@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""The CLI."""
+
 import logging
 import os
 
@@ -112,7 +114,8 @@ def advise(debug: bool = False):
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
 
-        pipfile, pipfile_lock, reasoning = thoth_advise(pipfile, pipfile_lock, debug)
+        pipfile, pipfile_lock, reasoning = thoth_advise(
+            pipfile, pipfile_lock, debug)
 
         _print_reasoning(reasoning)
         _write_pipfiles(pipfile, pipfile_lock)
@@ -126,10 +129,12 @@ def provenance_check(debug: bool = False):
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
         if not pipfile_lock:
-            _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
+            _LOGGER.error(
+                "No Pipfile.lock found - provenance cannot be checked")
             return 1
 
-        pipfile, pipfile_lock, reasoning = thoth_provenance_check(pipfile, pipfile_lock, debug)
+        pipfile, pipfile_lock, reasoning = thoth_provenance_check(
+            pipfile, pipfile_lock, debug)
 
         _print_reasoning(reasoning)
         _write_pipfiles(pipfile, pipfile_lock)
@@ -147,7 +152,8 @@ def config():
     try:
         configuration.open_config_file()
     except NoProjectDirError:
-        _LOGGER.info("No configuration file found, creating a default configuration for editing")
+        _LOGGER.info(
+            "No configuration file found, creating a default configuration for editing")
         configuration.create_default_config()
         configuration.open_config_file()
 

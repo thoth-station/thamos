@@ -31,8 +31,9 @@ _LOGGER = logging.getLogger(__name__)
 class _Configuration:
     """Handling of Thoth's configuration."""
 
-    DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
-    DEFAULT_THOTH_CONFIG = os.path.join(DATA_DIR, 'default_thoth.yaml')
+    DATA_DIR = os.path.join(os.path.dirname(
+        os.path.realpath(__file__)), 'data')
+    DEFAULT_THOTH_CONFIG = os.path.join(DATA_DIR, 'defaultThoth.yaml')
     CONFIG_NAME = '.thoth.yaml'
 
     def __init__(self):
@@ -56,13 +57,16 @@ class _Configuration:
     def create_default_config(self):
         """Place default configuration into the current directory."""
         if not os.path.isdir('.git'):
-            _LOGGER.warning("Configuration file is not created in the root of git repo")
+            _LOGGER.warning(
+                "Configuration file is not created in the root of git repo")
 
-        _LOGGER.debug("Reading default configuration from %r", self.DEFAULT_THOTH_CONFIG)
+        _LOGGER.debug("Reading default configuration from %r",
+                      self.DEFAULT_THOTH_CONFIG)
         with open(self.DEFAULT_THOTH_CONFIG, 'r') as default_config_file:
             default_config = default_config_file.read()
 
-        _LOGGER.debug("Writing configuration file to %r", os.path.join(os.getcwd(), self.CONFIG_NAME))
+        _LOGGER.debug("Writing configuration file to %r",
+                      os.path.join(os.getcwd(), self.CONFIG_NAME))
         with open(self.CONFIG_NAME, 'w') as config_file:
             config_file.write(default_config)
 
@@ -71,7 +75,8 @@ class _Configuration:
         """Open Thoth's configuration file."""
         with workdir(config.CONFIG_NAME):
             editor = os.getenv('EDITOR', 'vim')
-            _LOGGER.debug("Opening configuration file %r with editor %r", config.CONFIG_NAME, editor)
+            _LOGGER.debug(
+                "Opening configuration file %r with editor %r", config.CONFIG_NAME, editor)
             call([editor, config.CONFIG_NAME])
 
 
