@@ -1,0 +1,26 @@
+---
+#
+# This default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
+#
+
+# TODO: Adjust Thoth's host.
+host: http://localhost
+# One of testing, stable, latest.
+recommendation_type: stable
+managers:
+  - name: pipfile-requirements
+  - name: update
+    configuration:
+      labels:
+        - bot
+        - thoth
+  - name: info
+  - name: version
+    configuration:
+      # TODO: Adjust repo maintainers.
+      maintainers: []
+      # TODO: Adjust issue assignees.
+      assignees: []
+      labels:
+        - bot
+      changelog_file: true

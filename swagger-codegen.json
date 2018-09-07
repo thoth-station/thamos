@@ -1,0 +1,6 @@
+{
+  "apiPackage" : "thoth",
+  "packageName": "thamos.swagger_client",
+  "packageUrl": "https://github.com/thoth-station/thamos",
+  "packageVersion": "0.0.1"
+}
