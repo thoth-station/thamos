@@ -13,7 +13,6 @@ click = "*"
 
 [dev-packages]
 coala-bears = "*"
-remark = "*"
 
 [requires]
 python_version = "3.6"

@@ -25,8 +25,3 @@ bears = YAMLLintBear, FilenameBear
 files = .zuul.yaml
 file_naming_convention = camel
 max_line_length = 180
-
-[all.docs]
-bears = MarkdownBear, FilenameBear
-files = Documentation/**.md, Documentation/docs/**.md
-file_naming_convention = pascal
