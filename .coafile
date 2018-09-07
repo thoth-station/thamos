@@ -1,0 +1,25 @@
+[all]
+bears = LineCountBear, FilenameBear
+files = **.py, **.yaml, **.rst, **.md
+file_naming_convention = camel
+ignore = **/__pycache__/**, **/__pycache__, __pycache__, __pycache__/**, **/*.pyc, *.pyc
+max_lines_per_file = 1000
+
+[all.python]
+bears = PycodestyleBear, PyDocStyleBear
+files = **.py
+language = Python
+max_line_length = 120
+editor = vim
+ignore = setup.py
+
+[all.yaml]
+bears = YAMLLintBear
+files = **.yaml
+ignore = .zuul.yaml
+max_line_length = 120
+
+[zuul.yaml]
+bears = YAMLLintBear
+files = .zuul.yaml
+max_line_length = 180
