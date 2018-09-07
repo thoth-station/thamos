@@ -12,6 +12,7 @@ daiquiri = "*"
 click = "*"
 
 [dev-packages]
+coala-bears = "*"
 
 [requires]
 python_version = "3.6"
