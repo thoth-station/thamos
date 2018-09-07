@@ -1,0 +1,10 @@
+- project:
+    check:
+      jobs:
+        - linters
+    gate:
+      jobs:
+        - linters
+    kebechet-auto-gate:
+      jobs:
+        - linters
