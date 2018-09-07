@@ -8,3 +8,6 @@
     kebechet-auto-gate:
       jobs:
         - linters
+    release:
+      jobs:
+        - upload-pypi-sesheta
