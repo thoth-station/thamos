@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **get_solve_python**
-> get_solve_python(analysis_id)
+> AnalysisResultResponse get_solve_python(analysis_id)
 
 Retrieve a solver result.
 
@@ -31,7 +31,8 @@ analysis_id = 'analysis_id_example' # str | Document id to be retrieved.
 
 try:
     # Retrieve a solver result.
-    api_instance.get_solve_python(analysis_id)
+    api_response = api_instance.get_solve_python(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EcosystemSolverApi->get_solve_python: %s\n" % e)
 ```
@@ -44,7 +45,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResultResponse**](AnalysisResultResponse.md)
 
 ### Authorization
 
@@ -58,7 +59,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_solve_python_log**
-> get_solve_python_log(analysis_id)
+> AnalysisLogResponse get_solve_python_log(analysis_id)
 
 Retrieve a solver log.
 
@@ -76,7 +77,8 @@ analysis_id = 'analysis_id_example' # str | An id of analysis for a solver run.
 
 try:
     # Retrieve a solver log.
-    api_instance.get_solve_python_log(analysis_id)
+    api_response = api_instance.get_solve_python_log(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EcosystemSolverApi->get_solve_python_log: %s\n" % e)
 ```
@@ -89,7 +91,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisLogResponse**](AnalysisLogResponse.md)
 
 ### Authorization
 
@@ -103,7 +105,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_solve_python_status**
-> get_solve_python_status(analysis_id)
+> AnalysisStatusResponse get_solve_python_status(analysis_id)
 
 Show status of an ecosystem solver.
 
@@ -121,7 +123,8 @@ analysis_id = 'analysis_id_example' # str | An id of requested ecosystem solver 
 
 try:
     # Show status of an ecosystem solver.
-    api_instance.get_solve_python_status(analysis_id)
+    api_response = api_instance.get_solve_python_status(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EcosystemSolverApi->get_solve_python_status: %s\n" % e)
 ```
@@ -134,7 +137,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisStatusResponse**](AnalysisStatusResponse.md)
 
 ### Authorization
 
@@ -148,7 +151,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_solve_python_results**
-> list_solve_python_results(page=page)
+> AnalysisListingResponse list_solve_python_results(page=page)
 
 Retrieve a list of document ids for solver results.
 
@@ -166,7 +169,8 @@ page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of document ids for solver results.
-    api_instance.list_solve_python_results(page=page)
+    api_response = api_instance.list_solve_python_results(page=page)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EcosystemSolverApi->list_solve_python_results: %s\n" % e)
 ```
@@ -179,7 +183,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisListingResponse**](AnalysisListingResponse.md)
 
 ### Authorization
 
@@ -193,7 +197,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_solvers**
-> list_solvers()
+> dict(str, ERRORUNKNOWN) list_solvers()
 
 Retrieve a list of solvers installed and available.
 
@@ -210,7 +214,8 @@ api_instance = thamos.swagger_client.EcosystemSolverApi()
 
 try:
     # Retrieve a list of solvers installed and available.
-    api_instance.list_solvers()
+    api_response = api_instance.list_solvers()
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EcosystemSolverApi->list_solvers: %s\n" % e)
 ```
@@ -220,7 +225,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
 
 ### Authorization
 
@@ -234,7 +239,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_solve_python**
-> post_solve_python(packages, solver=solver, debug=debug, transitive=transitive)
+> AnalysisResponse post_solve_python(packages, solver=solver, debug=debug, transitive=transitive)
 
 Solve the given application stack.
 
@@ -255,7 +260,8 @@ transitive = true # bool | Packages to be solved. (optional) (default to true)
 
 try:
     # Solve the given application stack.
-    api_instance.post_solve_python(packages, solver=solver, debug=debug, transitive=transitive)
+    api_response = api_instance.post_solve_python(packages, solver=solver, debug=debug, transitive=transitive)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EcosystemSolverApi->post_solve_python: %s\n" % e)
 ```
@@ -271,7 +277,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResponse**](AnalysisResponse.md)
 
 ### Authorization
 

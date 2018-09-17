@@ -1,20 +1,20 @@
-# thamos.swagger_client.ImageAnalysisApi
+# thamos.swagger_client.AdviseApi
 
 All URIs are relative to *https://localhost/api/v1/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_analyze**](ImageAnalysisApi.md#get_analyze) | **GET** /analyze/{analysis_id} | Retrieve an analyzer result.
-[**get_analyze_log**](ImageAnalysisApi.md#get_analyze_log) | **GET** /analyze/{analysis_id}/log | Show logs of an analysis.
-[**get_analyze_status**](ImageAnalysisApi.md#get_analyze_status) | **GET** /analyze/{analysis_id}/status | Show analysis status.
-[**list_analyze**](ImageAnalysisApi.md#list_analyze) | **GET** /analyze | Retrieve a list of document ids for analyzer results.
-[**post_analyze**](ImageAnalysisApi.md#post_analyze) | **POST** /analyze | Analyze the given image asynchronously.
+[**get_advise_python**](AdviseApi.md#get_advise_python) | **GET** /advise/python/{analysis_id} | Get computeted adviser result based on its id.
+[**get_advise_python_log**](AdviseApi.md#get_advise_python_log) | **GET** /advise/python/{analysis_id}/log | Retrieve a adviser run log.
+[**get_advise_python_status**](AdviseApi.md#get_advise_python_status) | **GET** /advise/python/{analysis_id}/status | Show status of an adviser computing recomemendations.
+[**list_advise_python**](AdviseApi.md#list_advise_python) | **GET** /advise/python | Get adviser results available.
+[**post_advise_python**](AdviseApi.md#post_advise_python) | **POST** /advise/python | Get advise for Python ecosystem.
 
 
-# **get_analyze**
-> AnalysisResultResponse get_analyze(analysis_id)
+# **get_advise_python**
+> AnalysisResultResponse get_advise_python(analysis_id)
 
-Retrieve an analyzer result.
+Get computeted adviser result based on its id.
 
 ### Example
 ```python
@@ -25,22 +25,22 @@ from thamos.swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = thamos.swagger_client.ImageAnalysisApi()
-analysis_id = 'analysis_id_example' # str | Id of analysis that results should be retrieved.
+api_instance = thamos.swagger_client.AdviseApi()
+analysis_id = 'analysis_id_example' # str | Advise id returned on advise request.
 
 try:
-    # Retrieve an analyzer result.
-    api_response = api_instance.get_analyze(analysis_id)
+    # Get computeted adviser result based on its id.
+    api_response = api_instance.get_advise_python(analysis_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ImageAnalysisApi->get_analyze: %s\n" % e)
+    print("Exception when calling AdviseApi->get_advise_python: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Id of analysis that results should be retrieved. | 
+ **analysis_id** | **str**| Advise id returned on advise request. | 
 
 ### Return type
 
@@ -57,10 +57,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_analyze_log**
-> AnalysisLogResponse get_analyze_log(analysis_id)
+# **get_advise_python_log**
+> AnalysisLogResponse get_advise_python_log(analysis_id)
 
-Show logs of an analysis.
+Retrieve a adviser run log.
 
 ### Example
 ```python
@@ -71,22 +71,22 @@ from thamos.swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = thamos.swagger_client.ImageAnalysisApi()
-analysis_id = 'analysis_id_example' # str | An id of requested analysis.
+api_instance = thamos.swagger_client.AdviseApi()
+analysis_id = 'analysis_id_example' # str | An id of analysis for which log should be retrieved.
 
 try:
-    # Show logs of an analysis.
-    api_response = api_instance.get_analyze_log(analysis_id)
+    # Retrieve a adviser run log.
+    api_response = api_instance.get_advise_python_log(analysis_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ImageAnalysisApi->get_analyze_log: %s\n" % e)
+    print("Exception when calling AdviseApi->get_advise_python_log: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of analysis for which log should be retrieved. | 
 
 ### Return type
 
@@ -103,10 +103,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_analyze_status**
-> AnalysisStatusResponse get_analyze_status(analysis_id)
+# **get_advise_python_status**
+> AnalysisStatusResponse get_advise_python_status(analysis_id)
 
-Show analysis status.
+Show status of an adviser computing recomemendations.
 
 ### Example
 ```python
@@ -117,22 +117,22 @@ from thamos.swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = thamos.swagger_client.ImageAnalysisApi()
-analysis_id = 'analysis_id_example' # str | An id of requested analysis.
+api_instance = thamos.swagger_client.AdviseApi()
+analysis_id = 'analysis_id_example' # str | An id of requested adviser run.
 
 try:
-    # Show analysis status.
-    api_response = api_instance.get_analyze_status(analysis_id)
+    # Show status of an adviser computing recomemendations.
+    api_response = api_instance.get_advise_python_status(analysis_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ImageAnalysisApi->get_analyze_status: %s\n" % e)
+    print("Exception when calling AdviseApi->get_advise_python_status: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of requested adviser run. | 
 
 ### Return type
 
@@ -149,10 +149,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_analyze**
-> AnalysisListingResponse list_analyze(page=page)
+# **list_advise_python**
+> AnalysisListingResponse list_advise_python(page=page)
 
-Retrieve a list of document ids for analyzer results.
+Get adviser results available.
 
 ### Example
 ```python
@@ -163,15 +163,15 @@ from thamos.swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = thamos.swagger_client.ImageAnalysisApi()
+api_instance = thamos.swagger_client.AdviseApi()
 page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
-    # Retrieve a list of document ids for analyzer results.
-    api_response = api_instance.list_analyze(page=page)
+    # Get adviser results available.
+    api_response = api_instance.list_advise_python(page=page)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ImageAnalysisApi->list_analyze: %s\n" % e)
+    print("Exception when calling AdviseApi->list_advise_python: %s\n" % e)
 ```
 
 ### Parameters
@@ -195,10 +195,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_analyze**
-> AnalysisResponse post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+# **post_advise_python**
+> AnalysisResponse post_advise_python(application_stack, recommendation_type, runtime_environment=runtime_environment, debug=debug)
 
-Analyze the given image asynchronously.
+Get advise for Python ecosystem.
 
 ### Example
 ```python
@@ -209,30 +209,28 @@ from thamos.swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = thamos.swagger_client.ImageAnalysisApi()
-image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
-registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
-registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
-debug = false # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional) (default to false)
-verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
+api_instance = thamos.swagger_client.AdviseApi()
+application_stack = thamos.swagger_client.PythonStack() # PythonStack | Specification of Python application stack.
+recommendation_type = 'stable' # str | Recommendation type. (default to stable)
+runtime_environment = 'runtime_environment_example' # str | Runtime environment in which the given stack will be run.  (optional)
+debug = false # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional) (default to false)
 
 try:
-    # Analyze the given image asynchronously.
-    api_response = api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+    # Get advise for Python ecosystem.
+    api_response = api_instance.post_advise_python(application_stack, recommendation_type, runtime_environment=runtime_environment, debug=debug)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ImageAnalysisApi->post_analyze: %s\n" % e)
+    print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
- **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
- **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
- **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
- **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
+ **application_stack** | [**PythonStack**](PythonStack.md)| Specification of Python application stack. | 
+ **recommendation_type** | **str**| Recommendation type. | [default to stable]
+ **runtime_environment** | **str**| Runtime environment in which the given stack will be run.  | [optional] 
+ **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
 
 ### Return type
 

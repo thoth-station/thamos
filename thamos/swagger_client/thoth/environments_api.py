@@ -44,7 +44,7 @@ class EnvironmentsApi(object):
         :param async bool
         :param str runtime_environment_name: Runtime environment name to be retrieved. (required)
         :param str analysis_id: Specify analysis id for which results should be retrieved. If omitted, the latest will be used. 
-        :return: None
+        :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -66,7 +66,7 @@ class EnvironmentsApi(object):
         :param async bool
         :param str runtime_environment_name: Runtime environment name to be retrieved. (required)
         :param str analysis_id: Specify analysis id for which results should be retrieved. If omitted, the latest will be used. 
-        :return: None
+        :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -126,7 +126,7 @@ class EnvironmentsApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='dict(str, ERRORUNKNOWN)',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -145,7 +145,7 @@ class EnvironmentsApi(object):
         :param async bool
         :param str runtime_environment_name: Runtime environment name for which analyses should be retrieved.  (required)
         :param int page: Page offset in pagination.
-        :return: None
+        :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -167,7 +167,7 @@ class EnvironmentsApi(object):
         :param async bool
         :param str runtime_environment_name: Runtime environment name for which analyses should be retrieved.  (required)
         :param int page: Page offset in pagination.
-        :return: None
+        :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -227,7 +227,7 @@ class EnvironmentsApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='dict(str, ERRORUNKNOWN)',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -245,7 +245,7 @@ class EnvironmentsApi(object):
 
         :param async bool
         :param int page: Page offset in pagination.
-        :return: None
+        :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -266,7 +266,7 @@ class EnvironmentsApi(object):
 
         :param async bool
         :param int page: Page offset in pagination.
-        :return: None
+        :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -320,7 +320,7 @@ class EnvironmentsApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='dict(str, ERRORUNKNOWN)',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),

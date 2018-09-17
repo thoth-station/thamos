@@ -17,17 +17,30 @@ from __future__ import absolute_import
 
 # import apis into sdk package
 from thamos.swagger_client.thoth.admin_api import AdminApi
+from thamos.swagger_client.thoth.advise_api import AdviseApi
 from thamos.swagger_client.thoth.buildlogs_api import BuildlogsApi
 from thamos.swagger_client.thoth.ecosystem_solver_api import EcosystemSolverApi
 from thamos.swagger_client.thoth.environments_api import EnvironmentsApi
 from thamos.swagger_client.thoth.image_analysis_api import ImageAnalysisApi
 from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
-from thamos.swagger_client.thoth.recommendation_api import RecommendationApi
 
 # import ApiClient
 from thamos.swagger_client.api_client import ApiClient
 from thamos.swagger_client.configuration import Configuration
 # import models into sdk package
+from thamos.swagger_client.models.analysis_listing_response import AnalysisListingResponse
+from thamos.swagger_client.models.analysis_listing_response_inner import AnalysisListingResponseInner
+from thamos.swagger_client.models.analysis_log_response import AnalysisLogResponse
+from thamos.swagger_client.models.analysis_response import AnalysisResponse
+from thamos.swagger_client.models.analysis_response_error import AnalysisResponseError
+from thamos.swagger_client.models.analysis_result_response import AnalysisResultResponse
+from thamos.swagger_client.models.analysis_result_response_metadata import AnalysisResultResponseMetadata
+from thamos.swagger_client.models.analysis_result_response_metadata_distribution import AnalysisResultResponseMetadataDistribution
+from thamos.swagger_client.models.analysis_result_response_metadata_distribution_version_parts import AnalysisResultResponseMetadataDistributionVersionParts
+from thamos.swagger_client.models.analysis_result_response_metadata_python import AnalysisResultResponseMetadataPython
+from thamos.swagger_client.models.analysis_status_response import AnalysisStatusResponse
+from thamos.swagger_client.models.analysis_unfinished_result_response import AnalysisUnfinishedResultResponse
+from thamos.swagger_client.models.analysis_unfinished_result_response_status import AnalysisUnfinishedResultResponseStatus
 from thamos.swagger_client.models.environment import Environment
 from thamos.swagger_client.models.environment_inner import EnvironmentInner
 from thamos.swagger_client.models.log import Log

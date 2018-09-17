@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **get_provenance_python**
-> get_provenance_python(analysis_id)
+> AnalysisResultResponse get_provenance_python(analysis_id)
 
 Retrieve a provenance check result.
 
@@ -29,7 +29,8 @@ analysis_id = 'analysis_id_example' # str | Id of analysis to be retrieved.
 
 try:
     # Retrieve a provenance check result.
-    api_instance.get_provenance_python(analysis_id)
+    api_response = api_instance.get_provenance_python(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->get_provenance_python: %s\n" % e)
 ```
@@ -42,7 +43,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResultResponse**](AnalysisResultResponse.md)
 
 ### Authorization
 
@@ -56,7 +57,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_provenance_python_log**
-> get_provenance_python_log(analysis_id)
+> AnalysisLogResponse get_provenance_python_log(analysis_id)
 
 Show logs of a provenance checks.
 
@@ -74,7 +75,8 @@ analysis_id = 'analysis_id_example' # str | An id of requested analysis.
 
 try:
     # Show logs of a provenance checks.
-    api_instance.get_provenance_python_log(analysis_id)
+    api_response = api_instance.get_provenance_python_log(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->get_provenance_python_log: %s\n" % e)
 ```
@@ -87,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisLogResponse**](AnalysisLogResponse.md)
 
 ### Authorization
 
@@ -101,7 +103,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_provenance_python_status**
-> get_provenance_python_status(analysis_id)
+> AnalysisStatusResponse get_provenance_python_status(analysis_id)
 
 Show status of a provenance check.
 
@@ -119,7 +121,8 @@ analysis_id = 'analysis_id_example' # str | An id of requested provenance check.
 
 try:
     # Show status of a provenance check.
-    api_instance.get_provenance_python_status(analysis_id)
+    api_response = api_instance.get_provenance_python_status(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->get_provenance_python_status: %s\n" % e)
 ```
@@ -132,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisStatusResponse**](AnalysisStatusResponse.md)
 
 ### Authorization
 
@@ -146,7 +149,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_provenance_python**
-> post_provenance_python(application_stack)
+> AnalysisResponse post_provenance_python(application_stack, debug=debug)
 
 Check provenance of packages stated in an application stack.
 
@@ -161,10 +164,12 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = thamos.swagger_client.ProvenanceApi()
 application_stack = thamos.swagger_client.PythonStack() # PythonStack | Pipfile and Pipfile.lock as used by pipenv.
+debug = false # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional) (default to false)
 
 try:
     # Check provenance of packages stated in an application stack.
-    api_instance.post_provenance_python(application_stack)
+    api_response = api_instance.post_provenance_python(application_stack, debug=debug)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->post_provenance_python: %s\n" % e)
 ```
@@ -174,10 +179,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **application_stack** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
+ **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to false]
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResponse**](AnalysisResponse.md)
 
 ### Authorization
 

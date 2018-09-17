@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **get_runtime_environment**
-> get_runtime_environment(runtime_environment_name, analysis_id=analysis_id)
+> dict(str, ERRORUNKNOWN) get_runtime_environment(runtime_environment_name, analysis_id=analysis_id)
 
 Retrieve runtime environment information.
 
@@ -29,7 +29,8 @@ analysis_id = 'analysis_id_example' # str | Specify analysis id for which result
 
 try:
     # Retrieve runtime environment information.
-    api_instance.get_runtime_environment(runtime_environment_name, analysis_id=analysis_id)
+    api_response = api_instance.get_runtime_environment(runtime_environment_name, analysis_id=analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentsApi->get_runtime_environment: %s\n" % e)
 ```
@@ -43,7 +44,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
 
 ### Authorization
 
@@ -57,7 +58,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environment_analyses**
-> list_runtime_environment_analyses(runtime_environment_name, page=page)
+> dict(str, ERRORUNKNOWN) list_runtime_environment_analyses(runtime_environment_name, page=page)
 
 List analyses for the given runtime environment.
 
@@ -76,7 +77,8 @@ page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # List analyses for the given runtime environment.
-    api_instance.list_runtime_environment_analyses(runtime_environment_name, page=page)
+    api_response = api_instance.list_runtime_environment_analyses(runtime_environment_name, page=page)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentsApi->list_runtime_environment_analyses: %s\n" % e)
 ```
@@ -90,7 +92,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
 
 ### Authorization
 
@@ -104,7 +106,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environments**
-> list_runtime_environments(page=page)
+> dict(str, ERRORUNKNOWN) list_runtime_environments(page=page)
 
 Retrieve a list of runtime environments analyzed.
 
@@ -122,7 +124,8 @@ page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of runtime environments analyzed.
-    api_instance.list_runtime_environments(page=page)
+    api_response = api_instance.list_runtime_environments(page=page)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentsApi->list_runtime_environments: %s\n" % e)
 ```
@@ -135,7 +138,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
 
 ### Authorization
 
