@@ -43,7 +43,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param str analysis_id: Id of analysis that results should be retrieved. (required)
-        :return: None
+        :return: AnalysisResultResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -64,7 +64,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param str analysis_id: Id of analysis that results should be retrieved. (required)
-        :return: None
+        :return: AnalysisResultResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -122,7 +122,7 @@ class ImageAnalysisApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='AnalysisResultResponse',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -140,7 +140,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param str analysis_id: An id of requested analysis. (required)
-        :return: None
+        :return: AnalysisLogResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -161,7 +161,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param str analysis_id: An id of requested analysis. (required)
-        :return: None
+        :return: AnalysisLogResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -219,7 +219,7 @@ class ImageAnalysisApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='AnalysisLogResponse',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -237,7 +237,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param str analysis_id: An id of requested analysis. (required)
-        :return: None
+        :return: AnalysisStatusResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -258,7 +258,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param str analysis_id: An id of requested analysis. (required)
-        :return: None
+        :return: AnalysisStatusResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -316,7 +316,7 @@ class ImageAnalysisApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='AnalysisStatusResponse',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -334,7 +334,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param int page: Page offset in pagination.
-        :return: None
+        :return: AnalysisListingResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -355,7 +355,7 @@ class ImageAnalysisApi(object):
 
         :param async bool
         :param int page: Page offset in pagination.
-        :return: None
+        :return: AnalysisListingResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -409,7 +409,7 @@ class ImageAnalysisApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='AnalysisListingResponse',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -431,7 +431,7 @@ class ImageAnalysisApi(object):
         :param str registry_password: Registry password or token to be used for pulling images from registry. 
         :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
         :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
-        :return: None
+        :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -456,7 +456,7 @@ class ImageAnalysisApi(object):
         :param str registry_password: Registry password or token to be used for pulling images from registry. 
         :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
         :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
-        :return: None
+        :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -522,7 +522,7 @@ class ImageAnalysisApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='AnalysisResponse',  # noqa: E501
             auth_settings=auth_settings,
             async=params.get('async'),
             _return_http_data_only=params.get('_return_http_data_only'),

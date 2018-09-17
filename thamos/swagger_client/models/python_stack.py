@@ -113,7 +113,7 @@ class PythonStack(object):
     def requirements_format(self):
         """Gets the requirements_format of this PythonStack.  # noqa: E501
 
-        Lockfile format - defaults to pipenv if not explicitly specified.  # noqa: E501
+        Lockfile format - defaults to pipenv if not explicitly specified.   # noqa: E501
 
         :return: The requirements_format of this PythonStack.  # noqa: E501
         :rtype: str
@@ -124,7 +124,7 @@ class PythonStack(object):
     def requirements_format(self, requirements_format):
         """Sets the requirements_format of this PythonStack.
 
-        Lockfile format - defaults to pipenv if not explicitly specified.  # noqa: E501
+        Lockfile format - defaults to pipenv if not explicitly specified.   # noqa: E501
 
         :param requirements_format: The requirements_format of this PythonStack.  # noqa: E501
         :type: str
