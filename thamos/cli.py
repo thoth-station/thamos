@@ -27,6 +27,7 @@ from thamos.exceptions import NoProjectDirError
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.utils import workdir
+from thamos.install import do_install
 from thamos import __version__ as thamos_version
 
 daiquiri.setup(level=logging.INFO)
@@ -107,22 +108,21 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None):
 
 
 @cli.command('advise')
-@click.option('--debug', is_flag=True, auto_envvar_prefix=True,
+@click.option('--debug', is_flag=True,
               help="Run analysis in debug mode on Thoth.")
 def advise(debug: bool = False):
     """Update the given application stack and provide reasoning.."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
 
-        pipfile, pipfile_lock, reasoning = thoth_advise(
-            pipfile, pipfile_lock, debug)
+        pipfile, pipfile_lock, reasoning = thoth_advise(pipfile, pipfile_lock, debug)
 
         _print_reasoning(reasoning)
         _write_pipfiles(pipfile, pipfile_lock)
 
 
 @cli.command('provenance-check')
-@click.option('--debug', is_flag=True, auto_envvar_prefix=True,
+@click.option('--debug', is_flag=True,
               help="Run analysis in debug mode on Thoth.")
 def provenance_check(debug: bool = False):
     """Check provenance of installed packages."""
@@ -133,8 +133,7 @@ def provenance_check(debug: bool = False):
                 "No Pipfile.lock found - provenance cannot be checked")
             return 1
 
-        pipfile, pipfile_lock, reasoning = thoth_provenance_check(
-            pipfile, pipfile_lock, debug)
+        pipfile, pipfile_lock, reasoning = thoth_provenance_check(pipfile, pipfile_lock, debug)
 
         _print_reasoning(reasoning)
         _write_pipfiles(pipfile, pipfile_lock)
@@ -146,14 +145,22 @@ def image_analysis():
     raise NotImplementedError
 
 
+@cli.command('install')
+@click.argument('packages', nargs=-1)
+@click.option('--interactive', '-i', is_flag=True,
+              help="Run installation in an interactive mode.")
+def install(packages, interactive: bool = False):
+    """Perform installation of a package or multiple packages if requested."""
+    do_install(packages, interactive)
+
+
 @cli.command('config')
 def config():
     """Adjust Thamos and Thoth remote configuration."""
     try:
         configuration.open_config_file()
     except NoProjectDirError:
-        _LOGGER.info(
-            "No configuration file found, creating a default configuration for editing")
+        _LOGGER.info("No configuration file found, creating a default configuration for editing")
         configuration.create_default_config()
         configuration.open_config_file()
 

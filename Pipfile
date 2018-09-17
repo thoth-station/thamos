@@ -10,6 +10,10 @@ python-dateutil = ">=2.5.3"
 "urllib3" = ">=1.15.1"
 daiquiri = "*"
 click = "*"
+distro = "*"
+thoth-adviser = "*"
+thoth-analyzer = "*"
+pipenv = "*"
 
 [dev-packages]
 coala-bears = "*"

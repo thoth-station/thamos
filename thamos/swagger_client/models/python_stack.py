@@ -104,8 +104,6 @@ class PythonStack(object):
         """
         if requirements_lock is None:
             raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501
-        if requirements_lock is not None and len(requirements_lock) < 1:
-            raise ValueError("Invalid value for `requirements_lock`, length must be greater than or equal to `1`")  # noqa: E501
 
         self._requirements_lock = requirements_lock
 

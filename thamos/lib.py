@@ -18,12 +18,13 @@
 """Core parts of library for interacting with Thoth."""
 
 import logging
+from time import sleep
 
 from .swagger_client import ApiClient
 from .swagger_client import Configuration
 from .swagger_client import ProvenanceApi
 from .swagger_client import PythonStack
-from .swagger_client import RecommendationApi
+from .swagger_client import AdviseApi
 from .config import config as thoth_config
 
 _LOGGER = logging.getLogger(__name__)
@@ -35,23 +36,42 @@ def with_api_client(func):
         thoth_config.load_config()
         config = Configuration()
         config.host = thoth_config.content.get('host') or config.host
+        _LOGGER.debug("Using Thoth host %r", config.host)
         return func(ApiClient(configuration=config), *args, **kwargs)
 
     return wrapper
 
 
+def _wait_for_analysis(status_func: callable, analysis_id) -> None:
+    """Wait for ongoing analysis to finish."""
+    sleep_time = 0.5
+    while True:
+        response = status_func(analysis_id)
+        if response.status['finished_at'] is not None:
+            break
+        _LOGGER.debug("Waiting for %r to finish for %s seconds", analysis_id, sleep_time)
+
+        sleep(sleep_time)
+        sleep_time = min(sleep_time * 2, 10)
+
+
 @with_api_client
 def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, debug: bool = False) -> tuple:
     """Submit a stack for adviser checks and wait for results."""
-    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
-    api_instance = RecommendationApi(api_client)
-    response = api_instance.post_recommend_python(
+    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or '')
+    api_instance = AdviseApi(api_client)
+    response = api_instance.post_advise_python(
         stack,
-        type=thoth_config.content.get('recommendation_type', 'stable'),
+        recommendation_type=thoth_config.content.get('recommendation_type', 'stable'),
         debug=debug
     )
-    print(response)
-    # TODO: implement models on API and wait for analysis to finish
+    _LOGGER.debug("Sucessfully submitted advise analysis; id is %r", response.analysis_id)
+    _wait_for_analysis(api_instance.get_advise_python_status, response.analysis_id)
+    _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
+    response = api_instance.get_advise_python(response.analysis_id)
+    _LOGGER.debug("Adviser check metadata: %r", response.metadata)
+
+    result = response.result
     return None, None, None
 
 
@@ -61,7 +81,11 @@ def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str, deb
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(stack, debug=debug)
-    print(response)
-    # TODO: implement models on API and wait for analysis to finish
-    # TODO: accept debug on API
+    _LOGGER.debug("Sucessfully submitted provenance check analysis; id is %r", response.analysis_id)
+    _wait_for_analysis(api_instance.get_provenance_python_status, response.analysis_id)
+    _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
+    response = api_instance.get_provenance_python(response.analysis_id)
+    _LOGGER.debug("Provenance check metadata: %r", response.metadata)
+
+    result = response.result
     return None, None, None
