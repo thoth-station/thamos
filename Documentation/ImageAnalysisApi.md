@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **get_analyze**
-> get_analyze(analysis_id)
+> AnalysisResultResponse get_analyze(analysis_id)
 
 Retrieve an analyzer result.
 
@@ -30,7 +30,8 @@ analysis_id = 'analysis_id_example' # str | Id of analysis that results should b
 
 try:
     # Retrieve an analyzer result.
-    api_instance.get_analyze(analysis_id)
+    api_response = api_instance.get_analyze(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->get_analyze: %s\n" % e)
 ```
@@ -43,7 +44,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResultResponse**](AnalysisResultResponse.md)
 
 ### Authorization
 
@@ -57,7 +58,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_analyze_log**
-> get_analyze_log(analysis_id)
+> AnalysisLogResponse get_analyze_log(analysis_id)
 
 Show logs of an analysis.
 
@@ -75,7 +76,8 @@ analysis_id = 'analysis_id_example' # str | An id of requested analysis.
 
 try:
     # Show logs of an analysis.
-    api_instance.get_analyze_log(analysis_id)
+    api_response = api_instance.get_analyze_log(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->get_analyze_log: %s\n" % e)
 ```
@@ -88,7 +90,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisLogResponse**](AnalysisLogResponse.md)
 
 ### Authorization
 
@@ -102,7 +104,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_analyze_status**
-> get_analyze_status(analysis_id)
+> AnalysisStatusResponse get_analyze_status(analysis_id)
 
 Show analysis status.
 
@@ -120,7 +122,8 @@ analysis_id = 'analysis_id_example' # str | An id of requested analysis.
 
 try:
     # Show analysis status.
-    api_instance.get_analyze_status(analysis_id)
+    api_response = api_instance.get_analyze_status(analysis_id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->get_analyze_status: %s\n" % e)
 ```
@@ -133,7 +136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisStatusResponse**](AnalysisStatusResponse.md)
 
 ### Authorization
 
@@ -147,7 +150,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_analyze**
-> list_analyze(page=page)
+> AnalysisListingResponse list_analyze(page=page)
 
 Retrieve a list of document ids for analyzer results.
 
@@ -165,7 +168,8 @@ page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of document ids for analyzer results.
-    api_instance.list_analyze(page=page)
+    api_response = api_instance.list_analyze(page=page)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->list_analyze: %s\n" % e)
 ```
@@ -178,7 +182,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisListingResponse**](AnalysisListingResponse.md)
 
 ### Authorization
 
@@ -192,7 +196,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_analyze**
-> post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+> AnalysisResponse post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
 
 Analyze the given image asynchronously.
 
@@ -214,7 +218,8 @@ verify_tls = true # bool | Verify TLS certificates of registry from where images
 
 try:
     # Analyze the given image asynchronously.
-    api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+    api_response = api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->post_analyze: %s\n" % e)
 ```
@@ -231,7 +236,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResponse**](AnalysisResponse.md)
 
 ### Authorization
 
