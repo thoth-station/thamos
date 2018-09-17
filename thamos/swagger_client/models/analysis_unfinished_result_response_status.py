@@ -31,188 +31,74 @@ class AnalysisUnfinishedResultResponseStatus(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'container': 'str',
-        'exit_code': 'int',
-        'finished_at': 'str',
-        'reason': 'str',
-        'started_at': 'str',
-        'state': 'str'
+        'status': 'object',
+        'parameters': 'object'
     }
 
     attribute_map = {
-        'container': '_container',
-        'exit_code': 'exit_code',
-        'finished_at': 'finished_at',
-        'reason': 'reason',
-        'started_at': 'started_at',
-        'state': 'state'
+        'status': 'status',
+        'parameters': 'parameters'
     }
 
-    def __init__(self, container=None, exit_code=None, finished_at=None, reason=None, started_at=None, state=None):  # noqa: E501
+    def __init__(self, status=None, parameters=None):  # noqa: E501
         """AnalysisUnfinishedResultResponseStatus - a model defined in Swagger"""  # noqa: E501
 
-        self._container = None
-        self._exit_code = None
-        self._finished_at = None
-        self._reason = None
-        self._started_at = None
-        self._state = None
+        self._status = None
+        self._parameters = None
         self.discriminator = None
 
-        self.container = container
-        self.exit_code = exit_code
-        self.finished_at = finished_at
-        self.reason = reason
-        self.started_at = started_at
-        self.state = state
+        self.status = status
+        self.parameters = parameters
 
     @property
-    def container(self):
-        """Gets the container of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
+    def status(self):
+        """Gets the status of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
 
-        SHA of container image in which the analysis is done.  # noqa: E501
+        Status information about the analysis run.  # noqa: E501
 
-        :return: The container of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :rtype: str
+        :return: The status of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
+        :rtype: object
         """
-        return self._container
+        return self._status
 
-    @container.setter
-    def container(self, container):
-        """Sets the container of this AnalysisUnfinishedResultResponseStatus.
+    @status.setter
+    def status(self, status):
+        """Sets the status of this AnalysisUnfinishedResultResponseStatus.
 
-        SHA of container image in which the analysis is done.  # noqa: E501
+        Status information about the analysis run.  # noqa: E501
 
-        :param container: The container of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :type: str
+        :param status: The status of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
+        :type: object
         """
-        if container is None:
-            raise ValueError("Invalid value for `container`, must not be `None`")  # noqa: E501
+        if status is None:
+            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
 
-        self._container = container
+        self._status = status
 
     @property
-    def exit_code(self):
-        """Gets the exit_code of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
+    def parameters(self):
+        """Gets the parameters of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
 
-        Return code of the process perfoming analysis.  # noqa: E501
+        Parameters echoed back to user for debugging.  # noqa: E501
 
-        :return: The exit_code of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :rtype: int
+        :return: The parameters of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
+        :rtype: object
         """
-        return self._exit_code
+        return self._parameters
 
-    @exit_code.setter
-    def exit_code(self, exit_code):
-        """Sets the exit_code of this AnalysisUnfinishedResultResponseStatus.
+    @parameters.setter
+    def parameters(self, parameters):
+        """Sets the parameters of this AnalysisUnfinishedResultResponseStatus.
 
-        Return code of the process perfoming analysis.  # noqa: E501
+        Parameters echoed back to user for debugging.  # noqa: E501
 
-        :param exit_code: The exit_code of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :type: int
+        :param parameters: The parameters of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
+        :type: object
         """
-        if exit_code is None:
-            raise ValueError("Invalid value for `exit_code`, must not be `None`")  # noqa: E501
+        if parameters is None:
+            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
-        self._exit_code = exit_code
-
-    @property
-    def finished_at(self):
-        """Gets the finished_at of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-
-        Datetime in ISO format informing about when the analysis has finished.   # noqa: E501
-
-        :return: The finished_at of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :rtype: str
-        """
-        return self._finished_at
-
-    @finished_at.setter
-    def finished_at(self, finished_at):
-        """Sets the finished_at of this AnalysisUnfinishedResultResponseStatus.
-
-        Datetime in ISO format informing about when the analysis has finished.   # noqa: E501
-
-        :param finished_at: The finished_at of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :type: str
-        """
-        if finished_at is None:
-            raise ValueError("Invalid value for `finished_at`, must not be `None`")  # noqa: E501
-
-        self._finished_at = finished_at
-
-    @property
-    def reason(self):
-        """Gets the reason of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-
-        Reasoning on finished run.  # noqa: E501
-
-        :return: The reason of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :rtype: str
-        """
-        return self._reason
-
-    @reason.setter
-    def reason(self, reason):
-        """Sets the reason of this AnalysisUnfinishedResultResponseStatus.
-
-        Reasoning on finished run.  # noqa: E501
-
-        :param reason: The reason of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :type: str
-        """
-        if reason is None:
-            raise ValueError("Invalid value for `reason`, must not be `None`")  # noqa: E501
-
-        self._reason = reason
-
-    @property
-    def started_at(self):
-        """Gets the started_at of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-
-        Datetime in ISO format informing about when the analysis has started.   # noqa: E501
-
-        :return: The started_at of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :rtype: str
-        """
-        return self._started_at
-
-    @started_at.setter
-    def started_at(self, started_at):
-        """Sets the started_at of this AnalysisUnfinishedResultResponseStatus.
-
-        Datetime in ISO format informing about when the analysis has started.   # noqa: E501
-
-        :param started_at: The started_at of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :type: str
-        """
-        if started_at is None:
-            raise ValueError("Invalid value for `started_at`, must not be `None`")  # noqa: E501
-
-        self._started_at = started_at
-
-    @property
-    def state(self):
-        """Gets the state of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-
-
-        :return: The state of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :rtype: str
-        """
-        return self._state
-
-    @state.setter
-    def state(self, state):
-        """Sets the state of this AnalysisUnfinishedResultResponseStatus.
-
-
-        :param state: The state of this AnalysisUnfinishedResultResponseStatus.  # noqa: E501
-        :type: str
-        """
-        if state is None:
-            raise ValueError("Invalid value for `state`, must not be `None`")  # noqa: E501
-
-        self._state = state
+        self._parameters = parameters
 
     def to_dict(self):
         """Returns the model properties as a dict"""
