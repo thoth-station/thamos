@@ -5,9 +5,6 @@
 
 # TODO: Adjust Thoth's host.
 host: http://localhost/api/v1
-index_aicoe:
-  base_url: https://index-aicoe.a3c1.starter-us-west-1.openshiftapps.com
-  verify_ssl: true
 # One of testing, stable, latest.
 recommendation_type: stable
 managers:

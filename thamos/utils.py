@@ -34,10 +34,13 @@ def workdir(file_lookup: str = None):
 
     project_dir = os.getcwd()
     for _ in range(_WORKDIR_DEPTH_LEN):
-        if os.path.isfile(file_lookup):
+        file = os.path.join(project_dir, file_lookup)
+        if os.path.isfile(file):
             with cwd(project_dir):
                 yield project_dir
             break
+
+        project_dir = os.path.dirname(project_dir)
     else:
         raise NoProjectDirError(
             f"No {file_lookup} found in the current directory {project_dir!r} or in any of its parent directories"

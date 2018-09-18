@@ -35,15 +35,14 @@ class _Configuration:
     DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
     DEFAULT_THOTH_CONFIG = os.path.join(DATA_DIR, 'defaultThoth.yaml')
     CONFIG_NAME = '.thoth.yaml'
-    DEFAULT_INDEX_AICOE = {
-        'base_url': 'https://index-aicoe.a3c1.starter-us-west-1.openshiftapps.com',
-        'verify_ssl': True
-    }
 
     def __init__(self):
         """Construct configuration instance."""
         self._configuration = None
         self._index_aicoe = None
+        # Thoth instance to be used when explicitly said by user - the one stated in
+        # configuration file will be omitted.
+        self.explicit_host = None
 
     @property
     def content(self):
@@ -52,18 +51,6 @@ class _Configuration:
             self.load_config()
 
         return self._configuration
-
-    @property
-    def index_aicoe(self):
-        """Configuration of AICoE index where verified/optimized artifacts sit."""
-        if not self._index_aicoe:
-            try:
-                self._index_aicoe = self.content.get('index_aicoe', self.DEFAULT_INDEX_AICOE)
-            except (NoProjectDirError, FileNotFoundError):
-                self._index_aicoe = self.DEFAULT_INDEX_AICOE
-            
-        return self._index_aicoe
-
 
     def load_config(self):
         """Load configuration file."""

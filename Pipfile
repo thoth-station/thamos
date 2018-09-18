@@ -11,9 +11,9 @@ python-dateutil = ">=2.5.3"
 daiquiri = "*"
 click = "*"
 distro = "*"
-thoth-adviser = "*"
 thoth-analyzer = "*"
-pipenv = "*"
+yaspin = "*"
+texttable = "*"
 
 [dev-packages]
 coala-bears = "*"

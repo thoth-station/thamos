@@ -17,9 +17,19 @@
 
 """Core parts of library for interacting with Thoth."""
 
+import os
 import logging
+import typing
 from time import sleep
+from time import time
+from contextlib import contextmanager
+from functools import partial
+import json
 
+from yaspin import yaspin
+from yaspin.spinners import Spinners
+
+from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
 from .swagger_client import Configuration
 from .swagger_client import ProvenanceApi
@@ -30,62 +40,104 @@ from .config import config as thoth_config
 _LOGGER = logging.getLogger(__name__)
 
 
-def with_api_client(func):
+def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
     def wrapper(*args, **kwargs):
         thoth_config.load_config()
         config = Configuration()
-        config.host = thoth_config.content.get('host') or config.host
+        config.host = thoth_config.explicit_host or thoth_config.content.get('host') or config.host
         _LOGGER.debug("Using Thoth host %r", config.host)
-        return func(ApiClient(configuration=config), *args, **kwargs)
+        start = time()
+        result = func(ApiClient(configuration=config), *args, **kwargs)
+        _LOGGER.debug("Elapsed seconds processing request: %f", time() - start)
+        return result
 
     return wrapper
 
 
-def _wait_for_analysis(status_func: callable, analysis_id) -> None:
+def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
-    sleep_time = 0.5
-    while True:
-        response = status_func(analysis_id)
-        if response.status['finished_at'] is not None:
-            break
-        _LOGGER.debug("Waiting for %r to finish for %s seconds", analysis_id, sleep_time)
+    @contextmanager
+    def _no_spinner():
+        yield
 
-        sleep(sleep_time)
-        sleep_time = min(sleep_time * 2, 10)
+    spinner = partial(
+        yaspin,
+        Spinners.clock,
+        text=f"Waiting for response from Thoth (analysis: {analysis_id})..."
+    )
+    if _LOGGER.getEffectiveLevel() == logging.DEBUG or bool(int(os.getenv('THAMOS_NO_PROGRESSBAR', 1))):
+        # CLI automatically injects THAMOS_NO_PROGRESSBAR=0 if user did not turned it off explictily.
+        spinner = _no_spinner
+
+    sleep_time = 0.5
+    with spinner():
+        while True:
+            response = status_func(analysis_id)
+            if response.status['finished_at'] is not None:
+                break
+            _LOGGER.debug(
+                "Waiting for %r to finish for %s seconds (state: %s)",
+                analysis_id, sleep_time, response.status['state']
+            )
+
+            sleep(sleep_time)
+            sleep_time = min(sleep_time * 2, 10)
+
+
+def _retrieve_analysis_result(retrieve_func: callable, analysis_id: str) -> typing.Optional[dict]:
+    """Retrieve analysis result, raise error if analysis failed."""
+    try:
+        return retrieve_func(analysis_id)
+    except ApiException as exc:
+        _LOGGER.debug("Retrieved error response %s from server: %s", exc.status, exc.reason)
+        response = json.loads(exc.body)
+        _LOGGER.debug("Error from server: %s", response)
+        _LOGGER.error("%s (analysis: %s)", response['error'], analysis_id)
+        return None
 
 
 @with_api_client
-def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, debug: bool = False) -> tuple:
+def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendation_type: str = None,
+           debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or '')
     api_instance = AdviseApi(api_client)
     response = api_instance.post_advise_python(
         stack,
-        recommendation_type=thoth_config.content.get('recommendation_type', 'stable'),
+        recommendation_type=recommendation_type or thoth_config.content.get('recommendation_type', 'stable'),
         debug=debug
     )
-    _LOGGER.debug("Sucessfully submitted advise analysis; id is %r", response.analysis_id)
+    _LOGGER.info("Sucessfully submitted advise analysis %r", response.analysis_id)
     _wait_for_analysis(api_instance.get_advise_python_status, response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
-    response = api_instance.get_advise_python(response.analysis_id)
+    response = _retrieve_analysis_result(api_instance.get_advise_python, response.analysis_id)
+    if not response:
+        return None
+
     _LOGGER.debug("Adviser check metadata: %r", response.metadata)
 
-    result = response.result
-    return None, None, None
+    return (
+        response.result['output']['requirements'],
+        response.result['output']['requirements_locked'],
+        response.result['report'],
+        response.result['error']
+    )
 
 
 @with_api_client
-def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str, debug: bool = False) -> tuple:
+def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str,
+                     debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(stack, debug=debug)
-    _LOGGER.debug("Sucessfully submitted provenance check analysis; id is %r", response.analysis_id)
+    _LOGGER.info("Sucessfully submitted provenance check analysis %r", response.analysis_id)
     _wait_for_analysis(api_instance.get_provenance_python_status, response.analysis_id)
     _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
-    response = api_instance.get_provenance_python(response.analysis_id)
-    _LOGGER.debug("Provenance check metadata: %r", response.metadata)
+    response = _retrieve_analysis_result(api_instance.get_provenance_python, response.analysis_id)
+    if not response:
+        return None
 
-    result = response.result
-    return None, None, None
+    _LOGGER.debug("Provenance check metadata: %r", response.metadata)
+    return response.result['report']['findings'], response.result['error']
