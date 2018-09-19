@@ -175,6 +175,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     # as a library, progressbar is not shown as one would expect.
     os.environ['THAMOS_NO_PROGRESSBAR'] = os.getenv('THAMOS_NO_PROGRESSBAR', '0')
 
+
 @cli.command('advise')
 @click.option('--debug', is_flag=True,
               help="Run analysis in debug mode on Thoth.")

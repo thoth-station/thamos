@@ -25,5 +25,6 @@ class ThamosException(Exception):
 class NoProjectDirError(ThamosException):
     """An exception raised if the project directory cannot be found."""
 
+
 class InternalError(ThamosException):
     """An exception raised on internal programming errors."""
