@@ -207,7 +207,7 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
             click.echo(pipfile)
             click.echo(pipfile_lock)
 
-    sys.exit(5 if error else 0)
+    sys.exit(4 if error else 0)
 
 
 @cli.command('provenance-check')
@@ -233,7 +233,7 @@ def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, json
 
         findings, error = results
         _print_report(findings, json_output=json_output) if findings else _LOGGER.info("Provenance check passed!")
-        sys.exit(5 if error else 0)
+        sys.exit(4 if error else 0)
 
 
 @cli.command('config')
