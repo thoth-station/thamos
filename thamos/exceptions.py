@@ -22,5 +22,9 @@ class ThamosException(Exception):
     """A base class for exceptions in Thamos."""
 
 
-class NoProjectDirError(Exception):
+class NoProjectDirError(ThamosException):
     """An exception raised if the project directory cannot be found."""
+
+
+class InternalError(ThamosException):
+    """An exception raised on internal programming errors."""
