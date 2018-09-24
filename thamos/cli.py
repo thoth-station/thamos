@@ -53,6 +53,8 @@ _EMOJI = {
 _TABLE_COLS_ALIGN = {
     'type': 'c',
     'severity': 'c',
+    'package_name': 'c',
+    'package_version': 'r'
 }
 
 
@@ -182,18 +184,20 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 @click.option('--no-write', '-W', is_flag=True,
               help="Do not write results to files, just print them.")
 @click.option('--recommendation-type', '-r', type=str,
-              help="Use selected recommendation type, do not lead it from Thoth's config file.")
+              help="Use selected recommendation type, do not load it from Thoth's config file.")
+@click.option('--runtime-environment', '-e', type=str,
+              help="Use selected runtime environment, do not load it from Thoth's config file.")
 @click.option('--json', '-j', 'json_output', is_flag=True,
               help="Print output in JSON format.")
 @click.pass_context
 @handle_cli_exception
 def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation_type: str = None,
-           json_output: bool = False):
+           runtime_environment: str = None, json_output: bool = False):
     """Update the given application stack and provide reasoning.."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
 
-        results = thoth_advise(pipfile, pipfile_lock, recommendation_type, debug)
+        results = thoth_advise(pipfile, pipfile_lock, recommendation_type, runtime_environment, debug)
         if not results:
             return sys.exit(2)
 
