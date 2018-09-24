@@ -141,4 +141,4 @@ def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str,
         return None
 
     _LOGGER.debug("Provenance check metadata: %r", response.metadata)
-    return response.result['report']['findings'], response.result['error']
+    return response.result['report'], response.result['error']
