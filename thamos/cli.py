@@ -53,6 +53,8 @@ _EMOJI = {
 _TABLE_COLS_ALIGN = {
     'type': 'c',
     'severity': 'c',
+    'package_name': 'c',
+    'package_version': 'c'
 }
 
 
