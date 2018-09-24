@@ -137,8 +137,10 @@ def _print_report(report: dict, json_output: bool = False):
         row = []
         for column in header:
             entry = item.get(column, '-')
-            if not bool(int(os.getenv('THAMOS_NO_EMOJI', 0))):
+            if not bool(int(os.getenv('THAMOS_NO_EMOJI', 0))) and isinstance(entry, str):
                 entry = _EMOJI.get(entry, entry)
+            if isinstance(entry, dict):
+                entry = ", ".join(f'{k}: {v}' for k, v in entry.items())
             row.append(entry)
 
         table.add_row(row)
@@ -235,8 +237,8 @@ def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, json
         if not results:
             sys.exit(2)
 
-        findings, error = results
-        _print_report(findings, json_output=json_output) if findings else _LOGGER.info("Provenance check passed!")
+        report, error = results
+        _print_report(report, json_output=json_output) if report else _LOGGER.info("Provenance check passed!")
         sys.exit(4 if error else 0)
 
 
