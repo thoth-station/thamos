@@ -126,8 +126,13 @@ def _print_report(report: dict, json_output: bool = False):
     table.set_deco(Texttable.HEADER | Texttable.VLINES)
 
     header = set()
+    to_remove = set()
     for item in report:
-        header = header.union(item.keys())
+        header = header.union(set(item.keys()))
+        to_remove = to_remove.union(set(i for i, v in item.items() if isinstance(v, dict)))
+
+    # Remove fields that can be an array - these are addition details that are supressed from the table output.
+    header = header - to_remove
 
     header = list(sorted(header))
     table.set_cols_align([_TABLE_COLS_ALIGN.get(column, 'l') for column in header])
@@ -137,10 +142,13 @@ def _print_report(report: dict, json_output: bool = False):
         row = []
         for column in header:
             entry = item.get(column, '-')
+
             if not bool(int(os.getenv('THAMOS_NO_EMOJI', 0))) and isinstance(entry, str):
                 entry = _EMOJI.get(entry, entry)
-            if isinstance(entry, dict):
-                entry = ", ".join(f'{k}: {v}' for k, v in entry.items())
+
+            if isinstance(entry, list):
+                entry = ", ".join(entry)
+
             row.append(entry)
 
         table.add_row(row)
