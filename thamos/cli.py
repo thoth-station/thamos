@@ -126,8 +126,13 @@ def _print_report(report: dict, json_output: bool = False):
     table.set_deco(Texttable.HEADER | Texttable.VLINES)
 
     header = set()
+    to_remove = set()
     for item in report:
-        header = header.union(item.keys())
+        header = header.union(set(item.keys()))
+        to_remove = to_remove.union(set(i for i, v in item.items() if isinstance(v, dict)))
+
+    # Remove fields that can be an array - these are addition details that are supressed from the table output.
+    header = header - to_remove
 
     header = list(sorted(header))
     table.set_cols_align([_TABLE_COLS_ALIGN.get(column, 'l') for column in header])
@@ -137,8 +142,13 @@ def _print_report(report: dict, json_output: bool = False):
         row = []
         for column in header:
             entry = item.get(column, '-')
-            if not bool(int(os.getenv('THAMOS_NO_EMOJI', 0))):
+
+            if not bool(int(os.getenv('THAMOS_NO_EMOJI', 0))) and isinstance(entry, str):
                 entry = _EMOJI.get(entry, entry)
+
+            if isinstance(entry, list):
+                entry = ", ".join(entry)
+
             row.append(entry)
 
         table.add_row(row)
@@ -235,8 +245,8 @@ def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, json
         if not results:
             sys.exit(2)
 
-        findings, error = results
-        _print_report(findings, json_output=json_output) if findings else _LOGGER.info("Provenance check passed!")
+        report, error = results
+        _print_report(report, json_output=json_output) if report else _LOGGER.info("Provenance check passed!")
         sys.exit(4 if error else 0)
 
 
