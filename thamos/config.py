@@ -56,7 +56,7 @@ class _Configuration:
         """Load configuration file."""
         with workdir(config.CONFIG_NAME):
             with open(config.CONFIG_NAME, 'r') as config_file:
-                self._configuration = yaml.load(config_file)
+                self._configuration = yaml.safe_load(config_file)
 
     def create_default_config(self):
         """Place default configuration into the current directory."""
