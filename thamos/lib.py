@@ -74,11 +74,11 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     with spinner():
         while True:
             response = status_func(analysis_id)
-            if response.status['finished_at'] is not None:
+            if response.status.finished_at is not None:
                 break
             _LOGGER.debug(
                 "Waiting for %r to finish for %s seconds (state: %s)",
-                analysis_id, sleep_time, response.status['state']
+                analysis_id, sleep_time, response.status.state
             )
 
             sleep(sleep_time)
