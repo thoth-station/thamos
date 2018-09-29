@@ -43,3 +43,10 @@ find swagger-codegen-output/thamos.swagger_client/ -iname '*.py' -exec sed -i 's
 cp -r swagger-codegen-output/thamos.swagger_client/* thamos/swagger_client
 cp -r swagger-codegen-output/docs Documentation
 
+# Nullable values are not recognized by swagger-codegen.sh.
+sed -i '/.*if container is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
+sed -i '/.*if exit_code is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
+sed -i '/.*if finished_at is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
+sed -i '/.*if reason is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
+sed -i '/.*if started_at is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
+
