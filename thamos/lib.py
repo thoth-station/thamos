@@ -99,7 +99,7 @@ def _retrieve_analysis_result(retrieve_func: callable, analysis_id: str) -> typi
 
 @with_api_client
 def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendation_type: str = None,
-           runtime_environment: str = None, debug: bool = False) -> typing.Optional[tuple]:
+           runtime_environment: str = None, *, nowait: bool = False, debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or '')
     api_instance = AdviseApi(api_client)
@@ -110,6 +110,9 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
         debug=debug
     )
     _LOGGER.info("Sucessfully submitted advise analysis %r", response.analysis_id)
+    if nowait:
+        return response.analysis_id
+
     _wait_for_analysis(api_instance.get_advise_python_status, response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
     response = _retrieve_analysis_result(api_instance.get_advise_python, response.analysis_id)
@@ -127,13 +130,16 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
 
 
 @with_api_client
-def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str,
-                     debug: bool = False) -> typing.Optional[tuple]:
+def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str, *,
+                     nowait: bool = False, debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(stack, debug=debug)
     _LOGGER.info("Sucessfully submitted provenance check analysis %r", response.analysis_id)
+    if nowait:
+        return response.analysis_id
+
     _wait_for_analysis(api_instance.get_provenance_python_status, response.analysis_id)
     _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
     response = _retrieve_analysis_result(api_instance.get_provenance_python, response.analysis_id)

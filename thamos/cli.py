@@ -197,19 +197,27 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
               help="Use selected recommendation type, do not load it from Thoth's config file.")
 @click.option('--runtime-environment', '-e', type=str,
               help="Use selected runtime environment, do not load it from Thoth's config file.")
+@click.option('--no-wait', is_flag=True,
+              help="Do not wait for analysis to finish, just submit it.")
 @click.option('--json', '-j', 'json_output', is_flag=True,
               help="Print output in JSON format.")
 @click.pass_context
 @handle_cli_exception
 def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation_type: str = None,
-           runtime_environment: str = None, json_output: bool = False):
+           runtime_environment: str = None, no_wait: bool = False, json_output: bool = False):
     """Update the given application stack and provide reasoning.."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
 
-        results = thoth_advise(pipfile, pipfile_lock, recommendation_type, runtime_environment, debug)
+        results = thoth_advise(pipfile, pipfile_lock, recommendation_type, runtime_environment,
+                               debug=debug, nowait=no_wait)
         if not results:
             return sys.exit(2)
+
+        if no_wait:
+            # Echo the analysis id to user when not waiting.
+            click.echo(results)
+            sys.exit(0)
 
         pipfile, pipfile_lock, report, error = results
 
@@ -231,9 +239,12 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
               help="Do not write results to files, just print them.")
 @click.option('--json', '-j', 'json_output', is_flag=True,
               help="Print output in JSON format.")
+@click.option('--no-wait', is_flag=True,
+              help="Do not wait for analysis to finish, just submit it.")
 @click.pass_context
 @handle_cli_exception
-def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, json_output: bool = False):
+def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, no_wait: bool = False,
+                     json_output: bool = False):
     """Check provenance of installed packages."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
@@ -241,9 +252,14 @@ def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, json
             _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
             sys.exit(3)
 
-        results = thoth_provenance_check(pipfile, pipfile_lock, debug)
+        results = thoth_provenance_check(pipfile, pipfile_lock, debug=debug, nowait=no_wait)
         if not results:
             sys.exit(2)
+
+        if no_wait:
+            # Echo the analysis id to user when nowait.
+            click.echo(results)
+            sys.exit(0)
 
         report, error = results
         _print_report(report, json_output=json_output) if report else _LOGGER.info("Provenance check passed!")
