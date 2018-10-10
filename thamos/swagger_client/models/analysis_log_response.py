@@ -70,8 +70,6 @@ class AnalysisLogResponse(object):
         :param log: The log of this AnalysisLogResponse.  # noqa: E501
         :type: str
         """
-        if log is None:
-            raise ValueError("Invalid value for `log`, must not be `None`")  # noqa: E501
 
         self._log = log
 
