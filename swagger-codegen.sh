@@ -29,7 +29,7 @@ if [ ! -d 'swagger-codegen' ]; then
 fi
 
 
-rm -rf swagger-codegen-output/
+rm -rf swagger-codegen-output/ Documentation/
 java -jar swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
     -i "${THOTH_SWAGGER_YAML}" \
     -l python \
