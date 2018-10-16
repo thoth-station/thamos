@@ -91,12 +91,33 @@
             "index": "pypi",
             "version": "==2.7.3"
         },
+        "pytz": {
+            "hashes": [
+                "sha256:a061aa0a9e06881eb8b3b2b43f05b9439d6583c206d0a6c340ff72a7b6669053",
+                "sha256:ffb9ef1de172603304d9d2819af6f5ece76f2e85ec10692a524dd876e72bf277"
+            ],
+            "version": "==2018.5"
+        },
         "requests": {
             "hashes": [
                 "sha256:63b52e3c866428a224f97cab011de738c36aec0185aa91cfacd418b5d58911d1",
                 "sha256:ec22d826a36ed72a7358ff3fe56cbd4ba69dd7a6718ffd450ff0e9df7a47ce6a"
             ],
             "version": "==2.19.1"
+        },
+        "rfc5424-logging-handler": {
+            "hashes": [
+                "sha256:1ab343e1ee3639251d6b5dfd4db2e614f056b068c148a172314486804aac2c7d",
+                "sha256:f51dd80c2606fec874f871ed4b920c4087d4308064d2a138b8d55808d4987dce"
+            ],
+            "version": "==1.2.1"
+        },
+        "sentry-sdk": {
+            "hashes": [
+                "sha256:4a021782d74c35bd35ca90f25f9c1c14ae45137f496c5835d361cd02a637a45a",
+                "sha256:68091ad8200dac306052e389705357b6758744253951f05496284e21284f3194"
+            ],
+            "version": "==0.4.1"
         },
         "six": {
             "hashes": [
@@ -115,11 +136,18 @@
         },
         "thoth-analyzer": {
             "hashes": [
-                "sha256:097d537bc21904c41d16c22bd389f909c2c5f397570696558de4baefa79d09f8",
-                "sha256:66e3561ae1ba01ef7ad15a255b866c5eccce6f445a5bef21096dcbc756d65be6"
+                "sha256:607b050b84fb21cafae56c29703e179b9326d63f76f87e20b25c7e708f3dcf30",
+                "sha256:f9cda99a582fab64924a4b8bd5dae3b47349ae3486d37023147235a22e896e56"
             ],
             "index": "pypi",
-            "version": "==0.0.7"
+            "version": "==0.1.0"
+        },
+        "thoth-common": {
+            "hashes": [
+                "sha256:ccf901789e8b67fcc7f70e9b65e87db2f5c475008a3edc25e19cccebd430ea9f",
+                "sha256:e258f8d3c70fec87cd6d153857639f75f40a124abcc640e466189e8d07a2c447"
+            ],
+            "version": "==0.3.11"
         },
         "toml": {
             "hashes": [
@@ -128,6 +156,12 @@
             ],
             "index": "pypi",
             "version": "==0.10.0"
+        },
+        "tzlocal": {
+            "hashes": [
+                "sha256:4ebeb848845ac898da6519b9b31879cf13b6626f7184c496037b818e238f2c4e"
+            ],
+            "version": "==1.5.1"
         },
         "urllib3": {
             "hashes": [
