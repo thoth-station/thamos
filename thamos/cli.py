@@ -24,6 +24,7 @@ import sys
 from shutil import get_terminal_size
 import json
 
+import toml
 from texttable import Texttable
 import click
 from termcolor import colored
@@ -101,17 +102,18 @@ def _load_pipfiles() -> tuple:
 
 def _write_pipfiles(pipfile: str, pipfile_lock: str):
     """Write content of Pipfile and Pipfile.lock to the current directory."""
+    # TODO: Move this function to the thoth-python package once we will have it.
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
         with open('Pipfile', 'w') as pipfile_file:
-            pipfile_file.write(pipfile)
+            toml.dump(pipfile, pipfile_file, preserve=True)
     else:
         _LOGGER.debug("No changes to Pipfile to write")
 
     if pipfile_lock:
         _LOGGER.debug("Writing to Pipfile.lock in %r", os.getcwd())
         with open('Pipfile.lock', 'w') as pipfile_lock_file:
-            pipfile_lock_file.write(pipfile_lock)
+            json.dump(pipfile_lock, pipfile_lock, sort_keys=True, indent=4)
     else:
         _LOGGER.debug("No changes to Pipfile.lock to write")
 
