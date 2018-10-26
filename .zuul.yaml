@@ -1,13 +1,13 @@
 - project:
     check:
       jobs:
-        - linters
+        - "thoth-coala"
     gate:
       jobs:
-        - linters
+        - "thoth-coala"
     kebechet-auto-gate:
       jobs:
-        - linters
+        - "thoth-coala"
     release:
       jobs:
-        - upload-pypi-sesheta
+        - "upload-pypi-sesheta"
