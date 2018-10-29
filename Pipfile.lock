@@ -85,18 +85,18 @@
         },
         "python-dateutil": {
             "hashes": [
-                "sha256:2f13d3ea236aeb237e7258d5729c46eafe1506fd7f8507f34730734ed8b37454",
-                "sha256:f7cde3aecf8a797553d6ec49b65f0fbcffe7ffb971ccac452d181c28fd279936"
+                "sha256:063df5763652e21de43de7d9e00ccf239f953a832941e37be541614732cdfc93",
+                "sha256:88f9287c0174266bb0d8cedd395cfba9c58e87e5ad86b2ce58859bc11be3cf02"
             ],
             "index": "pypi",
-            "version": "==2.7.4"
+            "version": "==2.7.5"
         },
         "pytz": {
             "hashes": [
-                "sha256:642253af8eae734d1509fc6ac9c1aee5e5b69d76392660889979b9870610a46b",
-                "sha256:91e3ccf2c344ffaa6defba1ce7f38f97026943f675b7703f44789768e4cb0ece"
+                "sha256:31cb35c89bd7d333cd32c5f278fca91b523b0834369e757f4c5641ea252236ca",
+                "sha256:8e0f8568c118d3077b46be7d654cc8167fa916092e28320cde048e54bfc9f1e6"
             ],
-            "version": "==2018.6"
+            "version": "==2018.7"
         },
         "requests": {
             "hashes": [
@@ -144,10 +144,10 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:6e874ee5aff6d9b2b3844cb4140e3ba866e9db85fac4436894e5948f951122f5",
-                "sha256:a1dcb8ade11f014cb9b8e1b2b99efc323e1e16cc3863ccf80495199db6c19e70"
+                "sha256:5213daa7c804850da1199785eb521eff3f05f85bff6c34bac071f5d983995ebf",
+                "sha256:fa4082df05ce47bda6c7657b585db3561893bf21db062a201c1014befba57f67"
             ],
-            "version": "==0.3.12"
+            "version": "==0.3.14"
         },
         "toml": {
             "hashes": [
@@ -598,10 +598,10 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:642253af8eae734d1509fc6ac9c1aee5e5b69d76392660889979b9870610a46b",
-                "sha256:91e3ccf2c344ffaa6defba1ce7f38f97026943f675b7703f44789768e4cb0ece"
+                "sha256:31cb35c89bd7d333cd32c5f278fca91b523b0834369e757f4c5641ea252236ca",
+                "sha256:8e0f8568c118d3077b46be7d654cc8167fa916092e28320cde048e54bfc9f1e6"
             ],
-            "version": "==2018.6"
+            "version": "==2018.7"
         },
         "pyyaml": {
             "hashes": [
