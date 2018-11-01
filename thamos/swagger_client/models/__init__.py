@@ -28,11 +28,8 @@ from thamos.swagger_client.models.analysis_status_response import AnalysisStatus
 from thamos.swagger_client.models.analysis_status_response_status import AnalysisStatusResponseStatus
 from thamos.swagger_client.models.analysis_unfinished_result_response import AnalysisUnfinishedResultResponse
 from thamos.swagger_client.models.analysis_unfinished_result_response_status import AnalysisUnfinishedResultResponseStatus
-from thamos.swagger_client.models.environment import Environment
-from thamos.swagger_client.models.environment_inner import EnvironmentInner
+from thamos.swagger_client.models.image_metadata_response import ImageMetadataResponse
 from thamos.swagger_client.models.log import Log
 from thamos.swagger_client.models.log_metadata import LogMetadata
 from thamos.swagger_client.models.log_metadata_annotations import LogMetadataAnnotations
-from thamos.swagger_client.models.packages import Packages
-from thamos.swagger_client.models.pod_info import PodInfo
 from thamos.swagger_client.models.python_stack import PythonStack

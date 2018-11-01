@@ -149,7 +149,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_provenance_python**
-> AnalysisResponse post_provenance_python(application_stack, debug=debug)
+> AnalysisResponse post_provenance_python(application_stack, debug=debug, force=force)
 
 Check provenance of packages stated in an application stack.
 
@@ -165,10 +165,11 @@ from pprint import pprint
 api_instance = thamos.swagger_client.ProvenanceApi()
 application_stack = thamos.swagger_client.PythonStack() # PythonStack | Pipfile and Pipfile.lock as used by pipenv.
 debug = false # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional) (default to false)
+force = false # bool | Do not use cached results, always run provenance checks.  (optional) (default to false)
 
 try:
     # Check provenance of packages stated in an application stack.
-    api_response = api_instance.post_provenance_python(application_stack, debug=debug)
+    api_response = api_instance.post_provenance_python(application_stack, debug=debug, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->post_provenance_python: %s\n" % e)
@@ -180,6 +181,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **application_stack** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
  **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to false]
+ **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] [default to false]
 
 ### Return type
 

@@ -430,6 +430,7 @@ class AdviseApi(object):
         :param str recommendation_type: Recommendation type. (required)
         :param str runtime_environment: Runtime environment in which the given stack will be run. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
+        :param bool force: Do not use cached results, always run adviser. 
         :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -454,12 +455,13 @@ class AdviseApi(object):
         :param str recommendation_type: Recommendation type. (required)
         :param str runtime_environment: Runtime environment in which the given stack will be run. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
+        :param bool force: Do not use cached results, always run adviser. 
         :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['application_stack', 'recommendation_type', 'runtime_environment', 'debug']  # noqa: E501
+        all_params = ['application_stack', 'recommendation_type', 'runtime_environment', 'debug', 'force']  # noqa: E501
         all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -494,6 +496,8 @@ class AdviseApi(object):
             query_params.append(('runtime_environment', params['runtime_environment']))  # noqa: E501
         if 'debug' in params:
             query_params.append(('debug', params['debug']))  # noqa: E501
+        if 'force' in params:
+            query_params.append(('force', params['force']))  # noqa: E501
 
         header_params = {}
 

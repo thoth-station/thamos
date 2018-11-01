@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**get_analyze_status**](ImageAnalysisApi.md#get_analyze_status) | **GET** /analyze/{analysis_id}/status | Show analysis status.
 [**list_analyze**](ImageAnalysisApi.md#list_analyze) | **GET** /analyze | Retrieve a list of document ids for analyzer results.
 [**post_analyze**](ImageAnalysisApi.md#post_analyze) | **POST** /analyze | Analyze the given image asynchronously.
+[**post_image_metadata**](ImageAnalysisApi.md#post_image_metadata) | **POST** /image/metadata | Get metadata for the given image
 
 
 # **get_analyze**
@@ -196,7 +197,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_analyze**
-> AnalysisResponse post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+> AnalysisResponse post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls, force=force)
 
 Analyze the given image asynchronously.
 
@@ -215,10 +216,11 @@ registry_user = 'registry_user_example' # str | Registry user to be used for pul
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
 debug = false # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional) (default to false)
 verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
+force = false # bool | Do not use cached results, always run analysis.  (optional) (default to false)
 
 try:
     # Analyze the given image asynchronously.
-    api_response = api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls)
+    api_response = api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, debug=debug, verify_tls=verify_tls, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->post_analyze: %s\n" % e)
@@ -233,10 +235,63 @@ Name | Type | Description  | Notes
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
  **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
  **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
+ **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to false]
 
 ### Return type
 
 [**AnalysisResponse**](AnalysisResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_image_metadata**
+> ImageMetadataResponse post_image_metadata(image, registry_user=registry_user, registry_password=registry_password, verify_tls=verify_tls)
+
+Get metadata for the given image
+
+### Example
+```python
+from __future__ import print_function
+import time
+import thamos.swagger_client
+from thamos.swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = thamos.swagger_client.ImageAnalysisApi()
+image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
+registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
+registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
+verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
+
+try:
+    # Get metadata for the given image
+    api_response = api_instance.post_image_metadata(image, registry_user=registry_user, registry_password=registry_password, verify_tls=verify_tls)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ImageAnalysisApi->post_image_metadata: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
+ **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
+ **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
+ **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
+
+### Return type
+
+[**ImageMetadataResponse**](ImageMetadataResponse.md)
 
 ### Authorization
 
