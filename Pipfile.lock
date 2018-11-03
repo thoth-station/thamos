@@ -114,10 +114,10 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:9161ccee9cc714ca205d42e252eddbc9ed89152bf09cac099143835486f5e7a4",
-                "sha256:c18552010648e6303b557310dc6e4babda3c942c6e4145995699547c64d3982f"
+                "sha256:d4eb77414e21258943cdd7ea4aa216e2d994d38700d747d5d3da943edd414b58",
+                "sha256:e77795ca8bafbcf4a19d9c2fcd99f9cb68a9623e5f853a0758084a8b025e6c87"
             ],
-            "version": "==0.5.1"
+            "version": "==0.5.2"
         },
         "six": {
             "hashes": [
@@ -129,10 +129,10 @@
         },
         "texttable": {
             "hashes": [
-                "sha256:95e8cfe85f8395a7eacdfbc8f09d885b9ef3a6ac6ead0364ea721de1127aa36b"
+                "sha256:1ba399c103c825202659c4d638946c15ffc565ad7846ee0672964786f437fb57"
             ],
             "index": "pypi",
-            "version": "==1.4.0"
+            "version": "==1.5.0"
         },
         "thoth-analyzer": {
             "hashes": [
@@ -144,10 +144,10 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:5213daa7c804850da1199785eb521eff3f05f85bff6c34bac071f5d983995ebf",
-                "sha256:fa4082df05ce47bda6c7657b585db3561893bf21db062a201c1014befba57f67"
+                "sha256:96158f8d7871230b44bc9ce69300414a1c6ffcd7de9914ab2b4028a2c90ef5cd",
+                "sha256:981d0b8b9f9d1ac5157e691539911d1008847e4a4255cb625d9e8454ab142b92"
             ],
-            "version": "==0.3.14"
+            "version": "==0.3.16"
         },
         "toml": {
             "hashes": [
@@ -347,9 +347,9 @@
         },
         "future": {
             "hashes": [
-                "sha256:eb6d4df04f1fb538c99f69c9a28b255d1ee4e825d479b9c62fc38c0cf38065a4"
+                "sha256:67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8"
             ],
-            "version": "==0.17.0"
+            "version": "==0.17.1"
         },
         "gitdb2": {
             "hashes": [
@@ -578,10 +578,10 @@
         },
         "pyparsing": {
             "hashes": [
-                "sha256:bc6c7146b91af3f567cf6daeaec360bc07d45ffec4cf5353f4d7a208ce7ca30a",
-                "sha256:d29593d8ebe7b57d6967b62494f8c72b03ac0262b1eed63826c6f788b3606401"
+                "sha256:40856e74d4987de5d01761a22d1621ae1c7f8774585acae358aa5c5936c6c90b",
+                "sha256:f353aab21fd474459d97b709e527b5571314ee5f067441dc9f88e33eecd96592"
             ],
-            "version": "==2.2.2"
+            "version": "==2.3.0"
         },
         "pyprint": {
             "hashes": [
