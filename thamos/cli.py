@@ -211,8 +211,16 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
 
-        results = thoth_advise(pipfile, pipfile_lock, recommendation_type, runtime_environment,
-                               debug=debug, nowait=no_wait)
+        # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
+        results = thoth_advise(
+            pipfile,
+            pipfile_lock,
+            recommendation_type,
+            runtime_environment,
+            debug=debug,
+            nowait=no_wait
+        )
+
         if not results:
             return sys.exit(2)
 
@@ -223,7 +231,8 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
 
         pipfile, pipfile_lock, report, error = results
 
-        _print_report(report, json_output=json_output)
+        # Print report of the best one - thus index zero.
+        _print_report(report[0][0], json_output=json_output)
 
         if not no_write:
             _write_pipfiles(pipfile, pipfile_lock)

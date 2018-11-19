@@ -37,11 +37,11 @@ class EnvironmentsApi(object):
         """Retrieve runtime environment information.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_runtime_environment(runtime_environment_name, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_runtime_environment(runtime_environment_name, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str runtime_environment_name: Runtime environment name to be retrieved. (required)
         :param str analysis_id: Specify analysis id for which results should be retrieved. If omitted, the latest will be used. 
         :return: dict(str, ERRORUNKNOWN)
@@ -49,7 +49,7 @@ class EnvironmentsApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.get_runtime_environment_with_http_info(runtime_environment_name, **kwargs)  # noqa: E501
         else:
             (data) = self.get_runtime_environment_with_http_info(runtime_environment_name, **kwargs)  # noqa: E501
@@ -59,11 +59,11 @@ class EnvironmentsApi(object):
         """Retrieve runtime environment information.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_runtime_environment_with_http_info(runtime_environment_name, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_runtime_environment_with_http_info(runtime_environment_name, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str runtime_environment_name: Runtime environment name to be retrieved. (required)
         :param str analysis_id: Specify analysis id for which results should be retrieved. If omitted, the latest will be used. 
         :return: dict(str, ERRORUNKNOWN)
@@ -72,7 +72,7 @@ class EnvironmentsApi(object):
         """
 
         all_params = ['runtime_environment_name', 'analysis_id']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -128,7 +128,7 @@ class EnvironmentsApi(object):
             files=local_var_files,
             response_type='dict(str, ERRORUNKNOWN)',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -138,11 +138,11 @@ class EnvironmentsApi(object):
         """List analyses for the given runtime environment.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_runtime_environment_analyses(runtime_environment_name, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_runtime_environment_analyses(runtime_environment_name, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str runtime_environment_name: Runtime environment name for which analyses should be retrieved.  (required)
         :param int page: Page offset in pagination.
         :return: dict(str, ERRORUNKNOWN)
@@ -150,7 +150,7 @@ class EnvironmentsApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.list_runtime_environment_analyses_with_http_info(runtime_environment_name, **kwargs)  # noqa: E501
         else:
             (data) = self.list_runtime_environment_analyses_with_http_info(runtime_environment_name, **kwargs)  # noqa: E501
@@ -160,11 +160,11 @@ class EnvironmentsApi(object):
         """List analyses for the given runtime environment.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_runtime_environment_analyses_with_http_info(runtime_environment_name, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_runtime_environment_analyses_with_http_info(runtime_environment_name, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str runtime_environment_name: Runtime environment name for which analyses should be retrieved.  (required)
         :param int page: Page offset in pagination.
         :return: dict(str, ERRORUNKNOWN)
@@ -173,7 +173,7 @@ class EnvironmentsApi(object):
         """
 
         all_params = ['runtime_environment_name', 'page']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -229,7 +229,7 @@ class EnvironmentsApi(object):
             files=local_var_files,
             response_type='dict(str, ERRORUNKNOWN)',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -239,18 +239,18 @@ class EnvironmentsApi(object):
         """Retrieve a list of runtime environments analyzed.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_runtime_environments(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_runtime_environments(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param int page: Page offset in pagination.
         :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.list_runtime_environments_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.list_runtime_environments_with_http_info(**kwargs)  # noqa: E501
@@ -260,11 +260,11 @@ class EnvironmentsApi(object):
         """Retrieve a list of runtime environments analyzed.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_runtime_environments_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_runtime_environments_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param int page: Page offset in pagination.
         :return: dict(str, ERRORUNKNOWN)
                  If the method is called asynchronously,
@@ -272,7 +272,7 @@ class EnvironmentsApi(object):
         """
 
         all_params = ['page']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -322,7 +322,7 @@ class EnvironmentsApi(object):
             files=local_var_files,
             response_type='dict(str, ERRORUNKNOWN)',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),

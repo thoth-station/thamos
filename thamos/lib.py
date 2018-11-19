@@ -99,7 +99,8 @@ def _retrieve_analysis_result(retrieve_func: callable, analysis_id: str) -> typi
 
 @with_api_client
 def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendation_type: str = None,
-           runtime_environment: str = None, *, nowait: bool = False, debug: bool = False) -> typing.Optional[tuple]:
+           runtime_environment: str = None, *, nowait: bool = False, 
+           limit: int = 1, count: int = None, debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or '')
     api_instance = AdviseApi(api_client)
@@ -107,6 +108,8 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
         stack,
         recommendation_type=recommendation_type or thoth_config.content.get('recommendation_type', 'stable'),
         runtime_environment=runtime_environment or thoth_config.content.get('runtime_environment'),
+        count=count,
+        limit=limit,
         debug=debug
     )
     _LOGGER.info("Sucessfully submitted advise analysis %r", response.analysis_id)
