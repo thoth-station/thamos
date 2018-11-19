@@ -46,6 +46,10 @@ def with_api_client(func: typing.Callable):
         thoth_config.load_config()
         config = Configuration()
         config.host = thoth_config.explicit_host or thoth_config.content.get('host') or config.host
+        if config.host.endswith('/'):
+            # Make sure we do not use trailing /.
+            config.host = config.host[:-len('/')]
+
         _LOGGER.debug("Using Thoth host %r", config.host)
         start = time()
         result = func(ApiClient(configuration=config), *args, **kwargs)
