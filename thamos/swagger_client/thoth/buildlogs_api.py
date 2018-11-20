@@ -37,18 +37,18 @@ class BuildlogsApi(object):
         """Retrieve the given build log.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_buildlog(document_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_buildlog(document_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str document_id: Build log to be retrieved. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.get_buildlog_with_http_info(document_id, **kwargs)  # noqa: E501
         else:
             (data) = self.get_buildlog_with_http_info(document_id, **kwargs)  # noqa: E501
@@ -58,11 +58,11 @@ class BuildlogsApi(object):
         """Retrieve the given build log.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_buildlog_with_http_info(document_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_buildlog_with_http_info(document_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str document_id: Build log to be retrieved. (required)
         :return: None
                  If the method is called asynchronously,
@@ -70,7 +70,7 @@ class BuildlogsApi(object):
         """
 
         all_params = ['document_id']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -124,7 +124,7 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -134,18 +134,18 @@ class BuildlogsApi(object):
         """Retrieve a list of document ids for stored build logs.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_buildlogs(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_buildlogs(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param int page: Page offset in pagination.
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.list_buildlogs_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.list_buildlogs_with_http_info(**kwargs)  # noqa: E501
@@ -155,11 +155,11 @@ class BuildlogsApi(object):
         """Retrieve a list of document ids for stored build logs.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_buildlogs_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_buildlogs_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param int page: Page offset in pagination.
         :return: None
                  If the method is called asynchronously,
@@ -167,7 +167,7 @@ class BuildlogsApi(object):
         """
 
         all_params = ['page']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -217,7 +217,7 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -227,18 +227,18 @@ class BuildlogsApi(object):
         """Parse Docker build log or installation log and show installed packages.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.parse_log(log_info, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.parse_log(log_info, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param Log log_info: A full log. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.parse_log_with_http_info(log_info, **kwargs)  # noqa: E501
         else:
             (data) = self.parse_log_with_http_info(log_info, **kwargs)  # noqa: E501
@@ -248,11 +248,11 @@ class BuildlogsApi(object):
         """Parse Docker build log or installation log and show installed packages.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.parse_log_with_http_info(log_info, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.parse_log_with_http_info(log_info, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param Log log_info: A full log. (required)
         :return: None
                  If the method is called asynchronously,
@@ -260,7 +260,7 @@ class BuildlogsApi(object):
         """
 
         all_params = ['log_info']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -314,7 +314,7 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -324,18 +324,18 @@ class BuildlogsApi(object):
         """Store the given build log.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.post_buildlog(log_info, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.post_buildlog(log_info, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param Log log_info: Build log to be stored. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.post_buildlog_with_http_info(log_info, **kwargs)  # noqa: E501
         else:
             (data) = self.post_buildlog_with_http_info(log_info, **kwargs)  # noqa: E501
@@ -345,11 +345,11 @@ class BuildlogsApi(object):
         """Store the given build log.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.post_buildlog_with_http_info(log_info, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.post_buildlog_with_http_info(log_info, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param Log log_info: Build log to be stored. (required)
         :return: None
                  If the method is called asynchronously,
@@ -357,7 +357,7 @@ class BuildlogsApi(object):
         """
 
         all_params = ['log_info']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -411,7 +411,7 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),

@@ -15,6 +15,7 @@ thoth-analyzer = "*"
 yaspin = "*"
 texttable = "*"
 toml = "*"
+pyyaml = "*"
 
 [dev-packages]
 coala-bears = "*"

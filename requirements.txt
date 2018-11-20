@@ -6,3 +6,10 @@ setuptools >= 21.0.0
 urllib3 >= 1.15.1
 daiquiri
 click
+distro
+thoth-analyzer
+yaspin
+texttable
+pyyaml
+
+

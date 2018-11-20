@@ -37,18 +37,18 @@ class AdviseApi(object):
         """Get computeted adviser result based on its id.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_advise_python(analysis_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_advise_python(analysis_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str analysis_id: Advise id returned on advise request. (required)
         :return: AnalysisResultResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.get_advise_python_with_http_info(analysis_id, **kwargs)  # noqa: E501
         else:
             (data) = self.get_advise_python_with_http_info(analysis_id, **kwargs)  # noqa: E501
@@ -58,11 +58,11 @@ class AdviseApi(object):
         """Get computeted adviser result based on its id.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_advise_python_with_http_info(analysis_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_advise_python_with_http_info(analysis_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str analysis_id: Advise id returned on advise request. (required)
         :return: AnalysisResultResponse
                  If the method is called asynchronously,
@@ -70,7 +70,7 @@ class AdviseApi(object):
         """
 
         all_params = ['analysis_id']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -124,7 +124,7 @@ class AdviseApi(object):
             files=local_var_files,
             response_type='AnalysisResultResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -134,18 +134,18 @@ class AdviseApi(object):
         """Retrieve a adviser run log.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_advise_python_log(analysis_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_advise_python_log(analysis_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str analysis_id: An id of analysis for which log should be retrieved. (required)
         :return: AnalysisLogResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.get_advise_python_log_with_http_info(analysis_id, **kwargs)  # noqa: E501
         else:
             (data) = self.get_advise_python_log_with_http_info(analysis_id, **kwargs)  # noqa: E501
@@ -155,11 +155,11 @@ class AdviseApi(object):
         """Retrieve a adviser run log.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_advise_python_log_with_http_info(analysis_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_advise_python_log_with_http_info(analysis_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str analysis_id: An id of analysis for which log should be retrieved. (required)
         :return: AnalysisLogResponse
                  If the method is called asynchronously,
@@ -167,7 +167,7 @@ class AdviseApi(object):
         """
 
         all_params = ['analysis_id']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -221,7 +221,7 @@ class AdviseApi(object):
             files=local_var_files,
             response_type='AnalysisLogResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -231,18 +231,18 @@ class AdviseApi(object):
         """Show status of an adviser computing recomemendations.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_advise_python_status(analysis_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_advise_python_status(analysis_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str analysis_id: An id of requested adviser run. (required)
         :return: AnalysisStatusResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.get_advise_python_status_with_http_info(analysis_id, **kwargs)  # noqa: E501
         else:
             (data) = self.get_advise_python_status_with_http_info(analysis_id, **kwargs)  # noqa: E501
@@ -252,11 +252,11 @@ class AdviseApi(object):
         """Show status of an adviser computing recomemendations.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.get_advise_python_status_with_http_info(analysis_id, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_advise_python_status_with_http_info(analysis_id, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str analysis_id: An id of requested adviser run. (required)
         :return: AnalysisStatusResponse
                  If the method is called asynchronously,
@@ -264,7 +264,7 @@ class AdviseApi(object):
         """
 
         all_params = ['analysis_id']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -318,7 +318,7 @@ class AdviseApi(object):
             files=local_var_files,
             response_type='AnalysisStatusResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -328,18 +328,18 @@ class AdviseApi(object):
         """Get adviser results available.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_advise_python(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_advise_python(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param int page: Page offset in pagination.
         :return: AnalysisListingResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.list_advise_python_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.list_advise_python_with_http_info(**kwargs)  # noqa: E501
@@ -349,11 +349,11 @@ class AdviseApi(object):
         """Get adviser results available.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.list_advise_python_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_advise_python_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param int page: Page offset in pagination.
         :return: AnalysisListingResponse
                  If the method is called asynchronously,
@@ -361,7 +361,7 @@ class AdviseApi(object):
         """
 
         all_params = ['page']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -411,7 +411,7 @@ class AdviseApi(object):
             files=local_var_files,
             response_type='AnalysisListingResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -421,21 +421,24 @@ class AdviseApi(object):
         """Get advise for Python ecosystem.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.post_advise_python(application_stack, recommendation_type, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.post_advise_python(application_stack, recommendation_type, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param PythonStack application_stack: Specification of Python application stack. (required)
         :param str recommendation_type: Recommendation type. (required)
         :param str runtime_environment: Runtime environment in which the given stack will be run. 
+        :param int count: Number of software stacks that should be returned.
+        :param int limit: Limit number of software stacks scored.
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
+        :param bool force: Do not use cached results, always run adviser. 
         :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.post_advise_python_with_http_info(application_stack, recommendation_type, **kwargs)  # noqa: E501
         else:
             (data) = self.post_advise_python_with_http_info(application_stack, recommendation_type, **kwargs)  # noqa: E501
@@ -445,22 +448,25 @@ class AdviseApi(object):
         """Get advise for Python ecosystem.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.post_advise_python_with_http_info(application_stack, recommendation_type, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.post_advise_python_with_http_info(application_stack, recommendation_type, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param PythonStack application_stack: Specification of Python application stack. (required)
         :param str recommendation_type: Recommendation type. (required)
         :param str runtime_environment: Runtime environment in which the given stack will be run. 
+        :param int count: Number of software stacks that should be returned.
+        :param int limit: Limit number of software stacks scored.
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
+        :param bool force: Do not use cached results, always run adviser. 
         :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['application_stack', 'recommendation_type', 'runtime_environment', 'debug']  # noqa: E501
-        all_params.append('async')
+        all_params = ['application_stack', 'recommendation_type', 'runtime_environment', 'count', 'limit', 'debug', 'force']  # noqa: E501
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -492,8 +498,14 @@ class AdviseApi(object):
             query_params.append(('recommendation_type', params['recommendation_type']))  # noqa: E501
         if 'runtime_environment' in params:
             query_params.append(('runtime_environment', params['runtime_environment']))  # noqa: E501
+        if 'count' in params:
+            query_params.append(('count', params['count']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
         if 'debug' in params:
             query_params.append(('debug', params['debug']))  # noqa: E501
+        if 'force' in params:
+            query_params.append(('force', params['force']))  # noqa: E501
 
         header_params = {}
 
@@ -524,7 +536,7 @@ class AdviseApi(object):
             files=local_var_files,
             response_type='AnalysisResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
