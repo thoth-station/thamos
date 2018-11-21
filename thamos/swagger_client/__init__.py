@@ -26,6 +26,9 @@ from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
 from thamos.swagger_client.api_client import ApiClient
 from thamos.swagger_client.configuration import Configuration
 # import models into sdk package
+from thamos.swagger_client.models.advise_input import AdviseInput
+from thamos.swagger_client.models.advise_input_application_stack import AdviseInputApplicationStack
+from thamos.swagger_client.models.advise_input_runtime_environment import AdviseInputRuntimeEnvironment
 from thamos.swagger_client.models.analysis_listing_response import AnalysisListingResponse
 from thamos.swagger_client.models.analysis_log_response import AnalysisLogResponse
 from thamos.swagger_client.models.analysis_response import AnalysisResponse
