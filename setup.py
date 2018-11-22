@@ -1,5 +1,6 @@
 import os
 from setuptools import setup, find_packages
+from pathlib import Path
 
 
 def get_install_requires():
@@ -32,7 +33,7 @@ setup(
     },
     include_package_data=True,
     description='A CLI tool and library for interacting with Thoth',
-    long_description='A CLI tool and library for interacting with Thoth',
+    long_description=Path('README.rst').read_text(),
     author='Fridolin Pokorny',
     author_email='fridolin@redhat.com',
     license='GPLv3+',
