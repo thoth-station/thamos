@@ -15,6 +15,9 @@
 from __future__ import absolute_import
 
 # import models into model package
+from thamos.swagger_client.models.advise_input import AdviseInput
+from thamos.swagger_client.models.advise_input_application_stack import AdviseInputApplicationStack
+from thamos.swagger_client.models.advise_input_runtime_environment import AdviseInputRuntimeEnvironment
 from thamos.swagger_client.models.analysis_listing_response import AnalysisListingResponse
 from thamos.swagger_client.models.analysis_log_response import AnalysisLogResponse
 from thamos.swagger_client.models.analysis_response import AnalysisResponse

@@ -417,18 +417,17 @@ class AdviseApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def post_advise_python(self, application_stack, recommendation_type, **kwargs):  # noqa: E501
+    def post_advise_python(self, input, recommendation_type, **kwargs):  # noqa: E501
         """Get advise for Python ecosystem.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.post_advise_python(application_stack, recommendation_type, async_req=True)
+        >>> thread = api.post_advise_python(input, recommendation_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param PythonStack application_stack: Specification of Python application stack. (required)
+        :param AdviseInput input: Specification of Python application stack. (required)
         :param str recommendation_type: Recommendation type. (required)
-        :param str runtime_environment: Runtime environment in which the given stack will be run. 
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
@@ -439,23 +438,22 @@ class AdviseApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.post_advise_python_with_http_info(application_stack, recommendation_type, **kwargs)  # noqa: E501
+            return self.post_advise_python_with_http_info(input, recommendation_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.post_advise_python_with_http_info(application_stack, recommendation_type, **kwargs)  # noqa: E501
+            (data) = self.post_advise_python_with_http_info(input, recommendation_type, **kwargs)  # noqa: E501
             return data
 
-    def post_advise_python_with_http_info(self, application_stack, recommendation_type, **kwargs):  # noqa: E501
+    def post_advise_python_with_http_info(self, input, recommendation_type, **kwargs):  # noqa: E501
         """Get advise for Python ecosystem.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.post_advise_python_with_http_info(application_stack, recommendation_type, async_req=True)
+        >>> thread = api.post_advise_python_with_http_info(input, recommendation_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param PythonStack application_stack: Specification of Python application stack. (required)
+        :param AdviseInput input: Specification of Python application stack. (required)
         :param str recommendation_type: Recommendation type. (required)
-        :param str runtime_environment: Runtime environment in which the given stack will be run. 
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
@@ -465,7 +463,7 @@ class AdviseApi(object):
                  returns the request thread.
         """
 
-        all_params = ['application_stack', 'recommendation_type', 'runtime_environment', 'count', 'limit', 'debug', 'force']  # noqa: E501
+        all_params = ['input', 'recommendation_type', 'count', 'limit', 'debug', 'force']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -480,10 +478,10 @@ class AdviseApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'application_stack' is set
-        if ('application_stack' not in params or
-                params['application_stack'] is None):
-            raise ValueError("Missing the required parameter `application_stack` when calling `post_advise_python`")  # noqa: E501
+        # verify the required parameter 'input' is set
+        if ('input' not in params or
+                params['input'] is None):
+            raise ValueError("Missing the required parameter `input` when calling `post_advise_python`")  # noqa: E501
         # verify the required parameter 'recommendation_type' is set
         if ('recommendation_type' not in params or
                 params['recommendation_type'] is None):
@@ -496,8 +494,6 @@ class AdviseApi(object):
         query_params = []
         if 'recommendation_type' in params:
             query_params.append(('recommendation_type', params['recommendation_type']))  # noqa: E501
-        if 'runtime_environment' in params:
-            query_params.append(('runtime_environment', params['runtime_environment']))  # noqa: E501
         if 'count' in params:
             query_params.append(('count', params['count']))  # noqa: E501
         if 'limit' in params:
@@ -513,8 +509,8 @@ class AdviseApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'application_stack' in params:
-            body_params = params['application_stack']
+        if 'input' in params:
+            body_params = params['input']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501

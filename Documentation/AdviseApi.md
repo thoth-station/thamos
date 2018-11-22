@@ -196,7 +196,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisResponse post_advise_python(application_stack, recommendation_type, runtime_environment=runtime_environment, count=count, limit=limit, debug=debug, force=force)
+> AnalysisResponse post_advise_python(input, recommendation_type, count=count, limit=limit, debug=debug, force=force)
 
 Get advise for Python ecosystem.
 
@@ -210,9 +210,8 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.AdviseApi()
-application_stack = thamos.swagger_client.PythonStack() # PythonStack | Specification of Python application stack.
+input = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack.
 recommendation_type = 'stable' # str | Recommendation type. (default to stable)
-runtime_environment = 'runtime_environment_example' # str | Runtime environment in which the given stack will be run.  (optional)
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
 debug = false # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional) (default to false)
@@ -220,7 +219,7 @@ force = false # bool | Do not use cached results, always run adviser.  (optional
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(application_stack, recommendation_type, runtime_environment=runtime_environment, count=count, limit=limit, debug=debug, force=force)
+    api_response = api_instance.post_advise_python(input, recommendation_type, count=count, limit=limit, debug=debug, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -230,9 +229,8 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **application_stack** | [**PythonStack**](PythonStack.md)| Specification of Python application stack. | 
+ **input** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack. | 
  **recommendation_type** | **str**| Recommendation type. | [default to stable]
- **runtime_environment** | **str**| Runtime environment in which the given stack will be run.  | [optional] 
  **count** | **int**| Number of software stacks that should be returned. | [optional] 
  **limit** | **int**| Limit number of software stacks scored. | [optional] 
  **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
