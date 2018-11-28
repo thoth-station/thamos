@@ -217,7 +217,8 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
             pipfile_lock,
             recommendation_type,
             debug=debug,
-            nowait=no_wait
+            nowait=no_wait,
+            force=force
         )
 
         if not results:
