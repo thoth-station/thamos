@@ -201,10 +201,12 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
               help="Do not wait for analysis to finish, just submit it.")
 @click.option('--json', '-j', 'json_output', is_flag=True,
               help="Print output in JSON format.")
+@click.option('--force', is_flag=True,
+              help="Force analysis run bypassing server-side cache.")
 @click.pass_context
 @handle_cli_exception
 def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation_type: str = None,
-           no_wait: bool = False, json_output: bool = False):
+           no_wait: bool = False, json_output: bool = False, force: bool = False):
     """Update the given application stack and provide reasoning.."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
@@ -215,7 +217,8 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
             pipfile_lock,
             recommendation_type,
             debug=debug,
-            nowait=no_wait
+            nowait=no_wait,
+            force=force
         )
 
         if not results:
@@ -249,10 +252,12 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
               help="Print output in JSON format.")
 @click.option('--no-wait', is_flag=True,
               help="Do not wait for analysis to finish, just submit it.")
+@click.option('--force', is_flag=True,
+              help="Force analysis run bypassing server-side cache.")
 @click.pass_context
 @handle_cli_exception
 def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, no_wait: bool = False,
-                     json_output: bool = False):
+                     json_output: bool = False, force: bool = False):
     """Check provenance of installed packages."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
@@ -260,7 +265,7 @@ def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, no_w
             _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
             sys.exit(3)
 
-        results = thoth_provenance_check(pipfile, pipfile_lock, debug=debug, nowait=no_wait)
+        results = thoth_provenance_check(pipfile, pipfile_lock, debug=debug, nowait=no_wait, force=force)
         if not results:
             sys.exit(2)
 
