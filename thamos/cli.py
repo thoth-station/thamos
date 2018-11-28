@@ -232,7 +232,7 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
         pipfile, pipfile_lock, report, error = results
 
         # Print report of the best one - thus index zero.
-        _print_report(report[0][1], json_output=json_output)
+        _print_report(report[0][0], json_output=json_output)
 
         if not no_write:
             _write_pipfiles(pipfile, pipfile_lock)
