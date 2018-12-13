@@ -108,6 +108,9 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
            runtime_environment: str = None, *, nowait: bool = False, force: bool = False,
            limit: int = None, count: int = 1, debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
+    if not pipfile:
+        raise ValueError("No Pipfile content provided for advises")
+
     recommendation_type = recommendation_type or thoth_config.content.get('recommendation_type') or 'stable'
     runtime_environment = runtime_environment or thoth_config.content.get('runtime_environment')
 
@@ -149,8 +152,6 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
     _LOGGER.debug("Adviser check metadata: %r", response.metadata)
 
     return (
-        response.result['output']['requirements'],
-        response.result['output']['requirements_locked'],
         response.result['report'],
         response.result['error']
     )
@@ -161,6 +162,9 @@ def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str, *,
                      nowait: bool = False, force: bool = False,
                      debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
+    if not pipfile:
+        raise ValueError("No Pipfile content provided for provenance checks")
+
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(stack, debug=debug, force=force)
