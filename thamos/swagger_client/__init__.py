@@ -20,6 +20,7 @@ from thamos.swagger_client.thoth.advise_api import AdviseApi
 from thamos.swagger_client.thoth.buildlogs_api import BuildlogsApi
 from thamos.swagger_client.thoth.environments_api import EnvironmentsApi
 from thamos.swagger_client.thoth.image_analysis_api import ImageAnalysisApi
+from thamos.swagger_client.thoth.info_api import InfoApi
 from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
 
 # import ApiClient
@@ -46,4 +47,6 @@ from thamos.swagger_client.models.image_metadata_response import ImageMetadataRe
 from thamos.swagger_client.models.log import Log
 from thamos.swagger_client.models.log_metadata import LogMetadata
 from thamos.swagger_client.models.log_metadata_annotations import LogMetadataAnnotations
+from thamos.swagger_client.models.python_package_indexes import PythonPackageIndexes
+from thamos.swagger_client.models.python_package_indexes_inner import PythonPackageIndexesInner
 from thamos.swagger_client.models.python_stack import PythonStack

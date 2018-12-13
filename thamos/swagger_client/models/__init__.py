@@ -35,4 +35,6 @@ from thamos.swagger_client.models.image_metadata_response import ImageMetadataRe
 from thamos.swagger_client.models.log import Log
 from thamos.swagger_client.models.log_metadata import LogMetadata
 from thamos.swagger_client.models.log_metadata_annotations import LogMetadataAnnotations
+from thamos.swagger_client.models.python_package_indexes import PythonPackageIndexes
+from thamos.swagger_client.models.python_package_indexes_inner import PythonPackageIndexesInner
 from thamos.swagger_client.models.python_stack import PythonStack
