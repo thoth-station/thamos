@@ -113,7 +113,7 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str):
     if pipfile_lock:
         _LOGGER.debug("Writing to Pipfile.lock in %r", os.getcwd())
         with open('Pipfile.lock', 'w') as pipfile_lock_file:
-            json.dump(pipfile_lock, pipfile_lock, sort_keys=True, indent=4)
+            json.dump(pipfile_lock, pipfile_lock_file, sort_keys=True, indent=4)
     else:
         _LOGGER.debug("No changes to Pipfile.lock to write")
 
