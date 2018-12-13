@@ -229,10 +229,13 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
             click.echo(results)
             sys.exit(0)
 
-        pipfile, pipfile_lock, report, error = results
+        report, error = results
 
         # Print report of the best one - thus index zero.
         _print_report(report[0][0], json_output=json_output)
+
+        pipfile = report[0][1]['requirements']
+        pipfile_lock = report[0][1]['requirements_locked']
 
         if not no_write:
             _write_pipfiles(pipfile, pipfile_lock)
