@@ -106,14 +106,14 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str):
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
         with open('Pipfile', 'w') as pipfile_file:
-            toml.dump(pipfile, pipfile_file, preserve=True)
+            toml.dump(pipfile, pipfile_file)
     else:
         _LOGGER.debug("No changes to Pipfile to write")
 
     if pipfile_lock:
         _LOGGER.debug("Writing to Pipfile.lock in %r", os.getcwd())
         with open('Pipfile.lock', 'w') as pipfile_lock_file:
-            json.dump(pipfile_lock, pipfile_lock, sort_keys=True, indent=4)
+            json.dump(pipfile_lock, pipfile_lock_file, sort_keys=True, indent=4)
     else:
         _LOGGER.debug("No changes to Pipfile.lock to write")
 
@@ -229,10 +229,13 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
             click.echo(results)
             sys.exit(0)
 
-        pipfile, pipfile_lock, report, error = results
+        report, error = results
 
         # Print report of the best one - thus index zero.
         _print_report(report[0][0], json_output=json_output)
+
+        pipfile = report[0][1]['requirements']
+        pipfile_lock = report[0][1]['requirements_locked']
 
         if not no_write:
             _write_pipfiles(pipfile, pipfile_lock)
