@@ -106,7 +106,7 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str):
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
         with open('Pipfile', 'w') as pipfile_file:
-            toml.dump(pipfile, pipfile_file, preserve=True)
+            toml.dump(pipfile, pipfile_file)
     else:
         _LOGGER.debug("No changes to Pipfile to write")
 
