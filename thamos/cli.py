@@ -279,7 +279,14 @@ def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, no_w
 
         report, error = results
         _print_report(report, json_output=json_output) if report else _LOGGER.info("Provenance check passed!")
-        sys.exit(4 if error else 0)
+
+        if error:
+            sys.exit(5)
+
+        if any(item.get('type') == 'ERROR' for item in report):
+            sys.exit(4)
+
+        return 0
 
 
 @cli.command('config')
