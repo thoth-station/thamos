@@ -8,6 +8,9 @@ host: thoth-user-api.redhat.com
 tls_verify: true
 # One of testing, stable, latest.
 recommendation_type: stable
+runtime_environment:
+  cpu_family: 6
+  cpu_model: 94
 managers:
   - name: pipfile-requirements
   - name: update
