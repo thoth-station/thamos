@@ -11,5 +11,4 @@ thoth-analyzer
 yaspin
 texttable
 pyyaml
-
-
+requests

@@ -28,3 +28,7 @@ class NoProjectDirError(ThamosException):
 
 class InternalError(ThamosException):
     """An exception raised on internal programming errors."""
+
+
+class NoApiSupported(ThamosException):
+    """Raised if client and Thoth server does not support same API versions."""
