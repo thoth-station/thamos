@@ -72,7 +72,7 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
     def wrapper(ctx, *args, **kwargs):
         try:
-            return func(ctx, *args, **kwargs)
+            return func(*args, **kwargs)
         except Exception as exc:
             if ctx.parent.params['verbose']:
                 raise
@@ -203,9 +203,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
               help="Print output in JSON format.")
 @click.option('--force', is_flag=True,
               help="Force analysis run bypassing server-side cache.")
-@click.pass_context
-@handle_cli_exception
-def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation_type: str = None,
+def advise(debug: bool = False, no_write: bool = False, recommendation_type: str = None,
            no_wait: bool = False, json_output: bool = False, force: bool = False):
     """Update the given application stack and provide reasoning.."""
     with workdir():
@@ -249,8 +247,6 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
 @cli.command('provenance-check')
 @click.option('--debug', is_flag=True,
               help="Run analysis in debug mode on Thoth.")
-@click.option('--no-write', '-W', is_flag=True,
-              help="Do not write results to files, just print them.")
 @click.option('--json', '-j', 'json_output', is_flag=True,
               help="Print output in JSON format.")
 @click.option('--no-wait', is_flag=True,
@@ -259,7 +255,7 @@ def advise(ctx=None, debug: bool = False, no_write: bool = False, recommendation
               help="Force analysis run bypassing server-side cache.")
 @click.pass_context
 @handle_cli_exception
-def provenance_check(ctx=None, debug: bool = False, no_write: bool = False, no_wait: bool = False,
+def provenance_check(debug: bool = False, no_wait: bool = False,
                      json_output: bool = False, force: bool = False):
     """Check provenance of installed packages."""
     with workdir():
