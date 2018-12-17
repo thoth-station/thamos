@@ -19,6 +19,7 @@
 
 from contextlib import contextmanager
 import os
+import sys
 
 from .exceptions import NoProjectDirError
 
@@ -43,7 +44,8 @@ def workdir(file_lookup: str = None):
         project_dir = os.path.dirname(project_dir)
     else:
         raise NoProjectDirError(
-            f"No {file_lookup} found in the current directory {project_dir!r} or in any of its parent directories"
+            f"No {file_lookup} found in the current directory {project_dir!r} or in any of its parent "
+            f"directories, you can generate it using '{sys.argv[0]} config'"
         )
 
 
