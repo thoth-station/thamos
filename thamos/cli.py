@@ -102,7 +102,6 @@ def _load_pipfiles() -> tuple:
 
 def _write_pipfiles(pipfile: str, pipfile_lock: str):
     """Write content of Pipfile and Pipfile.lock to the current directory."""
-    # TODO: Move this function to the thoth-python package once we will have it.
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
         with open('Pipfile', 'w') as pipfile_file:
