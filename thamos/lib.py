@@ -21,13 +21,16 @@ import os
 import logging
 import typing
 from time import sleep
-from time import time
+from time import monotonic
 from contextlib import contextmanager
 from functools import partial
+from functools import wraps
 import json
+import urllib3
 
 from yaspin import yaspin
 from yaspin.spinners import Spinners
+import requests
 
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
@@ -38,24 +41,56 @@ from .swagger_client import AdviseInputRuntimeEnvironment
 from .swagger_client import AdviseInput
 from .swagger_client import AdviseApi
 from .config import config as thoth_config
+from .exceptions import NoApiSupported
+from .exceptions import InternalError
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 _LOGGER = logging.getLogger(__name__)
 
 
+def _api_discovery(host: str, tls_verify: bool = True) -> str:
+    """Discover API versions available, return the most recent one supported by client and server."""
+    api_url = 'https://' + host + '/api/v1'
+
+    if not tls_verify:
+        _LOGGER.warning(
+            "TLS verification turned off, its highly recommended to use a secured connection, "
+            "see configuration file for configuration options"
+        )
+
+    response = requests.get(api_url, verify=tls_verify, headers={'Accept': 'application/json'})
+
+    try:
+        response.raise_for_status()
+    except Exception as exc:
+        raise NoApiSupported("Server does not support API v1 required by Thamos client") from exc
+
+    if response.status_code != 200:
+        raise InternalError("Cannot correctly determine API version to be used")
+
+    return api_url
+
+
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
+    @wraps(func)
     def wrapper(*args, **kwargs):
         thoth_config.load_config()
         config = Configuration()
-        config.host = thoth_config.explicit_host or thoth_config.content.get('host') or config.host
-        if config.host.endswith('/'):
-            # Make sure we do not use trailing /.
-            config.host = config.host[:-len('/')]
+        host = thoth_config.explicit_host or thoth_config.content.get('host') or config.host
+        tls_verify = thoth_config.content.get('tls_verify', True)
+        _LOGGER.debug("Using Thoth host %r (TLS verify: %s)", config.host, tls_verify)
 
-        _LOGGER.debug("Using Thoth host %r", config.host)
-        start = time()
+        api_url = _api_discovery(host, tls_verify)
+        _LOGGER.debug("Using API: %s", api_url)
+        config.host = api_url
+        config.verify_ssl = tls_verify
+
+        start = monotonic()
         result = func(ApiClient(configuration=config), *args, **kwargs)
-        _LOGGER.debug("Elapsed seconds processing request: %f", time() - start)
+        _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
         return result
 
     return wrapper

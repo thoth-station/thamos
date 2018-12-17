@@ -4,7 +4,8 @@
 #
 
 # TODO: Adjust Thoth's host.
-host: https://url.corp.redhat.com/thoth-api-upshift-test
+host: thoth-user-api.redhat.com
+tls_verify: true
 # One of testing, stable, latest.
 recommendation_type: stable
 managers:

@@ -16,6 +16,7 @@ yaspin = "*"
 texttable = "*"
 toml = "*"
 pyyaml = "*"
+requests = "*"
 
 [dev-packages]
 coala-bears = "*"
