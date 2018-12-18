@@ -14,9 +14,9 @@ distro = "*"
 thoth-analyzer = "*"
 yaspin = "*"
 texttable = "*"
-toml = "*"
 pyyaml = "*"
 requests = "*"
+contoml = "*"
 
 [dev-packages]
 coala-bears = "*"

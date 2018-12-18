@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ee8354352b44643c6089ad9bed9e948a42d48697ba6bd59765cbaae541f3342d"
+            "sha256": "ac6b1e9761d22cb38292dc3c995bce4ee00290df2f015644c1a5e17350974082"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -39,6 +39,14 @@
             "index": "pypi",
             "version": "==7.0"
         },
+        "contoml": {
+            "hashes": [
+                "sha256:2353275caef3726131c4192379252cc48eb4a15c06df3e1046f783de937eba94",
+                "sha256:f62960b57a9489187653787bd67756d15a79e4579c7d779d8b94f581dd260a7d"
+            ],
+            "index": "pypi",
+            "version": "==0.32"
+        },
         "daiquiri": {
             "hashes": [
                 "sha256:8832f28e110165b905993b4bdab638a3c245f5671d5976f226f2628e7d2e7862",
@@ -68,6 +76,14 @@
                 "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"
             ],
             "version": "==2.8"
+        },
+        "iso8601": {
+            "hashes": [
+                "sha256:210e0134677cc0d02f6028087fee1df1e1d76d372ee1db0bf30bf66c5c1c89a3",
+                "sha256:49c4b20e1f38aa5cf109ddcd39647ac419f928512c869dc01d5c7098eddede82",
+                "sha256:bbbae5fb4a7abfe71d4688fd64bff70b91bbd74ef6a99d964bab18f7fdf286dd"
+            ],
+            "version": "==0.1.12"
         },
         "pexpect": {
             "hashes": [
@@ -145,6 +161,12 @@
             "index": "pypi",
             "version": "==1.12.0"
         },
+        "strict-rfc3339": {
+            "hashes": [
+                "sha256:5cad17bedfc3af57b399db0fed32771f18fc54bbd917e85546088607ac5e1277"
+            ],
+            "version": "==0.7"
+        },
         "texttable": {
             "hashes": [
                 "sha256:1ba399c103c825202659c4d638946c15ffc565ad7846ee0672964786f437fb57"
@@ -167,13 +189,11 @@
             ],
             "version": "==0.5.0"
         },
-        "toml": {
+        "timestamp": {
             "hashes": [
-                "sha256:229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c",
-                "sha256:235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
+                "sha256:b5c7a4539f0d8742b7d6c78febd241ab24903c73c38045690725220ca7eae4ac"
             ],
-            "index": "pypi",
-            "version": "==0.10.0"
+            "version": "==0.0.1"
         },
         "tzlocal": {
             "hashes": [
