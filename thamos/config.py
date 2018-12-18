@@ -19,12 +19,15 @@
 
 import logging
 import os
-import click
 
+import click
+import requests
 import yaml
 
 from .utils import workdir
-from .exceptions import NoProjectDirError
+from .exceptions import NoApiSupported
+from .exceptions import InternalError
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -43,6 +46,16 @@ class _Configuration:
         # Thoth instance to be used when explicitly said by user - the one stated in
         # configuration file will be omitted.
         self.explicit_host = None
+        self._api_url = None
+        self._tls_verify = True
+
+    @property
+    def api_url(self):
+        return self._api_url
+
+    @property
+    def tls_verify(self):
+        return self._tls_verify
 
     @property
     def content(self):
@@ -77,6 +90,39 @@ class _Configuration:
         with workdir(config.CONFIG_NAME):
             _LOGGER.debug("Opening configuration file %r", config.CONFIG_NAME)
             click.edit(filename=config.CONFIG_NAME)
+
+    def api_discovery(self, host: str = None) -> str:
+        """Discover API versions available, return the most recent one supported by client and server."""
+        api_url = 'https://' + host + '/api/v1'
+        self._tls_verify = self.content.get('tls_verify', True)
+
+        response = requests.get(api_url, verify=self.tls_verify, headers={'Accept': 'application/json'})
+
+        try:
+            response.raise_for_status()
+            if not self.tls_verify:
+                _LOGGER.warning(
+                    "TLS verification turned off, its highly recommended to use a secured connection, "
+                    "see configuration file for configuration options"
+                )
+        except Exception:
+            # Try without TLS - maybe router was not configured to use TLS.
+            api_url = 'http://' + host + '/api/v1'
+            response = requests.get(api_url, headers={'Accept': 'application/json'})
+            try:
+                response.raise_for_status()
+                _LOGGER.warning(
+                    "Using insecure connection to API service, please contact service provider to "
+                    "install TLS in order to secure network traffic"
+                )
+            except Exception as exc:
+                raise NoApiSupported("Server does not support API v1 required by Thamos client") from exc
+
+        if response.status_code != 200:
+            raise InternalError("Cannot correctly determine API version to be used")
+
+        self._api_url = api_url
+        return self._api_url
 
 
 config = _Configuration()
