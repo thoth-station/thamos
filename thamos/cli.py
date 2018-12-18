@@ -24,7 +24,7 @@ import sys
 from shutil import get_terminal_size
 import json
 
-import toml
+import contoml as toml
 from texttable import Texttable
 import click
 from termcolor import colored
@@ -104,8 +104,8 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str):
     """Write content of Pipfile and Pipfile.lock to the current directory."""
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
-        with open('Pipfile', 'w') as pipfile_file:
-            toml.dump(pipfile, pipfile_file)
+        # TODO: enable prettify once https://github.com/jumpscale7/python-consistent-toml/issues/24 is fixed
+        toml.dump(pipfile, 'Pipfile', prettify=False)
     else:
         _LOGGER.debug("No changes to Pipfile to write")
 
