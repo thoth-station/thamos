@@ -230,6 +230,8 @@ def advise(debug: bool = False, no_write: bool = False, recommendation_type: str
 
         # Print report of the best one - thus index zero.
         _print_report(report[0][0], json_output=json_output)
+        if error:
+            sys.exit(4)
 
         pipfile = report[0][1]['requirements']
         pipfile_lock = report[0][1]['requirements_locked']
@@ -240,7 +242,7 @@ def advise(debug: bool = False, no_write: bool = False, recommendation_type: str
             click.echo(pipfile)
             click.echo(pipfile_lock)
 
-    sys.exit(4 if error else 0)
+    sys.exit(0)
 
 
 @cli.command('provenance-check')
