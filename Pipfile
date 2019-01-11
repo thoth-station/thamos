@@ -17,6 +17,7 @@ texttable = "*"
 pyyaml = "*"
 requests = "*"
 contoml = "*"
+termcolor = "*"
 
 [dev-packages]
 coala-bears = "*"
