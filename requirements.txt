@@ -12,3 +12,4 @@ yaspin
 texttable
 pyyaml
 requests
+termcolor
