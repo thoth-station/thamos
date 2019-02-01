@@ -39,6 +39,7 @@ from .swagger_client import PythonStack
 from .swagger_client import AdviseInputRuntimeEnvironment
 from .swagger_client import AdviseInput
 from .swagger_client import AdviseApi
+from .swagger_client import ImageAnalysisApi
 from .config import config as thoth_config
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -146,7 +147,7 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
         **parameters
     )
 
-    _LOGGER.info("Sucessfully submitted advise analysis %r", response.analysis_id)
+    _LOGGER.info("Successfully submitted advise analysis %r", response.analysis_id)
     if nowait:
         return response.analysis_id
 
@@ -175,7 +176,7 @@ def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str, *,
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(stack, debug=debug, force=force)
-    _LOGGER.info("Sucessfully submitted provenance check analysis %r", response.analysis_id)
+    _LOGGER.info("Successfully submitted provenance check analysis %r", response.analysis_id)
     if nowait:
         return response.analysis_id
 
@@ -187,3 +188,45 @@ def provenance_check(api_client: ApiClient, pipfile: str, pipfile_lock: str, *,
 
     _LOGGER.debug("Provenance check metadata: %r", response.metadata)
     return response.result['report'], response.result['error']
+
+
+@with_api_client
+def image_analysis(api_client: ApiClient, image: str, *,
+                   registry_user: str = None, registry_password: str = None, verify_tls: bool = True,
+                   nowait: bool = False, force: bool = False, debug: bool = False) -> typing.Union[typing.Dict, str]:
+    """Submit an image for analysis to Thoth."""
+    if not image:
+        raise ValueError("No image provided")
+
+    api_instance = ImageAnalysisApi(api_client)
+    if registry_user or registry_password:
+        # Swagger client handles None in a different way - we need to explicitly avoid passing
+        # registry user and registry password if they are not set.
+        response = api_instance.post_analyze(
+            image=image,
+            debug=debug,
+            registry_user=registry_user,
+            registry_password=registry_password,
+            verify_tls=verify_tls,
+            force=force
+        )
+    else:
+        response = api_instance.post_analyze(
+            image=image,
+            debug=debug,
+            verify_tls=verify_tls,
+            force=force
+        )
+
+    _LOGGER.info("Successfully submitted provenance check analysis %r", response.analysis_id)
+    if nowait:
+        return response.analysis_id
+
+    _wait_for_analysis(api_instance.get_analyze_status, response.analysis_id)
+    _LOGGER.debug("Retrieving image analysis result result for %r", response.analysis_id)
+    response = _retrieve_analysis_result(api_instance.get_analyze, response.analysis_id)
+    if not response:
+        return None
+
+    _LOGGER.debug("Image analysis metadata: %r", response.metadata)
+    return response.result
