@@ -31,7 +31,6 @@ from termcolor import colored
 import daiquiri
 from thamos.config import config as configuration
 from thamos.exceptions import NoProjectDirError
-from thamos.exceptions import ThamosException
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.utils import workdir
