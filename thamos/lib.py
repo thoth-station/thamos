@@ -52,9 +52,12 @@ def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
     @wraps(func)
     def wrapper(*args, **kwargs):
-        thoth_config.load_config()
         config = Configuration()
-        host = thoth_config.explicit_host or thoth_config.content.get('host') or config.host
+        host = thoth_config.explicit_host
+        if not host:
+            thoth_config.load_config()
+            host = thoth_config.content.get('host') or config.host
+
         thoth_config.api_discovery(host)
 
         _LOGGER.debug("Using API: %s", thoth_config.api_url)

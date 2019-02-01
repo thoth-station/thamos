@@ -46,16 +46,12 @@ class _Configuration:
         # Thoth instance to be used when explicitly said by user - the one stated in
         # configuration file will be omitted.
         self.explicit_host = None
+        self.tls_verify = None
         self._api_url = None
-        self._tls_verify = True
 
     @property
     def api_url(self):
         return self._api_url
-
-    @property
-    def tls_verify(self):
-        return self._tls_verify
 
     @property
     def content(self):
@@ -94,7 +90,7 @@ class _Configuration:
     def api_discovery(self, host: str = None) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
         api_url = 'https://' + host + '/api/v1'
-        self._tls_verify = self.content.get('tls_verify', True)
+        self.tls_verify = self.tls_verify if self.tls_verify is not None else self.content.get('tls_verify', True)
 
         response = requests.get(api_url, verify=self.tls_verify, headers={'Accept': 'application/json'})
 
