@@ -47,3 +47,17 @@ Using Thamos as a library
      nowait=False
    )
 
+Disabling TLS related warnings
+==============================
+
+If you communicate with Thoth's user API without TLS (you have set the
+``tls_verify`` configuration option to ``false`` in the ``.thoth.yaml`` file),
+Thamos CLI and Thamos library issue a warning each time there is done
+communication with the API server. To suppress this warning, set the
+``THAMOS_DISABLE_TLS_WARNING`` environment variable to a non-zero value:
+
+.. code-block:: console
+
+  $ export THAMOS_DISABLE_TLS_WARNING=1
+  $ thamos advise
+

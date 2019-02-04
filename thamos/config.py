@@ -30,6 +30,7 @@ from .exceptions import InternalError
 
 
 _LOGGER = logging.getLogger(__name__)
+_THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
 
 
 class _Configuration:
@@ -96,7 +97,7 @@ class _Configuration:
 
         try:
             response.raise_for_status()
-            if not self.tls_verify:
+            if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING:
                 _LOGGER.warning(
                     "TLS verification turned off, its highly recommended to use a secured connection, "
                     "see configuration file for configuration options"
@@ -107,10 +108,11 @@ class _Configuration:
             response = requests.get(api_url, headers={'Accept': 'application/json'})
             try:
                 response.raise_for_status()
-                _LOGGER.warning(
-                    "Using insecure connection to API service, please contact service provider to "
-                    "install TLS in order to secure network traffic"
-                )
+                if not _THAMOS_DISABLE_TLS_WARNING:
+                    _LOGGER.warning(
+                        "Using insecure connection to API service, please contact service provider to "
+                        "install TLS in order to secure network traffic"
+                    )
             except Exception as exc:
                 raise NoApiSupported("Server does not support API v1 required by Thamos client") from exc
 
