@@ -8,6 +8,9 @@ tls_verify: true
 # Recommendation type - one of testing, stable, latest:
 recommendation_type: stable
 
+# Format of requirements file, currently supported is only Pipenv:
+requirements_format: pipenv
+
 # Operating system for which the recommendations should be created:
 operating_system:
   name: fedora
