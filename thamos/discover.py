@@ -65,7 +65,6 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
 
 def discover_distribution() -> tuple:
     """Get distribution identifier and distribution version."""
-    distro.linux_distribution
     distribution, version, *_ = distro.linux_distribution(full_distribution_name=False)
     return distribution, version
 

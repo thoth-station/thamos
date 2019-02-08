@@ -11,20 +11,20 @@ recommendation_type: stable
 # Format of requirements file, currently supported is only Pipenv:
 requirements_format: pipenv
 
-# Operating system for which the recommendations should be created:
-operating_system:
-  name: fedora
-  version: '29'
-
-# Hardware information for the recommendation engine:
-hardware_information:
-  cpu_family: 6
-  cpu_model: 94
-
-# Software configuration of runtime environment:
-runtime_environment:
-  python_version: '3.6'
-  cuda_version: null
+configurations:
+  - name: fedora:29
+    # Operating system for which the recommendations should be created:
+    operating_system:
+      name: fedora
+      version: '29'
+    # Hardware information for the recommendation engine:
+    hardware_information:
+      cpu_family: 6
+      cpu_model: 94
+    # Software configuration of runtime environment:
+    runtime_environment:
+      python_version: '3.6'
+      cuda_version: null
 
 #
 # Configuration of bots:
