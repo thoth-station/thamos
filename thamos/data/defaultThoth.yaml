@@ -1,12 +1,12 @@
-#
-# This is  Thoth's configuration file placed in a root of a repo used by Thamos
-# CLI as well as by Thoth bots. Please adjust values listed below as desired.
-#
-host: thoth-user-api.redhat.com  # TODO: Adjust Thoth's host.
-tls_verify: true
+# This is  Thoth's configuration file placed in a root of a repo
+# (named as .thoth.yaml) used by Thamos CLI as well as by Thoth bots. Please
+# adjust values listed below as desired.
 
-# Recommendation type - one of testing, stable, latest:
-recommendation_type: stable
+# A remote Thoth service to talk to:
+host: thoth-user-api.redhat.com  # TODO: Adjust Thoth's host.
+
+# Configure TLS verification for communication with remote Thoth instance:
+tls_verify: true
 
 # Format of requirements file, currently supported is only Pipenv:
 requirements_format: pipenv
@@ -24,6 +24,8 @@ runtime_environments:
     # Software configuration of runtime environment:
     python_version: '3.6'
     cuda_version: null
+    # Recommendation type - one of testing, stable, latest:
+    recommendation_type: stable
 
 #
 # Configuration of bots:
@@ -33,7 +35,7 @@ managers:
   - name: info
   - name: version
     configuration:
-      # A list of maintainers (accounts) of this repository:
+      # A list of maintainers (GitHub or GitLab accounts) of this repository:
       maintainers: []
       # A list of assignees to which the opened pull requests and issues should
       # be assigned to:
