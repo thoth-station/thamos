@@ -32,3 +32,7 @@ class InternalError(ThamosException):
 
 class NoApiSupported(ThamosException):
     """Raised if client and Thoth server does not support same API versions."""
+
+
+class UnknownAnalysisType(ThamosException):
+    """Raised analysis type (adviser, package-extract, ...) cannot be determined from analysis identifier."""

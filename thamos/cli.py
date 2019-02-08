@@ -33,6 +33,8 @@ from thamos.config import config as configuration
 from thamos.exceptions import NoProjectDirError
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
+from thamos.lib import get_log
+from thamos.lib import get_status
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
 
@@ -283,6 +285,20 @@ def provenance_check(debug: bool = False, no_wait: bool = False,
             sys.exit(4)
 
         return 0
+
+
+@cli.command('log')
+@click.argument("analysis_id", type=str)
+def log(analysis_id: str):
+    """Get log of running or finished analysis."""
+    click.echo(get_log(analysis_id))
+
+
+@cli.command('status')
+@click.argument("analysis_id", type=str)
+def status(analysis_id: str):
+    """Get status of an analysis."""
+    click.echo(get_status(analysis_id))
 
 
 @cli.command('config')

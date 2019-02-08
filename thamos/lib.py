@@ -40,7 +40,9 @@ from .swagger_client import AdviseInputRuntimeEnvironment
 from .swagger_client import AdviseInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
+from .swagger_client import ProvenanceApi
 from .config import config as thoth_config
+from .exceptions import UnknownAnalysisType
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -233,3 +235,39 @@ def image_analysis(api_client: ApiClient, image: str, *,
 
     _LOGGER.debug("Image analysis metadata: %r", response.metadata)
     return response.result
+
+
+@with_api_client
+def get_log(api_client: ApiClient, analysis_id: str):
+    """Get log of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+    if analysis_id.startswith("package-extract-"):
+        api_instance = ImageAnalysisApi(api_client)
+        method = api_instance.get_analyze_log
+    elif analysis_id.startswith("provenance-checker-"):
+        api_instance = ProvenanceApi(api_client)
+        method = api_instance.get_provenance_python_log
+    elif analysis_id.startswith("adviser-"):
+        api_instance = AdviseApi(api_client)
+        method = api_instance.get_advise_python_log
+    else:
+        raise UnknownAnalysisType("Cannot determine analysis type from identifier: %r", analysis_id)
+
+    return method(analysis_id).log
+
+
+@with_api_client
+def get_status(api_client: ApiClient, analysis_id: str):
+    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+    if analysis_id.startswith("package-extract-"):
+        api_instance = ImageAnalysisApi(api_client)
+        method = api_instance.get_analyze_status
+    elif analysis_id.startswith("provenance-checker-"):
+        api_instance = ProvenanceApi(api_client)
+        method = api_instance.get_provenance_python_status
+    elif analysis_id.startswith("adviser-"):
+        api_instance = AdviseApi(api_client)
+        method = api_instance.get_advise_python_status
+    else:
+        raise UnknownAnalysisType("Cannot determine analysis type from identifier: %r", analysis_id)
+
+    return method(analysis_id).status
