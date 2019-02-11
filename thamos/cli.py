@@ -195,7 +195,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
               help="Run analysis in debug mode on Thoth.")
 @click.option('--no-write', '-W', is_flag=True,
               help="Do not write results to files, just print them.")
-@click.option('--recommendation-type', '-r', type=str, metavar="RECOMMENDATION_TYPE",
+@click.option('--recommendation-type', '-t', type=str, metavar="RECOMMENDATION_TYPE",
               help="Use selected recommendation type, do not load it from Thoth's config file.")
 @click.option('--no-wait', is_flag=True,
               help="Do not wait for analysis to finish, just submit it.")
