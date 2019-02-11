@@ -210,7 +210,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.AdviseApi()
-input = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack.
+input = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack with runtime specific information.
 recommendation_type = 'stable' # str | Recommendation type. (default to stable)
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
@@ -229,7 +229,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **input** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack. | 
+ **input** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. | 
  **recommendation_type** | **str**| Recommendation type. | [default to stable]
  **count** | **int**| Number of software stacks that should be returned. | [optional] 
  **limit** | **int**| Limit number of software stacks scored. | [optional] 

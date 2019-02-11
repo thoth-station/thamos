@@ -426,7 +426,7 @@ class AdviseApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param AdviseInput input: Specification of Python application stack. (required)
+        :param AdviseInput input: Specification of Python application stack with runtime specific information. (required)
         :param str recommendation_type: Recommendation type. (required)
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
@@ -452,7 +452,7 @@ class AdviseApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param AdviseInput input: Specification of Python application stack. (required)
+        :param AdviseInput input: Specification of Python application stack with runtime specific information. (required)
         :param str recommendation_type: Recommendation type. (required)
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
