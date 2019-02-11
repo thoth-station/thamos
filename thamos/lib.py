@@ -126,7 +126,9 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
     if runtime_environment and runtime_environment_name:
         raise ValueError("Cannot use runtime_environment and runtime_environment_name at the same time")
 
-    recommendation_type = recommendation_type or thoth_config.content.get('recommendation_type') or 'stable'
+    # We use the explicit one if provided at the end.
+    recommendation_type_explicit = recommendation_type
+    recommendation_type = thoth_config.content.get('recommendation_type') or 'stable'
     runtime_environment = runtime_environment or thoth_config.get_runtime_environment(runtime_environment_name)
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or '')
@@ -140,6 +142,11 @@ def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendatio
 
     advise_input = AdviseInput(application_stack=stack, runtime_environment=runtime_environment)
     api_instance = AdviseApi(api_client)
+
+    # Force to use the explicit one if user asked so.
+    recommendation_type = recommendation_type_explicit or recommendation_type
+    if recommendation_type:
+        recommendation_type = recommendation_type.lower()
 
     parameters = {
         'recommendation_type': recommendation_type,
