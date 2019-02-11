@@ -36,3 +36,11 @@ class NoApiSupported(ThamosException):
 
 class UnknownAnalysisType(ThamosException):
     """Raised analysis type (adviser, package-extract, ...) cannot be determined from analysis identifier."""
+
+
+class NoRuntimeEnvironmentError(ThamosException):
+    """An exception raised if no runtime environment could be found."""
+
+
+class ConfigurationError(ThamosException):
+    """An exception raised if there are issues with configuration file."""

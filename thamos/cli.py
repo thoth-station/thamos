@@ -195,7 +195,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
               help="Run analysis in debug mode on Thoth.")
 @click.option('--no-write', '-W', is_flag=True,
               help="Do not write results to files, just print them.")
-@click.option('--recommendation-type', '-r', type=str,
+@click.option('--recommendation-type', '-r', type=str, metavar="RECOMMENDATION_TYPE",
               help="Use selected recommendation type, do not load it from Thoth's config file.")
 @click.option('--no-wait', is_flag=True,
               help="Do not wait for analysis to finish, just submit it.")
@@ -203,8 +203,11 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
               help="Print output in JSON format.")
 @click.option('--force', is_flag=True,
               help="Force analysis run bypassing server-side cache.")
+@click.option('--runtime-environment', "-r", type=str, default=None, metavar="NAME",
+              help="Specify explicitly runtime environment to get recommendations for; "
+                   "defaults to the first entry in the configuration file.")
 def advise(debug: bool = False, no_write: bool = False, recommendation_type: str = None,
-           no_wait: bool = False, json_output: bool = False, force: bool = False):
+           runtime_environment: str = None, no_wait: bool = False, json_output: bool = False, force: bool = False):
     """Update the given application stack and provide reasoning.."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
@@ -213,7 +216,8 @@ def advise(debug: bool = False, no_write: bool = False, recommendation_type: str
         results = thoth_advise(
             pipfile,
             pipfile_lock,
-            recommendation_type,
+            recommendation_type=recommendation_type,
+            runtime_environment_name=runtime_environment,
             debug=debug,
             nowait=no_wait,
             force=force
