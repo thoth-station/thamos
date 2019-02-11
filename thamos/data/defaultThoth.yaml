@@ -18,7 +18,7 @@ runtime_environments:
       name: fedora
       version: '29'
     # Hardware information for the recommendation engine:
-    hardware_information:
+    hardware:
       cpu_family: 6
       cpu_model: 94
     # Software configuration of runtime environment:
