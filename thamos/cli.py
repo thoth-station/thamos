@@ -39,24 +39,24 @@ from thamos.utils import workdir
 from thamos import __version__ as thamos_version
 
 # Suppress anoying errors when name not known (disable_warnings() does not work here).
-logging.getLogger('urllib3.connectionpool').setLevel(logging.ERROR)
+logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 daiquiri.setup(level=logging.INFO)
-_LOGGER = logging.getLogger('thamos')
+_LOGGER = logging.getLogger("thamos")
 
 _EMOJI = {
-    'WARNING': colored('\u26a0\ufe0f WARNING', 'yellow'),
-    'ERROR': colored('\u274c ERROR', 'red', attrs=['bold']),
-    'INFO': colored('\u2714\ufe0f INFO', 'green'),
-    'LATEST': colored('\U0001f44c LATEST', 'green'),
-    'CVE': colored('\u2620\uFE0F  CVE \u2620\uFE0F', 'red')
+    "WARNING": colored("\u26a0\ufe0f WARNING", "yellow"),
+    "ERROR": colored("\u274c ERROR", "red", attrs=["bold"]),
+    "INFO": colored("\u2714\ufe0f INFO", "green"),
+    "LATEST": colored("\U0001f44c LATEST", "green"),
+    "CVE": colored("\u2620\uFE0F  CVE \u2620\uFE0F", "red"),
 }
 
 # Align of columns in table - default is left, values stated here are adjusted otherwise.
 _TABLE_COLS_ALIGN = {
-    'type': 'c',
-    'severity': 'c',
-    'package_name': 'c',
-    'package_version': 'r'
+    "type": "c",
+    "severity": "c",
+    "package_name": "c",
+    "package_version": "r",
 }
 
 
@@ -71,11 +71,12 @@ def _print_version(ctx, _, value):
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
+
     def wrapper(ctx, *args, **kwargs):
         try:
             return func(*args, **kwargs)
         except Exception as exc:
-            if ctx.parent.params['verbose']:
+            if ctx.parent.params["verbose"]:
                 raise
 
             _LOGGER.error(str(exc))
@@ -87,13 +88,13 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
 def _load_pipfiles() -> tuple:
     """Load Pipfile and Pipfile.lock from the current directory."""
     _LOGGER.debug("Loading Pipfile in %r", os.getcwd())
-    with open('Pipfile', 'r') as pipfile_file:
+    with open("Pipfile", "r") as pipfile_file:
         pipfile_content = pipfile_file.read()
 
     pipfile_lock_content = None
     try:
         _LOGGER.debug("Loading Pipfile.lock in %r", os.getcwd())
-        with open('Pipfile.lock', 'r') as pipfile_lock_file:
+        with open("Pipfile.lock", "r") as pipfile_lock_file:
             pipfile_lock_content = pipfile_lock_file.read()
     except FileNotFoundError:
         _LOGGER.info("No Pipfile.lock found")
@@ -106,13 +107,13 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str):
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
         # TODO: enable prettify once https://github.com/jumpscale7/python-consistent-toml/issues/24 is fixed
-        toml.dump(pipfile, 'Pipfile', prettify=False)
+        toml.dump(pipfile, "Pipfile", prettify=False)
     else:
         _LOGGER.debug("No changes to Pipfile to write")
 
     if pipfile_lock:
         _LOGGER.debug("Writing to Pipfile.lock in %r", os.getcwd())
-        with open('Pipfile.lock', 'w') as pipfile_lock_file:
+        with open("Pipfile.lock", "w") as pipfile_lock_file:
             json.dump(pipfile_lock, pipfile_lock_file, sort_keys=True, indent=4)
     else:
         _LOGGER.debug("No changes to Pipfile.lock to write")
@@ -131,21 +132,25 @@ def _print_report(report: dict, json_output: bool = False):
     to_remove = set()
     for item in report:
         header = header.union(set(item.keys()))
-        to_remove = to_remove.union(set(i for i, v in item.items() if isinstance(v, dict)))
+        to_remove = to_remove.union(
+            set(i for i, v in item.items() if isinstance(v, dict))
+        )
 
     # Remove fields that can be an array - these are addition details that are supressed from the table output.
     header = header - to_remove
 
     header = list(sorted(header))
-    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, 'l') for column in header])
-    table.header([item[0].upper() + item[1:].replace('_', ' ') for item in header])
+    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, "l") for column in header])
+    table.header([item[0].upper() + item[1:].replace("_", " ") for item in header])
 
     for item in report:
         row = []
         for column in header:
-            entry = item.get(column, '-')
+            entry = item.get(column, "-")
 
-            if not bool(int(os.getenv('THAMOS_NO_EMOJI', 0))) and isinstance(entry, str):
+            if not bool(int(os.getenv("THAMOS_NO_EMOJI", 0))) and isinstance(
+                entry, str
+            ):
                 entry = _EMOJI.get(entry, entry)
 
             if isinstance(entry, list):
@@ -160,18 +165,39 @@ def _print_report(report: dict, json_output: bool = False):
 
 @click.group()
 @click.pass_context
-@click.option('-v', '--verbose', is_flag=True, envvar='THAMOS_VERBOSE',
-              help="Be verbose about what's going on.")
-@click.option('--version', is_flag=True, is_eager=True, callback=_print_version, expose_value=False,
-              help="Print version and exit.")
-@click.option('--workdir', '-d', type=str, default=None,
-              help="Adjust working directory for sub-commands.")
-@click.option('--thoth-host', '-t', type=str, default=None,
-              help="Use selected host instead of the one stated in the configuration file.")
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    envvar="THAMOS_VERBOSE",
+    help="Be verbose about what's going on.",
+)
+@click.option(
+    "--version",
+    is_flag=True,
+    is_eager=True,
+    callback=_print_version,
+    expose_value=False,
+    help="Print version and exit.",
+)
+@click.option(
+    "--workdir",
+    "-d",
+    type=str,
+    default=None,
+    help="Adjust working directory for sub-commands.",
+)
+@click.option(
+    "--thoth-host",
+    "-t",
+    type=str,
+    default=None,
+    help="Use selected host instead of the one stated in the configuration file.",
+)
 def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = None):
     """A CLI tool for interacting with Thoth."""
     if ctx:
-        ctx.auto_envvar_prefix = 'THAMOS'
+        ctx.auto_envvar_prefix = "THAMOS"
 
     if verbose:
         _LOGGER.setLevel(logging.DEBUG)
@@ -187,27 +213,53 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 
     # Turn on progressbar explicitly here if it was not turned off by user. If Thamos is used
     # as a library, progressbar is not shown as one would expect.
-    os.environ['THAMOS_NO_PROGRESSBAR'] = os.getenv('THAMOS_NO_PROGRESSBAR', '0')
+    os.environ["THAMOS_NO_PROGRESSBAR"] = os.getenv("THAMOS_NO_PROGRESSBAR", "0")
 
 
-@cli.command('advise')
-@click.option('--debug', is_flag=True,
-              help="Run analysis in debug mode on Thoth.")
-@click.option('--no-write', '-W', is_flag=True,
-              help="Do not write results to files, just print them.")
-@click.option('--recommendation-type', '-t', type=str, metavar="RECOMMENDATION_TYPE",
-              help="Use selected recommendation type, do not load it from Thoth's config file.")
-@click.option('--no-wait', is_flag=True,
-              help="Do not wait for analysis to finish, just submit it.")
-@click.option('--json', '-j', 'json_output', is_flag=True,
-              help="Print output in JSON format.")
-@click.option('--force', is_flag=True,
-              help="Force analysis run bypassing server-side cache.")
-@click.option('--runtime-environment', "-r", type=str, default=None, metavar="NAME",
-              help="Specify explicitly runtime environment to get recommendations for; "
-                   "defaults to the first entry in the configuration file.")
-def advise(debug: bool = False, no_write: bool = False, recommendation_type: str = None,
-           runtime_environment: str = None, no_wait: bool = False, json_output: bool = False, force: bool = False):
+@cli.command("advise")
+@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--no-write",
+    "-W",
+    is_flag=True,
+    help="Do not write results to files, just print them.",
+)
+@click.option(
+    "--recommendation-type",
+    "-t",
+    type=str,
+    metavar="RECOMMENDATION_TYPE",
+    help="Use selected recommendation type, do not load it from Thoth's config file.",
+)
+@click.option(
+    "--no-wait",
+    is_flag=True,
+    help="Do not wait for analysis to finish, just submit it.",
+)
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
+@click.option(
+    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+)
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    help="Specify explicitly runtime environment to get recommendations for; "
+    "defaults to the first entry in the configuration file.",
+)
+def advise(
+    debug: bool = False,
+    no_write: bool = False,
+    recommendation_type: str = None,
+    runtime_environment: str = None,
+    no_wait: bool = False,
+    json_output: bool = False,
+    force: bool = False,
+):
     """Update the given application stack and provide reasoning.."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
@@ -220,7 +272,7 @@ def advise(debug: bool = False, no_write: bool = False, recommendation_type: str
             runtime_environment_name=runtime_environment,
             debug=debug,
             nowait=no_wait,
-            force=force
+            force=force,
         )
 
         if not results:
@@ -238,8 +290,8 @@ def advise(debug: bool = False, no_write: bool = False, recommendation_type: str
         if error:
             sys.exit(4)
 
-        pipfile = report[0][1]['requirements']
-        pipfile_lock = report[0][1]['requirements_locked']
+        pipfile = report[0][1]["requirements"]
+        pipfile_lock = report[0][1]["requirements_locked"]
 
         if not no_write:
             _write_pipfiles(pipfile, pipfile_lock)
@@ -250,19 +302,27 @@ def advise(debug: bool = False, no_write: bool = False, recommendation_type: str
     sys.exit(0)
 
 
-@cli.command('provenance-check')
-@click.option('--debug', is_flag=True,
-              help="Run analysis in debug mode on Thoth.")
-@click.option('--json', '-j', 'json_output', is_flag=True,
-              help="Print output in JSON format.")
-@click.option('--no-wait', is_flag=True,
-              help="Do not wait for analysis to finish, just submit it.")
-@click.option('--force', is_flag=True,
-              help="Force analysis run bypassing server-side cache.")
+@cli.command("provenance-check")
+@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
+@click.option(
+    "--no-wait",
+    is_flag=True,
+    help="Do not wait for analysis to finish, just submit it.",
+)
+@click.option(
+    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+)
 @click.pass_context
 @handle_cli_exception
-def provenance_check(debug: bool = False, no_wait: bool = False,
-                     json_output: bool = False, force: bool = False):
+def provenance_check(
+    debug: bool = False,
+    no_wait: bool = False,
+    json_output: bool = False,
+    force: bool = False,
+):
     """Check provenance of installed packages."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
@@ -270,7 +330,9 @@ def provenance_check(debug: bool = False, no_wait: bool = False,
             _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
             sys.exit(3)
 
-        results = thoth_provenance_check(pipfile, pipfile_lock, debug=debug, nowait=no_wait, force=force)
+        results = thoth_provenance_check(
+            pipfile, pipfile_lock, debug=debug, nowait=no_wait, force=force
+        )
         if not results:
             sys.exit(2)
 
@@ -280,41 +342,45 @@ def provenance_check(debug: bool = False, no_wait: bool = False,
             sys.exit(0)
 
         report, error = results
-        _print_report(report, json_output=json_output) if report else _LOGGER.info("Provenance check passed!")
+        _print_report(report, json_output=json_output) if report else _LOGGER.info(
+            "Provenance check passed!"
+        )
 
         if error:
             sys.exit(5)
 
-        if any(item.get('type') == 'ERROR' for item in report):
+        if any(item.get("type") == "ERROR" for item in report):
             sys.exit(4)
 
         return 0
 
 
-@cli.command('log')
+@cli.command("log")
 @click.argument("analysis_id", type=str)
 def log(analysis_id: str):
     """Get log of running or finished analysis."""
     click.echo(get_log(analysis_id))
 
 
-@cli.command('status')
+@cli.command("status")
 @click.argument("analysis_id", type=str)
 def status(analysis_id: str):
     """Get status of an analysis."""
     click.echo(get_status(analysis_id))
 
 
-@cli.command('config')
+@cli.command("config")
 def config():
     """Adjust Thamos and Thoth remote configuration."""
     try:
         configuration.open_config_file()
     except NoProjectDirError:
-        _LOGGER.info("No configuration file found, creating a default configuration for editing")
+        _LOGGER.info(
+            "No configuration file found, creating a default configuration for editing"
+        )
         configuration.create_default_config()
         configuration.open_config_file()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

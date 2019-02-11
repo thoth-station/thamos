@@ -36,28 +36,33 @@ _LOGGER = logging.getLogger(__name__)
 
 def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
     """Check for CUDA version, if no CUDA is installed, return None."""
-    if bool(int(os.getenv('THAMOS_DISABLE_CUDA', 0))):
+    if bool(int(os.getenv("THAMOS_DISABLE_CUDA", 0))):
         _LOGGER.debug(
             "Disabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to %r",
-            os.environ['THAMOS_DISABLE_CUDA']
+            os.environ["THAMOS_DISABLE_CUDA"],
         )
         return None
 
-    result = run_command('nvcc --version', raise_on_error=False)
+    result = run_command("nvcc --version", raise_on_error=False)
     if result.return_code != 0:
-        _LOGGER.debug("Unable to detect CUDA version - nvcc returned non-zero version: %s", result.to_dict())
+        _LOGGER.debug(
+            "Unable to detect CUDA version - nvcc returned non-zero version: %s",
+            result.to_dict(),
+        )
         return None
 
     lines = result.stdout.splitlines()
-    version_info = lines[-1].split(',')
+    version_info = lines[-1].split(",")
     if len(version_info) != 3:
-        _LOGGER.debug("Unable to detect CUDA version from nvcc output: %r", result.stdout)
+        _LOGGER.debug(
+            "Unable to detect CUDA version from nvcc output: %r", result.stdout
+        )
         return None
 
-    cuda_version = version_info[1].strip()[len('release '):]
+    cuda_version = version_info[1].strip()[len("release ") :]
 
     if interactive:
-        cuda_version = click.prompt('Please select CUDA version', default=cuda_version)
+        cuda_version = click.prompt("Please select CUDA version", default=cuda_version)
 
     _LOGGER.debug("Detected CUDA version: %r", cuda_version)
     return cuda_version
