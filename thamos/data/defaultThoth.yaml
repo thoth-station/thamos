@@ -1,30 +1,48 @@
----
-#
-# This default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
-#
+# This is  Thoth's configuration file placed in a root of a repo
+# (named as .thoth.yaml) used by Thamos CLI as well as by Thoth bots. Please
+# adjust values listed below as desired.
 
-# TODO: Adjust Thoth's host.
-host: thoth-user-api.redhat.com
+# A remote Thoth service to talk to:
+host: thoth-user-api.redhat.com  # TODO: Adjust Thoth's host.
+
+# Configure TLS verification for communication with remote Thoth instance:
 tls_verify: true
-# One of testing, stable, latest.
-recommendation_type: stable
-runtime_environment:
-  cpu_family: 6
-  cpu_model: 94
+
+# Format of requirements file, currently supported is only Pipenv:
+requirements_format: pipenv
+
+runtime_environments:
+  - name: fedora:29
+    # Operating system for which the recommendations should be created:
+    operating_system:
+      name: fedora
+      version: '29'
+    # Hardware information for the recommendation engine:
+    hardware:
+      cpu_family: 6
+      cpu_model: 94
+    # Software configuration of runtime environment:
+    python_version: '3.6'
+    cuda_version: null
+    # Recommendation type - one of testing, stable, latest:
+    recommendation_type: stable
+
+#
+# Configuration of bots:
+#
 managers:
   - name: pipfile-requirements
-  - name: update
-    configuration:
-      labels:
-        - bot
-        - thoth
   - name: info
   - name: version
     configuration:
-      # TODO: Adjust repo maintainers.
+      # A list of maintainers (GitHub or GitLab accounts) of this repository:
       maintainers: []
-      # TODO: Adjust issue assignees.
+      # A list of assignees to which the opened pull requests and issues should
+      # be assigned to:
       assignees: []
+      # Labels for issues and pull requests:
       labels:
         - bot
+      # Automatically maintain a changelog file stating features of new
+      # releases:
       changelog_file: true

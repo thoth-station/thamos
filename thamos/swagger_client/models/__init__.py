@@ -38,3 +38,4 @@ from thamos.swagger_client.models.log_metadata_annotations import LogMetadataAnn
 from thamos.swagger_client.models.python_package_indexes import PythonPackageIndexes
 from thamos.swagger_client.models.python_package_indexes_inner import PythonPackageIndexesInner
 from thamos.swagger_client.models.python_stack import PythonStack
+from thamos.swagger_client.models.runtime_environment import RuntimeEnvironment

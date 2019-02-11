@@ -34,9 +34,8 @@ from yaspin.spinners import Spinners
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
 from .swagger_client import Configuration
-from .swagger_client import ProvenanceApi
 from .swagger_client import PythonStack
-from .swagger_client import AdviseInputRuntimeEnvironment
+from .swagger_client import RuntimeEnvironment
 from .swagger_client import AdviseInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
@@ -117,20 +116,27 @@ def _retrieve_analysis_result(retrieve_func: callable, analysis_id: str) -> typi
 
 
 @with_api_client
-def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendation_type: str = None,
-           runtime_environment: str = None, *, nowait: bool = False, force: bool = False,
+def advise(api_client: ApiClient, pipfile: str, pipfile_lock: str, recommendation_type: str = None, *,
+           runtime_environment: dict = None, runtime_environment_name: str = None, nowait: bool = False, force: bool = False,
            limit: int = None, count: int = 1, debug: bool = False) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
         raise ValueError("No Pipfile content provided for advises")
 
+    if runtime_environment and runtime_environment_name:
+        raise ValueError("Cannot use runtime_environment and runtime_environment_name at the same time")
+
     recommendation_type = recommendation_type or thoth_config.content.get('recommendation_type') or 'stable'
-    runtime_environment = runtime_environment or thoth_config.content.get('runtime_environment')
+    runtime_environment = runtime_environment or thoth_config.get_runtime_environment(runtime_environment_name)
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or '')
 
     if runtime_environment:
-        runtime_environment = AdviseInputRuntimeEnvironment(**runtime_environment)
+        # Override recommendation type specified explicitly in the runtime environment entry.
+        if "recommendation_type" in runtime_environment:
+            recommendation_type = runtime_environment.pop("recommendation_type")
+
+        runtime_environment = RuntimeEnvironment(**runtime_environment)
 
     advise_input = AdviseInput(application_stack=stack, runtime_environment=runtime_environment)
     api_instance = AdviseApi(api_client)

@@ -19,6 +19,7 @@
 
 import logging
 import os
+import typing
 
 import click
 import requests
@@ -27,6 +28,8 @@ import yaml
 from .utils import workdir
 from .exceptions import NoApiSupported
 from .exceptions import InternalError
+from .exceptions import NoRuntimeEnvironmentError
+from .exceptions import ConfigurationError
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -87,6 +90,67 @@ class _Configuration:
         with workdir(config.CONFIG_NAME):
             _LOGGER.debug("Opening configuration file %r", config.CONFIG_NAME)
             click.edit(filename=config.CONFIG_NAME)
+
+    def list_runtime_environments(self):
+        """List available runtime environments."""
+        return self.content.get("runtime_environments", [])
+
+    def get_runtime_environment(self, name: str = None) -> typing.Optional[dict]:
+        """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
+        content = self.content
+        if "runtime_environments" not in content:
+            raise NoRuntimeEnvironmentError(
+                "No runtime environment configuration stated in the configuration file "
+                "under 'runtime_environments' configuration entry"
+            )
+
+        if not isinstance(content["runtime_environments"], list):
+            raise ConfigurationError(
+                ""
+            )
+
+        to_return = None
+        seen_names = set()
+        for idx, runtime_environment in enumerate(content["runtime_environments"]):
+            if not isinstance(runtime_environment, dict):
+                raise ConfigurationError(
+                    "Unknown runtime configuration entry, runtime configuration should be "
+                    "a dictionary; got: %r", runtime_environment
+                )
+
+            # We explicitly iterate over all entries to perform the following sanity checks.
+            current_name = runtime_environment.get("name")
+            if current_name is not None and current_name in seen_names:
+                raise ConfigurationError(
+                    "Multiple configuration options with name %r found in the configuration file", current_name
+                )
+
+            if idx > 0 and current_name is None:
+                raise ConfigurationError(
+                    "Assign explicitly name for each configuration entry if there are multiple "
+                    "runtime configuration options to distinguish between them"
+                )
+
+            if current_name is not None:
+                seen_names.add(current_name)
+
+            if name is None and idx == 0:
+                # Return the first one by default.
+                to_return = runtime_environment
+            elif current_name == name:
+                # Return by name.
+                to_return = runtime_environment
+
+        if to_return is None and len(content["runtime_environments"]) > 0:
+            if name is not None:
+                raise NoRuntimeEnvironmentError(
+                    f"No runtime environment with name {name!r} was found in the configuration file; "
+                    f"configured runtime environment names: {','.join(seen_names)}"
+                )
+
+            raise NoRuntimeEnvironmentError("No runtime environment configuration was found")
+
+        return to_return
 
     def api_discovery(self, host: str = None) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
