@@ -26,6 +26,10 @@ import requests
 import yaml
 
 from .utils import workdir
+from .discover import discover_cpu
+from .discover import discover_cuda_version
+from .discover import discover_distribution
+from .discover import discover_python_version
 from .exceptions import NoApiSupported
 from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
@@ -81,6 +85,23 @@ class _Configuration:
         )
         with open(self.DEFAULT_THOTH_CONFIG, "r") as default_config_file:
             default_config = default_config_file.read()
+
+        _LOGGER.info("Discovering host runtime environment")
+
+        cpu_info = discover_cpu()
+        cuda_version = discover_cuda_version()
+        # Add quotes for textual representation in the config file.
+        cuda_version = f"'{cuda_version}" if cuda_version is not None else 'null'
+        os_name, os_version = discover_distribution()
+        python_version = discover_python_version()
+
+        default_config = default_config.format(
+            cuda_version=cuda_version,
+            os_name=os_name,
+            os_version=os_version,
+            python_version=python_version,
+            **cpu_info
+        )
 
         _LOGGER.debug(
             "Writing configuration file to %r",
