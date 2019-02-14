@@ -23,6 +23,7 @@ import os
 import sys
 from shutil import get_terminal_size
 import json
+from functools import wraps
 
 import contoml as toml
 from texttable import Texttable
@@ -71,7 +72,7 @@ def _print_version(ctx, _, value):
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
-
+    @wraps(func)
     def wrapper(ctx, *args, **kwargs):
         try:
             return func(*args, **kwargs)
@@ -260,7 +261,7 @@ def advise(
     json_output: bool = False,
     force: bool = False,
 ):
-    """Update the given application stack and provide reasoning.."""
+    """Ask Thoth for recommendations on application stack."""
     with workdir():
         pipfile, pipfile_lock = _load_pipfiles()
 
@@ -371,7 +372,11 @@ def status(analysis_id: str):
 
 @cli.command("config")
 def config():
-    """Adjust Thamos and Thoth remote configuration."""
+    """Adjust Thamos and Thoth remote configuration.
+
+    Perform autodiscovery of available hardware and software on the host and
+    create a default configuration for Thoth (placed into .thoth.yaml).
+    """
     try:
         configuration.open_config_file()
     except NoProjectDirError:

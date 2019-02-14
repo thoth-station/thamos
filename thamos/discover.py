@@ -21,17 +21,13 @@ import os
 import sys
 import logging
 import typing
-import json
 
 import distro
 import click
 from thoth.analyzer import run_command
-from thoth.adviser.python import Source
-
-from .utils import workdir
-from .config import config
 
 _LOGGER = logging.getLogger(__name__)
+_PROC_CPU_INFO = "/proc/cpuinfo"
 
 
 def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
@@ -74,6 +70,44 @@ def discover_distribution() -> tuple:
     return distribution, version
 
 
-def discover_python_version() -> tuple:
+def discover_python_version() -> str:
     """Discover Python version in which we run in."""
-    return sys.version_info.major, sys.version_info.minor
+    return f"{sys.version_info.major}.{sys.version_info.minor}"
+
+
+def discover_cpu() -> dict:
+    result = {
+        "cpu_family": None,
+        "cpu_model": None,
+        "cpu_model_name": None
+    }
+
+    try:
+        with open(_PROC_CPU_INFO, "r") as cpu_info_file:
+            content = cpu_info_file.read().splitlines()
+
+        for line in content:
+            if line.startswith("model name") and result["cpu_model_name"] is None:
+                try:
+                    result["cpu_model_name"] = line.split(":")[1].strip()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to obtain CPU model name from %s: %s", str(exc), _PROC_CPU_INFO)
+            elif line.startswith("model\t") and result["cpu_model"] is None:
+                try:
+                    result["cpu_model"] = int(line.split(":")[1])
+                except Exception as exc:
+                    _LOGGER.warning("Failed to obtain CPU model from %s: %s", str(exc), _PROC_CPU_INFO)
+            elif line.startswith("cpu family") and result["cpu_family"] is None:
+                try:
+                    result["cpu_family"] = int(line.split(":")[1])
+                except Exception as exc:
+                    _LOGGER.warning("Failed to obtain CPU family from %s: %s", str(exc), _PROC_CPU_INFO)
+
+    except Exception as exc:
+        _LOGGER.exception("Failed to obtain CPU specific information: %s", str(exc))
+
+    if result["cpu_model_name"] is None:
+        # Assign a text representation - unknown for config file.
+        result["cpu_model_name"] = "Unknown"
+
+    return result

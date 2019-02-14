@@ -12,18 +12,19 @@ tls_verify: true
 requirements_format: pipenv
 
 runtime_environments:
-  - name: fedora:29
+  - name: '{os_name}:{os_version}'
     # Operating system for which the recommendations should be created:
     operating_system:
-      name: fedora
-      version: '29'
+      name: {os_name}
+      version: '{os_version}'
     # Hardware information for the recommendation engine:
     hardware:
-      cpu_family: 6
-      cpu_model: 94
+      # {cpu_model_name}
+      cpu_family: {cpu_family}
+      cpu_model: {cpu_model}
     # Software configuration of runtime environment:
-    python_version: '3.6'
-    cuda_version: null
+    python_version: '{python_version}'
+    cuda_version: {cuda_version}
     # Recommendation type - one of testing, stable, latest:
     recommendation_type: stable
 
