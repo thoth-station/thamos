@@ -26,6 +26,7 @@ import json
 from functools import wraps
 
 import contoml as toml
+import yaml
 from texttable import Texttable
 import click
 from termcolor import colored
@@ -365,9 +366,29 @@ def log(analysis_id: str):
 
 @cli.command("status")
 @click.argument("analysis_id", type=str)
-def status(analysis_id: str):
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+def status(analysis_id: str, output_format: str = None):
     """Get status of an analysis."""
-    click.echo(get_status(analysis_id))
+    status_dict = get_status(analysis_id)
+    if not output_format or output_format == "table":
+        table = Texttable(max_width=get_terminal_size().columns)
+        table.set_deco(Texttable.VLINES)
+        table.add_rows(list(status_dict.items()), header=False)
+        output = table.draw()
+    elif output_format == "json":
+        output = json.dumps(status_dict, indent=2)
+    elif output_format == "yaml":
+        output = yaml.dump(status_dict, default_flow_style=False)
+    else:
+        raise NotImplementedError(f"Unknown output format {output_format}")
+
+    click.echo(output)
 
 
 @cli.command("config")

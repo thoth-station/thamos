@@ -329,4 +329,4 @@ def get_status(api_client: ApiClient, analysis_id: str):
             "Cannot determine analysis type from identifier: %r", analysis_id
         )
 
-    return method(analysis_id).status
+    return method(analysis_id).status.to_dict()
