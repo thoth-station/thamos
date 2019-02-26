@@ -1,0 +1,10 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+tensorflow = ">=1.12" 
+
+[requires]
+python_version = "3.6"
