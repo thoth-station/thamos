@@ -156,3 +156,6 @@
 * Initial implementation of CLI
 * Regenerate swagger client based on the current state
 * Regenerate swagger client with new response models
+
+## Release 0.3.0 (2019-02-27T15:49:07)
+
