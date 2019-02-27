@@ -51,7 +51,6 @@ _LOGGER = logging.getLogger(__name__)
 
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
-
     @wraps(func)
     def wrapper(*args, **kwargs):
         config = Configuration()
@@ -76,7 +75,6 @@ def with_api_client(func: typing.Callable):
 
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
-
     @contextmanager
     def _no_spinner():
         yield

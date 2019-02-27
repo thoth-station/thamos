@@ -55,7 +55,7 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
         )
         return None
 
-    cuda_version = version_info[1].strip()[len("release ") :]
+    cuda_version = version_info[1].strip()[len("release "):]
 
     if interactive:
         cuda_version = click.prompt("Please select CUDA version", default=cuda_version)
@@ -76,6 +76,7 @@ def discover_python_version() -> str:
 
 
 def discover_cpu() -> dict:
+    """Discover CPU model, model name and family."""
     result = {
         "cpu_family": None,
         "cpu_model": None,
