@@ -1,0 +1,24 @@
+#
+# This default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
+
+host: test.thoth-station.ninja
+tls_verify: false
+
+recommendation_type: stable
+requirements_format: pipenv
+
+runtime_environments:
+  - name: "rhel76"
+    # Operating system for which the recommendations should be created:
+    operating_system:
+      name: rhel
+      version: "7.6"
+    # Hardware information for the recommendation engine:
+    hardware:
+      cpu_family: 6
+      cpu_model: 85
+    # Software configuration of runtime environment:
+    python_version: "3.6"
+    cuda_version: null
+    # Recommendation type - one of testing, stable, latest:
+    recommendation_type: stable
