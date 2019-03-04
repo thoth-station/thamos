@@ -1,15 +1,14 @@
 #
-# This default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
+# This is default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
 
 host: test.thoth-station.ninja
 tls_verify: false
 
-recommendation_type: stable
 requirements_format: pipenv
 
 runtime_environments:
   - name: "fedora:29"
-    recommendation_type: stable
+    recommendation_type: latest
     operating_system:
       name: fedora
       version: "29"
