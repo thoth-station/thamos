@@ -8,6 +8,9 @@ commands:
 
 .. code-block:: console
 
+  # Make sure you have Thamos CLI and Pipenv installed:
+  pip3 install --user thamos
+
   # Clone this repository so you have examples directory present:
   git clone https://github.com/thoth-station/thamos.git
 
@@ -28,6 +31,7 @@ commands:
 
   # Verify the recommended stack works by installing the stack and running
   # provided example application:
+  pip3 install --user pipenv
   pipenv install
   FLASK_APP=hello.py pipenv run flask run
 
