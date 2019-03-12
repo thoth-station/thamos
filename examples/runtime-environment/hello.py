@@ -14,4 +14,3 @@ def thoth_hello():
 
 if __name__ == '__main__':
     sys.exit(thoth_hello())
-
