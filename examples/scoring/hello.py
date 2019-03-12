@@ -8,6 +8,7 @@ from yaml import __version__ as PYYAML_VERSION
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def hello_world():
     """Return a hello string with Flask and YAML versions.."""
