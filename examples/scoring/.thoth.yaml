@@ -13,5 +13,4 @@ runtime_environments:
     operating_system:
       name: fedora
       version: "29"
-    python_version: "3.6"
     recommendation_type: stable
