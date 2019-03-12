@@ -13,13 +13,5 @@ runtime_environments:
     operating_system:
       name: fedora
       version: "29"
-    # Hardware information for the recommendation engine:
-    hardware:
-      # Intel(R) Core(TM) i7-4900MQ CPU @ 2.80GHz
-      cpu_family: 6
-      cpu_model: 60
-    # Software configuration of runtime environment:
     python_version: "3.6"
-    cuda_version: null
-    # Recommendation type - one of testing, stable, latest:
     recommendation_type: stable
