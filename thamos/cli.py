@@ -396,7 +396,7 @@ def status(analysis_id: str, output_format: str = None):
     "-I",
     envvar="THAMOS_NO_INTERACTIVE",
     is_flag=True,
-    help="If a config",
+    help="Do not open editor with configuration.",
 )
 def config(no_interactive: bool = False):
     """Adjust Thamos and Thoth remote configuration.
