@@ -41,6 +41,7 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
 
     result = run_command("nvcc --version", raise_on_error=False)
     if result.return_code != 0:
+        _LOGGER.info("No CUDA version detected")
         _LOGGER.debug(
             "Unable to detect CUDA version - nvcc returned non-zero version: %s",
             result.to_dict(),
@@ -60,7 +61,7 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
     if interactive:
         cuda_version = click.prompt("Please select CUDA version", default=cuda_version)
 
-    _LOGGER.debug("Detected CUDA version: %r", cuda_version)
+    _LOGGER.info("Detected CUDA version: %r", cuda_version)
     return cuda_version
 
 
@@ -111,4 +112,5 @@ def discover_cpu() -> dict:
         # Assign a text representation - unknown for config file.
         result["cpu_model_name"] = "Unknown"
 
+    _LOGGER.info("Detected CPU: %s", ", ".join((f"{k}: {v}" for k, v in result.items())))
     return result

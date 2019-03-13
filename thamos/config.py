@@ -34,6 +34,7 @@ from .exceptions import NoApiSupported
 from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
+from .exceptions import NoProjectDirError
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -68,6 +69,14 @@ class _Configuration:
             self.load_config()
 
         return self._configuration
+
+    def config_file_exists(self) -> bool:
+        """Check if configuration file exists."""
+        try:
+            with workdir(self.CONFIG_NAME):
+                return True
+        except NoProjectDirError:
+            return False
 
     def load_config(self):
         """Load configuration file."""

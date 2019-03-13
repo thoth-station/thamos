@@ -32,7 +32,6 @@ import click
 from termcolor import colored
 import daiquiri
 from thamos.config import config as configuration
-from thamos.exceptions import NoProjectDirError
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import get_log
@@ -392,19 +391,28 @@ def status(analysis_id: str, output_format: str = None):
 
 
 @cli.command("config")
-def config():
+@click.option(
+    "--no-interactive",
+    "-I",
+    envvar="THAMOS_NO_INTERACTIVE",
+    is_flag=True,
+    help="If a config",
+)
+def config(no_interactive: bool = False):
     """Adjust Thamos and Thoth remote configuration.
 
     Perform autodiscovery of available hardware and software on the host and
     create a default configuration for Thoth (placed into .thoth.yaml).
     """
-    try:
-        configuration.open_config_file()
-    except NoProjectDirError:
+    if not configuration.config_file_exists():
         _LOGGER.info(
-            "No configuration file found, creating a default configuration for editing"
+            "No configuration file found, creating one from a default configuration template"
         )
         configuration.create_default_config()
+    elif no_interactive:
+        _LOGGER.info("Configuration file already present, no action performed in non-interactive mode")
+
+    if not no_interactive:
         configuration.open_config_file()
 
 
