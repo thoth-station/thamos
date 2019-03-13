@@ -196,7 +196,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisResponse post_advise_python(input, recommendation_type, count=count, limit=limit, debug=debug, force=force)
+> AnalysisResponse post_advise_python(input, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
 
 Get advise for Python ecosystem.
 
@@ -214,12 +214,14 @@ input = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Pyt
 recommendation_type = 'stable' # str | Recommendation type. (default to stable)
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
+origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
 debug = false # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional) (default to false)
+limit_latest_versions = 56 # int | Limit number of packages considering only specific number of versions for each package. (optional)
 force = false # bool | Do not use cached results, always run adviser.  (optional) (default to false)
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(input, recommendation_type, count=count, limit=limit, debug=debug, force=force)
+    api_response = api_instance.post_advise_python(input, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -233,7 +235,9 @@ Name | Type | Description  | Notes
  **recommendation_type** | **str**| Recommendation type. | [default to stable]
  **count** | **int**| Number of software stacks that should be returned. | [optional] 
  **limit** | **int**| Limit number of software stacks scored. | [optional] 
+ **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
  **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
+ **limit_latest_versions** | **int**| Limit number of packages considering only specific number of versions for each package. | [optional] 
  **force** | **bool**| Do not use cached results, always run adviser.  | [optional] [default to false]
 
 ### Return type

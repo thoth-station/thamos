@@ -252,6 +252,13 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     help="Specify explicitly runtime environment to get recommendations for; "
     "defaults to the first entry in the configuration file.",
 )
+@click.option(
+    "--limit-latest-versions",
+    type=int,
+    default=None,
+    metavar="COUNT",
+    help="Specify number of latest versions for each package to consider.",
+)
 def advise(
     debug: bool = False,
     no_write: bool = False,
@@ -259,6 +266,7 @@ def advise(
     runtime_environment: str = None,
     no_wait: bool = False,
     json_output: bool = False,
+    limit_latest_versions: int = None,
     force: bool = False,
 ):
     """Ask Thoth for recommendations on application stack."""
@@ -274,6 +282,7 @@ def advise(
             debug=debug,
             nowait=no_wait,
             force=force,
+            limit_latest_versions=limit_latest_versions,
         )
 
         if not results:

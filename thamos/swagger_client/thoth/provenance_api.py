@@ -334,6 +334,7 @@ class ProvenanceApi(object):
 
         :param async_req bool
         :param PythonStack application_stack: Pipfile and Pipfile.lock as used by pipenv. (required)
+        :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
         :param bool debug: Run the provenance checker in a verbose mode so developers can debug it. 
         :param bool force: Do not use cached results, always run provenance checks. 
         :return: AnalysisResponse
@@ -357,6 +358,7 @@ class ProvenanceApi(object):
 
         :param async_req bool
         :param PythonStack application_stack: Pipfile and Pipfile.lock as used by pipenv. (required)
+        :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
         :param bool debug: Run the provenance checker in a verbose mode so developers can debug it. 
         :param bool force: Do not use cached results, always run provenance checks. 
         :return: AnalysisResponse
@@ -364,7 +366,7 @@ class ProvenanceApi(object):
                  returns the request thread.
         """
 
-        all_params = ['application_stack', 'debug', 'force']  # noqa: E501
+        all_params = ['application_stack', 'origin', 'debug', 'force']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -389,6 +391,8 @@ class ProvenanceApi(object):
         path_params = {}
 
         query_params = []
+        if 'origin' in params:
+            query_params.append(('origin', params['origin']))  # noqa: E501
         if 'debug' in params:
             query_params.append(('debug', params['debug']))  # noqa: E501
         if 'force' in params:
