@@ -43,7 +43,7 @@ variable to `1` (`0` explicitly turns this behaviour off, default value):
 Entries which should be expanded have environment variables in curly braces
 like the following example:
 
-.. code-block: yaml
+.. code-block:: yaml
 
    host: {THOTH_HOST}
 
