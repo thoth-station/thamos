@@ -383,7 +383,7 @@ def status(analysis_id: str, output_format: str = None):
     elif output_format == "json":
         output = json.dumps(status_dict, indent=2)
     elif output_format == "yaml":
-        output = yaml.dump(status_dict, default_flow_style=False)
+        output = yaml.safe_dump(status_dict, default_flow_style=False)
     else:
         raise NotImplementedError(f"Unknown output format {output_format}")
 
