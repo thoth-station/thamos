@@ -526,6 +526,7 @@ class ImageAnalysisApi(object):
         :param str image: Name of image - can also specify remote registry to pull image from.  (required)
         :param str registry_user: Registry user to be used for pulling images from registry. 
         :param str registry_password: Registry password or token to be used for pulling images from registry. 
+        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available. 
         :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
         :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
         :param bool force: Do not use cached results, always run analysis. 
@@ -552,6 +553,7 @@ class ImageAnalysisApi(object):
         :param str image: Name of image - can also specify remote registry to pull image from.  (required)
         :param str registry_user: Registry user to be used for pulling images from registry. 
         :param str registry_password: Registry password or token to be used for pulling images from registry. 
+        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available. 
         :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
         :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
         :param bool force: Do not use cached results, always run analysis. 
@@ -560,7 +562,7 @@ class ImageAnalysisApi(object):
                  returns the request thread.
         """
 
-        all_params = ['image', 'registry_user', 'registry_password', 'debug', 'verify_tls', 'force']  # noqa: E501
+        all_params = ['image', 'registry_user', 'registry_password', 'origin', 'debug', 'verify_tls', 'force']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -591,6 +593,8 @@ class ImageAnalysisApi(object):
             query_params.append(('registry_user', params['registry_user']))  # noqa: E501
         if 'registry_password' in params:
             query_params.append(('registry_password', params['registry_password']))  # noqa: E501
+        if 'origin' in params:
+            query_params.append(('origin', params['origin']))  # noqa: E501
         if 'debug' in params:
             query_params.append(('debug', params['debug']))  # noqa: E501
         if 'verify_tls' in params:

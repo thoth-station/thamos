@@ -32,6 +32,7 @@ from thamos.swagger_client.models.analysis_status_response_status import Analysi
 from thamos.swagger_client.models.analysis_unfinished_result_response import AnalysisUnfinishedResultResponse
 from thamos.swagger_client.models.analysis_unfinished_result_response_status import AnalysisUnfinishedResultResponseStatus
 from thamos.swagger_client.models.image_metadata_response import ImageMetadataResponse
+from thamos.swagger_client.models.info import Info
 from thamos.swagger_client.models.log import Log
 from thamos.swagger_client.models.log_metadata import LogMetadata
 from thamos.swagger_client.models.log_metadata_annotations import LogMetadataAnnotations

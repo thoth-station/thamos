@@ -132,6 +132,7 @@ def advise(
     *,
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
+    limit_latest_versions: int = None,
     nowait: bool = False,
     force: bool = False,
     limit: int = None,
@@ -184,6 +185,9 @@ def advise(
 
     if count is not None:
         parameters["count"] = count
+
+    if limit_latest_versions is not None:
+        parameters["limit_latest_versions"] = limit_latest_versions
 
     response = api_instance.post_advise_python(advise_input, **parameters)
 
