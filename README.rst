@@ -22,6 +22,37 @@ installation instructions bellow to setup Thoth/Thamos for your repository:
   $ thamos advise
 
 
+Adjusting configuration based on environment variables
+======================================================
+
+You can adjust content of configuration file each time Thamos CLI or Thamos
+library loads it by expanding entries with environment variables. This can be
+handy if you would like to parameterize some of the options at
+runtime (e.g. in deployment).
+
+This behaviour is (due to security reasons) explicitly turned off by default.
+However you can turn it on by setting `THAMOS_CONFIG_EXPAND_ENV` environment
+variable to `1` (`0` explicitly turns this behaviour off, default value):
+
+
+.. code-block:: console
+
+    THOTH_HOST=test.thoth-station.ninja THAMOS_CONFIG_EXPAND_ENV=1 thamos advise
+    2019-03-13 11:22:59,562 [18639] INFO     thamos.config: Expanding configuration file based on environment variables
+
+Entries which should be expanded have environment variables in curly braces
+like the following example:
+
+.. code-block: yaml
+
+   host: {THOTH_HOST}
+
+
+Note the expansion is done by replacing these values directly with values of
+environment variable, this means types need to be taken into account
+(environment variable with value `"true"` is put into configuration file as
+`true`).
+
 Using Thamos as a library
 =========================
 

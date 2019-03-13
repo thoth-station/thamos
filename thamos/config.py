@@ -82,7 +82,13 @@ class _Configuration:
         """Load configuration file."""
         with workdir(config.CONFIG_NAME):
             with open(config.CONFIG_NAME, "r") as config_file:
-                self._configuration = yaml.safe_load(config_file)
+                self._configuration = config_file.read()
+
+                if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)):
+                    _LOGGER.info("Expanding configuration file based on environment variables")
+                    self._configuration = self._configuration.format(**os.environ)
+
+                self._configuration = yaml.safe_load(self._configuration)
 
     def create_default_config(self):
         """Place default configuration into the current directory."""
