@@ -205,7 +205,7 @@ def advise(
 
     _LOGGER.debug("Adviser check metadata: %r", response.metadata)
 
-    return response.result["report"], response.result["error"]
+    return response.result, response.result["error"]
 
 
 @with_api_client
