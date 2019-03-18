@@ -145,7 +145,10 @@ def _write_configuration(advised_configuration: dict, recommendation_type: str =
 
     for idx, runtime_environment_entry in enumerate(content.get("runtime_environments", [])):
         if runtime_environment_entry.get("name") == advised_configuration["name"]:
-            _LOGGER.debug("Adjusting configuration entry for %r based on recommendations", advised_configuration["name"])
+            _LOGGER.debug(
+                "Adjusting configuration entry for %r based on recommendations",
+                advised_configuration["name"]
+            )
             runtime_environment_entry = advised_configuration
             if recommendation_type:
                 runtime_environment_entry["recommendation_type"] = recommendation_type
