@@ -52,5 +52,15 @@ commands:
   pipenv run python3 ./hello.py
 
 
+To automatically obtain information about your environment, run the following
+Thamos commands before `pipenv install`:
+
+.. code-block:: console
+
+  # Or export THAMOS_NO_INTERACTIVE=1
+  thamos config --no-interactive
+  thamos advise
+  pipenv install
+
 **Note:** You need to be connected to Red Hat VPN as Thoth is currently hosted internally only.
 

@@ -8,11 +8,11 @@ recommendation_type: stable
 requirements_format: pipenv
 
 runtime_environments:
-  - name: "rhel76"
+  - name: "fedora:29"
     # Operating system for which the recommendations should be created:
     operating_system:
-      name: rhel
-      version: "7.6"
+      name: fedora
+      version: "29"
     # Hardware information for the recommendation engine:
     hardware:
       cpu_family: 6
