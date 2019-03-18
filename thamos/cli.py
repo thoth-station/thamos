@@ -129,6 +129,10 @@ def _print_header(header: str) -> None:
 
 
 def _write_configuration(advised_configuration: dict, recommendation_type: str = None) -> None:
+    if not advised_configuration:
+        _LOGGER.debug("No advises on configuration, nothing to adjust")
+        return
+
     if "name" not in advised_configuration:
         _LOGGER.error(
             "Cannot adjust Thoth's configuration based on advises: No name found in Thoth's configuration entry"
