@@ -248,6 +248,7 @@ def image_analysis(
     api_client: ApiClient,
     image: str,
     *,
+    environment_type: str,
     registry_user: str = None,
     registry_password: str = None,
     verify_tls: bool = True,
@@ -270,6 +271,7 @@ def image_analysis(
             registry_password=registry_password,
             verify_tls=verify_tls,
             force=force,
+            environment_type=environment_type,
         )
     else:
         response = api_instance.post_analyze(

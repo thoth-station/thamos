@@ -244,7 +244,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_analyze**
-> AnalysisResponse post_analyze(image, registry_user=registry_user, registry_password=registry_password, origin=origin, debug=debug, verify_tls=verify_tls, force=force)
+> AnalysisResponse post_analyze(image, registry_user=registry_user, registry_password=registry_password, environment_type=environment_type, origin=origin, debug=debug, verify_tls=verify_tls, force=force)
 
 Analyze the given image asynchronously.
 
@@ -261,6 +261,7 @@ api_instance = thamos.swagger_client.ImageAnalysisApi()
 image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
+environment_type = 'runtime' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional) (default to runtime)
 origin = 'origin_example' # str | A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  (optional)
 debug = false # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional) (default to false)
 verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
@@ -268,7 +269,7 @@ force = false # bool | Do not use cached results, always run analysis.  (optiona
 
 try:
     # Analyze the given image asynchronously.
-    api_response = api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, origin=origin, debug=debug, verify_tls=verify_tls, force=force)
+    api_response = api_instance.post_analyze(image, registry_user=registry_user, registry_password=registry_password, environment_type=environment_type, origin=origin, debug=debug, verify_tls=verify_tls, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ImageAnalysisApi->post_analyze: %s\n" % e)
@@ -281,6 +282,7 @@ Name | Type | Description  | Notes
  **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
  **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
+ **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to runtime]
  **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
  **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
  **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
