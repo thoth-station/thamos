@@ -103,7 +103,7 @@ def _load_pipfiles() -> tuple:
     return pipfile_content, pipfile_lock_content
 
 
-def _write_pipfiles(pipfile: str, pipfile_lock: str):
+def _write_pipfiles(pipfile: str, pipfile_lock: str) -> None:
     """Write content of Pipfile and Pipfile.lock to the current directory."""
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
@@ -118,6 +118,44 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str):
             json.dump(pipfile_lock, pipfile_lock_file, sort_keys=True, indent=4)
     else:
         _LOGGER.debug("No changes to Pipfile.lock to write")
+
+
+def _print_header(header: str) -> None:
+    """Print header to terminal respecting terminal size."""
+    terminal_size = get_terminal_size()
+    padding = (terminal_size.columns - len(header) - 2) // 2
+    click.echo(padding * " " + header)
+    click.echo(padding * " " + "=" * len(header) + "  \n")
+
+
+def _write_configuration(advised_configuration: dict, recommendation_type: str = None) -> None:
+    if "name" not in advised_configuration:
+        _LOGGER.error(
+            "Cannot adjust Thoth's configuration based on advises: No name found in Thoth's configuration entry"
+        )
+        return
+
+    _LOGGER.debug("Reading Thoth's configuration file")
+    with open(".thoth.yaml", "r") as thoth_yaml_file:
+        content = yaml.safe_load(thoth_yaml_file.read())
+
+    for idx, runtime_environment_entry in enumerate(content.get("runtime_environments", [])):
+        if runtime_environment_entry.get("name") == advised_configuration["name"]:
+            _LOGGER.debug("Adjusting configuration entry for %r based on recommendations", advised_configuration["name"])
+            runtime_environment_entry = advised_configuration
+            if recommendation_type:
+                runtime_environment_entry["recommendation_type"] = recommendation_type
+            break
+    else:
+        _LOGGER.error(
+            "Cannot adjust Thoth's configuration based on advises: No runtime environment entry with name %r found",
+            advised_configuration["name"]
+        )
+        return
+
+    _LOGGER.debug("Writing adjusted Thoth's configuration file")
+    with open(".thoth.yaml", "w") as thoth_yaml_file:
+        yaml.safe_dump(content, thoth_yaml_file)
 
 
 def _print_report(report: dict, json_output: bool = False):
@@ -293,21 +331,26 @@ def advise(
             click.echo(results)
             sys.exit(0)
 
-        report, error = results
-
-        # Print report of the best one - thus index zero.
-        _print_report(report[0][0], json_output=json_output)
-        if error:
-            sys.exit(4)
-
-        pipfile = report[0][1]["requirements"]
-        pipfile_lock = report[0][1]["requirements_locked"]
+        result, error = results
 
         if not no_write:
+            # Print report of the best one - thus index zero.
+            _print_header("Recommended stack report")
+            _print_report(result["report"][0][0], json_output=json_output)
+
+            _print_header("Application stack guidance")
+            _print_report(result["stack_info"], json_output=json_output)
+
+            pipfile = result["report"][0][1]["requirements"]
+            pipfile_lock = result["report"][0][1]["requirements_locked"]
+
+            _write_configuration(result["advised_configuration"], recommendation_type)
             _write_pipfiles(pipfile, pipfile_lock)
         else:
-            click.echo(pipfile)
-            click.echo(pipfile_lock)
+            click.echo(json.dumps(result, indent=2))
+
+        if error:
+            sys.exit(4)
 
     sys.exit(0)
 
