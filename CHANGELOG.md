@@ -159,3 +159,32 @@
 
 ## Release 0.3.0 (2019-02-27T15:49:07)
 
+
+## Release 0.3.1 (2019-03-18T16:21:21)
+* Provide environment type in library adapter
+* Automatic update of dependency pyyaml from 3.13 to 5.1
+* Regenerate client
+* Target coala issues
+* Do not write changes in configuration if there are no changes
+* Adjust Thoth's configuration based on recommendations
+* Regenerate swagger-client, add limit latest versions option
+* Fix formatting
+* Use safe_dump() instead of dump()
+* Automatic dependency re-locking
+* Add ability to expand entries in configuration file
+* Add ability to create configuration in non-interactive mode
+* Demo with lower flask version
+* Move resolved stacks to misc repo
+* Fix issues reported by coala
+* Add files supporting "scoring" scenario
+* Fix coala complains
+* Add files supporting "scoring" scenario
+* Add README for runtime environment scenario
+* Remove requires section in example
+* Minor improvements in README file
+* Minor improvements in README file
+* Add README file for lockdown example
+* Add example flask application to verify stack works
+* fixed the wrong version specifier
+* Adjust recommendation type to latest
+* all the use cases
