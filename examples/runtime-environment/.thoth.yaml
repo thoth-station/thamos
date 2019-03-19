@@ -1,5 +1,5 @@
 #
-# This default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
+# This is a default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
 
 host: test.thoth-station.ninja
 tls_verify: false
