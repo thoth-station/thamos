@@ -128,7 +128,8 @@ def _print_header(header: str) -> None:
     click.echo(padding * " " + "=" * len(header) + "  \n")
 
 
-def _write_configuration(advised_configuration: dict, recommendation_type: str = None) -> None:
+def _write_configuration(advised_configuration: dict, recommendation_type: str = None,
+                         limit_latest_versions: int = None) -> None:
     if not advised_configuration:
         _LOGGER.debug("No advises on configuration, nothing to adjust")
         return
@@ -152,6 +153,8 @@ def _write_configuration(advised_configuration: dict, recommendation_type: str =
             runtime_environment_entry = advised_configuration
             if recommendation_type:
                 runtime_environment_entry["recommendation_type"] = recommendation_type
+            if limit_latest_versions:
+                runtime_environment_entry["limit_latest_versions"] = limit_latest_versions
             break
     else:
         _LOGGER.error(
@@ -351,7 +354,7 @@ def advise(
             pipfile = result["report"][0][1]["requirements"]
             pipfile_lock = result["report"][0][1]["requirements_locked"]
 
-            _write_configuration(result["advised_configuration"], recommendation_type)
+            _write_configuration(result["advised_configuration"], recommendation_type, limit_latest_versions)
             _write_pipfiles(pipfile, pipfile_lock)
         else:
             click.echo(json.dumps(result, indent=2))

@@ -22,3 +22,4 @@ runtime_environments:
     cuda_version: null
     # Recommendation type - one of testing, stable, latest:
     recommendation_type: stable
+    limit_latest_versions: null

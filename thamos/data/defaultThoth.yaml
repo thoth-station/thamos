@@ -27,6 +27,8 @@ runtime_environments:
     cuda_version: {cuda_version}
     # Recommendation type - one of testing, stable, latest:
     recommendation_type: stable
+    # Limit Latest Versions
+    limit_latest_versions: null
 
 #
 # Configuration of bots:

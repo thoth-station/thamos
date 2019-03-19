@@ -9,3 +9,4 @@ runtime_environments:
       version: "7"
     python_version: "3.6"
     recommendation_type: latest
+    limit_latest_versions: null
