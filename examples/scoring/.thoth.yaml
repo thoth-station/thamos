@@ -14,3 +14,4 @@ runtime_environments:
       name: fedora
       version: "29"
     recommendation_type: stable
+    limit_latest_versions: null

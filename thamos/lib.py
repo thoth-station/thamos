@@ -149,6 +149,9 @@ def advise(
         )
 
     # We use the explicit one if provided at the end.
+    limit_latest_versions_explicit = limit_latest_versions
+    limit_latest_versions = thoth_config.content.get("limit_latest_versions")
+
     recommendation_type_explicit = recommendation_type
     recommendation_type = thoth_config.content.get("recommendation_type") or "stable"
     runtime_environment = runtime_environment or thoth_config.get_runtime_environment(
@@ -161,6 +164,8 @@ def advise(
         # Override recommendation type specified explicitly in the runtime environment entry.
         if "recommendation_type" in runtime_environment:
             recommendation_type = runtime_environment.pop("recommendation_type")
+        if "limit_latest_versions" in runtime_environment:
+            limit_latest_versions = runtime_environment.pop("limit_latest_versions")
 
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
@@ -186,6 +191,7 @@ def advise(
     if count is not None:
         parameters["count"] = count
 
+    limit_latest_versions = limit_latest_versions_explicit or limit_latest_versions
     if limit_latest_versions is not None:
         parameters["limit_latest_versions"] = limit_latest_versions
 
