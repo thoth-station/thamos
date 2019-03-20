@@ -35,7 +35,7 @@ from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
-
+from urllib.parse import urljoin
 
 _LOGGER = logging.getLogger(__name__)
 _THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
@@ -197,7 +197,7 @@ class _Configuration:
 
     def api_discovery(self, host: str = None) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
-        api_url = "https://" + host + "/api/v1"
+        api_url = urljoin("https://" + host, "/api/v1")
         self.tls_verify = (
             self.tls_verify
             if self.tls_verify is not None
@@ -217,7 +217,7 @@ class _Configuration:
                 )
         except Exception:
             # Try without TLS - maybe router was not configured to use TLS.
-            api_url = "http://" + host + "/api/v1"
+            api_url = urljoin("https://" + host, "/api/v1")
             response = requests.get(api_url, headers={"Accept": "application/json"})
             try:
                 response.raise_for_status()
