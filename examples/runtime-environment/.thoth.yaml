@@ -8,15 +8,15 @@ recommendation_type: stable
 requirements_format: pipenv
 
 runtime_environments:
-  - name: "fedora:29"
+  - name: "fedora:28"
     # Operating system for which the recommendations should be created:
     operating_system:
       name: fedora
-      version: "29"
+      version: "28"
     # Hardware information for the recommendation engine:
     hardware:
       cpu_family: 6
-      cpu_model: 85
+      cpu_model: 94
     # Software configuration of runtime environment:
     python_version: "3.6"
     cuda_version: null
