@@ -346,17 +346,19 @@ def advise(
 
         if not no_write:
             # Print report of the best one - thus index zero.
-            _print_header("Recommended stack report")
-            _print_report(result["report"][0][0], json_output=json_output)
+            if result["report"][0][0]:
+                _print_header("Recommended stack report")
+                _print_report(result["report"][0][0], json_output=json_output)
 
-            _print_header("Application stack guidance")
-            _print_report(result["stack_info"], json_output=json_output)
+            if result["stack_info"]:
+                _print_header("Application stack guidance")
+                _print_report(result["stack_info"], json_output=json_output)
 
-            pipfile = result["report"][0][1]["requirements"]
-            pipfile_lock = result["report"][0][1]["requirements_locked"]
-
-            _write_configuration(result["advised_configuration"], recommendation_type, limit_latest_versions)
-            _write_pipfiles(pipfile, pipfile_lock)
+            if not error:
+                pipfile = result["report"][0][1]["requirements"]
+                pipfile_lock = result["report"][0][1]["requirements_locked"]
+                _write_configuration(result["advised_configuration"], recommendation_type, limit_latest_versions)
+                _write_pipfiles(pipfile, pipfile_lock)
         else:
             click.echo(json.dumps(result, indent=2))
 
