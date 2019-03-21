@@ -155,6 +155,7 @@ def _write_configuration(advised_configuration: dict, recommendation_type: str =
                 runtime_environment_entry["recommendation_type"] = recommendation_type
             if limit_latest_versions:
                 runtime_environment_entry["limit_latest_versions"] = limit_latest_versions
+            content["runtime_environments"][idx] = runtime_environment_entry
             break
     else:
         _LOGGER.error(
