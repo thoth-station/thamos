@@ -217,7 +217,7 @@ class _Configuration:
                 )
         except Exception:
             # Try without TLS - maybe router was not configured to use TLS.
-            api_url = urljoin("https://" + host, "/api/v1")
+            api_url = urljoin("http://" + host, "/api/v1")
             response = requests.get(api_url, headers={"Accept": "application/json"})
             try:
                 response.raise_for_status()
