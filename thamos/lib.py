@@ -197,7 +197,11 @@ def advise(
 
     response = api_instance.post_advise_python(advise_input, **parameters)
 
-    _LOGGER.info("Successfully submitted advise analysis %r", response.analysis_id)
+    _LOGGER.info(
+        "Successfully submitted advise analysis %r to %r",
+        response.analysis_id,
+        thoth_config.api_url,
+    )
     if nowait:
         return response.analysis_id
 
@@ -232,7 +236,9 @@ def provenance_check(
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(stack, debug=debug, force=force)
     _LOGGER.info(
-        "Successfully submitted provenance check analysis %r", response.analysis_id
+        "Successfully submitted provenance check analysis %r to %r",
+        response.analysis_id,
+        thoth_config.api_url,
     )
     if nowait:
         return response.analysis_id
@@ -285,7 +291,9 @@ def image_analysis(
         )
 
     _LOGGER.info(
-        "Successfully submitted provenance check analysis %r", response.analysis_id
+        "Successfully submitted provenance check analysis %r to %r",
+        response.analysis_id,
+        thoth_config.api_url,
     )
     if nowait:
         return response.analysis_id
