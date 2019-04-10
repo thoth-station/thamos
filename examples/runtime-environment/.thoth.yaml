@@ -1,7 +1,7 @@
 #
 # This is a default Thoth configuration file placed in a root of a repo. Please adjust values listed below.
 
-host: test.thoth-station.ninja
+host: stage.thoth-station.ninja
 tls_verify: false
 
 recommendation_type: stable
@@ -21,5 +21,4 @@ runtime_environments:
     python_version: "3.6"
     cuda_version: null
     # Recommendation type - one of testing, stable, latest:
-    recommendation_type: stable
-    limit_latest_versions: null
+    recommendation_type: STABLE
