@@ -7,10 +7,6 @@ If you would like to try this scenario with Thamos CLI, run the following
 commands:
 
 .. code-block:: console
-
-  # Make sure you have Thamos CLI installed:
-  pip3 install --user thamos
-
   # Clone this repository so you have examples directory present:
   git clone https://github.com/thoth-station/thamos.git
 
@@ -24,7 +20,10 @@ commands:
 
   # Ask Thoth for advises, Thoth will respect .thoth.yaml configuration file
   # and your Pipfile and recommend you Pipfile.lock:
-  thamos advise
+  sudo podman run --rm --tty --interactive \
+    --volume `pwd`:/opt/redhat/thoth/thamos/workdir:Z \ 
+    docker://quay.io/thoth-station/thamos:v0.3.1 \
+    thamos advise 
 
   # Check pinned down software stack in Pipfile.lock (previously this file was
   # not present):
