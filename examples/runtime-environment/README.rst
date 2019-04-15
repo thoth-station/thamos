@@ -2,7 +2,7 @@ A runtime environment advises in Thoth
 --------------------------------------
 
 Please follow instructions in `the relvant Jupyter Notebook
-<https://github.com/thoth-station/notebooks/blob/master/notebooks/Thoth%200.5.0%20-%20Example%202%20Guided%20Notebook.ipynb>`_.
+<https://github.com/thoth-station/notebooks/blob/master/notebooks/v0.5.0/Example%202%20Guided%20Notebook%20-%20runtime-environment.ipynb>`_.
 If you would like to try this scenario with Thamos CLI, run the following
 commands:
 
