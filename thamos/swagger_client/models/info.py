@@ -35,7 +35,7 @@ class Info(object):
         'version': 'str',
         's3_endpoint_url': 'str',
         's3_bucket_prefix': 'str',
-        'janusgraph_host': 'str',
+        'dgraph_host': 'str',
         'amun_api_url': 'str',
         'frontend_namespace': 'str',
         'middletier_namespace': 'str',
@@ -47,21 +47,21 @@ class Info(object):
         'version': 'version',
         's3_endpoint_url': 's3_endpoint_url',
         's3_bucket_prefix': 's3_bucket_prefix',
-        'janusgraph_host': 'janusgraph_host',
+        'dgraph_host': 'dgraph_host',
         'amun_api_url': 'amun_api_url',
         'frontend_namespace': 'frontend_namespace',
         'middletier_namespace': 'middletier_namespace',
         'backend_namespace': 'backend_namespace'
     }
 
-    def __init__(self, deployment_name=None, version=None, s3_endpoint_url=None, s3_bucket_prefix=None, janusgraph_host=None, amun_api_url=None, frontend_namespace=None, middletier_namespace=None, backend_namespace=None):  # noqa: E501
+    def __init__(self, deployment_name=None, version=None, s3_endpoint_url=None, s3_bucket_prefix=None, dgraph_host=None, amun_api_url=None, frontend_namespace=None, middletier_namespace=None, backend_namespace=None):  # noqa: E501
         """Info - a model defined in Swagger"""  # noqa: E501
 
         self._deployment_name = None
         self._version = None
         self._s3_endpoint_url = None
         self._s3_bucket_prefix = None
-        self._janusgraph_host = None
+        self._dgraph_host = None
         self._amun_api_url = None
         self._frontend_namespace = None
         self._middletier_namespace = None
@@ -76,8 +76,8 @@ class Info(object):
             self.s3_endpoint_url = s3_endpoint_url
         if s3_bucket_prefix is not None:
             self.s3_bucket_prefix = s3_bucket_prefix
-        if janusgraph_host is not None:
-            self.janusgraph_host = janusgraph_host
+        if dgraph_host is not None:
+            self.dgraph_host = dgraph_host
         if amun_api_url is not None:
             self.amun_api_url = amun_api_url
         if frontend_namespace is not None:
@@ -180,27 +180,27 @@ class Info(object):
         self._s3_bucket_prefix = s3_bucket_prefix
 
     @property
-    def janusgraph_host(self):
-        """Gets the janusgraph_host of this Info.  # noqa: E501
+    def dgraph_host(self):
+        """Gets the dgraph_host of this Info.  # noqa: E501
 
-        JanusGraph instance to which the deployment talks to.  # noqa: E501
+        Dgraph instance to which the deployment talks to.  # noqa: E501
 
-        :return: The janusgraph_host of this Info.  # noqa: E501
+        :return: The dgraph_host of this Info.  # noqa: E501
         :rtype: str
         """
-        return self._janusgraph_host
+        return self._dgraph_host
 
-    @janusgraph_host.setter
-    def janusgraph_host(self, janusgraph_host):
-        """Sets the janusgraph_host of this Info.
+    @dgraph_host.setter
+    def dgraph_host(self, dgraph_host):
+        """Sets the dgraph_host of this Info.
 
-        JanusGraph instance to which the deployment talks to.  # noqa: E501
+        Dgraph instance to which the deployment talks to.  # noqa: E501
 
-        :param janusgraph_host: The janusgraph_host of this Info.  # noqa: E501
+        :param dgraph_host: The dgraph_host of this Info.  # noqa: E501
         :type: str
         """
 
-        self._janusgraph_host = janusgraph_host
+        self._dgraph_host = dgraph_host
 
     @property
     def amun_api_url(self):
