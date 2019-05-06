@@ -30,6 +30,7 @@ import urllib3
 
 from yaspin import yaspin
 from yaspin.spinners import Spinners
+from invectio import gather_library_usage
 
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
@@ -47,6 +48,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 _LOGGER = logging.getLogger(__name__)
+_LIBRARIES_USAGE = frozenset(('tensorflow', 'keras', 'pytorch'))
 
 
 def with_api_client(func: typing.Callable):
@@ -123,6 +125,27 @@ def _retrieve_analysis_result(
         return None
 
 
+def _get_static_analysis() -> dict:
+    """Get static analysis of files used in project."""
+    # We are running in the root directory of project, use the root part for gathering static analysis.
+    _LOGGER.info("Performing static analysis")
+    library_usage = gather_library_usage(".", ignore_errors=True)
+
+    result = {}
+    for file_record in library_usage.values():
+        for library, usage in file_record.items():
+            if library not in _LIBRARIES_USAGE:
+                _LOGGER.debug("Omitting usage of library %r", library)
+                continue
+
+            if library not in result:
+                result[library] = []
+
+            result[library].extend(usage)
+
+    return result
+
+
 @with_api_client
 def advise(
     api_client: ApiClient,
@@ -133,6 +156,7 @@ def advise(
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
     limit_latest_versions: int = None,
+    no_static_analysis: bool = False,
     nowait: bool = False,
     force: bool = False,
     limit: int = None,
@@ -158,7 +182,15 @@ def advise(
         runtime_environment_name
     )
 
-    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
+    library_usage = None
+    if not no_static_analysis:
+        library_usage = _get_static_analysis()
+        _LOGGER.debug("Library usage:\n%s", json.dumps(library_usage, indent=2))
+
+    stack = PythonStack(
+        requirements=pipfile,
+        requirements_lock=pipfile_lock or "",
+    )
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
@@ -170,7 +202,9 @@ def advise(
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
     advise_input = AdviseInput(
-        application_stack=stack, runtime_environment=runtime_environment
+        application_stack=stack,
+        runtime_environment=runtime_environment,
+        library_usage=library_usage,
     )
     api_instance = AdviseApi(api_client)
 

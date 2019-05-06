@@ -18,6 +18,7 @@ pyyaml = "*"
 requests = "*"
 contoml = "*"
 termcolor = "*"
+invectio = "*"
 
 [dev-packages]
 coala-bears = "*"
