@@ -287,6 +287,11 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
+    "--no-static-analysis",
+    is_flag=True,
+    help="Do not perform static analysis of source code files.",
+)
+@click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
 @click.option(
@@ -314,6 +319,7 @@ def advise(
     recommendation_type: str = None,
     runtime_environment: str = None,
     no_wait: bool = False,
+    no_static_analysis: bool = False,
     json_output: bool = False,
     limit_latest_versions: int = None,
     force: bool = False,
@@ -332,6 +338,7 @@ def advise(
             nowait=no_wait,
             force=force,
             limit_latest_versions=limit_latest_versions,
+            no_static_analysis=no_static_analysis,
         )
 
         if not results:

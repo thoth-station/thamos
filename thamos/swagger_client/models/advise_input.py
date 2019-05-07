@@ -35,24 +35,29 @@ class AdviseInput(object):
     """
     swagger_types = {
         'application_stack': 'AdviseInputApplicationStack',
-        'runtime_environment': 'AdviseInputRuntimeEnvironment'
+        'runtime_environment': 'AdviseInputRuntimeEnvironment',
+        'library_usage': 'object'
     }
 
     attribute_map = {
         'application_stack': 'application_stack',
-        'runtime_environment': 'runtime_environment'
+        'runtime_environment': 'runtime_environment',
+        'library_usage': 'library_usage'
     }
 
-    def __init__(self, application_stack=None, runtime_environment=None):  # noqa: E501
+    def __init__(self, application_stack=None, runtime_environment=None, library_usage=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
 
         self._application_stack = None
         self._runtime_environment = None
+        self._library_usage = None
         self.discriminator = None
 
         self.application_stack = application_stack
         if runtime_environment is not None:
             self.runtime_environment = runtime_environment
+        if library_usage is not None:
+            self.library_usage = library_usage
 
     @property
     def application_stack(self):
@@ -97,6 +102,29 @@ class AdviseInput(object):
         """
 
         self._runtime_environment = runtime_environment
+
+    @property
+    def library_usage(self):
+        """Gets the library_usage of this AdviseInput.  # noqa: E501
+
+        Static analysis of libraries used within user's project.  # noqa: E501
+
+        :return: The library_usage of this AdviseInput.  # noqa: E501
+        :rtype: object
+        """
+        return self._library_usage
+
+    @library_usage.setter
+    def library_usage(self, library_usage):
+        """Sets the library_usage of this AdviseInput.
+
+        Static analysis of libraries used within user's project.  # noqa: E501
+
+        :param library_usage: The library_usage of this AdviseInput.  # noqa: E501
+        :type: object
+        """
+
+        self._library_usage = library_usage
 
     def to_dict(self):
         """Returns the model properties as a dict"""
