@@ -1,6 +1,6 @@
 # thamos.swagger_client.ImageAnalysisApi
 
-All URIs are relative to *https://localhost/api/v1/*
+All URIs are relative to */api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,7 +11,6 @@ Method | HTTP request | Description
 [**list_analyze**](ImageAnalysisApi.md#list_analyze) | **GET** /analyze | Retrieve a list of document ids for analyzer results.
 [**post_analyze**](ImageAnalysisApi.md#post_analyze) | **POST** /analyze | Analyze the given image asynchronously.
 [**post_image_metadata**](ImageAnalysisApi.md#post_image_metadata) | **POST** /image/metadata | Get metadata for the given image
-
 
 # **get_analyze**
 > AnalysisResultResponse get_analyze(analysis_id)
@@ -54,7 +53,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -100,7 +99,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -146,7 +145,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -192,7 +191,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -212,7 +211,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
+page = 56 # int | Page offset in pagination. (optional)
 
 try:
     # Retrieve a list of document ids for analyzer results.
@@ -226,7 +225,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
+ **page** | **int**| Page offset in pagination. | [optional] 
 
 ### Return type
 
@@ -238,7 +237,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -261,11 +260,11 @@ api_instance = thamos.swagger_client.ImageAnalysisApi()
 image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
-environment_type = 'runtime' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional) (default to runtime)
+environment_type = 'environment_type_example' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional)
 origin = 'origin_example' # str | A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-debug = false # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional) (default to false)
-verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
-force = false # bool | Do not use cached results, always run analysis.  (optional) (default to false)
+debug = true # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional)
+verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional)
+force = true # bool | Do not use cached results, always run analysis.  (optional)
 
 try:
     # Analyze the given image asynchronously.
@@ -282,11 +281,11 @@ Name | Type | Description  | Notes
  **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
  **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
- **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to runtime]
+ **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] 
  **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
- **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
- **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to false]
+ **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] 
+ **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] 
+ **force** | **bool**| Do not use cached results, always run analysis.  | [optional] 
 
 ### Return type
 
@@ -298,7 +297,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -321,7 +320,7 @@ api_instance = thamos.swagger_client.ImageAnalysisApi()
 image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
-verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
+verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional)
 
 try:
     # Get metadata for the given image
@@ -338,7 +337,7 @@ Name | Type | Description  | Notes
  **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
  **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
- **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
+ **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] 
 
 ### Return type
 
@@ -350,7 +349,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

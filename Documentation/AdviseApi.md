@@ -1,6 +1,6 @@
 # thamos.swagger_client.AdviseApi
 
-All URIs are relative to *https://localhost/api/v1/*
+All URIs are relative to */api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**get_advise_python_status**](AdviseApi.md#get_advise_python_status) | **GET** /advise/python/{analysis_id}/status | Show status of an adviser computing recomemendations.
 [**list_advise_python**](AdviseApi.md#list_advise_python) | **GET** /advise/python | Get adviser results available.
 [**post_advise_python**](AdviseApi.md#post_advise_python) | **POST** /advise/python | Get advise for Python ecosystem.
-
 
 # **get_advise_python**
 > AnalysisResultResponse get_advise_python(analysis_id)
@@ -52,7 +51,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -98,7 +97,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -144,7 +143,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -164,7 +163,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.AdviseApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
+page = 56 # int | Page offset in pagination. (optional)
 
 try:
     # Get adviser results available.
@@ -178,7 +177,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
+ **page** | **int**| Page offset in pagination. | [optional] 
 
 ### Return type
 
@@ -190,13 +189,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisResponse post_advise_python(input, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
+> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
 
 Get advise for Python ecosystem.
 
@@ -210,18 +209,18 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.AdviseApi()
-input = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack with runtime specific information.
-recommendation_type = 'stable' # str | Recommendation type. (default to stable)
+body = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack with runtime specific information.
+recommendation_type = 'recommendation_type_example' # str | Recommendation type.
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-debug = false # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional) (default to false)
+debug = true # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional)
 limit_latest_versions = 56 # int | Limit number of packages considering only specific number of versions for each package. (optional)
-force = false # bool | Do not use cached results, always run adviser.  (optional) (default to false)
+force = true # bool | Do not use cached results, always run adviser.  (optional)
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(input, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
+    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -231,14 +230,14 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **input** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. | 
- **recommendation_type** | **str**| Recommendation type. | [default to stable]
+ **body** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. | 
+ **recommendation_type** | **str**| Recommendation type. | 
  **count** | **int**| Number of software stacks that should be returned. | [optional] 
  **limit** | **int**| Limit number of software stacks scored. | [optional] 
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
+ **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] 
  **limit_latest_versions** | **int**| Limit number of packages considering only specific number of versions for each package. | [optional] 
- **force** | **bool**| Do not use cached results, always run adviser.  | [optional] [default to false]
+ **force** | **bool**| Do not use cached results, always run adviser.  | [optional] 
 
 ### Return type
 

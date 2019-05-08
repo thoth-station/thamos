@@ -1,6 +1,6 @@
 # thamos.swagger_client.BuildlogsApi
 
-All URIs are relative to *https://localhost/api/v1/*
+All URIs are relative to */api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,6 @@ Method | HTTP request | Description
 [**list_buildlogs**](BuildlogsApi.md#list_buildlogs) | **GET** /buildlog | Retrieve a list of document ids for stored build logs.
 [**parse_log**](BuildlogsApi.md#parse_log) | **POST** /parse-log | Parse Docker build log or installation log and show installed packages. 
 [**post_buildlog**](BuildlogsApi.md#post_buildlog) | **POST** /buildlog | Store the given build log.
-
 
 # **get_buildlog**
 > get_buildlog(document_id)
@@ -50,8 +49,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -70,7 +69,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.BuildlogsApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
+page = 56 # int | Page offset in pagination. (optional)
 
 try:
     # Retrieve a list of document ids for stored build logs.
@@ -83,7 +82,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
+ **page** | **int**| Page offset in pagination. | [optional] 
 
 ### Return type
 
@@ -95,13 +94,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **parse_log**
-> parse_log(log_info)
+> parse_log(body)
 
 Parse Docker build log or installation log and show installed packages. 
 
@@ -115,11 +114,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.BuildlogsApi()
-log_info = thamos.swagger_client.Log() # Log | A full log.
+body = thamos.swagger_client.Log() # Log | A full log.
 
 try:
     # Parse Docker build log or installation log and show installed packages. 
-    api_instance.parse_log(log_info)
+    api_instance.parse_log(body)
 except ApiException as e:
     print("Exception when calling BuildlogsApi->parse_log: %s\n" % e)
 ```
@@ -128,7 +127,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **log_info** | [**Log**](Log.md)| A full log. | 
+ **body** | [**Log**](Log.md)| A full log. | 
 
 ### Return type
 
@@ -141,12 +140,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_buildlog**
-> post_buildlog(log_info)
+> post_buildlog(body)
 
 Store the given build log.
 
@@ -160,11 +159,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.BuildlogsApi()
-log_info = thamos.swagger_client.Log() # Log | Build log to be stored.
+body = thamos.swagger_client.Log() # Log | Build log to be stored.
 
 try:
     # Store the given build log.
-    api_instance.post_buildlog(log_info)
+    api_instance.post_buildlog(body)
 except ApiException as e:
     print("Exception when calling BuildlogsApi->post_buildlog: %s\n" % e)
 ```
@@ -173,7 +172,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **log_info** | [**Log**](Log.md)| Build log to be stored. | 
+ **body** | [**Log**](Log.md)| Build log to be stored. | 
 
 ### Return type
 
@@ -186,7 +185,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

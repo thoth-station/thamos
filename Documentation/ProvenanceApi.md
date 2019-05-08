@@ -1,6 +1,6 @@
 # thamos.swagger_client.ProvenanceApi
 
-All URIs are relative to *https://localhost/api/v1/*
+All URIs are relative to */api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,6 @@ Method | HTTP request | Description
 [**get_provenance_python_log**](ProvenanceApi.md#get_provenance_python_log) | **GET** /provenance/python/{analysis_id}/log | Show logs of a provenance checks.
 [**get_provenance_python_status**](ProvenanceApi.md#get_provenance_python_status) | **GET** /provenance/python/{analysis_id}/status | Show status of a provenance check.
 [**post_provenance_python**](ProvenanceApi.md#post_provenance_python) | **POST** /provenance/python | Check provenance of packages stated in an application stack.
-
 
 # **get_provenance_python**
 > AnalysisResultResponse get_provenance_python(analysis_id)
@@ -51,7 +50,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -97,7 +96,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -143,13 +142,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_provenance_python**
-> AnalysisResponse post_provenance_python(application_stack, origin=origin, debug=debug, force=force)
+> AnalysisResponse post_provenance_python(body, origin=origin, debug=debug, force=force)
 
 Check provenance of packages stated in an application stack.
 
@@ -163,14 +162,14 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ProvenanceApi()
-application_stack = thamos.swagger_client.PythonStack() # PythonStack | Pipfile and Pipfile.lock as used by pipenv.
+body = thamos.swagger_client.PythonStack() # PythonStack | Pipfile and Pipfile.lock as used by pipenv.
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-debug = false # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional) (default to false)
-force = false # bool | Do not use cached results, always run provenance checks.  (optional) (default to false)
+debug = true # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional)
+force = true # bool | Do not use cached results, always run provenance checks.  (optional)
 
 try:
     # Check provenance of packages stated in an application stack.
-    api_response = api_instance.post_provenance_python(application_stack, origin=origin, debug=debug, force=force)
+    api_response = api_instance.post_provenance_python(body, origin=origin, debug=debug, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->post_provenance_python: %s\n" % e)
@@ -180,10 +179,10 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **application_stack** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
+ **body** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to false]
- **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] [default to false]
+ **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] 
+ **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] 
 
 ### Return type
 

@@ -24,6 +24,7 @@ which find > /dev/null  || die "Please install find utility to continue"
 if [ ! -d 'swagger-codegen' ]; then
     git clone https://github.com/swagger-api/swagger-codegen
     pushd swagger-codegen
+    git checkout '3.0.0'
     mvn clean package
     popd
 fi
