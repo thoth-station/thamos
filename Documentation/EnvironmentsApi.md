@@ -1,6 +1,6 @@
 # thamos.swagger_client.EnvironmentsApi
 
-All URIs are relative to *https://localhost/api/v1/*
+All URIs are relative to */api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,9 +8,8 @@ Method | HTTP request | Description
 [**list_runtime_environment_analyses**](EnvironmentsApi.md#list_runtime_environment_analyses) | **GET** /runtime-environment/{runtime_environment_name}/analyses | List analyses for the given runtime environment.
 [**list_runtime_environments**](EnvironmentsApi.md#list_runtime_environments) | **GET** /runtime-environment | Retrieve a list of runtime environments analyzed.
 
-
 # **get_runtime_environment**
-> dict(str, ERRORUNKNOWN) get_runtime_environment(runtime_environment_name, analysis_id=analysis_id)
+> object get_runtime_environment(runtime_environment_name, analysis_id=analysis_id)
 
 Retrieve runtime environment information.
 
@@ -44,7 +43,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
+**object**
 
 ### Authorization
 
@@ -52,13 +51,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environment_analyses**
-> dict(str, ERRORUNKNOWN) list_runtime_environment_analyses(runtime_environment_name, page=page)
+> object list_runtime_environment_analyses(runtime_environment_name, page=page)
 
 List analyses for the given runtime environment.
 
@@ -73,7 +72,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = thamos.swagger_client.EnvironmentsApi()
 runtime_environment_name = 'runtime_environment_name_example' # str | Runtime environment name for which analyses should be retrieved. 
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
+page = 56 # int | Page offset in pagination. (optional)
 
 try:
     # List analyses for the given runtime environment.
@@ -88,11 +87,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **runtime_environment_name** | **str**| Runtime environment name for which analyses should be retrieved.  | 
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
+ **page** | **int**| Page offset in pagination. | [optional] 
 
 ### Return type
 
-[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
+**object**
 
 ### Authorization
 
@@ -100,13 +99,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environments**
-> dict(str, ERRORUNKNOWN) list_runtime_environments(page=page)
+> object list_runtime_environments(page=page)
 
 Retrieve a list of runtime environments analyzed.
 
@@ -120,7 +119,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.EnvironmentsApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
+page = 56 # int | Page offset in pagination. (optional)
 
 try:
     # Retrieve a list of runtime environments analyzed.
@@ -134,11 +133,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
+ **page** | **int**| Page offset in pagination. | [optional] 
 
 ### Return type
 
-[**dict(str, ERRORUNKNOWN)**](ERRORUNKNOWN.md)
+**object**
 
 ### Authorization
 
@@ -146,7 +145,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
