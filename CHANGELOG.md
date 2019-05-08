@@ -188,3 +188,31 @@
 * fixed the wrong version specifier
 * Adjust recommendation type to latest
 * all the use cases
+
+## Release 0.4.0 (2019-05-08T17:25:11)
+* Regenerate for new implementation
+* Use openapi 3 implementation for swagger client generation
+* Re-generate swagger client
+* Integrate static analysis using Invectio
+* :pushpin: Automatic update of dependency urllib3 from 1.24.2 to 1.24.3
+* :pushpin: Automatic update of dependency yaspin from 0.14.1 to 0.14.2
+* Re-generate for transition to Dgraph
+* :pushpin: Automatic update of dependency urllib3 from 1.24.1 to 1.24.2
+* Fix link to notebook
+* Fix link to notebook
+* Fix link to notebook
+* Fix link to notebook
+* :sparkles: using -stage now, removed some quirks
+* :sparkles: added a container build script and adjusted some readmes
+* Log Thoth's API URL to show to which instance a user talks to
+* bug fix on TLS turned on
+* Used urljoin for maintaining semantic version of url
+* Correctly handle errors from reports and empty reports
+* Make sure configuration changes are propagated to config file
+* Match operating system with solver results
+* Pin down more dependencies
+* Enable limit_latest_versions to be configured from configuration
+* Update .thoth.yaml
+* Fix Coala complains
+* Adjust runtime-environment example to reflect data in Test environment
+* Add Thoth's configuration file
