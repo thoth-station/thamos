@@ -202,7 +202,7 @@ def advise(
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
     advise_input = AdviseInput(
-        application_stack=stack,
+        stack,
         runtime_environment=runtime_environment,
         library_usage=library_usage,
     )
