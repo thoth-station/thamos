@@ -216,3 +216,6 @@
 * Fix Coala complains
 * Adjust runtime-environment example to reflect data in Test environment
 * Add Thoth's configuration file
+
+## Release 0.4.1 (2019-05-08T18:43:04)
+* Use arguments instead of kwargs to be compatible with openapi
