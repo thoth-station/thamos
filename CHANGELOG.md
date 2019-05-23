@@ -219,3 +219,6 @@
 
 ## Release 0.4.1 (2019-05-08T18:43:04)
 * Use arguments instead of kwargs to be compatible with openapi
+
+## Release 0.4.2 (2019-05-23T18:55:41)
+* Add missing Invectio requirement
