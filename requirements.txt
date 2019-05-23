@@ -13,3 +13,4 @@ texttable
 pyyaml
 requests
 termcolor
+invectio
