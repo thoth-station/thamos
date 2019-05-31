@@ -129,7 +129,11 @@ def _get_static_analysis() -> dict:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis")
-    library_usage = gather_library_usage(".", ignore_errors=True)
+    try:
+        library_usage = gather_library_usage(".", ignore_errors=True)
+    except FileNotFoundError:
+        _LOGGER.warning("No library usage was aggregated - no Python sources found")
+        return {}
 
     result = {}
     for file_record in library_usage.values():
