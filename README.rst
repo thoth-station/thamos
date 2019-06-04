@@ -127,6 +127,7 @@ Then, you need to provide following environment variables:
 * `THAMOS_CONFIG_TEMPLATE` - holds path to template - use `/tmp/src` prefix to point to root of s2i repository (e.g. `/tmp/src/template.yaml` if `template.yaml` is the configuration template and is stored in root of your Git repository)
 * `THAMOS_NO_INTERACTIVE` - set to `1` if you don't want to omit interactive thamos (suitable for automated s2i builds happening in the cluster)
 * `THOTH_SERVICE_HOST` - set to host of Thoth backend you would like to talk to, applicable only you use expansion based on environment variables as shown in the example above
+* `THAMOS_NO_PROGRESSBAR` - set to `1` to disable progressbar while waiting for response from Thoth backend - it can cause annoying too verbose output printed to OpenShift console during the build
 
 Using Thamos as a library
 =========================
