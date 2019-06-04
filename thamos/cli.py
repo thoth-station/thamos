@@ -470,7 +470,15 @@ def status(analysis_id: str, output_format: str = None):
     is_flag=True,
     help="Do not open editor with configuration.",
 )
-def config(no_interactive: bool = False):
+@click.option(
+    "--template",
+    "-t",
+    metavar="FILE",
+    type=str,
+    envvar="THAMOS_CONFIG_TEMPLATE",
+    help="Template which should be used instead of the default one.",
+)
+def config(no_interactive: bool = False, template: str = None):
     """Adjust Thamos and Thoth remote configuration.
 
     Perform autodiscovery of available hardware and software on the host and
@@ -480,7 +488,7 @@ def config(no_interactive: bool = False):
         _LOGGER.info(
             "No configuration file found, creating one from a default configuration template"
         )
-        configuration.create_default_config()
+        configuration.create_default_config(template)
     elif no_interactive:
         _LOGGER.info("Configuration file already present, no action performed in non-interactive mode")
 

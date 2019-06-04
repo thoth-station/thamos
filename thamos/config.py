@@ -90,7 +90,7 @@ class _Configuration:
 
                 self._configuration = yaml.safe_load(self._configuration)
 
-    def create_default_config(self):
+    def create_default_config(self, template: str = None):
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
@@ -98,7 +98,8 @@ class _Configuration:
         _LOGGER.debug(
             "Reading default configuration from %r", self.DEFAULT_THOTH_CONFIG
         )
-        with open(self.DEFAULT_THOTH_CONFIG, "r") as default_config_file:
+        template = template or self.DEFAULT_THOTH_CONFIG
+        with open(template, "r") as default_config_file:
             default_config = default_config_file.read()
 
         _LOGGER.info("Discovering host runtime environment")
