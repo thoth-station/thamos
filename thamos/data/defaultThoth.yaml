@@ -3,7 +3,7 @@
 # adjust values listed below as desired.
 
 # A remote Thoth service to talk to:
-host: thoth-user-api.redhat.com  # TODO: Adjust Thoth's host.
+host: khemenu.thoth-station.ninja
 
 # Configure TLS verification for communication with remote Thoth instance:
 tls_verify: true
