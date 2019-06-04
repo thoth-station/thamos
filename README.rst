@@ -53,6 +53,81 @@ environment variable, this means types need to be taken into account
 (environment variable with value `"true"` is put into configuration file as
 `true`).
 
+
+Using custom configuration file template
+========================================
+
+You can use your own custom configuration file as a template. This is
+especially useful if you want to have some configuration entries constant and
+let expand only some of the configuration options. In other words, you can
+parametrize configuration file.
+
+An example of configuration file template can be:
+
+.. code-block:: yaml
+
+  host: {THOTH_SERVICE_HOST}
+  tls_verify: true
+  requirements_format: pipenv
+
+  runtime_environments:
+    - name: '{os_name}:{os_version}'
+      operating_system:
+        name: {os_name}
+        version: '{os_version}'
+      hardware:
+        cpu_family: {cpu_family}
+        cpu_model: {cpu_model}
+      python_version: '{python_version}'
+      cuda_version: {cuda_version}
+      recommendation_type: stable
+      limit_latest_versions: null
+
+Then, you need to supply this configuration file to the following command:
+
+.. code-block:: console
+
+  thamos config --template template.yaml
+
+Listing of automatically expanded configuration options which are supplied the
+config sub-command (these options are optional and will be expanded based on HW
+or SW discovery):
+
++------------------------+--------------------------------+----------+
+| Configuration option   | Explanation                    | Example  |
++========================+================================+==========+
+| `os_name`              | name of operating system       | fedora   |
++------------------------+--------------------------------+----------+
+| `os_version`           | version of operating system    |  30      |
++------------------------+--------------------------------+----------+
+| `cpu_family`           | CPU family identifier          |  6       |
++------------------------+--------------------------------+----------+
+| `cpu_model`            | CPU model identifier           |  94      |
++------------------------+--------------------------------+----------+
+| `python_version`       | Python version (major.minor)   |  3.6     |
++------------------------+--------------------------------+----------+
+| `cuda_version`         | CUDA version (major.minor)     |  9.0     |
++------------------------+--------------------------------+----------+
+
+These configuration options are optional and can be mixed with adjustment based
+on environment variables (see `THOTH_SERVICE_HOST` example above). Note the
+environment variables are not expanded on `thamos config` call but rather on
+other sub-commands issued (e.g. `thamos advise` or others).
+
+Using Thoth and thamos in OpenShift's s2i
+=========================================
+
+Using configuration templates is especially useful for OpenShift builds where
+you can specify your template in an s2i repository (omit `Pipfile.lock` to
+enable call to `thamos advise` as shown in `this repository
+<https://github.com/thoth-station/s2i-thoth-example>`_).
+
+Then, you need to provide following environment variables:
+
+* `THAMOS_CONFIG_TEMPLATE` - holds path to template - use `/tmp/src` prefix to point to root of s2i repository (e.g. `/tmp/src/template.yaml` if `template.yaml` is the configuration template and is stored in root of your Git repository)
+* `THAMOS_NO_INTERACTIVE` - set to `1` if you don't want to omit interactive thamos (suitable for automated s2i builds happening in the cluster)
+* `THOTH_SERVICE_HOST` - set to host of Thoth backend you would like to talk to, applicable only you use expansion based on environment variables as shown in the example above
+
 Using Thamos as a library
 =========================
 
