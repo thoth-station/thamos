@@ -149,7 +149,6 @@ def _get_static_analysis() -> dict:
 
     return result
 
-
 @with_api_client
 def advise(
     api_client: ApiClient,
@@ -165,7 +164,7 @@ def advise(
     force: bool = False,
     limit: int = None,
     count: int = 1,
-    debug: bool = False,
+    debug: bool = False, 
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -255,6 +254,40 @@ def advise(
 
     return response.result, response.result["error"]
 
+def advise_here(
+    api_client: ApiClient,
+    recommendation_type: str = None,
+    *,
+    runtime_environment: dict = None,
+    runtime_environment_name: str = None,
+    limit_latest_versions: int = None,
+    no_static_analysis: bool = False,
+    nowait: bool = False,
+    force: bool = False,
+    limit: int = None,
+    count: int = 1,
+    debug: bool = False,
+) -> typing.Optional[tuple]:
+    '''Run advise in current directory, requires no arguments'''
+    if not os.path.isfile("Pipfile"):
+        raise FileNotFoundError("No Pipfile found in current directory")
+    
+    with open("Pipfile", "r") as pipfile, \
+         open("Pipfile.lock", "a+") as piplock:
+        
+        return advise(
+            pipfile = pipfile.read(),
+            pipfile_lock = piplock.read(),
+            recommendation_type = recommendation_type,
+            runtime_environment_name = runtime_environment_name,
+            limit_latest_versions = limit_latest_versions,
+            no_static_analysis = no_static_analysis,
+            nowait = nowait,
+            force = force,
+            limit = limit,
+            count = count,
+            debug = debug
+        )
 
 @with_api_client
 def provenance_check(
