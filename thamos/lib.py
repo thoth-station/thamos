@@ -255,7 +255,6 @@ def advise(
     return response.result, response.result["error"]
 
 def advise_here(
-    api_client: ApiClient,
     recommendation_type: str = None,
     *,
     runtime_environment: dict = None,
