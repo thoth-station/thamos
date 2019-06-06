@@ -48,7 +48,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 _LOGGER = logging.getLogger(__name__)
-_LIBRARIES_USAGE = frozenset(('tensorflow', 'keras', 'pytorch'))
+_LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
 
 def with_api_client(func: typing.Callable):
@@ -191,10 +191,7 @@ def advise(
         library_usage = _get_static_analysis()
         _LOGGER.debug("Library usage:\n%s", json.dumps(library_usage, indent=2))
 
-    stack = PythonStack(
-        requirements=pipfile,
-        requirements_lock=pipfile_lock or "",
-    )
+    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
@@ -206,9 +203,7 @@ def advise(
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
     advise_input = AdviseInput(
-        stack,
-        runtime_environment=runtime_environment,
-        library_usage=library_usage,
+        stack, runtime_environment=runtime_environment, library_usage=library_usage
     )
     api_instance = AdviseApi(api_client)
 
@@ -254,6 +249,44 @@ def advise(
     _LOGGER.debug("Adviser check metadata: %r", response.metadata)
 
     return response.result, response.result["error"]
+
+
+def advise_here(
+    recommendation_type: str = None,
+    *,
+    runtime_environment: dict = None,
+    runtime_environment_name: str = None,
+    limit_latest_versions: int = None,
+    no_static_analysis: bool = False,
+    nowait: bool = False,
+    force: bool = False,
+    limit: int = None,
+    count: int = 1,
+    debug: bool = False,
+) -> typing.Optional[tuple]:
+    """Run advise in current directory, requires no arguments."""
+    if not os.path.isfile("Pipfile"):
+        raise FileNotFoundError("No Pipfile found in current directory")
+
+    with open("Pipfile", "r") as pipfile:
+        lock_str = ""
+        if os.path.isfile("Pipfile.lock"):
+            with open("Pipfile.lock", "r") as piplock:
+                lock_str = piplock.read()
+
+        return advise(
+            pipfile=pipfile.read(),
+            pipfile_lock=lock_str,
+            recommendation_type=recommendation_type,
+            runtime_environment_name=runtime_environment_name,
+            limit_latest_versions=limit_latest_versions,
+            no_static_analysis=no_static_analysis,
+            nowait=nowait,
+            force=force,
+            limit=limit,
+            count=count,
+            debug=debug,
+        )
 
 
 @with_api_client
