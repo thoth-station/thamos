@@ -50,6 +50,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 _LOGGER = logging.getLogger(__name__)
 _LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
+
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
     @wraps(func)
