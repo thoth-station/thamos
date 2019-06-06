@@ -50,10 +50,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 _LOGGER = logging.getLogger(__name__)
 _LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
-
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
-
     @wraps(func)
     def wrapper(*args, **kwargs):
         config = Configuration()
@@ -78,7 +76,6 @@ def with_api_client(func: typing.Callable):
 
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
-
     @contextmanager
     def _no_spinner():
         yield
@@ -266,7 +263,7 @@ def advise_here(
     count: int = 1,
     debug: bool = False,
 ) -> typing.Optional[tuple]:
-    """Run advise in current directory, requires no arguments"""
+    """Run advise in current directory, requires no arguments."""
     if not os.path.isfile("Pipfile"):
         raise FileNotFoundError("No Pipfile found in current directory")
 
