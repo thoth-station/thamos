@@ -48,11 +48,12 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 _LOGGER = logging.getLogger(__name__)
-_LIBRARIES_USAGE = frozenset(('tensorflow', 'keras', 'pytorch'))
+_LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
 
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         config = Configuration()
@@ -77,6 +78,7 @@ def with_api_client(func: typing.Callable):
 
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
+
     @contextmanager
     def _no_spinner():
         yield
@@ -149,6 +151,7 @@ def _get_static_analysis() -> dict:
 
     return result
 
+
 @with_api_client
 def advise(
     api_client: ApiClient,
@@ -164,7 +167,7 @@ def advise(
     force: bool = False,
     limit: int = None,
     count: int = 1,
-    debug: bool = False, 
+    debug: bool = False,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -190,10 +193,7 @@ def advise(
         library_usage = _get_static_analysis()
         _LOGGER.debug("Library usage:\n%s", json.dumps(library_usage, indent=2))
 
-    stack = PythonStack(
-        requirements=pipfile,
-        requirements_lock=pipfile_lock or "",
-    )
+    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
@@ -205,9 +205,7 @@ def advise(
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
     advise_input = AdviseInput(
-        stack,
-        runtime_environment=runtime_environment,
-        library_usage=library_usage,
+        stack, runtime_environment=runtime_environment, library_usage=library_usage
     )
     api_instance = AdviseApi(api_client)
 
@@ -254,6 +252,7 @@ def advise(
 
     return response.result, response.result["error"]
 
+
 def advise_here(
     recommendation_type: str = None,
     *,
@@ -267,10 +266,10 @@ def advise_here(
     count: int = 1,
     debug: bool = False,
 ) -> typing.Optional[tuple]:
-    '''Run advise in current directory, requires no arguments'''
+    """Run advise in current directory, requires no arguments"""
     if not os.path.isfile("Pipfile"):
         raise FileNotFoundError("No Pipfile found in current directory")
-    
+
     with open("Pipfile", "r") as pipfile:
         lock_str = ""
         if os.path.isfile("Pipfile.lock"):
@@ -278,18 +277,19 @@ def advise_here(
                 lock_str = piplock.read()
 
         return advise(
-            pipfile = pipfile.read(),
-            pipfile_lock = lock_str,
-            recommendation_type = recommendation_type,
-            runtime_environment_name = runtime_environment_name,
-            limit_latest_versions = limit_latest_versions,
-            no_static_analysis = no_static_analysis,
-            nowait = nowait,
-            force = force,
-            limit = limit,
-            count = count,
-            debug = debug
+            pipfile=pipfile.read(),
+            pipfile_lock=lock_str,
+            recommendation_type=recommendation_type,
+            runtime_environment_name=runtime_environment_name,
+            limit_latest_versions=limit_latest_versions,
+            no_static_analysis=no_static_analysis,
+            nowait=nowait,
+            force=force,
+            limit=limit,
+            count=count,
+            debug=debug,
         )
+
 
 @with_api_client
 def provenance_check(
