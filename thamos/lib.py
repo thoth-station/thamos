@@ -271,12 +271,15 @@ def advise_here(
     if not os.path.isfile("Pipfile"):
         raise FileNotFoundError("No Pipfile found in current directory")
     
-    with open("Pipfile", "r") as pipfile, \
-         open("Pipfile.lock", "a+") as piplock:
-        
+    with open("Pipfile", "r") as pipfile:
+        lock_str = ""
+        if os.path.isfile("Pipfile.lock"):
+            with open("Pipfile.lock", "r") as piplock:
+                lock_str = piplock.read()
+
         return advise(
             pipfile = pipfile.read(),
-            pipfile_lock = piplock.read(),
+            pipfile_lock = lock_str,
             recommendation_type = recommendation_type,
             runtime_environment_name = runtime_environment_name,
             limit_latest_versions = limit_latest_versions,
