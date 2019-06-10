@@ -292,8 +292,6 @@ def advise_here(
 @with_api_client
 def provenance_check(
     api_client: ApiClient,
-    pipfile: str,
-    pipfile_lock: str,
     *,
     nowait: bool = False,
     force: bool = False,
