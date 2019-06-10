@@ -300,7 +300,7 @@ def advise_here(
 def provenance_check(
     api_client: ApiClient,
     pipfile: str,
-    pipfile_lock: str,   
+    pipfile_lock: str,
     *,
     nowait: bool = False,
     force: bool = False,
