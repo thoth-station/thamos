@@ -53,6 +53,7 @@ _LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         config = Configuration()
@@ -77,6 +78,7 @@ def with_api_client(func: typing.Callable):
 
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
+
     @contextmanager
     def _no_spinner():
         yield
@@ -338,20 +340,16 @@ def provenance_check_here(
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
         raise FileNotFoundError("No Pipfile found in current directory")
-    
+
     if not os.path.isfile("Pipfile.lock"):
         raise FileNotFoundError("No Pipfile.lock found in current directory")
 
     with open("Pipfile", "r") as pipfile, open("Pipfile.lock", "r") as piplock:
         return self.provenance_check(
-            pipfile.read(),
-            piplock.read(),
-            nowait = nowait,
-            force = force,
-            debug = debug,
+            pipfile.read(), piplock.read(), nowait=nowait, force=force, debug=debug
         )
 
-    
+
 @with_api_client
 def image_analysis(
     api_client: ApiClient,
