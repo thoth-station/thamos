@@ -347,7 +347,7 @@ def provenance_check_here(
         raise FileNotFoundError("No Pipfile.lock found in current directory")
 
     with open("Pipfile", "r") as pipfile, open("Pipfile.lock", "r") as piplock:
-        return self.provenance_check(
+        return provenance_check(
             pipfile.read(), piplock.read(), nowait=nowait, force=force, debug=debug
         )
 
