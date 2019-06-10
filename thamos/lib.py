@@ -20,6 +20,7 @@
 import os
 import logging
 import typing
+import platform
 from time import sleep
 from time import monotonic
 from contextlib import contextmanager
@@ -32,6 +33,7 @@ from yaspin import yaspin
 from yaspin.spinners import Spinners
 from invectio import gather_library_usage
 
+from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
 from .swagger_client import Configuration
@@ -68,7 +70,12 @@ def with_api_client(func: typing.Callable):
         config.verify_ssl = thoth_config.tls_verify
 
         start = monotonic()
-        result = func(ApiClient(configuration=config), *args, **kwargs)
+        api_client = ApiClient(configuration=config)
+        # Override default user-agent.
+        api_client.user_agent = f"Thamos/{thamos_version} (Python {platform.python_version()}; " \
+                                f"{platform.system()} {platform.release()})"
+        print(api_client.user_agent)
+        result = func(api_client, *args, **kwargs)
         _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
         return result
 
