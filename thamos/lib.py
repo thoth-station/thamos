@@ -334,7 +334,6 @@ def provenance_check(
 
 
 def provenance_check_here(
-    api_client: ApiClient,
     *,
     nowait: bool = False,
     force: bool = False,
