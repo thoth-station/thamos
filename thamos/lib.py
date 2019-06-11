@@ -333,6 +333,25 @@ def provenance_check(
     return response.result["report"], response.result["error"]
 
 
+def provenance_check_here(
+    *,
+    nowait: bool = False,
+    force: bool = False,
+    debug: bool = False,
+) -> typing.Optional[tuple]:
+    """Submit a provenance check in current directory."""
+    if not os.path.isfile("Pipfile"):
+        raise FileNotFoundError("No Pipfile found in current directory")
+
+    if not os.path.isfile("Pipfile.lock"):
+        raise FileNotFoundError("No Pipfile.lock found in current directory")
+
+    with open("Pipfile", "r") as pipfile, open("Pipfile.lock", "r") as piplock:
+        return provenance_check(
+            pipfile.read(), piplock.read(), nowait=nowait, force=force, debug=debug
+        )
+
+
 @with_api_client
 def image_analysis(
     api_client: ApiClient,
