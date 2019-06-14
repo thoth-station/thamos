@@ -222,3 +222,32 @@
 
 ## Release 0.4.2 (2019-05-23T18:55:41)
 * Add missing Invectio requirement
+
+## Release 0.4.3 (2019-06-14T13:17:14)
+* :pushpin: Automatic update of dependency invectio from 0.0.1 to 0.0.3
+* :pushpin: Automatic update of dependency requests from 2.21.0 to 2.22.0
+* :pushpin: Automatic update of dependency pyyaml from 5.1 to 5.1.1
+* :pushpin: Automatic update of dependency yaspin from 0.14.2 to 0.14.3
+* :pushpin: Automatic update of dependency urllib3 from 1.24.3 to 1.25.3
+* Include Thoth's configuration file for sdist distribution
+* rm trailing white space
+* Removed self keyword
+* Remove api arg
+* Accidental white space
+* Forgot to remove arguments
+* Forgot to remove arguments
+* Manual formatting
+* Auto format
+* Provenance here lib function
+* Use own user-agent for user requests
+* Thamos Library advise_here (#159)
+* Edit styling
+* Edit styling
+* python/black styling
+* Pipfile.lock is not auto added
+* No need to include API client in args
+* Created library function for advising current directory
+* State configuration option for disabling progressbar
+* Adjust default Thoth host to talk to
+* Provide ability to supply configuration file template
+* Report warning if no library usage was gathered
