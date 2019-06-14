@@ -86,10 +86,10 @@
         },
         "invectio": {
             "hashes": [
-                "sha256:e7818962b532afa49bd8cbc1d6402b8240846360c43bff924d74359440c732ed"
+                "sha256:a21e591ebba63e27959ae6491b787e6567554db318e785f8ecd65c23465c323d"
             ],
             "index": "pypi",
-            "version": "==0.0.1"
+            "version": "==0.0.3"
         },
         "iso8601": {
             "hashes": [
