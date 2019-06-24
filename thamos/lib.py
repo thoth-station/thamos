@@ -184,14 +184,14 @@ def advise(
         )
 
     # We use the explicit one if provided at the end.
-    limit_latest_versions_explicit = limit_latest_versions
-    limit_latest_versions = thoth_config.content.get("limit_latest_versions")
+    if limit_latest_versions is None:
+        limit_latest_versions = thoth_config.content.get("limit_latest_versions")
 
-    recommendation_type_explicit = recommendation_type
-    recommendation_type = thoth_config.content.get("recommendation_type") or "stable"
-    runtime_environment = runtime_environment or thoth_config.get_runtime_environment(
-        runtime_environment_name
-    )
+    if recommendation_type is None:
+        recommendation_type = thoth_config.content.get("recommendation_type") or "stable"
+
+    if runtime_environment is None:
+        runtime_environment = thoth_config.get_runtime_environment(runtime_environment_name)
 
     library_usage = None
     if not no_static_analysis:
@@ -202,7 +202,7 @@ def advise(
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
-        if "recommendation_type" in runtime_environment:
+        if "recommendation_type" in runtime_environment and recommendation_type is None:
             recommendation_type = runtime_environment.pop("recommendation_type")
         if "limit_latest_versions" in runtime_environment:
             limit_latest_versions = runtime_environment.pop("limit_latest_versions")
@@ -214,8 +214,6 @@ def advise(
     )
     api_instance = AdviseApi(api_client)
 
-    # Force to use the explicit one if user asked so.
-    recommendation_type = recommendation_type_explicit or recommendation_type
     if recommendation_type:
         recommendation_type = recommendation_type.lower()
 
@@ -231,7 +229,6 @@ def advise(
     if count is not None:
         parameters["count"] = count
 
-    limit_latest_versions = limit_latest_versions_explicit or limit_latest_versions
     if limit_latest_versions is not None:
         parameters["limit_latest_versions"] = limit_latest_versions
 
