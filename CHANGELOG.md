@@ -255,3 +255,6 @@
 ## Release 0.5.0 (2019-06-24T09:04:03)
 * Fix handling based on arguments if no config file is needed
 * :pushpin: Automatic update of dependency certifi from 2019.3.9 to 2019.6.16
+
+## Release 0.5.1 (2019-06-24T09:41:35)
+
