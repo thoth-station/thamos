@@ -442,3 +442,24 @@ def get_status(api_client: ApiClient, analysis_id: str):
         )
 
     return method(analysis_id).status.to_dict()
+
+
+@with_api_client
+def get_analysis_results(api_client: ApiClient, analysis_id: str):
+    """Get the analysis result from a given id."""
+    if analysis_id.startswith("package-extract-"):
+        api_instance = ImageAnalysisApi(api_client)
+        method = api_instance.get_analyze
+    elif analysis_id.startswith("provenance-checker-"):
+        api_instance = ProvenanceApi(api_client)
+        method = api_instance.get_provenance_python
+    elif analysis_id.startswith("adviser-"):
+        api_instance = AdviseApi(api_client)
+        method = api_instance.get_advise_python
+    else:
+        raise UnknownAnalysisType(
+            "Cannot determine analysis type from identifier: %r", analysis_id
+        )
+    response = _retrieve_analysis_result(method, api_instance)
+    _LOGGER.debug("Image analysis metadata: %r", response.metadata)
+    return response.result
