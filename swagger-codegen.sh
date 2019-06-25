@@ -7,7 +7,7 @@
 
 set -ex
 
-THOTH_SWAGGER_YAML=${1:-'https://raw.githubusercontent.com/thoth-station/user-api/master/thoth/user_api/swagger.yaml'}
+THOTH_SWAGGER_YAML=${1:-'https://raw.githubusercontent.com/thoth-station/user-api/master/openapi/openapi.yaml'}
 
 function die() {
     echo $@ 1>&2
