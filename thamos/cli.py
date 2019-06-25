@@ -245,7 +245,7 @@ def _print_report(report: dict, json_output: bool = False):
     help="Use selected host instead of the one stated in the configuration file.",
 )
 def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = None):
-    """A CLI tool for interacting with Thoth."""
+    """CLI tool for interacting with Thoth."""
     if ctx:
         ctx.auto_envvar_prefix = "THAMOS"
 
