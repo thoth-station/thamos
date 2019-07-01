@@ -258,6 +258,7 @@ def advise(
 def advise_here(
     recommendation_type: str = None,
     *,
+    origin: str = None,
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
     limit_latest_versions: int = None,
@@ -290,6 +291,7 @@ def advise_here(
             limit=limit,
             count=count,
             debug=debug,
+            origin=origin,
         )
 
 
@@ -299,6 +301,7 @@ def provenance_check(
     pipfile: str,
     pipfile_lock: str,
     *,
+    origin: str = None,
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
@@ -309,7 +312,7 @@ def provenance_check(
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
-    response = api_instance.post_provenance_python(stack, debug=debug, force=force)
+    response = api_instance.post_provenance_python(stack, debug=debug, force=force, origin=origin)
     _LOGGER.info(
         "Successfully submitted provenance check analysis %r to %r",
         response.analysis_id,
@@ -332,6 +335,7 @@ def provenance_check(
 
 def provenance_check_here(
     *,
+    origin: str = None,
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
@@ -345,7 +349,12 @@ def provenance_check_here(
 
     with open("Pipfile", "r") as pipfile, open("Pipfile.lock", "r") as piplock:
         return provenance_check(
-            pipfile.read(), piplock.read(), nowait=nowait, force=force, debug=debug
+            pipfile.read(),
+            piplock.read(),
+            nowait=nowait,
+            force=force,
+            debug=debug,
+            origin=origin,
         )
 
 
