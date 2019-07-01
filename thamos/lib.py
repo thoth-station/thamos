@@ -469,6 +469,6 @@ def get_analysis_results(api_client: ApiClient, analysis_id: str):
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
         )
-    response = _retrieve_analysis_result(method, api_instance)
+    response = _retrieve_analysis_result(method, analysis_id)
     _LOGGER.debug("Image analysis metadata: %r", response.metadata)
     return response.result
