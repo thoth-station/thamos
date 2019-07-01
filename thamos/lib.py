@@ -349,12 +349,12 @@ def provenance_check_here(
 
     with open("Pipfile", "r") as pipfile, open("Pipfile.lock", "r") as piplock:
         return provenance_check(
-            pipfile.read(), 
-            piplock.read(), 
-            nowait=nowait, 
-            force=force, 
-            debug=debug, 
-            origin=origin
+            pipfile.read(),
+            piplock.read(),
+            nowait=nowait,
+            force=force,
+            debug=debug,
+            origin=origin,
         )
 
 
