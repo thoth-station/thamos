@@ -183,15 +183,20 @@ def advise(
             "Cannot use runtime_environment and runtime_environment_name at the same time"
         )
 
+    if runtime_environment is None:
+        runtime_environment = thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+
     # We use the explicit one if provided at the end.
     if limit_latest_versions is None:
         limit_latest_versions = thoth_config.content.get("limit_latest_versions")
 
     if recommendation_type is None:
-        recommendation_type = thoth_config.content.get("recommendation_type") or "stable"
-
-    if runtime_environment is None:
-        runtime_environment = thoth_config.get_runtime_environment(runtime_environment_name)
+        priority = (
+            runtime_environment.pop("recommendation_type", None),
+            thoth_config.content.get("recommendation_type", None),
+            "stable"
+        )
+        recommendation_type = next(filter(bool, priority))
 
     library_usage = None
     if not no_static_analysis:
@@ -202,8 +207,7 @@ def advise(
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
-        if "recommendation_type" in runtime_environment and recommendation_type is None:
-            recommendation_type = runtime_environment.pop("recommendation_type")
+        runtime_environment.pop("recommendation_type", None)
         if "limit_latest_versions" in runtime_environment:
             limit_latest_versions = runtime_environment.pop("limit_latest_versions")
 
