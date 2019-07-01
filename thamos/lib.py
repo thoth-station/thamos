@@ -465,10 +465,15 @@ def get_analysis_results(api_client: ApiClient, analysis_id: str):
     elif analysis_id.startswith("adviser-"):
         api_instance = AdviseApi(api_client)
         method = api_instance.get_advise_python
+        response = _retrieve_analysis_result(
+            api_instance.get_advise_python, analysis_id
+        )
+        return response
     else:
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
         )
-    response = method(analysis_id)
+    api_client.metadata = "Called from thamos get_analysis_results"
+    response = _retrieve_analysis_result(method, analysis_id)
     _LOGGER.debug("Image analysis metadata: %r", response.metadata)
     return response.result
