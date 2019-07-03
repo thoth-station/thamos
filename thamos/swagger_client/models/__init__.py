@@ -15,6 +15,8 @@ from __future__ import absolute_import
 
 # import models into model package
 from thamos.swagger_client.models.advise_input import AdviseInput
+from thamos.swagger_client.models.advise_input_application_stack import AdviseInputApplicationStack
+from thamos.swagger_client.models.advise_input_runtime_environment import AdviseInputRuntimeEnvironment
 from thamos.swagger_client.models.analysis_listing_response import AnalysisListingResponse
 from thamos.swagger_client.models.analysis_log_response import AnalysisLogResponse
 from thamos.swagger_client.models.analysis_response import AnalysisResponse
@@ -26,6 +28,7 @@ from thamos.swagger_client.models.analysis_result_response_metadata_distribution
 from thamos.swagger_client.models.analysis_status_response import AnalysisStatusResponse
 from thamos.swagger_client.models.analysis_status_response_status import AnalysisStatusResponseStatus
 from thamos.swagger_client.models.analysis_unfinished_result_response import AnalysisUnfinishedResultResponse
+from thamos.swagger_client.models.analysis_unfinished_result_response_status import AnalysisUnfinishedResultResponseStatus
 from thamos.swagger_client.models.image_metadata_response import ImageMetadataResponse
 from thamos.swagger_client.models.info import Info
 from thamos.swagger_client.models.log import Log

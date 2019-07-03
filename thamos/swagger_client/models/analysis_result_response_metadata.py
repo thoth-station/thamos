@@ -36,7 +36,7 @@ class AnalysisResultResponseMetadata(object):
         '_datetime': 'str',
         'distribution': 'AnalysisResultResponseMetadataDistribution',
         'hostname': 'str',
-        'python': 'object'
+        'python': 'Object'
     }
 
     attribute_map = {
@@ -221,7 +221,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :return: The python of this AnalysisResultResponseMetadata.  # noqa: E501
-        :rtype: object
+        :rtype: Object
         """
         return self._python
 
@@ -231,7 +231,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :param python: The python of this AnalysisResultResponseMetadata.  # noqa: E501
-        :type: object
+        :type: Object
         """
         if python is None:
             raise ValueError("Invalid value for `python`, must not be `None`")  # noqa: E501

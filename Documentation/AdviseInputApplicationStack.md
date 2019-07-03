@@ -1,4 +1,4 @@
-# PythonStack
+# AdviseInputApplicationStack
 
 ## Properties
 Name | Type | Description | Notes
