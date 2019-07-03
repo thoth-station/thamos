@@ -264,3 +264,14 @@
 
 ## Release 0.5.3 (2019-06-24T10:57:16)
 
+
+## Release 0.5.4 (2019-07-03T13:20:37)
+* Add `nowrite` parameter to create_default_config
+* Remove trailing whitespace
+* Added origin option to provenance and advise
+* Make sure to follow recomendation type priority
+* Fix issue #182
+* :pushpin: Automatic update of dependency texttable from 1.6.1 to 1.6.2
+* Update docs on how autogenerating code is done
+* lib analysis results
+* Fix URL to OpenAPI YAML
