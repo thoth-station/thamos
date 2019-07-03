@@ -26,6 +26,7 @@ from time import monotonic
 from contextlib import contextmanager
 from functools import partial
 from functools import wraps
+import pprint
 import json
 import urllib3
 
@@ -74,7 +75,6 @@ def with_api_client(func: typing.Callable):
         # Override default user-agent.
         api_client.user_agent = f"Thamos/{thamos_version} (Python {platform.python_version()}; " \
                                 f"{platform.system()} {platform.release()})"
-        print(api_client.user_agent)
         result = func(api_client, *args, **kwargs)
         _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
         return result
@@ -247,6 +247,10 @@ def advise(
         response.analysis_id,
         thoth_config.api_url,
     )
+
+    _LOGGER.debug("Analysis parameters:\n%r", pprint.pformat(parameters))
+    _LOGGER.debug("Adviser input:\n%s", advise_input.to_str())
+
     if nowait:
         return response.analysis_id
 
