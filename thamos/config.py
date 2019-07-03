@@ -90,7 +90,7 @@ class _Configuration:
 
                 self._configuration = yaml.safe_load(self._configuration)
 
-    def create_default_config(self, template: str = None):
+    def create_default_config(self, template: str = None, nowrite: bool = False) -> typing.Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
@@ -119,12 +119,16 @@ class _Configuration:
             **cpu_info
         )
 
-        _LOGGER.debug(
-            "Writing configuration file to %r",
-            os.path.join(os.getcwd(), self.CONFIG_NAME),
-        )
-        with open(self.CONFIG_NAME, "w") as config_file:
-            config_file.write(default_config)
+        if not nowrite:
+            _LOGGER.debug(
+                "Writing configuration file to %r",
+                os.path.join(os.getcwd(), self.CONFIG_NAME),
+            )
+
+            with open(self.CONFIG_NAME, "w") as config_file:
+                config_file.write(default_config)
+        else:
+            return yaml.safe_load(default_config)
 
     @staticmethod
     def open_config_file():
