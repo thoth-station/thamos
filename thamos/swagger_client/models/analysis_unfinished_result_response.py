@@ -14,6 +14,7 @@ import pprint
 import re  # noqa: F401
 
 import six
+from thamos.swagger_client.models.analysis_unfinished_result_response_status import AnalysisUnfinishedResultResponseStatus  # noqa: F401,E501
 
 
 class AnalysisUnfinishedResultResponse(object):
@@ -30,21 +31,25 @@ class AnalysisUnfinishedResultResponse(object):
     """
     swagger_types = {
         'error': 'str',
-        'parameters': 'object'
+        'parameters': 'object',
+        'status': 'AnalysisUnfinishedResultResponseStatus'
     }
 
     attribute_map = {
         'error': 'error',
-        'parameters': 'parameters'
+        'parameters': 'parameters',
+        'status': 'status'
     }
 
-    def __init__(self, error=None, parameters=None):  # noqa: E501
+    def __init__(self, error=None, parameters=None, status=None):  # noqa: E501
         """AnalysisUnfinishedResultResponse - a model defined in Swagger"""  # noqa: E501
         self._error = None
         self._parameters = None
+        self._status = None
         self.discriminator = None
         self.error = error
         self.parameters = parameters
+        self.status = status
 
     @property
     def error(self):
@@ -95,6 +100,29 @@ class AnalysisUnfinishedResultResponse(object):
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
         self._parameters = parameters
+
+    @property
+    def status(self):
+        """Gets the status of this AnalysisUnfinishedResultResponse.  # noqa: E501
+
+
+        :return: The status of this AnalysisUnfinishedResultResponse.  # noqa: E501
+        :rtype: AnalysisUnfinishedResultResponseStatus
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this AnalysisUnfinishedResultResponse.
+
+
+        :param status: The status of this AnalysisUnfinishedResultResponse.  # noqa: E501
+        :type: AnalysisUnfinishedResultResponseStatus
+        """
+        if status is None:
+            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
+
+        self._status = status
 
     def to_dict(self):
         """Returns the model properties as a dict"""

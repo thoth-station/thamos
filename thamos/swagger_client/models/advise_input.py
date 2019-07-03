@@ -14,6 +14,8 @@ import pprint
 import re  # noqa: F401
 
 import six
+from thamos.swagger_client.models.advise_input_application_stack import AdviseInputApplicationStack  # noqa: F401,E501
+from thamos.swagger_client.models.advise_input_runtime_environment import AdviseInputRuntimeEnvironment  # noqa: F401,E501
 
 
 class AdviseInput(object):
@@ -29,28 +31,28 @@ class AdviseInput(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'application_stack': 'object',
-        'runtime_environment': 'object',
-        'library_usage': 'object'
+        'application_stack': 'AdviseInputApplicationStack',
+        'library_usage': 'object',
+        'runtime_environment': 'AdviseInputRuntimeEnvironment'
     }
 
     attribute_map = {
         'application_stack': 'application_stack',
-        'runtime_environment': 'runtime_environment',
-        'library_usage': 'library_usage'
+        'library_usage': 'library_usage',
+        'runtime_environment': 'runtime_environment'
     }
 
-    def __init__(self, application_stack=None, runtime_environment=None, library_usage=None):  # noqa: E501
+    def __init__(self, application_stack=None, library_usage=None, runtime_environment=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
-        self._runtime_environment = None
         self._library_usage = None
+        self._runtime_environment = None
         self.discriminator = None
         self.application_stack = application_stack
-        if runtime_environment is not None:
-            self.runtime_environment = runtime_environment
         if library_usage is not None:
             self.library_usage = library_usage
+        if runtime_environment is not None:
+            self.runtime_environment = runtime_environment
 
     @property
     def application_stack(self):
@@ -58,7 +60,7 @@ class AdviseInput(object):
 
 
         :return: The application_stack of this AdviseInput.  # noqa: E501
-        :rtype: object
+        :rtype: AdviseInputApplicationStack
         """
         return self._application_stack
 
@@ -68,33 +70,12 @@ class AdviseInput(object):
 
 
         :param application_stack: The application_stack of this AdviseInput.  # noqa: E501
-        :type: object
+        :type: AdviseInputApplicationStack
         """
         if application_stack is None:
             raise ValueError("Invalid value for `application_stack`, must not be `None`")  # noqa: E501
 
         self._application_stack = application_stack
-
-    @property
-    def runtime_environment(self):
-        """Gets the runtime_environment of this AdviseInput.  # noqa: E501
-
-
-        :return: The runtime_environment of this AdviseInput.  # noqa: E501
-        :rtype: object
-        """
-        return self._runtime_environment
-
-    @runtime_environment.setter
-    def runtime_environment(self, runtime_environment):
-        """Sets the runtime_environment of this AdviseInput.
-
-
-        :param runtime_environment: The runtime_environment of this AdviseInput.  # noqa: E501
-        :type: object
-        """
-
-        self._runtime_environment = runtime_environment
 
     @property
     def library_usage(self):
@@ -118,6 +99,27 @@ class AdviseInput(object):
         """
 
         self._library_usage = library_usage
+
+    @property
+    def runtime_environment(self):
+        """Gets the runtime_environment of this AdviseInput.  # noqa: E501
+
+
+        :return: The runtime_environment of this AdviseInput.  # noqa: E501
+        :rtype: AdviseInputRuntimeEnvironment
+        """
+        return self._runtime_environment
+
+    @runtime_environment.setter
+    def runtime_environment(self, runtime_environment):
+        """Sets the runtime_environment of this AdviseInput.
+
+
+        :param runtime_environment: The runtime_environment of this AdviseInput.  # noqa: E501
+        :type: AdviseInputRuntimeEnvironment
+        """
+
+        self._runtime_environment = runtime_environment
 
     def to_dict(self):
         """Returns the model properties as a dict"""

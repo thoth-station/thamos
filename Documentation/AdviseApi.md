@@ -1,19 +1,19 @@
 # thamos.swagger_client.AdviseApi
 
-All URIs are relative to */api/v1*
+All URIs are relative to *http://test.thoth-station.ninja/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_advise_python**](AdviseApi.md#get_advise_python) | **GET** /advise/python/{analysis_id} | Get computeted adviser result based on its id.
+[**get_advise_python**](AdviseApi.md#get_advise_python) | **GET** /advise/python/{analysis_id} | Get computed adviser result based on its id.
 [**get_advise_python_log**](AdviseApi.md#get_advise_python_log) | **GET** /advise/python/{analysis_id}/log | Retrieve a adviser run log.
-[**get_advise_python_status**](AdviseApi.md#get_advise_python_status) | **GET** /advise/python/{analysis_id}/status | Show status of an adviser computing recomemendations.
+[**get_advise_python_status**](AdviseApi.md#get_advise_python_status) | **GET** /advise/python/{analysis_id}/status | Show status of an adviser computing recommendations.
 [**list_advise_python**](AdviseApi.md#list_advise_python) | **GET** /advise/python | Get adviser results available.
 [**post_advise_python**](AdviseApi.md#post_advise_python) | **POST** /advise/python | Get advise for Python ecosystem.
 
 # **get_advise_python**
 > AnalysisResultResponse get_advise_python(analysis_id)
 
-Get computeted adviser result based on its id.
+Get computed adviser result based on its id.
 
 ### Example
 ```python
@@ -28,7 +28,7 @@ api_instance = thamos.swagger_client.AdviseApi()
 analysis_id = 'analysis_id_example' # str | Advise id returned on advise request.
 
 try:
-    # Get computeted adviser result based on its id.
+    # Get computed adviser result based on its id.
     api_response = api_instance.get_advise_python(analysis_id)
     pprint(api_response)
 except ApiException as e:
@@ -105,7 +105,7 @@ No authorization required
 # **get_advise_python_status**
 > AnalysisStatusResponse get_advise_python_status(analysis_id)
 
-Show status of an adviser computing recomemendations.
+Show status of an adviser computing recommendations.
 
 ### Example
 ```python
@@ -120,7 +120,7 @@ api_instance = thamos.swagger_client.AdviseApi()
 analysis_id = 'analysis_id_example' # str | An id of requested adviser run.
 
 try:
-    # Show status of an adviser computing recomemendations.
+    # Show status of an adviser computing recommendations.
     api_response = api_instance.get_advise_python_status(analysis_id)
     pprint(api_response)
 except ApiException as e:

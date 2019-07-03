@@ -29,58 +29,33 @@ class Log(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'log': 'str',
         'apiversion': 'str',
         'kind': 'str',
+        'log': 'str',
         'metadata': 'str'
     }
 
     attribute_map = {
-        'log': 'log',
         'apiversion': 'apiversion',
         'kind': 'kind',
+        'log': 'log',
         'metadata': 'metadata'
     }
 
-    def __init__(self, log=None, apiversion=None, kind=None, metadata=None):  # noqa: E501
+    def __init__(self, apiversion=None, kind=None, log=None, metadata=None):  # noqa: E501
         """Log - a model defined in Swagger"""  # noqa: E501
-        self._log = None
         self._apiversion = None
         self._kind = None
+        self._log = None
         self._metadata = None
         self.discriminator = None
-        self.log = log
         if apiversion is not None:
             self.apiversion = apiversion
         if kind is not None:
             self.kind = kind
+        self.log = log
         if metadata is not None:
             self.metadata = metadata
-
-    @property
-    def log(self):
-        """Gets the log of this Log.  # noqa: E501
-
-        A full build or installation log that was output during image build.   # noqa: E501
-
-        :return: The log of this Log.  # noqa: E501
-        :rtype: str
-        """
-        return self._log
-
-    @log.setter
-    def log(self, log):
-        """Sets the log of this Log.
-
-        A full build or installation log that was output during image build.   # noqa: E501
-
-        :param log: The log of this Log.  # noqa: E501
-        :type: str
-        """
-        if log is None:
-            raise ValueError("Invalid value for `log`, must not be `None`")  # noqa: E501
-
-        self._log = log
 
     @property
     def apiversion(self):
@@ -127,6 +102,31 @@ class Log(object):
         """
 
         self._kind = kind
+
+    @property
+    def log(self):
+        """Gets the log of this Log.  # noqa: E501
+
+        A full build or installation log that was output during image build.   # noqa: E501
+
+        :return: The log of this Log.  # noqa: E501
+        :rtype: str
+        """
+        return self._log
+
+    @log.setter
+    def log(self, log):
+        """Sets the log of this Log.
+
+        A full build or installation log that was output during image build.   # noqa: E501
+
+        :param log: The log of this Log.  # noqa: E501
+        :type: str
+        """
+        if log is None:
+            raise ValueError("Invalid value for `log`, must not be `None`")  # noqa: E501
+
+        self._log = log
 
     @property
     def metadata(self):
