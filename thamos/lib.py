@@ -459,16 +459,20 @@ def get_analysis_results(api_client: ApiClient, analysis_id: str):
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(api_client)
         method = api_instance.get_analyze
+        response = _retrieve_analysis_results(method, analysis_id)
+        return response.result
     elif analysis_id.startswith("provenance-checker-"):
         api_instance = ProvenanceApi(api_client)
         method = api_instance.get_provenance_python
+        response = _retrieve_analysis_result(method, analysis_id)
+        return response.result["report"], response.result["error"]
     elif analysis_id.startswith("adviser-"):
         api_instance = AdviseApi(api_client)
         method = api_instance.get_advise_python
         response = _retrieve_analysis_result(
             api_instance.get_advise_python, analysis_id
         )
-        return response
+        return response.result, response.result["error"]
     else:
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
