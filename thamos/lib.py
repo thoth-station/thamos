@@ -339,7 +339,6 @@ def provenance_check(
 
 def provenance_check_here(
     *,
-    origin: str = None,
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
