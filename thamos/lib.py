@@ -173,6 +173,7 @@ def advise(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -232,6 +233,9 @@ def advise(
     if limit_latest_versions is not None:
         parameters["limit_latest_versions"] = limit_latest_versions
 
+    if origin is not None:
+        parameters["origin"] = origin
+
     response = api_instance.post_advise_python(advise_input, **parameters)
 
     _LOGGER.info(
@@ -258,7 +262,6 @@ def advise(
 def advise_here(
     recommendation_type: str = None,
     *,
-    origin: str = None,
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
     limit_latest_versions: int = None,
@@ -268,6 +271,7 @@ def advise_here(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     if not os.path.isfile("Pipfile"):
@@ -301,10 +305,10 @@ def provenance_check(
     pipfile: str,
     pipfile_lock: str,
     *,
-    origin: str = None,
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
@@ -339,6 +343,7 @@ def provenance_check_here(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
