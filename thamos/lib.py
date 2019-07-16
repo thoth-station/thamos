@@ -197,7 +197,7 @@ def advise(
         try:
             limit_latest_versions = next(filter(bool, priority))
         except StopIteration:
-            limit_latest_versions = None 
+            limit_latest_versions = None
 
     if recommendation_type is None:
         priority = (
