@@ -189,7 +189,15 @@ def advise(
 
     # We use the explicit one if provided at the end.
     if limit_latest_versions is None:
-        limit_latest_versions = thoth_config.content.get("limit_latest_versions")
+        priority = (
+            runtime_environment.pop("limit_latest_versions", None),
+            thoth_config.content.get("limit_latest_versions", None),
+            None
+        )
+        try:
+            limit_latest_versions = next(filter(bool, priority))
+        except StopIteration:
+            limit_latest_versions = None
 
     if recommendation_type is None:
         priority = (
@@ -209,8 +217,8 @@ def advise(
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
         runtime_environment.pop("recommendation_type", None)
-        if "limit_latest_versions" in runtime_environment:
-            limit_latest_versions = runtime_environment.pop("limit_latest_versions")
+        # Override latest versions limit specified explicitly in the runtime environment entry.
+        runtime_environment.pop("limit_latest_versions", None)
 
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
