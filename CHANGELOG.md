@@ -275,3 +275,19 @@
 * Update docs on how autogenerating code is done
 * lib analysis results
 * Fix URL to OpenAPI YAML
+
+## Release 0.5.5 (2019-07-17T13:14:56)
+* Fix issues with generated swagger client
+* Remove trailing whitespace
+* Fix propagation of `limit_latest_versions` parameter
+* Round up maximum line length allowed for Coala
+* Be more verbose about adviser input on debug
+* Use test environment as a source for swagger client
+* Regenerate swagger client
+* Removed unecessary from get_analysis_results
+* Duplicate origin param
+* Added origin to advise
+* Fixed
+* auto swagger client generated
+* Analysis ID is second argument
+* Analysis ID is second argument
