@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **_datetime** | **str** | Date and time of analysis end in ISO format. | 
 **distribution** | [**AnalysisResultResponseMetadataDistribution**](AnalysisResultResponseMetadataDistribution.md) |  | 
 **hostname** | **str** | Pod name where the analysis was done. | 
-**python** | [**Object**](Object.md) |  | 
+**python** | [**AnalysisResultResponseMetadataPython**](AnalysisResultResponseMetadataPython.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
