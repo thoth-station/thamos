@@ -145,19 +145,22 @@ def _get_static_analysis() -> dict:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
         return {}
 
-    result = {}
-    for file_record in library_usage.values():
+    report = {}
+    for file_record in library_usage["report"].values():
         for library, usage in file_record.items():
             if library not in _LIBRARIES_USAGE:
                 _LOGGER.debug("Omitting usage of library %r", library)
                 continue
 
-            if library not in result:
-                result[library] = []
+            if library not in report:
+                report[library] = []
 
-            result[library].extend(usage)
+            report[library].extend(usage)
 
-    return result
+    return {
+        "report": report,
+        "version": library_usage["version"],
+    }
 
 
 @with_api_client
