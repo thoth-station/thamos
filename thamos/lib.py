@@ -37,6 +37,7 @@ from invectio import gather_library_usage
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
+from .swagger_client import BuildAnalysisApi
 from .swagger_client import Configuration
 from .swagger_client import PythonStack
 from .swagger_client import RuntimeEnvironment
@@ -73,8 +74,10 @@ def with_api_client(func: typing.Callable):
         start = monotonic()
         api_client = ApiClient(configuration=config)
         # Override default user-agent.
-        api_client.user_agent = f"Thamos/{thamos_version} (Python {platform.python_version()}; " \
-                                f"{platform.system()} {platform.release()})"
+        api_client.user_agent = (
+            f"Thamos/{thamos_version} (Python {platform.python_version()}; "
+            f"{platform.system()} {platform.release()})"
+        )
         result = func(api_client, *args, **kwargs)
         _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
         return result
@@ -185,14 +188,16 @@ def advise(
         )
 
     if runtime_environment is None:
-        runtime_environment = thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+        runtime_environment = (
+            thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+        )
 
     # We use the explicit one if provided at the end.
     if limit_latest_versions is None:
         priority = (
             runtime_environment.pop("limit_latest_versions", None),
             thoth_config.content.get("limit_latest_versions", None),
-            None
+            None,
         )
         try:
             limit_latest_versions = next(filter(bool, priority))
@@ -203,7 +208,7 @@ def advise(
         priority = (
             runtime_environment.pop("recommendation_type", None),
             thoth_config.content.get("recommendation_type", None),
-            "stable"
+            "stable",
         )
         recommendation_type = next(filter(bool, priority))
 
@@ -332,7 +337,9 @@ def provenance_check(
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
-    response = api_instance.post_provenance_python(stack, debug=debug, force=force, origin=origin)
+    response = api_instance.post_provenance_python(
+        stack, debug=debug, force=force, origin=origin
+    )
     _LOGGER.info(
         "Successfully submitted provenance check analysis %r to %r",
         response.analysis_id,
@@ -431,6 +438,59 @@ def image_analysis(
 
     _LOGGER.debug("Image analysis metadata: %r", response.metadata)
     return response.result
+
+
+@with_api_client
+def build_analysis(
+    api_client: ApiClient,
+    build_log: dict,
+    base_image: str,
+    output_image: str,
+    *,
+    environment_type: str,
+    registry_user: str = None,
+    registry_password: str = None,
+    registry_verify_tls: bool = True,
+    nowait: bool = False,
+    force: bool = False,
+    debug: bool = False,
+) -> typing.Union[typing.Dict, str]:
+    """Submit a build image and logs for analysis to Thoth."""
+    if build_log or base_image or output_image:
+        build_detail = {
+            "build_log": build_log,
+            "base_image": base_image,
+            "output_image": output_image,
+        }
+    else:
+        raise ValueError("No build info provided")
+
+    api_instance = BuildAnalysisApi(api_client)
+    if registry_user or registry_password:
+        # Swagger client handles None in a different way - we need to explicitly avoid passing
+        # registry user and registry password if they are not set.
+        response = api_instance.post_build(
+            body=build_detail,
+            debug=debug,
+            registry_user=registry_user,
+            registry_password=registry_password,
+            registry_verify_tls=registry_verify_tls,
+            force=force,
+            environment_type=environment_type,
+        )
+    else:
+        response = api_instance.post_build(
+            body=build_detail,
+            debug=debug,
+            registry_verify_tls=registry_verify_tls,
+            force=force,
+        )
+
+    _LOGGER.info("Successfully submitted build analysis to %r", thoth_config.api_url)
+    if nowait:
+        return response
+
+    return response
 
 
 @with_api_client
