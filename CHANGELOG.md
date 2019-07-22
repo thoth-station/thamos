@@ -291,3 +291,8 @@
 * auto swagger client generated
 * Analysis ID is second argument
 * Analysis ID is second argument
+
+## Release 0.6.0 (2019-07-22T20:19:10)
+* :boat: updated thamos with latest user-api
+* :snail: supporting method for submitting whole build(imagestream and buildlog)
+* :pushpin: Automatic update of dependency invectio from 0.0.3 to 0.0.4
