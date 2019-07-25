@@ -353,7 +353,7 @@ def advise(
 
         if not no_write:
             # Print report of the best one - thus index zero.
-            if result["report"][0][0]:
+            if result["report"] and result["report"][0][0]:
                 _print_header("Recommended stack report")
                 _print_report(result["report"][0][0], json_output=json_output)
 
