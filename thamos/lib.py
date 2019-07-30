@@ -52,7 +52,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 _LOGGER = logging.getLogger(__name__)
-_LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
 
 def with_api_client(func: typing.Callable):
@@ -148,12 +147,8 @@ def _get_static_analysis() -> dict:
     report = {}
     for file_record in library_usage["report"].values():
         for library, usage in file_record.items():
-            if library not in _LIBRARIES_USAGE:
-                _LOGGER.debug("Omitting usage of library %r", library)
-                continue
-
-            if library not in report:
-                report[library] = []
+            if library not in result:
+                result[library] = []
 
             report[library].extend(usage)
 
