@@ -147,8 +147,9 @@ def _get_static_analysis() -> dict:
     report = {}
     for file_record in library_usage["report"].values():
         for library, usage in file_record.items():
-            if library not in result:
-                result[library] = []
+            # We could filter out some of the libraries which were used.
+            if library not in report:
+                report[library] = []
 
             report[library].extend(usage)
 
