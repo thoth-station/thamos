@@ -267,7 +267,12 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 
 
 @cli.command("advise")
-@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--debug",
+    is_flag=True,
+    envvar="THAMOS_DEBUG",
+    help="Run analysis in debug mode on Thoth."
+)
 @click.option(
     "--no-write",
     "-W",
@@ -279,6 +284,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     "-t",
     type=str,
     metavar="RECOMMENDATION_TYPE",
+    envvar="THAMOS_RECOMMENDATION_TYPE",
     help="Use selected recommendation type, do not load it from Thoth's config file.",
 )
 @click.option(
@@ -289,13 +295,17 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 @click.option(
     "--no-static-analysis",
     is_flag=True,
+    envvar="THAMOS_NO_STATIC_ANALYSIS",
     help="Do not perform static analysis of source code files.",
 )
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
 @click.option(
-    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+    "--force",
+    is_flag=True,
+    envvar="THAMOS_FORCE",
+    help="Force analysis run bypassing server-side cache."
 )
 @click.option(
     "--runtime-environment",
@@ -311,6 +321,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     type=int,
     default=None,
     metavar="COUNT",
+    envvar="THAMOS_LIMIT_LATEST_VERSIONS",
     help="Specify number of latest versions for each package to consider.",
 )
 def advise(
@@ -376,7 +387,12 @@ def advise(
 
 
 @cli.command("provenance-check")
-@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--debug",
+    is_flag=True,
+    envvar="THAMOS_DEBUG",
+    help="Run analysis in debug mode on Thoth."
+)
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
@@ -386,7 +402,10 @@ def advise(
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
-    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+    "--force",
+    is_flag=True,
+    envvar="THAMOS_FORCE",
+    help="Force analysis run bypassing server-side cache.",
 )
 @click.pass_context
 @handle_cli_exception
