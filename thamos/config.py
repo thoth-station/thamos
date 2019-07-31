@@ -95,10 +95,10 @@ class _Configuration:
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
 
-        _LOGGER.debug(
-            "Reading default configuration from %r", self.DEFAULT_THOTH_CONFIG
-        )
         template = template or self.DEFAULT_THOTH_CONFIG
+        _LOGGER.debug(
+            "Reading configuration from %r", template
+        )
         with open(template, "r") as default_config_file:
             default_config = default_config_file.read()
 

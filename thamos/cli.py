@@ -505,7 +505,7 @@ def config(no_interactive: bool = False, template: str = None):
     """
     if not configuration.config_file_exists():
         _LOGGER.info(
-            "No configuration file found, creating one from a default configuration template"
+            "No configuration file found, creating one from a configuration template"
         )
         configuration.create_default_config(template)
     elif no_interactive:
