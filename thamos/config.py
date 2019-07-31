@@ -116,7 +116,8 @@ class _Configuration:
             os_name=os_name,
             os_version=os_version,
             python_version=python_version,
-            **cpu_info
+            **cpu_info,
+            **(os.environ if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)) else {}),
         )
 
         if not nowrite:
