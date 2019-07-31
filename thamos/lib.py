@@ -552,8 +552,14 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
 
 
 @with_api_client
-def get_status(api_client: ApiClient, analysis_id: str):
-    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+def get_status(api_client: ApiClient, analysis_id: str = None):
+    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id.
+
+    If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
+    """
+    if not analysis_id:
+        analysis_id = _get_last_analysis_id()
+
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(api_client)
         method = api_instance.get_analyze_status

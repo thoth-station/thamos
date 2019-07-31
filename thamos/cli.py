@@ -464,7 +464,7 @@ def log(analysis_id: str = None):
 
 
 @cli.command("status")
-@click.argument("analysis_id", type=str)
+@click.argument("analysis_id", type=str, required=False)
 @click.option(
     "--output-format",
     "-o",
@@ -472,9 +472,17 @@ def log(analysis_id: str = None):
     default="table",
     help="Specify output format for the status report.",
 )
-def status(analysis_id: str, output_format: str = None):
-    """Get status of an analysis."""
-    status_dict = get_status(analysis_id)
+def status(analysis_id: str = None, output_format: str = None):
+    """Get status of an analysis.
+
+    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    """
+    if not analysis_id:
+        with workdir():
+            status_dict = get_status()
+    else:
+        status_dict = get_status(analysis_id)
+
     if not output_format or output_format == "table":
         table = Texttable(max_width=get_terminal_size().columns)
         table.set_deco(Texttable.VLINES)
