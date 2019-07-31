@@ -448,10 +448,19 @@ def provenance_check(
 
 
 @cli.command("log")
-@click.argument("analysis_id", type=str)
-def log(analysis_id: str):
-    """Get log of running or finished analysis."""
-    click.echo(get_log(analysis_id))
+@click.argument("analysis_id", type=str, required=False)
+def log(analysis_id: str = None):
+    """Get log of running or finished analysis.
+
+    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    """
+    if not analysis_id:
+        with workdir():
+            log_str = get_log()
+    else:
+        log_str = get_log(analysis_id)
+
+    click.echo(log_str)
 
 
 @cli.command("status")

@@ -20,6 +20,12 @@ installation instructions bellow to setup Thoth/Thamos for your repository:
   $ thamos config
   # Ask Thoth for software stack recommendations:
   $ thamos advise
+  # Retrieve logs of the last analysis:
+  $ thamos log
+
+
+As Thamos notes analysis ids for better UX of ``thamos log``, it's recommended to
+add ``.thoth_last_analysis_id`` file to ``.gitignore``.
 
 
 Adjusting configuration based on environment variables
