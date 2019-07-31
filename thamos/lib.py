@@ -115,7 +115,7 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
             )
 
             sleep(sleep_time)
-            sleep_time = min(sleep_time * 2, 10)
+            sleep_time = min(sleep_time * 2, 8)
 
 
 def _retrieve_analysis_result(
