@@ -50,6 +50,7 @@ from .exceptions import UnknownAnalysisType
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+LAST_ANALYSIS_ID_FILE = ".thoth_last_analysis_id"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -116,6 +117,33 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
 
             sleep(sleep_time)
             sleep_time = min(sleep_time * 2, 8)
+
+
+def _note_last_analysis_id(analysis_id: str) -> None:
+    """Store analysis id in a temporary file to keep analysis id for thamos log optional."""
+    if int(os.getenv("THAMOS_DISABLE_LAST_ANALYSIS_ID_FILE", 0)):
+        _LOGGER.debug("Last analysis id will not be noted")
+        return
+
+    _LOGGER.debug("Noting last analysis id %r", analysis_id)
+    try:
+        with open(LAST_ANALYSIS_ID_FILE, "w") as analysis_id_file:
+            analysis_id_file.write(analysis_id)
+    except Exception as exc:
+        _LOGGER.warning("Failed to write analysis id to a temporary file: %s", str(exc))
+
+
+def _get_last_analysis_id() -> str:
+    """Retrieve last analysis id from a temporary file."""
+    try:
+        with open(LAST_ANALYSIS_ID_FILE, "r") as analysis_id_file:
+            analysis_id = analysis_id_file.readline().strip()
+    except Exception as exc:
+        raise FileNotFoundError(
+            "Cannot retrieve last analysis id, you need to provide analysis id explicitly"
+        ) from exc
+
+    return analysis_id
 
 
 def _retrieve_analysis_result(
@@ -260,6 +288,8 @@ def advise(
         thoth_config.api_url,
     )
 
+    _note_last_analysis_id(response.analysis_id)
+
     _LOGGER.debug("Analysis parameters:\n%r", pprint.pformat(parameters))
     _LOGGER.debug("Adviser input:\n%s", advise_input.to_str())
 
@@ -345,6 +375,9 @@ def provenance_check(
         response.analysis_id,
         thoth_config.api_url,
     )
+
+    _note_last_analysis_id(response.analysis_id)
+
     if nowait:
         return response.analysis_id
 
@@ -494,8 +527,14 @@ def build_analysis(
 
 
 @with_api_client
-def get_log(api_client: ApiClient, analysis_id: str):
-    """Get log of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+def get_log(api_client: ApiClient, analysis_id: str = None):
+    """Get log of an analysis - the analysis type and endpoint are automatically derived from analysis id.
+
+    If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
+    """
+    if not analysis_id:
+        analysis_id = _get_last_analysis_id()
+
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(api_client)
         method = api_instance.get_analyze_log
@@ -514,8 +553,14 @@ def get_log(api_client: ApiClient, analysis_id: str):
 
 
 @with_api_client
-def get_status(api_client: ApiClient, analysis_id: str):
-    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+def get_status(api_client: ApiClient, analysis_id: str = None):
+    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id.
+
+    If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
+    """
+    if not analysis_id:
+        analysis_id = _get_last_analysis_id()
+
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(api_client)
         method = api_instance.get_analyze_status
