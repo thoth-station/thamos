@@ -126,14 +126,17 @@ Using Thoth and thamos in OpenShift's s2i
 Using configuration templates is especially useful for OpenShift builds where
 you can specify your template in an s2i repository (omit `Pipfile.lock` to
 enable call to `thamos advise` as shown in `this repository
-<https://github.com/thoth-station/s2i-thoth-example>`_).
+<https://github.com/thoth-station/s2i-example-tensorflow>`_).
 
 Then, you need to provide following environment variables:
 
-* `THAMOS_CONFIG_TEMPLATE` - holds path to template - use `/tmp/src` prefix to point to root of s2i repository (e.g. `/tmp/src/template.yaml` if `template.yaml` is the configuration template and is stored in root of your Git repository)
-* `THAMOS_NO_INTERACTIVE` - set to `1` if you don't want to omit interactive thamos (suitable for automated s2i builds happening in the cluster)
-* `THOTH_SERVICE_HOST` - set to host of Thoth backend you would like to talk to, applicable only you use expansion based on environment variables as shown in the example above
-* `THAMOS_NO_PROGRESSBAR` - set to `1` to disable progressbar while waiting for response from Thoth backend - it can cause annoying too verbose output printed to OpenShift console during the build
+* ``THAMOS_CONFIG_TEMPLATE`` - holds path to template - use ``/tmp/src`` prefix to point to root of s2i repository (e.g. ``/tmp/src/template.yaml`` if ``template.yaml`` is the configuration template and is stored in root of your Git repository).
+* ``THAMOS_NO_INTERACTIVE`` - set to `1` if you don't want to omit interactive thamos (suitable for automated s2i builds happening in the cluster).
+* ``THAMOS_NO_PROGRESSBAR`` - set to `1` to disable progressbar while waiting for response from Thoth backend - it can cause annoying too verbose output printed to OpenShift console during the build.
+* ``THAMOS_CONFIG_EXPAND_ENV`` - set to `1` to enable expansion based on environment variables when generating ``.thoth.yaml`` file - this needs to be explicitly turned on due to possible security implications.
+* ``THAMOS_FORCE`` - set to `1` not use cached results, always force analysis on Thoth's side (note this option can be ignored by a Thoth operator based on deployment configuration).
+* ``THAMOS_VERBOSE`` - set to `1` to run thamos in verbose mode to show what's going on (verbosity on client side).
+* ``THAMOS_DEBUG`` - set to `1` to run analyzes (adviser, provenance checker, ...) on Thoth's backend side in debug mode, you can obtain logs by running ``thamos logs`` or directly on Thoth's user API; the analysis id gets printed into the console during the build process in OpenShift (verbosity on server side).
 
 Using Thamos as a library
 =========================
