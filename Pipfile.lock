@@ -56,11 +56,11 @@
         },
         "daiquiri": {
             "hashes": [
-                "sha256:8832f28e110165b905993b4bdab638a3c245f5671d5976f226f2628e7d2e7862",
-                "sha256:ac0e69ac0a8c4ceabcf57f14ba4dc7b5940dc2bf9d1ee620d2ae9fa8f78c7891"
+                "sha256:14f0c0746df96cb9c1c5b12ff4dca0bcb977d072c6f4424adcc54e1c0f548cd7",
+                "sha256:c13a236b82b0ff6eda514bba71df595c61f12de024bc53c703a4c7511ddc94c1"
             ],
             "index": "pypi",
-            "version": "==1.5.0"
+            "version": "==1.6.0"
         },
         "delegator.py": {
             "hashes": [
