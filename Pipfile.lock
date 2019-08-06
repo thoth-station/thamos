@@ -86,11 +86,11 @@
         },
         "invectio": {
             "hashes": [
-                "sha256:92062571cc85c42fd99d52ccd19c9502bfd1ff45f21d4e71b496786346235e66",
-                "sha256:ddef94947d0082f4e7904584863e571b82a1892efb43b3b5961a21215b282fed"
+                "sha256:09285cc9ec88c7bc92212ae2dc5bf309805126324846df3c244c21d5505c426e",
+                "sha256:c0aec0386cf1d0a9af4f76ad6c0a451106db6343aac4473e9640ff23e8f805dc"
             ],
             "index": "pypi",
-            "version": "==0.0.5"
+            "version": "==0.0.6"
         },
         "iso8601": {
             "hashes": [
@@ -485,10 +485,10 @@
         },
         "jsonschema": {
             "hashes": [
-                "sha256:0c0a81564f181de3212efa2d17de1910f8732fa1b71c42266d983cd74304e20d",
-                "sha256:a5f6559964a3851f59040d3b961de5e68e70971afb88ba519d27e6a039efff1a"
+                "sha256:5f9c0a719ca2ce14c5de2fd350a64fd2d13e8539db29836a86adc990bb1a068f",
+                "sha256:8d4a2b7b6c2237e0199c8ea1a6d3e05bf118e289ae2b9d7ba444182a2959560d"
             ],
-            "version": "==3.0.1"
+            "version": "==3.0.2"
         },
         "jupyter-core": {
             "hashes": [
@@ -608,10 +608,10 @@
         },
         "pbr": {
             "hashes": [
-                "sha256:0ca44dc9fd3b04a22297c2a91082d8df2894862e8f4c86a49dac69eae9e85ca0",
-                "sha256:4aed6c1b1fa5020def0f22aed663d87b81bb3235f112490b07d2643d7a98c5b5"
+                "sha256:56e52299170b9492513c64be44736d27a512fa7e606f21942160b68ce510b4bc",
+                "sha256:9b321c204a88d8ab5082699469f52cc94c5da45c51f114113d01b3d993c24cdf"
             ],
-            "version": "==5.4.1"
+            "version": "==5.4.2"
         },
         "polib": {
             "hashes": [
