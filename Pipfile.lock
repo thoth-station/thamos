@@ -86,11 +86,11 @@
         },
         "invectio": {
             "hashes": [
-                "sha256:09285cc9ec88c7bc92212ae2dc5bf309805126324846df3c244c21d5505c426e",
-                "sha256:c0aec0386cf1d0a9af4f76ad6c0a451106db6343aac4473e9640ff23e8f805dc"
+                "sha256:23131d513a6072a8443e81129cfeb186d679ab903bffe2d8c4a03d341e6448da",
+                "sha256:f7e6934cdb6d45de99ef7a4e3f839b079a9549740d68efc5fe7a4bf56439f553"
             ],
             "index": "pypi",
-            "version": "==0.0.6"
+            "version": "==0.0.7"
         },
         "iso8601": {
             "hashes": [
