@@ -26,6 +26,7 @@ from time import monotonic
 from contextlib import contextmanager
 from functools import partial
 from functools import wraps
+import pprint
 import json
 import urllib3
 
@@ -36,6 +37,7 @@ from invectio import gather_library_usage
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
+from .swagger_client import BuildAnalysisApi
 from .swagger_client import Configuration
 from .swagger_client import PythonStack
 from .swagger_client import RuntimeEnvironment
@@ -48,9 +50,9 @@ from .exceptions import UnknownAnalysisType
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+LAST_ANALYSIS_ID_FILE = ".thoth_last_analysis_id"
 
 _LOGGER = logging.getLogger(__name__)
-_LIBRARIES_USAGE = frozenset(("tensorflow", "keras", "pytorch"))
 
 
 def with_api_client(func: typing.Callable):
@@ -72,9 +74,10 @@ def with_api_client(func: typing.Callable):
         start = monotonic()
         api_client = ApiClient(configuration=config)
         # Override default user-agent.
-        api_client.user_agent = f"Thamos/{thamos_version} (Python {platform.python_version()}; " \
-                                f"{platform.system()} {platform.release()})"
-        print(api_client.user_agent)
+        api_client.user_agent = (
+            f"Thamos/{thamos_version} (Python {platform.python_version()}; "
+            f"{platform.system()} {platform.release()})"
+        )
         result = func(api_client, *args, **kwargs)
         _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
         return result
@@ -113,7 +116,34 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
             )
 
             sleep(sleep_time)
-            sleep_time = min(sleep_time * 2, 10)
+            sleep_time = min(sleep_time * 2, 8)
+
+
+def _note_last_analysis_id(analysis_id: str) -> None:
+    """Store analysis id in a temporary file to keep analysis id for thamos log optional."""
+    if int(os.getenv("THAMOS_DISABLE_LAST_ANALYSIS_ID_FILE", 0)):
+        _LOGGER.debug("Last analysis id will not be noted")
+        return
+
+    _LOGGER.debug("Noting last analysis id %r", analysis_id)
+    try:
+        with open(LAST_ANALYSIS_ID_FILE, "w") as analysis_id_file:
+            analysis_id_file.write(analysis_id)
+    except Exception as exc:
+        _LOGGER.warning("Failed to write analysis id to a temporary file: %s", str(exc))
+
+
+def _get_last_analysis_id() -> str:
+    """Retrieve last analysis id from a temporary file."""
+    try:
+        with open(LAST_ANALYSIS_ID_FILE, "r") as analysis_id_file:
+            analysis_id = analysis_id_file.readline().strip()
+    except Exception as exc:
+        raise FileNotFoundError(
+            "Cannot retrieve last analysis id, you need to provide analysis id explicitly"
+        ) from exc
+
+    return analysis_id
 
 
 def _retrieve_analysis_result(
@@ -135,26 +165,26 @@ def _retrieve_analysis_result(
 def _get_static_analysis() -> dict:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
-    _LOGGER.info("Performing static analysis")
+    _LOGGER.info("Performing static analysis of sources to gather library usage")
     try:
-        library_usage = gather_library_usage(".", ignore_errors=True)["report"]
+        library_usage = gather_library_usage(".", ignore_errors=True, without_standard_imports=True)["report"]
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
         return {}
 
-    result = {}
-    for file_record in library_usage.values():
+    report = {}
+    for file_record in library_usage["report"].values():
         for library, usage in file_record.items():
-            if library not in _LIBRARIES_USAGE:
-                _LOGGER.debug("Omitting usage of library %r", library)
-                continue
+            # We could filter out some of the libraries which were used.
+            if library not in report:
+                report[library] = []
 
-            if library not in result:
-                result[library] = []
+            report[library].extend(usage)
 
-            result[library].extend(usage)
-
-    return result
+    return {
+        "report": report,
+        "version": library_usage["version"],
+    }
 
 
 @with_api_client
@@ -173,6 +203,7 @@ def advise(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -183,15 +214,30 @@ def advise(
             "Cannot use runtime_environment and runtime_environment_name at the same time"
         )
 
+    if runtime_environment is None:
+        runtime_environment = (
+            thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+        )
+
     # We use the explicit one if provided at the end.
     if limit_latest_versions is None:
-        limit_latest_versions = thoth_config.content.get("limit_latest_versions")
+        priority = (
+            runtime_environment.pop("limit_latest_versions", None),
+            thoth_config.content.get("limit_latest_versions", None),
+            None,
+        )
+        try:
+            limit_latest_versions = next(filter(bool, priority))
+        except StopIteration:
+            limit_latest_versions = None
 
     if recommendation_type is None:
-        recommendation_type = thoth_config.content.get("recommendation_type") or "stable"
-
-    if runtime_environment is None:
-        runtime_environment = thoth_config.get_runtime_environment(runtime_environment_name)
+        priority = (
+            runtime_environment.pop("recommendation_type", None),
+            thoth_config.content.get("recommendation_type", None),
+            "stable",
+        )
+        recommendation_type = next(filter(bool, priority))
 
     library_usage = None
     if not no_static_analysis:
@@ -202,10 +248,9 @@ def advise(
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
-        if "recommendation_type" in runtime_environment and recommendation_type is None:
-            recommendation_type = runtime_environment.pop("recommendation_type")
-        if "limit_latest_versions" in runtime_environment:
-            limit_latest_versions = runtime_environment.pop("limit_latest_versions")
+        runtime_environment.pop("recommendation_type", None)
+        # Override latest versions limit specified explicitly in the runtime environment entry.
+        runtime_environment.pop("limit_latest_versions", None)
 
         runtime_environment = RuntimeEnvironment(**runtime_environment)
 
@@ -232,6 +277,9 @@ def advise(
     if limit_latest_versions is not None:
         parameters["limit_latest_versions"] = limit_latest_versions
 
+    if origin is not None:
+        parameters["origin"] = origin
+
     response = api_instance.post_advise_python(advise_input, **parameters)
 
     _LOGGER.info(
@@ -239,6 +287,12 @@ def advise(
         response.analysis_id,
         thoth_config.api_url,
     )
+
+    _note_last_analysis_id(response.analysis_id)
+
+    _LOGGER.debug("Analysis parameters:\n%r", pprint.pformat(parameters))
+    _LOGGER.debug("Adviser input:\n%s", advise_input.to_str())
+
     if nowait:
         return response.analysis_id
 
@@ -267,21 +321,23 @@ def advise_here(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     if not os.path.isfile("Pipfile"):
         raise FileNotFoundError("No Pipfile found in current directory")
 
     with open("Pipfile", "r") as pipfile:
-        lock_str = ""
+        pipfile_lock_str = ""
         if os.path.isfile("Pipfile.lock"):
-            with open("Pipfile.lock", "r") as piplock:
-                lock_str = piplock.read()
+            with open("Pipfile.lock", "r") as pipfile_lock:
+                pipfile_lock_str = pipfile_lock.read()
 
         return advise(
             pipfile=pipfile.read(),
-            pipfile_lock=lock_str,
+            pipfile_lock=pipfile_lock_str,
             recommendation_type=recommendation_type,
+            runtime_environment=runtime_environment,
             runtime_environment_name=runtime_environment_name,
             limit_latest_versions=limit_latest_versions,
             no_static_analysis=no_static_analysis,
@@ -290,6 +346,7 @@ def advise_here(
             limit=limit,
             count=count,
             debug=debug,
+            origin=origin,
         )
 
 
@@ -302,6 +359,7 @@ def provenance_check(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
@@ -309,12 +367,17 @@ def provenance_check(
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
     api_instance = ProvenanceApi(api_client)
-    response = api_instance.post_provenance_python(stack, debug=debug, force=force)
+    response = api_instance.post_provenance_python(
+        stack, debug=debug, force=force, origin=origin
+    )
     _LOGGER.info(
         "Successfully submitted provenance check analysis %r to %r",
         response.analysis_id,
         thoth_config.api_url,
     )
+
+    _note_last_analysis_id(response.analysis_id)
+
     if nowait:
         return response.analysis_id
 
@@ -335,6 +398,7 @@ def provenance_check_here(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
+    origin: str = None,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
@@ -345,7 +409,12 @@ def provenance_check_here(
 
     with open("Pipfile", "r") as pipfile, open("Pipfile.lock", "r") as piplock:
         return provenance_check(
-            pipfile.read(), piplock.read(), nowait=nowait, force=force, debug=debug
+            pipfile.read(),
+            piplock.read(),
+            nowait=nowait,
+            force=force,
+            debug=debug,
+            origin=origin,
         )
 
 
@@ -405,8 +474,67 @@ def image_analysis(
 
 
 @with_api_client
-def get_log(api_client: ApiClient, analysis_id: str):
-    """Get log of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+def build_analysis(
+    api_client: ApiClient,
+    build_log: dict,
+    base_image: str,
+    output_image: str,
+    *,
+    environment_type: str,
+    registry_user: str = None,
+    registry_password: str = None,
+    registry_verify_tls: bool = True,
+    nowait: bool = False,
+    force: bool = False,
+    debug: bool = False,
+) -> typing.Union[typing.Dict, str]:
+    """Submit a build image and logs for analysis to Thoth."""
+    if build_log or base_image or output_image:
+        build_detail = {
+            "build_log": build_log,
+            "base_image": base_image,
+            "output_image": output_image,
+        }
+    else:
+        raise ValueError("No build info provided")
+
+    api_instance = BuildAnalysisApi(api_client)
+    if registry_user or registry_password:
+        # Swagger client handles None in a different way - we need to explicitly avoid passing
+        # registry user and registry password if they are not set.
+        response = api_instance.post_build(
+            body=build_detail,
+            debug=debug,
+            registry_user=registry_user,
+            registry_password=registry_password,
+            registry_verify_tls=registry_verify_tls,
+            force=force,
+            environment_type=environment_type,
+        )
+    else:
+        response = api_instance.post_build(
+            body=build_detail,
+            debug=debug,
+            registry_verify_tls=registry_verify_tls,
+            force=force,
+        )
+
+    _LOGGER.info("Successfully submitted build analysis to %r", thoth_config.api_url)
+    if nowait:
+        return response
+
+    return response
+
+
+@with_api_client
+def get_log(api_client: ApiClient, analysis_id: str = None):
+    """Get log of an analysis - the analysis type and endpoint are automatically derived from analysis id.
+
+    If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
+    """
+    if not analysis_id:
+        analysis_id = _get_last_analysis_id()
+
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(api_client)
         method = api_instance.get_analyze_log
@@ -425,8 +553,14 @@ def get_log(api_client: ApiClient, analysis_id: str):
 
 
 @with_api_client
-def get_status(api_client: ApiClient, analysis_id: str):
-    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id."""
+def get_status(api_client: ApiClient, analysis_id: str = None):
+    """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id.
+
+    If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
+    """
+    if not analysis_id:
+        analysis_id = _get_last_analysis_id()
+
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(api_client)
         method = api_instance.get_analyze_status
@@ -442,3 +576,29 @@ def get_status(api_client: ApiClient, analysis_id: str):
         )
 
     return method(analysis_id).status.to_dict()
+
+
+@with_api_client
+def get_analysis_results(api_client: ApiClient, analysis_id: str):
+    """Get the analysis result from a given id."""
+    if analysis_id.startswith("package-extract-"):
+        api_instance = ImageAnalysisApi(api_client)
+        method = api_instance.get_analyze
+        response = _retrieve_analysis_results(method, analysis_id)
+        return response.result
+    elif analysis_id.startswith("provenance-checker-"):
+        api_instance = ProvenanceApi(api_client)
+        method = api_instance.get_provenance_python
+        response = _retrieve_analysis_result(method, analysis_id)
+        return response.result["report"], response.result["error"]
+    elif analysis_id.startswith("adviser-"):
+        api_instance = AdviseApi(api_client)
+        method = api_instance.get_advise_python
+        response = _retrieve_analysis_result(
+            api_instance.get_advise_python, analysis_id
+        )
+        return response.result, response.result["error"]
+    else:
+        raise UnknownAnalysisType(
+            "Cannot determine analysis type from identifier: %r", analysis_id
+        )

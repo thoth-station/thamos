@@ -90,15 +90,15 @@ class _Configuration:
 
                 self._configuration = yaml.safe_load(self._configuration)
 
-    def create_default_config(self, template: str = None):
+    def create_default_config(self, template: str = None, nowrite: bool = False) -> typing.Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
 
-        _LOGGER.debug(
-            "Reading default configuration from %r", self.DEFAULT_THOTH_CONFIG
-        )
         template = template or self.DEFAULT_THOTH_CONFIG
+        _LOGGER.debug(
+            "Reading configuration from %r", template
+        )
         with open(template, "r") as default_config_file:
             default_config = default_config_file.read()
 
@@ -116,15 +116,20 @@ class _Configuration:
             os_name=os_name,
             os_version=os_version,
             python_version=python_version,
-            **cpu_info
+            **cpu_info,
+            **(os.environ if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)) else {}),
         )
 
-        _LOGGER.debug(
-            "Writing configuration file to %r",
-            os.path.join(os.getcwd(), self.CONFIG_NAME),
-        )
-        with open(self.CONFIG_NAME, "w") as config_file:
-            config_file.write(default_config)
+        if not nowrite:
+            _LOGGER.debug(
+                "Writing configuration file to %r",
+                os.path.join(os.getcwd(), self.CONFIG_NAME),
+            )
+
+            with open(self.CONFIG_NAME, "w") as config_file:
+                config_file.write(default_config)
+        else:
+            return yaml.safe_load(default_config)
 
     @staticmethod
     def open_config_file():

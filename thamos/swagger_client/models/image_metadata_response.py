@@ -29,152 +29,79 @@ class ImageMetadataResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'tag': 'str',
-        'digest': 'str',
-        'repo_tags': 'list[str]',
+        'architecture': 'str',
         'created': 'str',
+        'digest': 'str',
         'docker_version': 'str',
         'labels': 'object',
-        'architecture': 'str',
+        'layers': 'list[str]',
+        'name': 'str',
         'os': 'str',
-        'layers': 'list[str]'
+        'repo_tags': 'list[str]',
+        'tag': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'tag': 'tag',
-        'digest': 'digest',
-        'repo_tags': 'repo_tags',
+        'architecture': 'architecture',
         'created': 'created',
+        'digest': 'digest',
         'docker_version': 'docker_version',
         'labels': 'labels',
-        'architecture': 'architecture',
+        'layers': 'layers',
+        'name': 'name',
         'os': 'os',
-        'layers': 'layers'
+        'repo_tags': 'repo_tags',
+        'tag': 'tag'
     }
 
-    def __init__(self, name=None, tag=None, digest=None, repo_tags=None, created=None, docker_version=None, labels=None, architecture=None, os=None, layers=None):  # noqa: E501
+    def __init__(self, architecture=None, created=None, digest=None, docker_version=None, labels=None, layers=None, name=None, os=None, repo_tags=None, tag=None):  # noqa: E501
         """ImageMetadataResponse - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._tag = None
-        self._digest = None
-        self._repo_tags = None
+        self._architecture = None
         self._created = None
+        self._digest = None
         self._docker_version = None
         self._labels = None
-        self._architecture = None
-        self._os = None
         self._layers = None
+        self._name = None
+        self._os = None
+        self._repo_tags = None
+        self._tag = None
         self.discriminator = None
-        self.name = name
-        self.tag = tag
-        self.digest = digest
-        self.repo_tags = repo_tags
+        self.architecture = architecture
         self.created = created
+        self.digest = digest
         self.docker_version = docker_version
         self.labels = labels
-        self.architecture = architecture
-        self.os = os
         self.layers = layers
+        self.name = name
+        self.os = os
+        self.repo_tags = repo_tags
+        self.tag = tag
 
     @property
-    def name(self):
-        """Gets the name of this ImageMetadataResponse.  # noqa: E501
+    def architecture(self):
+        """Gets the architecture of this ImageMetadataResponse.  # noqa: E501
 
-        Name of the image with optional tag.  # noqa: E501
+        Target architecture of image.  # noqa: E501
 
-        :return: The name of this ImageMetadataResponse.  # noqa: E501
+        :return: The architecture of this ImageMetadataResponse.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._architecture
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this ImageMetadataResponse.
+    @architecture.setter
+    def architecture(self, architecture):
+        """Sets the architecture of this ImageMetadataResponse.
 
-        Name of the image with optional tag.  # noqa: E501
+        Target architecture of image.  # noqa: E501
 
-        :param name: The name of this ImageMetadataResponse.  # noqa: E501
+        :param architecture: The architecture of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+        if architecture is None:
+            raise ValueError("Invalid value for `architecture`, must not be `None`")  # noqa: E501
 
-        self._name = name
-
-    @property
-    def tag(self):
-        """Gets the tag of this ImageMetadataResponse.  # noqa: E501
-
-        Tag of the image.  # noqa: E501
-
-        :return: The tag of this ImageMetadataResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._tag
-
-    @tag.setter
-    def tag(self, tag):
-        """Sets the tag of this ImageMetadataResponse.
-
-        Tag of the image.  # noqa: E501
-
-        :param tag: The tag of this ImageMetadataResponse.  # noqa: E501
-        :type: str
-        """
-        if tag is None:
-            raise ValueError("Invalid value for `tag`, must not be `None`")  # noqa: E501
-
-        self._tag = tag
-
-    @property
-    def digest(self):
-        """Gets the digest of this ImageMetadataResponse.  # noqa: E501
-
-        Digest of the image.  # noqa: E501
-
-        :return: The digest of this ImageMetadataResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._digest
-
-    @digest.setter
-    def digest(self, digest):
-        """Sets the digest of this ImageMetadataResponse.
-
-        Digest of the image.  # noqa: E501
-
-        :param digest: The digest of this ImageMetadataResponse.  # noqa: E501
-        :type: str
-        """
-        if digest is None:
-            raise ValueError("Invalid value for `digest`, must not be `None`")  # noqa: E501
-
-        self._digest = digest
-
-    @property
-    def repo_tags(self):
-        """Gets the repo_tags of this ImageMetadataResponse.  # noqa: E501
-
-
-        :return: The repo_tags of this ImageMetadataResponse.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._repo_tags
-
-    @repo_tags.setter
-    def repo_tags(self, repo_tags):
-        """Sets the repo_tags of this ImageMetadataResponse.
-
-
-        :param repo_tags: The repo_tags of this ImageMetadataResponse.  # noqa: E501
-        :type: list[str]
-        """
-        if repo_tags is None:
-            raise ValueError("Invalid value for `repo_tags`, must not be `None`")  # noqa: E501
-
-        self._repo_tags = repo_tags
+        self._architecture = architecture
 
     @property
     def created(self):
@@ -200,6 +127,31 @@ class ImageMetadataResponse(object):
             raise ValueError("Invalid value for `created`, must not be `None`")  # noqa: E501
 
         self._created = created
+
+    @property
+    def digest(self):
+        """Gets the digest of this ImageMetadataResponse.  # noqa: E501
+
+        Digest of the image.  # noqa: E501
+
+        :return: The digest of this ImageMetadataResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._digest
+
+    @digest.setter
+    def digest(self, digest):
+        """Sets the digest of this ImageMetadataResponse.
+
+        Digest of the image.  # noqa: E501
+
+        :param digest: The digest of this ImageMetadataResponse.  # noqa: E501
+        :type: str
+        """
+        if digest is None:
+            raise ValueError("Invalid value for `digest`, must not be `None`")  # noqa: E501
+
+        self._digest = digest
 
     @property
     def docker_version(self):
@@ -252,29 +204,52 @@ class ImageMetadataResponse(object):
         self._labels = labels
 
     @property
-    def architecture(self):
-        """Gets the architecture of this ImageMetadataResponse.  # noqa: E501
+    def layers(self):
+        """Gets the layers of this ImageMetadataResponse.  # noqa: E501
 
-        Target architecture of image.  # noqa: E501
 
-        :return: The architecture of this ImageMetadataResponse.  # noqa: E501
+        :return: The layers of this ImageMetadataResponse.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._layers
+
+    @layers.setter
+    def layers(self, layers):
+        """Sets the layers of this ImageMetadataResponse.
+
+
+        :param layers: The layers of this ImageMetadataResponse.  # noqa: E501
+        :type: list[str]
+        """
+        if layers is None:
+            raise ValueError("Invalid value for `layers`, must not be `None`")  # noqa: E501
+
+        self._layers = layers
+
+    @property
+    def name(self):
+        """Gets the name of this ImageMetadataResponse.  # noqa: E501
+
+        Name of the image with optional tag.  # noqa: E501
+
+        :return: The name of this ImageMetadataResponse.  # noqa: E501
         :rtype: str
         """
-        return self._architecture
+        return self._name
 
-    @architecture.setter
-    def architecture(self, architecture):
-        """Sets the architecture of this ImageMetadataResponse.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this ImageMetadataResponse.
 
-        Target architecture of image.  # noqa: E501
+        Name of the image with optional tag.  # noqa: E501
 
-        :param architecture: The architecture of this ImageMetadataResponse.  # noqa: E501
+        :param name: The name of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if architecture is None:
-            raise ValueError("Invalid value for `architecture`, must not be `None`")  # noqa: E501
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._architecture = architecture
+        self._name = name
 
     @property
     def os(self):
@@ -302,27 +277,52 @@ class ImageMetadataResponse(object):
         self._os = os
 
     @property
-    def layers(self):
-        """Gets the layers of this ImageMetadataResponse.  # noqa: E501
+    def repo_tags(self):
+        """Gets the repo_tags of this ImageMetadataResponse.  # noqa: E501
 
 
-        :return: The layers of this ImageMetadataResponse.  # noqa: E501
+        :return: The repo_tags of this ImageMetadataResponse.  # noqa: E501
         :rtype: list[str]
         """
-        return self._layers
+        return self._repo_tags
 
-    @layers.setter
-    def layers(self, layers):
-        """Sets the layers of this ImageMetadataResponse.
+    @repo_tags.setter
+    def repo_tags(self, repo_tags):
+        """Sets the repo_tags of this ImageMetadataResponse.
 
 
-        :param layers: The layers of this ImageMetadataResponse.  # noqa: E501
+        :param repo_tags: The repo_tags of this ImageMetadataResponse.  # noqa: E501
         :type: list[str]
         """
-        if layers is None:
-            raise ValueError("Invalid value for `layers`, must not be `None`")  # noqa: E501
+        if repo_tags is None:
+            raise ValueError("Invalid value for `repo_tags`, must not be `None`")  # noqa: E501
 
-        self._layers = layers
+        self._repo_tags = repo_tags
+
+    @property
+    def tag(self):
+        """Gets the tag of this ImageMetadataResponse.  # noqa: E501
+
+        Tag of the image.  # noqa: E501
+
+        :return: The tag of this ImageMetadataResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._tag
+
+    @tag.setter
+    def tag(self, tag):
+        """Sets the tag of this ImageMetadataResponse.
+
+        Tag of the image.  # noqa: E501
+
+        :param tag: The tag of this ImageMetadataResponse.  # noqa: E501
+        :type: str
+        """
+        if tag is None:
+            raise ValueError("Invalid value for `tag`, must not be `None`")  # noqa: E501
+
+        self._tag = tag
 
     def to_dict(self):
         """Returns the model properties as a dict"""

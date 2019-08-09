@@ -33,7 +33,7 @@ class AdviseApi(object):
         self.api_client = api_client
 
     def get_advise_python(self, analysis_id, **kwargs):  # noqa: E501
-        """Get computeted adviser result based on its id.  # noqa: E501
+        """Get computed adviser result based on its id.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -54,7 +54,7 @@ class AdviseApi(object):
             return data
 
     def get_advise_python_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
-        """Get computeted adviser result based on its id.  # noqa: E501
+        """Get computed adviser result based on its id.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -219,7 +219,7 @@ class AdviseApi(object):
             collection_formats=collection_formats)
 
     def get_advise_python_status(self, analysis_id, **kwargs):  # noqa: E501
-        """Show status of an adviser computing recomemendations.  # noqa: E501
+        """Show status of an adviser computing recommendations.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -240,7 +240,7 @@ class AdviseApi(object):
             return data
 
     def get_advise_python_status_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
-        """Show status of an adviser computing recomemendations.  # noqa: E501
+        """Show status of an adviser computing recommendations.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

@@ -16,8 +16,8 @@ from __future__ import absolute_import
 
 # import apis into sdk package
 from thamos.swagger_client.thoth.advise_api import AdviseApi
+from thamos.swagger_client.thoth.build_analysis_api import BuildAnalysisApi
 from thamos.swagger_client.thoth.buildlogs_api import BuildlogsApi
-from thamos.swagger_client.thoth.environments_api import EnvironmentsApi
 from thamos.swagger_client.thoth.image_analysis_api import ImageAnalysisApi
 from thamos.swagger_client.thoth.info_api import InfoApi
 from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
@@ -26,6 +26,8 @@ from thamos.swagger_client.api_client import ApiClient
 from thamos.swagger_client.configuration import Configuration
 # import models into sdk package
 from thamos.swagger_client.models.advise_input import AdviseInput
+from thamos.swagger_client.models.advise_input_application_stack import AdviseInputApplicationStack
+from thamos.swagger_client.models.advise_input_runtime_environment import AdviseInputRuntimeEnvironment
 from thamos.swagger_client.models.analysis_listing_response import AnalysisListingResponse
 from thamos.swagger_client.models.analysis_log_response import AnalysisLogResponse
 from thamos.swagger_client.models.analysis_response import AnalysisResponse
@@ -34,9 +36,17 @@ from thamos.swagger_client.models.analysis_result_response import AnalysisResult
 from thamos.swagger_client.models.analysis_result_response_metadata import AnalysisResultResponseMetadata
 from thamos.swagger_client.models.analysis_result_response_metadata_distribution import AnalysisResultResponseMetadataDistribution
 from thamos.swagger_client.models.analysis_result_response_metadata_distribution_version_parts import AnalysisResultResponseMetadataDistributionVersionParts
+from thamos.swagger_client.models.analysis_result_response_metadata_python import AnalysisResultResponseMetadataPython
 from thamos.swagger_client.models.analysis_status_response import AnalysisStatusResponse
 from thamos.swagger_client.models.analysis_status_response_status import AnalysisStatusResponseStatus
 from thamos.swagger_client.models.analysis_unfinished_result_response import AnalysisUnfinishedResultResponse
+from thamos.swagger_client.models.analysis_unfinished_result_response_status import AnalysisUnfinishedResultResponseStatus
+from thamos.swagger_client.models.build import Build
+from thamos.swagger_client.models.build_analysis_response import BuildAnalysisResponse
+from thamos.swagger_client.models.build_analysis_response_base_image_analysis import BuildAnalysisResponseBaseImageAnalysis
+from thamos.swagger_client.models.build_analysis_response_error import BuildAnalysisResponseError
+from thamos.swagger_client.models.build_analysis_response_error_base_image_analysis import BuildAnalysisResponseErrorBaseImageAnalysis
+from thamos.swagger_client.models.build_build_log import BuildBuildLog
 from thamos.swagger_client.models.image_metadata_response import ImageMetadataResponse
 from thamos.swagger_client.models.info import Info
 from thamos.swagger_client.models.log import Log

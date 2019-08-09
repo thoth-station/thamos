@@ -15,6 +15,7 @@ import re  # noqa: F401
 
 import six
 from thamos.swagger_client.models.analysis_result_response_metadata_distribution import AnalysisResultResponseMetadataDistribution  # noqa: F401,E501
+from thamos.swagger_client.models.analysis_result_response_metadata_python import AnalysisResultResponseMetadataPython  # noqa: F401,E501
 
 
 class AnalysisResultResponseMetadata(object):
@@ -36,7 +37,7 @@ class AnalysisResultResponseMetadata(object):
         '_datetime': 'str',
         'distribution': 'AnalysisResultResponseMetadataDistribution',
         'hostname': 'str',
-        'python': 'object'
+        'python': 'AnalysisResultResponseMetadataPython'
     }
 
     attribute_map = {
@@ -221,7 +222,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :return: The python of this AnalysisResultResponseMetadata.  # noqa: E501
-        :rtype: object
+        :rtype: AnalysisResultResponseMetadataPython
         """
         return self._python
 
@@ -231,7 +232,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :param python: The python of this AnalysisResultResponseMetadata.  # noqa: E501
-        :type: object
+        :type: AnalysisResultResponseMetadataPython
         """
         if python is None:
             raise ValueError("Invalid value for `python`, must not be `None`")  # noqa: E501

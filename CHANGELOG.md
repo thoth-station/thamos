@@ -264,3 +264,35 @@
 
 ## Release 0.5.3 (2019-06-24T10:57:16)
 
+
+## Release 0.5.4 (2019-07-03T13:20:37)
+* Add `nowrite` parameter to create_default_config
+* Remove trailing whitespace
+* Added origin option to provenance and advise
+* Make sure to follow recomendation type priority
+* Fix issue #182
+* :pushpin: Automatic update of dependency texttable from 1.6.1 to 1.6.2
+* Update docs on how autogenerating code is done
+* lib analysis results
+* Fix URL to OpenAPI YAML
+
+## Release 0.5.5 (2019-07-17T13:14:56)
+* Fix issues with generated swagger client
+* Remove trailing whitespace
+* Fix propagation of `limit_latest_versions` parameter
+* Round up maximum line length allowed for Coala
+* Be more verbose about adviser input on debug
+* Use test environment as a source for swagger client
+* Regenerate swagger client
+* Removed unecessary from get_analysis_results
+* Duplicate origin param
+* Added origin to advise
+* Fixed
+* auto swagger client generated
+* Analysis ID is second argument
+* Analysis ID is second argument
+
+## Release 0.6.0 (2019-07-22T20:19:10)
+* :boat: updated thamos with latest user-api
+* :snail: supporting method for submitting whole build(imagestream and buildlog)
+* :pushpin: Automatic update of dependency invectio from 0.0.3 to 0.0.4

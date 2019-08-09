@@ -245,7 +245,7 @@ def _print_report(report: dict, json_output: bool = False):
     help="Use selected host instead of the one stated in the configuration file.",
 )
 def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = None):
-    """A CLI tool for interacting with Thoth."""
+    """CLI tool for interacting with Thoth."""
     if ctx:
         ctx.auto_envvar_prefix = "THAMOS"
 
@@ -267,7 +267,12 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 
 
 @cli.command("advise")
-@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--debug",
+    is_flag=True,
+    envvar="THAMOS_DEBUG",
+    help="Run analysis in debug mode on Thoth."
+)
 @click.option(
     "--no-write",
     "-W",
@@ -279,6 +284,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     "-t",
     type=str,
     metavar="RECOMMENDATION_TYPE",
+    envvar="THAMOS_RECOMMENDATION_TYPE",
     help="Use selected recommendation type, do not load it from Thoth's config file.",
 )
 @click.option(
@@ -289,13 +295,17 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 @click.option(
     "--no-static-analysis",
     is_flag=True,
+    envvar="THAMOS_NO_STATIC_ANALYSIS",
     help="Do not perform static analysis of source code files.",
 )
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
 @click.option(
-    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+    "--force",
+    is_flag=True,
+    envvar="THAMOS_FORCE",
+    help="Force analysis run bypassing server-side cache."
 )
 @click.option(
     "--runtime-environment",
@@ -311,6 +321,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     type=int,
     default=None,
     metavar="COUNT",
+    envvar="THAMOS_LIMIT_LATEST_VERSIONS",
     help="Specify number of latest versions for each package to consider.",
 )
 def advise(
@@ -353,7 +364,7 @@ def advise(
 
         if not no_write:
             # Print report of the best one - thus index zero.
-            if result["report"][0][0]:
+            if result["report"] and result["report"][0][0]:
                 _print_header("Recommended stack report")
                 _print_report(result["report"][0][0], json_output=json_output)
 
@@ -376,7 +387,12 @@ def advise(
 
 
 @cli.command("provenance-check")
-@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--debug",
+    is_flag=True,
+    envvar="THAMOS_DEBUG",
+    help="Run analysis in debug mode on Thoth."
+)
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
@@ -386,7 +402,10 @@ def advise(
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
-    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+    "--force",
+    is_flag=True,
+    envvar="THAMOS_FORCE",
+    help="Force analysis run bypassing server-side cache.",
 )
 @click.pass_context
 @handle_cli_exception
@@ -429,14 +448,23 @@ def provenance_check(
 
 
 @cli.command("log")
-@click.argument("analysis_id", type=str)
-def log(analysis_id: str):
-    """Get log of running or finished analysis."""
-    click.echo(get_log(analysis_id))
+@click.argument("analysis_id", type=str, required=False)
+def log(analysis_id: str = None):
+    """Get log of running or finished analysis.
+
+    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    """
+    if not analysis_id:
+        with workdir():
+            log_str = get_log()
+    else:
+        log_str = get_log(analysis_id)
+
+    click.echo(log_str)
 
 
 @cli.command("status")
-@click.argument("analysis_id", type=str)
+@click.argument("analysis_id", type=str, required=False)
 @click.option(
     "--output-format",
     "-o",
@@ -444,9 +472,17 @@ def log(analysis_id: str):
     default="table",
     help="Specify output format for the status report.",
 )
-def status(analysis_id: str, output_format: str = None):
-    """Get status of an analysis."""
-    status_dict = get_status(analysis_id)
+def status(analysis_id: str = None, output_format: str = None):
+    """Get status of an analysis.
+
+    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    """
+    if not analysis_id:
+        with workdir():
+            status_dict = get_status()
+    else:
+        status_dict = get_status(analysis_id)
+
     if not output_format or output_format == "table":
         table = Texttable(max_width=get_terminal_size().columns)
         table.set_deco(Texttable.VLINES)
@@ -486,7 +522,7 @@ def config(no_interactive: bool = False, template: str = None):
     """
     if not configuration.config_file_exists():
         _LOGGER.info(
-            "No configuration file found, creating one from a default configuration template"
+            "No configuration file found, creating one from a configuration template"
         )
         configuration.create_default_config(template)
     elif no_interactive:
