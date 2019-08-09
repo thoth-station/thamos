@@ -207,10 +207,10 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:4977c062673bdcfc1cb03528ccf1b3455b9221cf9c4be99614a013fd606003e0",
-                "sha256:914585c6b8211b41c0f28fd2dba982ab7be3cc16e42dc7f49620e95bfa6696f4"
+                "sha256:35cd7d3840f582f6960219f24379d239e3f5b67c037329191521b0c27061f826",
+                "sha256:3bc5830164762b008ab0c614d32a721ddc9c422da5eab804e6bc5f24308736af"
             ],
-            "version": "==0.9.5"
+            "version": "==0.9.6"
         },
         "timestamp": {
             "hashes": [
@@ -235,11 +235,11 @@
         },
         "yaspin": {
             "hashes": [
-                "sha256:8e6d2e2b207ba18510f190e04a25273a32d1f192af9c9a77ebe46deaca799dfa",
-                "sha256:94b7602f0dc59d26a15e63cefff6aaf644c58dd77fc4e1ef675d3ba2c302ed06"
+                "sha256:0ee4668936d0053de752c9a4963929faa3a832bd0ba823877d27855592dc80aa",
+                "sha256:5a938bdc7bab353fd8942d0619d56c6b5159a80997dc1c387a479b39e6dc9391"
             ],
             "index": "pypi",
-            "version": "==0.14.3"
+            "version": "==0.15.0"
         }
     },
     "develop": {
