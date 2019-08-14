@@ -13,8 +13,8 @@ installation instructions bellow to setup Thoth/Thamos for your repository:
 .. code-block:: console
 
   # Install Thamos CLI tool:
-  $ pip3 install thamos  # keep in mind: requires Python 3.6!!
-  # Go to repository that should be managed by Thoth:
+  $ pip3 install thamos  # keep in mind: requires Python 3.6+!!
+  # Go to repository that should be managed by Thoth which already has Pipfile present:
   $ cd ~/git/repo/
   # Setup Thamos configuration:
   $ thamos config
