@@ -520,16 +520,29 @@ def config(no_interactive: bool = False, template: str = None):
     Perform autodiscovery of available hardware and software on the host and
     create a default configuration for Thoth (placed into .thoth.yaml).
     """
-    if not configuration.config_file_exists():
+    if template:
         _LOGGER.info(
-            "No configuration file found, creating one from a configuration template"
+            "Creating configuration file from a configuration template %r",
+            template
         )
         configuration.create_default_config(template)
-    elif no_interactive:
-        _LOGGER.info("Configuration file already present, no action performed in non-interactive mode")
+
+        if not no_interactive:
+            configuration.open_config_file()
+
+        return
+
+    if not configuration.config_file_exists():
+        _LOGGER.info(
+            "No configuration file found, creating one from a configuration template from %s",
+            "a default template" if template is None else template
+        )
+        configuration.create_default_config(template)
 
     if not no_interactive:
         configuration.open_config_file()
+    elif no_interactive:
+        _LOGGER.info("Configuration file already present, no action performed in non-interactive mode")
 
 
 if __name__ == "__main__":
