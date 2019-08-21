@@ -16,9 +16,9 @@ yaspin = "*"
 texttable = "*"
 pyyaml = "*"
 requests = "*"
-contoml = "*"
 termcolor = "*"
 invectio = "*"
+toml = "*"
 
 [dev-packages]
 coala-bears = "*"
