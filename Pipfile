@@ -16,12 +16,15 @@ yaspin = "*"
 texttable = "*"
 pyyaml = "*"
 requests = "*"
-contoml = "*"
 termcolor = "*"
 invectio = "*"
+toml = "*"
 
 [dev-packages]
 coala-bears = "*"
+pytest-timeout = "*"
+pytest-cov = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.6"

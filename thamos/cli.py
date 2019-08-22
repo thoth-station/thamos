@@ -25,7 +25,7 @@ from shutil import get_terminal_size
 import json
 from functools import wraps
 
-import contoml as toml
+import toml
 import yaml
 from texttable import Texttable
 import click
@@ -107,8 +107,8 @@ def _write_pipfiles(pipfile: str, pipfile_lock: str) -> None:
     """Write content of Pipfile and Pipfile.lock to the current directory."""
     if pipfile:
         _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
-        # TODO: enable prettify once https://github.com/jumpscale7/python-consistent-toml/issues/24 is fixed
-        toml.dump(pipfile, "Pipfile", prettify=False)
+        with open("Pipfile", "w") as pipfile_file:
+            toml.dump(pipfile, pipfile_file)
     else:
         _LOGGER.debug("No changes to Pipfile to write")
 
