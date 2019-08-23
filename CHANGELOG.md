@@ -328,3 +328,6 @@
 * State Pipfile is required
 * We require Python 3.6+
 * Always create config from template if template is set explictly
+
+## Release 0.7.2 (2019-08-23T11:04:19)
+* Add missing toml in requirements.txt
