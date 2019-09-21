@@ -376,10 +376,10 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:1c5da96f77307d0afc7811f3adc736c363c52388700e449c6a5310be44c82376",
-                "sha256:61ac4fe28f8c67f0adf8740da77c84bf787034f9d32c60a77adac4d899a48a50"
+                "sha256:2529ab6f93914d01bcd80b1b16c15a025902350ab19af2033aa5ff797c1600ad",
+                "sha256:ab16b539c40cc18e3dcfec99d0d3fff16337a050eaf79d4503ef2b73af9a7d9e"
             ],
-            "version": "==0.12.1"
+            "version": "==0.12.2"
         },
         "six": {
             "hashes": [
@@ -405,10 +405,11 @@
         },
         "thoth-analyzer": {
             "hashes": [
-                "sha256:4e0b94e3a2a4dd48b531100c7754a961aaaabcde44868f3cf722ffac6c53dd10"
+                "sha256:792e81216678b49aed978866c109561270f3f3000b8e755591c2db27dc1006b6",
+                "sha256:fb5420476e90cba9a44aad7b41cab842f83df5a94be9ef268ada60e8665bf22e"
             ],
             "index": "pypi",
-            "version": "==0.1.2"
+            "version": "==0.1.3"
         },
         "thoth-common": {
             "hashes": [
