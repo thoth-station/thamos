@@ -162,7 +162,7 @@ def _retrieve_analysis_result(
         return None
 
 
-def _get_static_analysis() -> dict:
+def _get_static_analysis() -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
@@ -170,7 +170,7 @@ def _get_static_analysis() -> dict:
         library_usage = gather_library_usage(".", ignore_errors=True, without_standard_imports=True)
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
-        return {}
+        return None
 
     report = {}
     for file_record in library_usage["report"].values():
@@ -242,7 +242,7 @@ def advise(
     library_usage = None
     if not no_static_analysis:
         library_usage = _get_static_analysis()
-        _LOGGER.debug("Library usage:\n%s", json.dumps(library_usage, indent=2))
+        _LOGGER.debug("Library usage:%s", "\n" + json.dumps(library_usage, indent=2) if library_usage else None)
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
 
