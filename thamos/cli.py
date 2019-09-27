@@ -61,15 +61,6 @@ _TABLE_COLS_ALIGN = {
 }
 
 
-def _print_version(ctx, _, value):
-    """Print Kebechet version and exit."""
-    if not value or ctx.resilient_parsing:
-        return
-
-    click.echo(thamos_version)
-    ctx.exit()
-
-
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
     @wraps(func)
@@ -223,14 +214,6 @@ def _print_report(report: dict, json_output: bool = False):
     help="Be verbose about what's going on.",
 )
 @click.option(
-    "--version",
-    is_flag=True,
-    is_eager=True,
-    callback=_print_version,
-    expose_value=False,
-    help="Print version and exit.",
-)
-@click.option(
     "--workdir",
     "-d",
     type=str,
@@ -264,6 +247,34 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     # Turn on progressbar explicitly here if it was not turned off by user. If Thamos is used
     # as a library, progressbar is not shown as one would expect.
     os.environ["THAMOS_NO_PROGRESSBAR"] = os.getenv("THAMOS_NO_PROGRESSBAR", "0")
+
+
+@cli.command("version")
+@click.pass_context
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
+def _print_version(ctx, json_output: bool = False):
+    """Print Thamos and Thoth version and exit."""
+    exit_code = 0
+    thoth_version = None
+    try:
+        thoth_version = configuration.get_thoth_version()
+    except Exception:
+        _LOGGER.exception("Failed to obtain version information of Thoth")
+        exit_code = 1
+
+    if json_output:
+        click.echo(json.dumps({
+            "thamos_version": thamos_version,
+            "thoth_version": thoth_version,
+            "thoth_api_url": configuration.api_url
+        }, indent=2))
+    else:
+        click.echo(f"Thamos version: {thamos_version!s}")
+        click.echo(f"Thoth version ({configuration.api_url}: {thoth_version}")
+
+    ctx.exit(exit_code)
 
 
 @cli.command("advise")
