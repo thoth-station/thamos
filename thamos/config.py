@@ -60,6 +60,10 @@ class _Configuration:
 
     @property
     def api_url(self):
+        """Get URL to Thoth's API."""
+        if not self._api_url:
+            self._api_url = self.api_discovery(self.content["host"])
+
         return self._api_url
 
     @property
@@ -69,6 +73,13 @@ class _Configuration:
             self.load_config()
 
         return self._configuration
+
+    def get_thoth_version(self) -> str:
+        """Get version of Thoth backend."""
+        _LOGGER.debug("Contacting Thoth at %r to receive version information", self.api_url)
+        response = requests.head(self.api_url, verify=self.tls_verify)
+        response.raise_for_status()
+        return response.headers.get("X-Thoth-Version", "Not Available")
 
     def config_file_exists(self) -> bool:
         """Check if configuration file exists."""
