@@ -138,6 +138,12 @@ Then, you need to provide following environment variables:
 * ``THAMOS_VERBOSE`` - set to `1` to run thamos in verbose mode to show what's going on (verbosity on client side).
 * ``THAMOS_DEBUG`` - set to `1` to run analyzes (adviser, provenance checker, ...) on Thoth's backend side in debug mode, you can obtain logs by running ``thamos logs`` or directly on Thoth's user API; the analysis id gets printed into the console during the build process in OpenShift (verbosity on server side).
 
+See `OpenShift s2i documentation
+<https://docs.openshift.com/container-platform/3.9/dev_guide/builds/advanced_build_operations.html#dev-guide-assigning-builds-to-nodes>`_
+on how to pin build to a specific node in the cluster. This is needed if you
+would like to perform automatic hardware discovery to get optimized stacks on
+your hardware.
+
 Using Thamos as a library
 =========================
 
