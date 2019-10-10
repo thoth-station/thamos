@@ -1,2 +1,2 @@
 exclude_patterns:
-- "thamos/swagger_clinet/**"
+- "thamos/swagger_client/**"
