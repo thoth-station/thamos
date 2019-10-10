@@ -1,0 +1,17 @@
+# Set unix LF EOL for shell scripts
+*.sh     text eol=lf
+*.py     text working-tree-encoding=utf-8 eol=lf
+*.ipynb  text
+*        text=auto
+
+*.db     binary
+*.p      binary
+*.pkl    binary
+*.pickle binary
+*.pyc    binary
+*.pyd    binary
+*.pyo    binary
+
+Pipenv.lock linguist-generated=true
+
+**/swagger_client/** -diff linguist-generated=true
