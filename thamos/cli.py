@@ -119,8 +119,11 @@ def _print_header(header: str) -> None:
     click.echo(padding * " " + "=" * len(header) + "  \n")
 
 
-def _write_configuration(advised_configuration: dict, recommendation_type: str = None,
-                         limit_latest_versions: int = None) -> None:
+def _write_configuration(
+    advised_configuration: dict,
+    recommendation_type: str = None,
+    limit_latest_versions: int = None,
+) -> None:
     if not advised_configuration:
         _LOGGER.debug("No advises on configuration, nothing to adjust")
         return
@@ -135,23 +138,27 @@ def _write_configuration(advised_configuration: dict, recommendation_type: str =
     with open(".thoth.yaml", "r") as thoth_yaml_file:
         content = yaml.safe_load(thoth_yaml_file.read())
 
-    for idx, runtime_environment_entry in enumerate(content.get("runtime_environments", [])):
+    for idx, runtime_environment_entry in enumerate(
+        content.get("runtime_environments", [])
+    ):
         if runtime_environment_entry.get("name") == advised_configuration["name"]:
             _LOGGER.debug(
                 "Adjusting configuration entry for %r based on recommendations",
-                advised_configuration["name"]
+                advised_configuration["name"],
             )
             runtime_environment_entry = advised_configuration
             if recommendation_type:
                 runtime_environment_entry["recommendation_type"] = recommendation_type
             if limit_latest_versions:
-                runtime_environment_entry["limit_latest_versions"] = limit_latest_versions
+                runtime_environment_entry[
+                    "limit_latest_versions"
+                ] = limit_latest_versions
             content["runtime_environments"][idx] = runtime_environment_entry
             break
     else:
         _LOGGER.error(
             "Cannot adjust Thoth's configuration based on advises: No runtime environment entry with name %r found",
-            advised_configuration["name"]
+            advised_configuration["name"],
         )
         return
 
@@ -265,11 +272,16 @@ def _print_version(ctx, json_output: bool = False):
         exit_code = 1
 
     if json_output:
-        click.echo(json.dumps({
-            "thamos_version": thamos_version,
-            "thoth_version": thoth_version,
-            "thoth_api_url": configuration.api_url
-        }, indent=2))
+        click.echo(
+            json.dumps(
+                {
+                    "thamos_version": thamos_version,
+                    "thoth_version": thoth_version,
+                    "thoth_api_url": configuration.api_url,
+                },
+                indent=2,
+            )
+        )
     else:
         click.echo(f"Thamos version: {thamos_version!s}")
         click.echo(f"Thoth version ({configuration.api_url}: {thoth_version}")
@@ -282,7 +294,7 @@ def _print_version(ctx, json_output: bool = False):
     "--debug",
     is_flag=True,
     envvar="THAMOS_DEBUG",
-    help="Run analysis in debug mode on Thoth."
+    help="Run analysis in debug mode on Thoth.",
 )
 @click.option(
     "--no-write",
@@ -316,7 +328,7 @@ def _print_version(ctx, json_output: bool = False):
     "--force",
     is_flag=True,
     envvar="THAMOS_FORCE",
-    help="Force analysis run bypassing server-side cache."
+    help="Force analysis run bypassing server-side cache.",
 )
 @click.option(
     "--runtime-environment",
@@ -372,21 +384,24 @@ def advise(
             sys.exit(0)
 
         result, error = results
-
         if not no_write:
             # Print report of the best one - thus index zero.
             if result["report"] and result["report"][0][0]:
                 _print_header("Recommended stack report")
                 _print_report(result["report"][0][0], json_output=json_output)
 
-            if result["stack_info"]:
+            if result.get("stack_info"):
                 _print_header("Application stack guidance")
                 _print_report(result["stack_info"], json_output=json_output)
 
             if not error:
                 pipfile = result["report"][0][1]["requirements"]
                 pipfile_lock = result["report"][0][1]["requirements_locked"]
-                _write_configuration(result["advised_configuration"], recommendation_type, limit_latest_versions)
+                _write_configuration(
+                    result["advised_configuration"],
+                    recommendation_type,
+                    limit_latest_versions,
+                )
                 _write_pipfiles(pipfile, pipfile_lock)
         else:
             click.echo(json.dumps(result, indent=2))
@@ -402,7 +417,7 @@ def advise(
     "--debug",
     is_flag=True,
     envvar="THAMOS_DEBUG",
-    help="Run analysis in debug mode on Thoth."
+    help="Run analysis in debug mode on Thoth.",
 )
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
@@ -533,8 +548,7 @@ def config(no_interactive: bool = False, template: str = None):
     """
     if template:
         _LOGGER.info(
-            "Creating configuration file from a configuration template %r",
-            template
+            "Creating configuration file from a configuration template %r", template
         )
         configuration.create_default_config(template)
 
@@ -546,14 +560,16 @@ def config(no_interactive: bool = False, template: str = None):
     if not configuration.config_file_exists():
         _LOGGER.info(
             "No configuration file found, creating one from a configuration template from %s",
-            "a default template" if template is None else template
+            "a default template" if template is None else template,
         )
         configuration.create_default_config(template)
 
     if not no_interactive:
         configuration.open_config_file()
     elif no_interactive:
-        _LOGGER.info("Configuration file already present, no action performed in non-interactive mode")
+        _LOGGER.info(
+            "Configuration file already present, no action performed in non-interactive mode"
+        )
 
 
 if __name__ == "__main__":
