@@ -1,6 +1,6 @@
 # thamos.swagger_client.BuildlogsApi
 
-All URIs are relative to *http://test.thoth-station.ninja/api/v1*
+All URIs are relative to *https://test.thoth-station.ninja/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,6 @@ Method | HTTP request | Description
 [**get_buildlog_analyze**](BuildlogsApi.md#get_buildlog_analyze) | **GET** /buildlog-analyze/{analysis_id} | Retrieve a build analyzer result.
 [**list_buildlog_analyze**](BuildlogsApi.md#list_buildlog_analyze) | **GET** /buildlog-analyze | Retrieve a list of document ids for build analyzer results.
 [**list_buildlogs**](BuildlogsApi.md#list_buildlogs) | **GET** /buildlog | Retrieve a list of document ids for stored build logs.
-[**parse_log**](BuildlogsApi.md#parse_log) | **POST** /parse-log | Parse Docker build log or installation log and show installed packages. 
 [**post_buildlog**](BuildlogsApi.md#post_buildlog) | **POST** /buildlog | Store the given build log.
 
 # **get_buildlog**
@@ -189,51 +188,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **parse_log**
-> parse_log(body)
-
-Parse Docker build log or installation log and show installed packages. 
-
-### Example
-```python
-from __future__ import print_function
-import time
-import thamos.swagger_client
-from thamos.swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = thamos.swagger_client.BuildlogsApi()
-body = thamos.swagger_client.Log() # Log | A full log.
-
-try:
-    # Parse Docker build log or installation log and show installed packages. 
-    api_instance.parse_log(body)
-except ApiException as e:
-    print("Exception when calling BuildlogsApi->parse_log: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**Log**](Log.md)| A full log. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -1,11 +1,10 @@
-# AdviseInput
+# InlineResponse200
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**application_stack** | [**PythonStack**](PythonStack.md) |  | 
-**library_usage** | [**AdviseInputLibraryUsage**](AdviseInputLibraryUsage.md) |  | [optional] 
-**runtime_environment** | [**RuntimeEnvironment**](RuntimeEnvironment.md) |  | [optional] 
+**hardware_environments** | [**list[InlineResponse200HardwareEnvironments]**](InlineResponse200HardwareEnvironments.md) |  | 
+**parameters** | [**InlineResponse200Parameters**](InlineResponse200Parameters.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
