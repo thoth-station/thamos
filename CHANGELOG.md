@@ -331,3 +331,30 @@
 
 ## Release 0.7.2 (2019-08-23T11:04:19)
 * Add missing toml in requirements.txt
+
+## Release 0.7.3 (2019-11-11T21:34:58)
+* Adjust output visualization according to new adviser output
+* save check for the stack-info
+* update thamos with latest user-api
+* use https protocol to access test user-api
+* :pushpin: Automatic update of dependency six from 1.12.0 to 1.13.0
+* :pushpin: Automatic update of dependency python-dateutil from 2.8.0 to 2.8.1
+* :pushpin: Automatic update of dependency pytest from 5.2.1 to 5.2.2
+* Update .codeclimate.yml
+* Create .codeclimate.yml
+* Create .gitattributes
+* :pushpin: Automatic update of dependency pytest from 5.2.0 to 5.2.1
+* :pushpin: Automatic update of dependency pytest-cov from 2.8.0 to 2.8.1
+* :pushpin: Automatic update of dependency pytest-cov from 2.7.1 to 2.8.0
+* Print out Thoth backend version on `thamos version'
+* :pushpin: Automatic update of dependency pytest from 5.1.3 to 5.2.0
+* :pushpin: Automatic update of dependency thoth-analyzer from 0.1.3 to 0.1.4
+* :pushpin: Automatic update of dependency urllib3 from 1.25.5 to 1.25.6
+* Do not send empty library usage
+* :pushpin: Automatic update of dependency pytest from 5.1.2 to 5.1.3
+* :pushpin: Automatic update of dependency thoth-analyzer from 0.1.2 to 0.1.3
+* :pushpin: Automatic update of dependency urllib3 from 1.25.4 to 1.25.5
+* :pushpin: Automatic update of dependency urllib3 from 1.25.3 to 1.25.4
+* :pushpin: Automatic update of dependency certifi from 2019.6.16 to 2019.9.11
+* :pushpin: Automatic update of dependency pytest from 5.1.1 to 5.1.2
+* Link to docs for specific node placement
