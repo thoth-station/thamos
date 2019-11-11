@@ -386,21 +386,21 @@ def advise(
         result, error = results
         if not no_write:
             # Print report of the best one - thus index zero.
-            if result["report"] and result["report"][0][0]:
+            if result["report"] and result["report"]["products"]:
                 _print_header("Recommended stack report")
-                _print_report(result["report"][0][0], json_output=json_output)
+                _print_report(result["report"]["products"][0]["justification"], json_output=json_output)
 
-            if result.get("stack_info"):
+            if result["report"] and result["report"]["stack_info"]:
                 _print_header("Application stack guidance")
-                _print_report(result["stack_info"], json_output=json_output)
+                _print_report(result["report"]["stack_info"], json_output=json_output)
 
             if not error:
-                pipfile = result["report"][0][1]["requirements"]
-                pipfile_lock = result["report"][0][1]["requirements_locked"]
+                pipfile = result["report"]["products"][0]["project"]["requirements"]
+                pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
                 _write_configuration(
-                    result["advised_configuration"],
+                    result["report"]["advised_runtime_environment"],
                     recommendation_type,
-                    limit_latest_versions,
+                    limit_latest_versions
                 )
                 _write_pipfiles(pipfile, pipfile_lock)
         else:
