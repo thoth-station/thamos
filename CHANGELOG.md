@@ -358,3 +358,8 @@
 * :pushpin: Automatic update of dependency certifi from 2019.6.16 to 2019.9.11
 * :pushpin: Automatic update of dependency pytest from 5.1.1 to 5.1.2
 * Link to docs for specific node placement
+
+## Release 0.7.4 (2019-11-11T23:22:21)
+* Release of version 0.7.3
+* :pushpin: Automatic update of dependency urllib3 from 1.25.6 to 1.25.7
+
