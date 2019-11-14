@@ -398,7 +398,7 @@ def advise(
                 pipfile = result["report"]["products"][0]["project"]["requirements"]
                 pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
                 _write_configuration(
-                    result["report"]["advised_runtime_environment"],
+                    result["report"]["products"][0]["advised_runtime_environment"],
                     recommendation_type,
                     limit_latest_versions
                 )
