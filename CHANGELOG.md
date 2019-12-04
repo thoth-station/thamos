@@ -656,3 +656,6 @@
 * added the missing coala config
 * added github and zuul configs
 * Initial implementation
+
+## Release 0.7.6 (2019-12-04T15:17:26)
+* :pencil: there was some ( too much
