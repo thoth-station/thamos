@@ -283,8 +283,8 @@ def _print_version(ctx, json_output: bool = False):
             )
         )
     else:
-        click.echo(f"Thamos version: {thamos_version!s}")
-        click.echo(f"Thoth version ({configuration.api_url}: {thoth_version}")
+        click.echo(f"Thamos Client version: {thamos_version!s}")
+        click.echo(f"Thoth API {configuration.api_url}: {thoth_version}")
 
     ctx.exit(exit_code)
 
