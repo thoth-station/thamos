@@ -1,11 +1,9 @@
 [[source]]
+name = "pypi-org"
 url = "https://pypi.org/simple"
 verify_ssl = true
-name = "pypi"
+
+[dev-packages]
 
 [packages]
-daiquiri = "*"
-flask = "<=0.12.4" 
-
-[requires]
-python_version = "3.6"
+flask = "*"

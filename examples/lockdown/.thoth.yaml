@@ -7,8 +7,8 @@ tls_verify: false
 requirements_format: pipenv
 
 runtime_environments:
-  - name: "fedora:29"
+  - name: "my_project"
     recommendation_type: LATEST
     operating_system:
-      name: fedora
-      version: "29"
+      name: "rhel"
+      version: "8.0"
