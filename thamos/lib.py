@@ -187,6 +187,12 @@ def _get_static_analysis() -> typing.Optional[dict]:
     }
 
 
+def _is_s2i() -> bool:
+    """Check if we run in an OpenShift s2i build."""
+    # This environment variable is used by OpenShift's s2i build process.
+    return "STI_SCRIPTS_PATH" is os.environ
+
+
 @with_api_client
 def advise(
     api_client: ApiClient,
@@ -266,6 +272,7 @@ def advise(
         "recommendation_type": recommendation_type,
         "debug": debug,
         "force": force,
+        "is_s2i": _is_s2i(),
     }
 
     if limit is not None:
