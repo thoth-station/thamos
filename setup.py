@@ -51,12 +51,13 @@ class Test(TestCommand):
         sys.exit(pytest.main(passed_args))
 
 
+VERSION = get_version()
 setup(
     name='thamos',
     entry_points={
         'console_scripts': ['thamos=thamos.cli:cli']
     },
-    version=get_version(),
+    version=VERSION,
     package_data={
         'thamos': [
             os.path.join('data', '*.yaml')
@@ -70,5 +71,11 @@ setup(
     license='GPLv3+',
     packages=find_packages(),
     cmdclass={'test': Test},
-    install_requires=get_install_requires()
+    install_requires=get_install_requires(),
+    command_options={
+        "build_sphinx": {
+            "version": ("setup.py", VERSION),
+            "release": ("setup.py", VERSION),
+        }
+    },
 )

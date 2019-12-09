@@ -37,8 +37,8 @@ handy if you would like to parameterize some of the options at
 runtime (e.g. in deployment).
 
 This behaviour is (due to security reasons) explicitly turned off by default.
-However you can turn it on by setting `THAMOS_CONFIG_EXPAND_ENV` environment
-variable to `1` (`0` explicitly turns this behaviour off, default value):
+However you can turn it on by setting ``THAMOS_CONFIG_EXPAND_ENV`` environment
+variable to ``1`` (``0`` explicitly turns this behaviour off, default value):
 
 
 .. code-block:: console
@@ -56,8 +56,8 @@ like the following example:
 
 Note the expansion is done by replacing these values directly with values of
 environment variable, this means types need to be taken into account
-(environment variable with value `"true"` is put into configuration file as
-`true`).
+(environment variable with value ``"true"`` is put into configuration file as
+``true``).
 
 
 Using custom configuration file template
@@ -116,16 +116,16 @@ or SW discovery):
 +------------------------+--------------------------------+----------+
 
 These configuration options are optional and can be mixed with adjustment based
-on environment variables (see `THOTH_SERVICE_HOST` example above). Note the
+on environment variables (see ``THOTH_SERVICE_HOST`` example above). Note the
 environment variables are not expanded on `thamos config` call but rather on
-other sub-commands issued (e.g. `thamos advise` or others).
+other sub-commands issued (e.g. ``thamos advise`` or others).
 
 Using Thoth and thamos in OpenShift's s2i
 =========================================
 
 Using configuration templates is especially useful for OpenShift builds where
-you can specify your template in an s2i repository (omit `Pipfile.lock` to
-enable call to `thamos advise` as shown in `this repository
+you can specify your template in an s2i repository (omit ``Pipfile.lock`` to
+enable call to ``thamos advise`` as shown in `this repository
 <https://github.com/thoth-station/s2i-example-tensorflow>`_).
 
 Then, you need to provide following environment variables:
@@ -201,5 +201,5 @@ automatically placed into this repository in `thamos/swagger_client/` and
 `documentation on how to use the code
 <https://github.com/thoth-station/thamos/tree/master/Documentation>`_.  Thamos
 itself provides routines built on top of this automated generated code to
-simplify usage in `thamos/lib`.
+simplify usage in ``thamos/lib``.
 
