@@ -14,7 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.analysis_status_response import AnalysisStatusResponse  # noqa: F401,E501
 
 
 class AnalysisUnfinishedResultResponse(object):

@@ -14,7 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.analysis_result_response_metadata import AnalysisResultResponseMetadata  # noqa: F401,E501
 
 
 class AnalysisResultResponse(object):

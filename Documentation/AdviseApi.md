@@ -195,7 +195,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
+> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, is_s2i=is_s2i, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
 
 Get advise for Python ecosystem.
 
@@ -214,13 +214,14 @@ recommendation_type = 'recommendation_type_example' # str | Recommendation type.
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
+is_s2i = true # bool | A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build.  (optional)
 debug = true # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional)
 limit_latest_versions = 56 # int | Limit number of packages considering only specific number of versions for each package. (optional)
 force = true # bool | Do not use cached results, always run adviser.  (optional)
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
+    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, is_s2i=is_s2i, debug=debug, limit_latest_versions=limit_latest_versions, force=force)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -235,6 +236,7 @@ Name | Type | Description  | Notes
  **count** | **int**| Number of software stacks that should be returned. | [optional] 
  **limit** | **int**| Limit number of software stacks scored. | [optional] 
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
+ **is_s2i** | **bool**| A flag marking the given request coming from an OpenShift&#x27;s S2I (Source-to-Image) build.  | [optional] 
  **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] 
  **limit_latest_versions** | **int**| Limit number of packages considering only specific number of versions for each package. | [optional] 
  **force** | **bool**| Do not use cached results, always run adviser.  | [optional] 

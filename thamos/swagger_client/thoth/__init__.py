@@ -11,3 +11,4 @@ from thamos.swagger_client.thoth.info_api import InfoApi
 from thamos.swagger_client.thoth.kebechet_api import KebechetApi
 from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
 from thamos.swagger_client.thoth.python_package_metadata_api import PythonPackageMetadataApi
+from thamos.swagger_client.thoth.python_packages_api import PythonPackagesApi
