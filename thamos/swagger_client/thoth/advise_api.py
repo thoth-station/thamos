@@ -414,6 +414,7 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
+        :param bool is_s2i: A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
         :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
         :param bool force: Do not use cached results, always run adviser. 
@@ -442,6 +443,7 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
+        :param bool is_s2i: A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
         :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
         :param bool force: Do not use cached results, always run adviser. 
@@ -450,7 +452,7 @@ class AdviseApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'debug', 'limit_latest_versions', 'force']  # noqa: E501
+        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'is_s2i', 'debug', 'limit_latest_versions', 'force']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -487,6 +489,8 @@ class AdviseApi(object):
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'origin' in params:
             query_params.append(('origin', params['origin']))  # noqa: E501
+        if 'is_s2i' in params:
+            query_params.append(('is_s2i', params['is_s2i']))  # noqa: E501
         if 'debug' in params:
             query_params.append(('debug', params['debug']))  # noqa: E501
         if 'limit_latest_versions' in params:

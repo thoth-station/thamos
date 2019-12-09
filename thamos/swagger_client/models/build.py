@@ -14,7 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.build_build_log import BuildBuildLog  # noqa: F401,E501
 
 
 class Build(object):

@@ -23,6 +23,7 @@ from thamos.swagger_client.thoth.info_api import InfoApi
 from thamos.swagger_client.thoth.kebechet_api import KebechetApi
 from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
 from thamos.swagger_client.thoth.python_package_metadata_api import PythonPackageMetadataApi
+from thamos.swagger_client.thoth.python_packages_api import PythonPackagesApi
 # import ApiClient
 from thamos.swagger_client.api_client import ApiClient
 from thamos.swagger_client.configuration import Configuration
@@ -60,5 +61,7 @@ from thamos.swagger_client.models.python_package_indexes import PythonPackageInd
 from thamos.swagger_client.models.python_package_indexes_inner import PythonPackageIndexesInner
 from thamos.swagger_client.models.python_package_metadata_response import PythonPackageMetadataResponse
 from thamos.swagger_client.models.python_package_metadata_response_error import PythonPackageMetadataResponseError
+from thamos.swagger_client.models.python_packages_count_info_response import PythonPackagesCountInfoResponse
+from thamos.swagger_client.models.python_packages_count_info_response_error import PythonPackagesCountInfoResponseError
 from thamos.swagger_client.models.python_stack import PythonStack
 from thamos.swagger_client.models.runtime_environment import RuntimeEnvironment

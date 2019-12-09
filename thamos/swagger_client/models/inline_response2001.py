@@ -14,7 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.inline_response2001_runtime_environments import InlineResponse2001RuntimeEnvironments  # noqa: F401,E501
 
 
 class InlineResponse2001(object):

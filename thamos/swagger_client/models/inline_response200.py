@@ -14,8 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.inline_response200_hardware_environments import InlineResponse200HardwareEnvironments  # noqa: F401,E501
-from thamos.swagger_client.models.inline_response200_parameters import InlineResponse200Parameters  # noqa: F401,E501
 
 
 class InlineResponse200(object):

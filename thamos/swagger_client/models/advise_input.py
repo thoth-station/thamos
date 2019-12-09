@@ -14,9 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.advise_input_library_usage import AdviseInputLibraryUsage  # noqa: F401,E501
-from thamos.swagger_client.models.python_stack import PythonStack  # noqa: F401,E501
-from thamos.swagger_client.models.runtime_environment import RuntimeEnvironment  # noqa: F401,E501
 
 
 class AdviseInput(object):

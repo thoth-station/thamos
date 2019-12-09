@@ -14,7 +14,6 @@ import pprint
 import re  # noqa: F401
 
 import six
-from thamos.swagger_client.models.build_analysis_response_base_image_analysis import BuildAnalysisResponseBaseImageAnalysis  # noqa: F401,E501
 
 
 class BuildAnalysisResponse(object):
