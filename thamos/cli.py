@@ -387,8 +387,11 @@ def advise(
         if not no_write:
             # Print report of the best one - thus index zero.
             if result["report"] and result["report"]["products"]:
-                _print_header("Recommended stack report")
-                _print_report(result["report"]["products"][0]["justification"], json_output=json_output)
+                if result["report"]["products"][0]["justification"]:
+                    _print_header("Recommended stack report")
+                    _print_report(result["report"]["products"][0]["justification"], json_output=json_output)
+                else:
+                    click.echo("No justification was made for the recommended stack")
 
             if result["report"] and result["report"]["stack_info"]:
                 _print_header("Application stack guidance")
