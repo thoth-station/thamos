@@ -659,3 +659,13 @@
 
 ## Release 0.7.6 (2019-12-04T15:17:26)
 * :pencil: there was some ( too much
+
+## Release 0.7.7 (2019-12-13T12:36:52)
+* Inform about no justification made
+* :pushpin: Automatic update of dependency thoth-analyzer from 0.1.6 to 0.1.7
+* Add missing bits for documentation
+* Generate Thamos documentation
+* Regenerate client to support is_s2i flag
+* Propagate is_s2i flag based to User API
+* minor updates
+* :pushpin: Automatic update of dependency thoth-analyzer from 0.1.5 to 0.1.6
