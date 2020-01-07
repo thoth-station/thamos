@@ -31,7 +31,7 @@ _WORKDIR_DEPTH_LEN = 33
 @contextmanager
 def workdir(file_lookup: str = None):
     """Find project directory and cd into it."""
-    file_lookup = file_lookup or "Pipfile"
+    file_lookup = file_lookup or ".thoth.yaml"
 
     project_dir = os.getcwd()
     for _ in range(_WORKDIR_DEPTH_LEN):
