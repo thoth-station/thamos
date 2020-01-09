@@ -120,6 +120,16 @@ on environment variables (see ``THOTH_SERVICE_HOST`` example above). Note the
 environment variables are not expanded on `thamos config` call but rather on
 other sub-commands issued (e.g. ``thamos advise`` or others).
 
+The output format coming out of recommendations can be compatible with
+`Pipenv <https://pipenv.kennethreitz.org/en/latest/>`__,
+`raw pip <https://pip.pypa.io/en/stable/user_guide/>`__  or similar to the one
+provided by `pip-tools <https://pypi.org/project/pip-tools/>`__ (actually same as for
+``pip`` as these formats are interchangeable). The format is configured using
+``requirements_format`` configuration option, available options are:
+
+* ``requirements_format: pipenv`` for `Pipenv <https://pipenv.kennethreitz.org/en/latest/>`__ compatible output
+* ``requirements_format: pip`` or ``requirements_format: pip-tools`` for `pip <https://pip.pypa.io/en/stable/user_guide/>`__ or `pip-tools <https://pypi.org/project/pip-tools/>`__ compatible output
+
 Using Thoth and thamos in OpenShift's s2i
 =========================================
 

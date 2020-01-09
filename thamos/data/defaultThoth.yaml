@@ -8,7 +8,7 @@ host: khemenu.thoth-station.ninja
 # Configure TLS verification for communication with remote Thoth instance:
 tls_verify: true
 
-# Format of requirements file, currently supported is only Pipenv:
+# Format of requirements file, supported are "pip" and "pipenv":
 requirements_format: pipenv
 
 runtime_environments:

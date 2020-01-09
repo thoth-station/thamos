@@ -23,7 +23,7 @@ from pathlib import Path
 import toml
 
 from thamos.utils import cwd
-from thamos.cli import _write_pipfiles
+from thamos.cli import _write_files
 
 
 class TestResponse(ThamosTestCase):
@@ -33,12 +33,31 @@ class TestResponse(ThamosTestCase):
         """Test serialization of a response from backend."""
         response = json.loads((Path(self.data_dir) / "response_1.json").read_text())
         with cwd(str(tmp_path)):
-            pipfile = response["report"][0][1]["requirements"]
-            pipfile_lock = response["report"][0][1]["requirements_locked"]
-            _write_pipfiles(pipfile, pipfile_lock)
+            pipfile = response["result"]["report"]["products"][0]["project"][
+                "requirements"
+            ]
+            pipfile_lock = response["result"]["report"]["products"][0]["project"][
+                "requirements_locked"
+            ]
+            _write_files(
+                dict(pipfile), dict(pipfile_lock), requirements_format="pipenv"
+            )
 
             written_pipfile = toml.loads(Path("Pipfile").read_text())
-            assert written_pipfile == pipfile
+            assert written_pipfile == {
+                "dev-packages": {},
+                "packages": {
+                    "flask": {"index": "pypi-org", "version": "*"},
+                    "tensorflow": {"index": "pypi-org", "version": "*"},
+                },
+                "source": [
+                    {
+                        "name": "pypi-org",
+                        "url": "https://pypi.org/simple",
+                        "verify_ssl": True,
+                    }
+                ],
+            }
 
             written_pipfile_lock = json.loads(Path("Pipfile.lock").read_text())
             assert written_pipfile_lock == pipfile_lock

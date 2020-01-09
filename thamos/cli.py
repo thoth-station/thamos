@@ -24,13 +24,17 @@ import sys
 from shutil import get_terminal_size
 import json
 from functools import wraps
+from typing import Any
+from typing import Dict
+from typing import Tuple
+from typing import Optional
 
-import toml
 import yaml
 from texttable import Texttable
 import click
 from termcolor import colored
 import daiquiri
+from thoth.python import Project
 from thamos.config import config as configuration
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
@@ -77,38 +81,31 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     return wrapper
 
 
-def _load_pipfiles() -> tuple:
-    """Load Pipfile and Pipfile.lock from the current directory."""
-    _LOGGER.debug("Loading Pipfile in %r", os.getcwd())
-    with open("Pipfile", "r") as pipfile_file:
-        pipfile_content = pipfile_file.read()
-
-    pipfile_lock_content = None
-    try:
-        _LOGGER.debug("Loading Pipfile.lock in %r", os.getcwd())
-        with open("Pipfile.lock", "r") as pipfile_lock_file:
-            pipfile_lock_content = pipfile_lock_file.read()
-    except FileNotFoundError:
-        _LOGGER.info("No Pipfile.lock found")
-
-    return pipfile_content, pipfile_lock_content
-
-
-def _write_pipfiles(pipfile: str, pipfile_lock: str) -> None:
-    """Write content of Pipfile and Pipfile.lock to the current directory."""
-    if pipfile:
-        _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
-        with open("Pipfile", "w") as pipfile_file:
-            toml.dump(pipfile, pipfile_file)
+def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
+    """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
+    if requirements_format == "pipenv":
+        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
+        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+    return project.pipfile.to_string(), project.pipfile_lock.to_string() if project.pipfile_lock else None
+
+
+def _write_files(requirements: str, requirements_lock: str, requirements_format: str) -> None:
+    """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
+    project = Project.from_dict(requirements, requirements_lock)
+    if requirements_format == "pipenv":
+        _LOGGER.debug("Writing to Pipfile/Pipfile.lock in %r", os.getcwd())
+        project.to_files()
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        _LOGGER.debug("Writing to requirements.in/requirements.txt in %r", os.getcwd())
+        project.to_pip_compile_files()
         _LOGGER.debug("No changes to Pipfile to write")
-
-    if pipfile_lock:
-        _LOGGER.debug("Writing to Pipfile.lock in %r", os.getcwd())
-        with open("Pipfile.lock", "w") as pipfile_lock_file:
-            json.dump(pipfile_lock, pipfile_lock_file, sort_keys=True, indent=4)
     else:
-        _LOGGER.debug("No changes to Pipfile.lock to write")
+        raise ValueError(
+            f"Unknown requirements format, supported are 'pipenv' and 'pip': {requirements_format!r}"
+        )
 
 
 def _print_header(header: str) -> None:
@@ -360,7 +357,7 @@ def advise(
 ):
     """Ask Thoth for recommendations on application stack."""
     with workdir():
-        pipfile, pipfile_lock = _load_pipfiles()
+        pipfile, pipfile_lock = _load_files(requirements_format=configuration.requirements_format)
 
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise(
@@ -405,7 +402,7 @@ def advise(
                     recommendation_type,
                     limit_latest_versions
                 )
-                _write_pipfiles(pipfile, pipfile_lock)
+                _write_files(pipfile, pipfile_lock, configuration.requirements_format)
         else:
             click.echo(json.dumps(result, indent=2))
 
@@ -446,7 +443,10 @@ def provenance_check(
 ):
     """Check provenance of installed packages."""
     with workdir():
-        pipfile, pipfile_lock = _load_pipfiles()
+        if configuration.requirements_format != "pipenv":
+            raise ValueError("Provenance checks are available only for requirements managed by Pipenv")
+
+        pipfile, pipfile_lock = _load_files("pipenv")
         if not pipfile_lock:
             _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
             sys.exit(3)

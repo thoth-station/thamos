@@ -74,6 +74,10 @@ class _Configuration:
 
         return self._configuration
 
+    @property
+    def requirements_format(self) -> str:
+        return self.content.get("requirements_format", "pipenv")
+
     def get_thoth_version(self) -> str:
         """Get version of Thoth backend."""
         _LOGGER.debug("Contacting Thoth at %r to receive version information", self.api_url)
