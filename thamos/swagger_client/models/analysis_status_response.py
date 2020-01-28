@@ -29,22 +29,45 @@ class AnalysisStatusResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'parameters': 'object',
-        'status': 'AnalysisStatusResponseStatus'
+        'status': 'AnalysisStatusResponseStatus',
+        'parameters': 'object'
     }
 
     attribute_map = {
-        'parameters': 'parameters',
-        'status': 'status'
+        'status': 'status',
+        'parameters': 'parameters'
     }
 
-    def __init__(self, parameters=None, status=None):  # noqa: E501
+    def __init__(self, status=None, parameters=None):  # noqa: E501
         """AnalysisStatusResponse - a model defined in Swagger"""  # noqa: E501
-        self._parameters = None
         self._status = None
+        self._parameters = None
         self.discriminator = None
-        self.parameters = parameters
         self.status = status
+        self.parameters = parameters
+
+    @property
+    def status(self):
+        """Gets the status of this AnalysisStatusResponse.  # noqa: E501
+
+
+        :return: The status of this AnalysisStatusResponse.  # noqa: E501
+        :rtype: AnalysisStatusResponseStatus
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this AnalysisStatusResponse.
+
+
+        :param status: The status of this AnalysisStatusResponse.  # noqa: E501
+        :type: AnalysisStatusResponseStatus
+        """
+        if status is None:
+            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
+
+        self._status = status
 
     @property
     def parameters(self):
@@ -70,29 +93,6 @@ class AnalysisStatusResponse(object):
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
         self._parameters = parameters
-
-    @property
-    def status(self):
-        """Gets the status of this AnalysisStatusResponse.  # noqa: E501
-
-
-        :return: The status of this AnalysisStatusResponse.  # noqa: E501
-        :rtype: AnalysisStatusResponseStatus
-        """
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        """Sets the status of this AnalysisStatusResponse.
-
-
-        :param status: The status of this AnalysisStatusResponse.  # noqa: E501
-        :type: AnalysisStatusResponseStatus
-        """
-        if status is None:
-            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
-
-        self._status = status
 
     def to_dict(self):
         """Returns the model properties as a dict"""

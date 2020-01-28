@@ -29,45 +29,22 @@ class AdviseInputLibraryUsage(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'report': 'object',
-        'version': 'str'
+        'version': 'str',
+        'report': 'object'
     }
 
     attribute_map = {
-        'report': 'report',
-        'version': 'version'
+        'version': 'version',
+        'report': 'report'
     }
 
-    def __init__(self, report=None, version=None):  # noqa: E501
+    def __init__(self, version=None, report=None):  # noqa: E501
         """AdviseInputLibraryUsage - a model defined in Swagger"""  # noqa: E501
-        self._report = None
         self._version = None
+        self._report = None
         self.discriminator = None
-        self.report = report
         self.version = version
-
-    @property
-    def report(self):
-        """Gets the report of this AdviseInputLibraryUsage.  # noqa: E501
-
-
-        :return: The report of this AdviseInputLibraryUsage.  # noqa: E501
-        :rtype: object
-        """
-        return self._report
-
-    @report.setter
-    def report(self, report):
-        """Sets the report of this AdviseInputLibraryUsage.
-
-
-        :param report: The report of this AdviseInputLibraryUsage.  # noqa: E501
-        :type: object
-        """
-        if report is None:
-            raise ValueError("Invalid value for `report`, must not be `None`")  # noqa: E501
-
-        self._report = report
+        self.report = report
 
     @property
     def version(self):
@@ -91,6 +68,29 @@ class AdviseInputLibraryUsage(object):
             raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
 
         self._version = version
+
+    @property
+    def report(self):
+        """Gets the report of this AdviseInputLibraryUsage.  # noqa: E501
+
+
+        :return: The report of this AdviseInputLibraryUsage.  # noqa: E501
+        :rtype: object
+        """
+        return self._report
+
+    @report.setter
+    def report(self, report):
+        """Sets the report of this AdviseInputLibraryUsage.
+
+
+        :param report: The report of this AdviseInputLibraryUsage.  # noqa: E501
+        :type: object
+        """
+        if report is None:
+            raise ValueError("Invalid value for `report`, must not be `None`")  # noqa: E501
+
+        self._report = report
 
     def to_dict(self):
         """Returns the model properties as a dict"""
