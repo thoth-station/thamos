@@ -18,6 +18,7 @@ from __future__ import absolute_import
 from thamos.swagger_client.thoth.advise_api import AdviseApi
 from thamos.swagger_client.thoth.build_analysis_api import BuildAnalysisApi
 from thamos.swagger_client.thoth.buildlogs_api import BuildlogsApi
+from thamos.swagger_client.thoth.git_hub_api import GitHubApi
 from thamos.swagger_client.thoth.image_analysis_api import ImageAnalysisApi
 from thamos.swagger_client.thoth.info_api import InfoApi
 from thamos.swagger_client.thoth.kebechet_api import KebechetApi
@@ -51,11 +52,11 @@ from thamos.swagger_client.models.build_build_log import BuildBuildLog
 from thamos.swagger_client.models.image_metadata_response import ImageMetadataResponse
 from thamos.swagger_client.models.inline_response200 import InlineResponse200
 from thamos.swagger_client.models.inline_response2001 import InlineResponse2001
-from thamos.swagger_client.models.inline_response2001_runtime_environments import InlineResponse2001RuntimeEnvironments
+from thamos.swagger_client.models.inline_response2001_hardware_environments import InlineResponse2001HardwareEnvironments
+from thamos.swagger_client.models.inline_response2001_parameters import InlineResponse2001Parameters
 from thamos.swagger_client.models.inline_response2002 import InlineResponse2002
 from thamos.swagger_client.models.inline_response2002_software_environments import InlineResponse2002SoftwareEnvironments
-from thamos.swagger_client.models.inline_response200_hardware_environments import InlineResponse200HardwareEnvironments
-from thamos.swagger_client.models.inline_response200_parameters import InlineResponse200Parameters
+from thamos.swagger_client.models.inline_response200_runtime_environments import InlineResponse200RuntimeEnvironments
 from thamos.swagger_client.models.log import Log
 from thamos.swagger_client.models.python_package_indexes import PythonPackageIndexes
 from thamos.swagger_client.models.python_package_indexes_inner import PythonPackageIndexesInner
@@ -64,4 +65,5 @@ from thamos.swagger_client.models.python_package_metadata_response_error import 
 from thamos.swagger_client.models.python_packages_count_info_response import PythonPackagesCountInfoResponse
 from thamos.swagger_client.models.python_packages_count_info_response_error import PythonPackagesCountInfoResponseError
 from thamos.swagger_client.models.python_stack import PythonStack
+from thamos.swagger_client.models.qeb_hwt_thamos_advise_input import QebHwtThamosAdviseInput
 from thamos.swagger_client.models.runtime_environment import RuntimeEnvironment

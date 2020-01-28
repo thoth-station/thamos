@@ -30,25 +30,25 @@ class PythonPackageIndexesInner(object):
     """
     swagger_types = {
         'url': 'str',
-        'verify_ssl': 'bool',
-        'warehouse_api_url': 'str'
+        'warehouse_api_url': 'str',
+        'verify_ssl': 'bool'
     }
 
     attribute_map = {
         'url': 'url',
-        'verify_ssl': 'verify_ssl',
-        'warehouse_api_url': 'warehouse_api_url'
+        'warehouse_api_url': 'warehouse_api_url',
+        'verify_ssl': 'verify_ssl'
     }
 
-    def __init__(self, url=None, verify_ssl=None, warehouse_api_url=None):  # noqa: E501
+    def __init__(self, url=None, warehouse_api_url=None, verify_ssl=None):  # noqa: E501
         """PythonPackageIndexesInner - a model defined in Swagger"""  # noqa: E501
         self._url = None
-        self._verify_ssl = None
         self._warehouse_api_url = None
+        self._verify_ssl = None
         self.discriminator = None
         self.url = url
-        self.verify_ssl = verify_ssl
         self.warehouse_api_url = warehouse_api_url
+        self.verify_ssl = verify_ssl
 
     @property
     def url(self):
@@ -76,31 +76,6 @@ class PythonPackageIndexesInner(object):
         self._url = url
 
     @property
-    def verify_ssl(self):
-        """Gets the verify_ssl of this PythonPackageIndexesInner.  # noqa: E501
-
-        Use secured connection to warehouse.  # noqa: E501
-
-        :return: The verify_ssl of this PythonPackageIndexesInner.  # noqa: E501
-        :rtype: bool
-        """
-        return self._verify_ssl
-
-    @verify_ssl.setter
-    def verify_ssl(self, verify_ssl):
-        """Sets the verify_ssl of this PythonPackageIndexesInner.
-
-        Use secured connection to warehouse.  # noqa: E501
-
-        :param verify_ssl: The verify_ssl of this PythonPackageIndexesInner.  # noqa: E501
-        :type: bool
-        """
-        if verify_ssl is None:
-            raise ValueError("Invalid value for `verify_ssl`, must not be `None`")  # noqa: E501
-
-        self._verify_ssl = verify_ssl
-
-    @property
     def warehouse_api_url(self):
         """Gets the warehouse_api_url of this PythonPackageIndexesInner.  # noqa: E501
 
@@ -124,6 +99,31 @@ class PythonPackageIndexesInner(object):
             raise ValueError("Invalid value for `warehouse_api_url`, must not be `None`")  # noqa: E501
 
         self._warehouse_api_url = warehouse_api_url
+
+    @property
+    def verify_ssl(self):
+        """Gets the verify_ssl of this PythonPackageIndexesInner.  # noqa: E501
+
+        Use secured connection to warehouse.  # noqa: E501
+
+        :return: The verify_ssl of this PythonPackageIndexesInner.  # noqa: E501
+        :rtype: bool
+        """
+        return self._verify_ssl
+
+    @verify_ssl.setter
+    def verify_ssl(self, verify_ssl):
+        """Sets the verify_ssl of this PythonPackageIndexesInner.
+
+        Use secured connection to warehouse.  # noqa: E501
+
+        :param verify_ssl: The verify_ssl of this PythonPackageIndexesInner.  # noqa: E501
+        :type: bool
+        """
+        if verify_ssl is None:
+            raise ValueError("Invalid value for `verify_ssl`, must not be `None`")  # noqa: E501
+
+        self._verify_ssl = verify_ssl
 
     def to_dict(self):
         """Returns the model properties as a dict"""

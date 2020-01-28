@@ -1,4 +1,4 @@
-# InlineResponse200Parameters
+# InlineResponse2001Parameters
 
 ## Properties
 Name | Type | Description | Notes

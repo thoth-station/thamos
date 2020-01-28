@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**list_software_environments**](InfoApi.md#list_software_environments) | **GET** /software-environment | Retrieve a list of supported software environments
 
 # **list_hardware_environments**
-> InlineResponse200 list_hardware_environments(page=page)
+> InlineResponse2001 list_hardware_environments(page=page)
 
 Retrieve a list of supported hardware environments
 
@@ -42,7 +42,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**InlineResponse2001**](InlineResponse2001.md)
 
 ### Authorization
 
@@ -98,7 +98,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environments**
-> InlineResponse2001 list_runtime_environments()
+> InlineResponse200 list_runtime_environments()
 
 Retrieve a list of supported runtime environments
 
@@ -126,7 +126,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**InlineResponse200**](InlineResponse200.md)
 
 ### Authorization
 

@@ -1,4 +1,4 @@
-# InlineResponse200HardwareEnvironments
+# InlineResponse2001HardwareEnvironments
 
 ## Properties
 Name | Type | Description | Notes
