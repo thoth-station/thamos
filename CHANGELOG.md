@@ -669,3 +669,25 @@
 * Propagate is_s2i flag based to User API
 * minor updates
 * :pushpin: Automatic update of dependency thoth-analyzer from 0.1.5 to 0.1.6
+
+## Release 0.8.0 (2020-01-29T10:30:44)
+* Regenerate client with updated GitHub parameter types
+* Fix method name
+* Add support for GitHub integration to Thamos lib
+* Regenerate client for GitHub support
+* :pushpin: Automatic update of dependency urllib3 from 1.25.7 to 1.25.8
+* :pushpin: Automatic update of dependency pytest from 5.3.3 to 5.3.4
+* :pushpin: Automatic update of dependency pytest from 5.3.2 to 5.3.3
+* :pushpin: Automatic update of dependency thoth-analyzer from 0.1.7 to 0.1.8
+* :pushpin: Automatic update of dependency daiquiri from 1.6.1 to 2.0.0
+* :pushpin: Automatic update of dependency six from 1.13.0 to 1.14.0
+* :pushpin: Automatic update of dependency yaspin from 0.15.0 to 0.16.0
+* :pushpin: Automatic update of dependency thoth-python from 0.9.0 to 0.9.1
+* Adjust testsuite to new response format
+* Add pip/pip-compile support
+* :pushpin: Automatic update of dependency pytest-timeout from 1.3.3 to 1.3.4
+* :pushpin: Automatic update of dependency pyyaml from 5.2 to 5.3
+* Update examples
+* Happy new year!
+* :pushpin: Automatic update of dependency daiquiri from 1.6.0 to 1.6.1
+* :pushpin: Automatic update of dependency pytest from 5.3.1 to 5.3.2
