@@ -691,3 +691,9 @@
 * Happy new year!
 * :pushpin: Automatic update of dependency daiquiri from 1.6.0 to 1.6.1
 * :pushpin: Automatic update of dependency pytest from 5.3.1 to 5.3.2
+
+## Release 0.8.1 (2020-02-05T15:45:24)
+* Regenerate client and docs after modifying GitHubApp parameters
+* remove unusued parameter
+* Modify parameters for GitHub App
+* :pushpin: Automatic update of dependency pytest from 5.3.4 to 5.3.5
