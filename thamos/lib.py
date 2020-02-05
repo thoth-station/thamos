@@ -213,7 +213,8 @@ def advise(
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
-    revision: typing.Optional[str] = None
+    github_base_repo_url: typing.Optional[str] = None,
+    github_head_repo_url: typing.Optional[str] = None
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -300,8 +301,11 @@ def advise(
     if github_installation_id is not None:
         parameters["github_installation_id"] = github_installation_id
 
-    if revision is not None:
-        parameters["revision"] = revision
+    if github_head_repo_url is not None:
+        parameters["github_head_repo_url"] = github_head_repo_url
+
+    if github_base_repo_url is not None:
+        parameters["github_base_repo_url"] = github_base_repo_url
 
     response = api_instance.post_advise_python(advise_input, **parameters)
 
@@ -348,7 +352,8 @@ def advise_here(
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
-    revision: typing.Optional[str] = None
+    github_base_repo_url: typing.Optional[str] = None,
+    github_head_repo_url: typing.Optional[str] = None
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     if not os.path.isfile("Pipfile"):
@@ -377,7 +382,8 @@ def advise_here(
             github_event_type=github_event_type,
             github_check_run_id=github_check_run_id,
             github_installation_id=github_installation_id,
-            revision=revision,
+            github_base_repo_url=github_base_repo_url,
+            github_head_repo_url=github_head_repo_url,
         )
 
 
