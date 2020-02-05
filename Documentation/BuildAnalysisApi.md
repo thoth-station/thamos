@@ -24,11 +24,11 @@ api_instance = thamos.swagger_client.BuildAnalysisApi()
 body = thamos.swagger_client.Build() # Build | Fill up the Build details such as output imagestream, base imagestream, and build log.
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
-environment_type = 'environment_type_example' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional)
+environment_type = 'runtime' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional) (default to runtime)
 origin = 'origin_example' # str | A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-debug = true # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional)
-registry_verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional)
-force = true # bool | Do not use cached results, always run analysis.  (optional)
+debug = false # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional) (default to false)
+registry_verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
+force = false # bool | Do not use cached results, always run analysis.  (optional) (default to false)
 
 try:
     # Analyze the given build imagestream and log.
@@ -45,11 +45,11 @@ Name | Type | Description  | Notes
  **body** | [**Build**](Build.md)| Fill up the Build details such as output imagestream, base imagestream, and build log. | 
  **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
- **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] 
+ **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to runtime]
  **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] 
- **registry_verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] 
- **force** | **bool**| Do not use cached results, always run analysis.  | [optional] 
+ **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
+ **registry_verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
+ **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to false]
 
 ### Return type
 

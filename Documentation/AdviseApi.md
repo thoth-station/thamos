@@ -163,7 +163,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.AdviseApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Get adviser results available.
@@ -177,7 +177,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 
@@ -195,7 +195,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, revision=revision, is_s2i=is_s2i, debug=debug, limit_latest_versions=limit_latest_versions, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id)
+> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, is_s2i=is_s2i, debug=debug, limit_latest_versions=limit_latest_versions, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url)
 
 Get advise for Python ecosystem.
 
@@ -210,22 +210,22 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = thamos.swagger_client.AdviseApi()
 body = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack with runtime specific information.
-recommendation_type = 'recommendation_type_example' # str | Recommendation type.
+recommendation_type = 'stable' # str | Recommendation type. (default to stable)
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-revision = 'revision_example' # str | Commit hash or revision to origin if origin is a Git repo. (optional)
 is_s2i = true # bool | A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build.  (optional)
-debug = true # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional)
+debug = false # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional) (default to false)
 limit_latest_versions = 56 # int | Limit number of packages considering only specific number of versions for each package. (optional)
-force = true # bool | Do not use cached results, always run adviser.  (optional)
+force = false # bool | Do not use cached results, always run adviser.  (optional) (default to false)
 github_event_type = 'github_event_type_example' # str | GitHub's event type. (optional)
 github_check_run_id = 56 # int | GitHub's event id. (optional)
 github_installation_id = 56 # int | GitHub's installation id. (optional)
+github_base_repo_url = 'github_base_repo_url_example' # str | URL of the GitHub repository containing the Pull Request. (optional)
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, revision=revision, is_s2i=is_s2i, debug=debug, limit_latest_versions=limit_latest_versions, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id)
+    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, is_s2i=is_s2i, debug=debug, limit_latest_versions=limit_latest_versions, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -236,18 +236,18 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. | 
- **recommendation_type** | **str**| Recommendation type. | 
+ **recommendation_type** | **str**| Recommendation type. | [default to stable]
  **count** | **int**| Number of software stacks that should be returned. | [optional] 
  **limit** | **int**| Limit number of software stacks scored. | [optional] 
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **revision** | **str**| Commit hash or revision to origin if origin is a Git repo. | [optional] 
  **is_s2i** | **bool**| A flag marking the given request coming from an OpenShift&#x27;s S2I (Source-to-Image) build.  | [optional] 
- **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] 
+ **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
  **limit_latest_versions** | **int**| Limit number of packages considering only specific number of versions for each package. | [optional] 
- **force** | **bool**| Do not use cached results, always run adviser.  | [optional] 
+ **force** | **bool**| Do not use cached results, always run adviser.  | [optional] [default to false]
  **github_event_type** | **str**| GitHub&#x27;s event type. | [optional] 
  **github_check_run_id** | **int**| GitHub&#x27;s event id. | [optional] 
  **github_installation_id** | **int**| GitHub&#x27;s installation id. | [optional] 
+ **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional] 
 
 ### Return type
 

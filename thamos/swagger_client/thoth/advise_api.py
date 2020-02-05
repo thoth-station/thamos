@@ -414,7 +414,6 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
-        :param str revision: Commit hash or revision to origin if origin is a Git repo.
         :param bool is_s2i: A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
         :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
@@ -422,6 +421,7 @@ class AdviseApi(object):
         :param str github_event_type: GitHub's event type.
         :param int github_check_run_id: GitHub's event id.
         :param int github_installation_id: GitHub's installation id.
+        :param str github_base_repo_url: URL of the GitHub repository containing the Pull Request.
         :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -447,7 +447,6 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
-        :param str revision: Commit hash or revision to origin if origin is a Git repo.
         :param bool is_s2i: A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
         :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
@@ -455,12 +454,13 @@ class AdviseApi(object):
         :param str github_event_type: GitHub's event type.
         :param int github_check_run_id: GitHub's event id.
         :param int github_installation_id: GitHub's installation id.
+        :param str github_base_repo_url: URL of the GitHub repository containing the Pull Request.
         :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'revision', 'is_s2i', 'debug', 'limit_latest_versions', 'force', 'github_event_type', 'github_check_run_id', 'github_installation_id']  # noqa: E501
+        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'is_s2i', 'debug', 'limit_latest_versions', 'force', 'github_event_type', 'github_check_run_id', 'github_installation_id', 'github_base_repo_url']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -497,8 +497,6 @@ class AdviseApi(object):
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'origin' in params:
             query_params.append(('origin', params['origin']))  # noqa: E501
-        if 'revision' in params:
-            query_params.append(('revision', params['revision']))  # noqa: E501
         if 'is_s2i' in params:
             query_params.append(('is_s2i', params['is_s2i']))  # noqa: E501
         if 'debug' in params:
@@ -513,6 +511,8 @@ class AdviseApi(object):
             query_params.append(('github_check_run_id', params['github_check_run_id']))  # noqa: E501
         if 'github_installation_id' in params:
             query_params.append(('github_installation_id', params['github_installation_id']))  # noqa: E501
+        if 'github_base_repo_url' in params:
+            query_params.append(('github_base_repo_url', params['github_base_repo_url']))  # noqa: E501
 
         header_params = {}
 

@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**list_software_environments**](InfoApi.md#list_software_environments) | **GET** /software-environment | Retrieve a list of supported software environments
 
 # **list_hardware_environments**
-> InlineResponse2001 list_hardware_environments(page=page)
+> InlineResponse200 list_hardware_environments(page=page)
 
 Retrieve a list of supported hardware environments
 
@@ -24,7 +24,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.InfoApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of supported hardware environments
@@ -38,11 +38,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**InlineResponse200**](InlineResponse200.md)
 
 ### Authorization
 
@@ -98,7 +98,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environments**
-> InlineResponse200 list_runtime_environments()
+> InlineResponse2001 list_runtime_environments()
 
 Retrieve a list of supported runtime environments
 
@@ -126,7 +126,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**InlineResponse2001**](InlineResponse2001.md)
 
 ### Authorization
 
@@ -154,7 +154,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.InfoApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of supported software environments
@@ -168,7 +168,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 

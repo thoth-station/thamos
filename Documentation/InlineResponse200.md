@@ -3,8 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**parameters** | **object** | Parameters echoed back to user. | 
-**runtime_environments** | [**list[InlineResponse200RuntimeEnvironments]**](InlineResponse200RuntimeEnvironments.md) |  | 
+**hardware_environments** | [**list[InlineResponse200HardwareEnvironments]**](InlineResponse200HardwareEnvironments.md) |  | 
+**parameters** | [**InlineResponse200Parameters**](InlineResponse200Parameters.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

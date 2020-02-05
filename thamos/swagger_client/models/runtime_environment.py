@@ -29,44 +29,67 @@ class RuntimeEnvironment(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'hardware': 'object',
-        'operating_system': 'object',
-        'python_version': 'str',
         'cuda_version': 'str',
+        'hardware': 'object',
+        'ipython': 'object',
         'name': 'str',
-        'ipython': 'object'
+        'operating_system': 'object',
+        'python_version': 'str'
     }
 
     attribute_map = {
-        'hardware': 'hardware',
-        'operating_system': 'operating_system',
-        'python_version': 'python_version',
         'cuda_version': 'cuda_version',
+        'hardware': 'hardware',
+        'ipython': 'ipython',
         'name': 'name',
-        'ipython': 'ipython'
+        'operating_system': 'operating_system',
+        'python_version': 'python_version'
     }
 
-    def __init__(self, hardware=None, operating_system=None, python_version=None, cuda_version=None, name=None, ipython=None):  # noqa: E501
+    def __init__(self, cuda_version=None, hardware=None, ipython=None, name=None, operating_system=None, python_version=None):  # noqa: E501
         """RuntimeEnvironment - a model defined in Swagger"""  # noqa: E501
+        self._cuda_version = None
         self._hardware = None
+        self._ipython = None
+        self._name = None
         self._operating_system = None
         self._python_version = None
-        self._cuda_version = None
-        self._name = None
-        self._ipython = None
         self.discriminator = None
+        if cuda_version is not None:
+            self.cuda_version = cuda_version
         if hardware is not None:
             self.hardware = hardware
+        if ipython is not None:
+            self.ipython = ipython
+        if name is not None:
+            self.name = name
         if operating_system is not None:
             self.operating_system = operating_system
         if python_version is not None:
             self.python_version = python_version
-        if cuda_version is not None:
-            self.cuda_version = cuda_version
-        if name is not None:
-            self.name = name
-        if ipython is not None:
-            self.ipython = ipython
+
+    @property
+    def cuda_version(self):
+        """Gets the cuda_version of this RuntimeEnvironment.  # noqa: E501
+
+        Nvidia CUDA version which the application uses.  # noqa: E501
+
+        :return: The cuda_version of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
+        """
+        return self._cuda_version
+
+    @cuda_version.setter
+    def cuda_version(self, cuda_version):
+        """Sets the cuda_version of this RuntimeEnvironment.
+
+        Nvidia CUDA version which the application uses.  # noqa: E501
+
+        :param cuda_version: The cuda_version of this RuntimeEnvironment.  # noqa: E501
+        :type: str
+        """
+
+        self._cuda_version = cuda_version
 
     @property
     def hardware(self):
@@ -90,6 +113,52 @@ class RuntimeEnvironment(object):
         """
 
         self._hardware = hardware
+
+    @property
+    def ipython(self):
+        """Gets the ipython of this RuntimeEnvironment.  # noqa: E501
+
+        Additional information captured when recommendations were requested for Jupyter Notebook environments.   # noqa: E501
+
+        :return: The ipython of this RuntimeEnvironment.  # noqa: E501
+        :rtype: object
+        """
+        return self._ipython
+
+    @ipython.setter
+    def ipython(self, ipython):
+        """Sets the ipython of this RuntimeEnvironment.
+
+        Additional information captured when recommendations were requested for Jupyter Notebook environments.   # noqa: E501
+
+        :param ipython: The ipython of this RuntimeEnvironment.  # noqa: E501
+        :type: object
+        """
+
+        self._ipython = ipython
+
+    @property
+    def name(self):
+        """Gets the name of this RuntimeEnvironment.  # noqa: E501
+
+        User defined name of the runtime environment.  # noqa: E501
+
+        :return: The name of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this RuntimeEnvironment.
+
+        User defined name of the runtime environment.  # noqa: E501
+
+        :param name: The name of this RuntimeEnvironment.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     @property
     def operating_system(self):
@@ -136,75 +205,6 @@ class RuntimeEnvironment(object):
         """
 
         self._python_version = python_version
-
-    @property
-    def cuda_version(self):
-        """Gets the cuda_version of this RuntimeEnvironment.  # noqa: E501
-
-        Nvidia CUDA version which the application uses.  # noqa: E501
-
-        :return: The cuda_version of this RuntimeEnvironment.  # noqa: E501
-        :rtype: str
-        """
-        return self._cuda_version
-
-    @cuda_version.setter
-    def cuda_version(self, cuda_version):
-        """Sets the cuda_version of this RuntimeEnvironment.
-
-        Nvidia CUDA version which the application uses.  # noqa: E501
-
-        :param cuda_version: The cuda_version of this RuntimeEnvironment.  # noqa: E501
-        :type: str
-        """
-
-        self._cuda_version = cuda_version
-
-    @property
-    def name(self):
-        """Gets the name of this RuntimeEnvironment.  # noqa: E501
-
-        User defined name of the runtime environment.  # noqa: E501
-
-        :return: The name of this RuntimeEnvironment.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this RuntimeEnvironment.
-
-        User defined name of the runtime environment.  # noqa: E501
-
-        :param name: The name of this RuntimeEnvironment.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
-
-    @property
-    def ipython(self):
-        """Gets the ipython of this RuntimeEnvironment.  # noqa: E501
-
-        Additional information captured when recommendations were requested for Jupyter Notebook environments.   # noqa: E501
-
-        :return: The ipython of this RuntimeEnvironment.  # noqa: E501
-        :rtype: object
-        """
-        return self._ipython
-
-    @ipython.setter
-    def ipython(self, ipython):
-        """Sets the ipython of this RuntimeEnvironment.
-
-        Additional information captured when recommendations were requested for Jupyter Notebook environments.   # noqa: E501
-
-        :param ipython: The ipython of this RuntimeEnvironment.  # noqa: E501
-        :type: object
-        """
-
-        self._ipython = ipython
 
     def to_dict(self):
         """Returns the model properties as a dict"""

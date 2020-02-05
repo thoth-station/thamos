@@ -29,47 +29,22 @@ class AnalysisListingResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'result': 'list[str]',
-        'parameters': 'object'
+        'parameters': 'object',
+        'result': 'list[str]'
     }
 
     attribute_map = {
-        'result': 'result',
-        'parameters': 'parameters'
+        'parameters': 'parameters',
+        'result': 'result'
     }
 
-    def __init__(self, result=None, parameters=None):  # noqa: E501
+    def __init__(self, parameters=None, result=None):  # noqa: E501
         """AnalysisListingResponse - a model defined in Swagger"""  # noqa: E501
-        self._result = None
         self._parameters = None
+        self._result = None
         self.discriminator = None
-        self.result = result
         self.parameters = parameters
-
-    @property
-    def result(self):
-        """Gets the result of this AnalysisListingResponse.  # noqa: E501
-
-        List of available analysis ids.  # noqa: E501
-
-        :return: The result of this AnalysisListingResponse.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._result
-
-    @result.setter
-    def result(self, result):
-        """Sets the result of this AnalysisListingResponse.
-
-        List of available analysis ids.  # noqa: E501
-
-        :param result: The result of this AnalysisListingResponse.  # noqa: E501
-        :type: list[str]
-        """
-        if result is None:
-            raise ValueError("Invalid value for `result`, must not be `None`")  # noqa: E501
-
-        self._result = result
+        self.result = result
 
     @property
     def parameters(self):
@@ -95,6 +70,31 @@ class AnalysisListingResponse(object):
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
         self._parameters = parameters
+
+    @property
+    def result(self):
+        """Gets the result of this AnalysisListingResponse.  # noqa: E501
+
+        List of available analysis ids.  # noqa: E501
+
+        :return: The result of this AnalysisListingResponse.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._result
+
+    @result.setter
+    def result(self, result):
+        """Sets the result of this AnalysisListingResponse.
+
+        List of available analysis ids.  # noqa: E501
+
+        :param result: The result of this AnalysisListingResponse.  # noqa: E501
+        :type: list[str]
+        """
+        if result is None:
+            raise ValueError("Invalid value for `result`, must not be `None`")  # noqa: E501
+
+        self._result = result
 
     def to_dict(self):
         """Returns the model properties as a dict"""

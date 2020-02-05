@@ -4,12 +4,12 @@ All URIs are relative to *https://test.thoth-station.ninja/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**schedule_thamos_advise**](GitHubApi.md#schedule_thamos_advise) | **POST** /qeb-hwt | Schedule Thamos advise.
+[**schedule_thamos_advise**](GitHubApi.md#schedule_thamos_advise) | **POST** /qeb-hwt | Schedule Thamos advise for GitHub App.
 
 # **schedule_thamos_advise**
-> schedule_thamos_advise(body)
+> AnalysisResponse schedule_thamos_advise(body)
 
-Schedule Thamos advise.
+Schedule Thamos advise for GitHub App.
 
 ### Example
 ```python
@@ -24,8 +24,9 @@ api_instance = thamos.swagger_client.GitHubApi()
 body = thamos.swagger_client.QebHwtThamosAdviseInput() # QebHwtThamosAdviseInput | Thamos advise inputs.
 
 try:
-    # Schedule Thamos advise.
-    api_instance.schedule_thamos_advise(body)
+    # Schedule Thamos advise for GitHub App.
+    api_response = api_instance.schedule_thamos_advise(body)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling GitHubApi->schedule_thamos_advise: %s\n" % e)
 ```
@@ -38,7 +39,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AnalysisResponse**](AnalysisResponse.md)
 
 ### Authorization
 
@@ -47,7 +48,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -29,30 +29,31 @@ class InlineResponse2001(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'parameters': 'InlineResponse2001Parameters',
-        'hardware_environments': 'list[InlineResponse2001HardwareEnvironments]'
+        'parameters': 'object',
+        'runtime_environments': 'list[InlineResponse2001RuntimeEnvironments]'
     }
 
     attribute_map = {
         'parameters': 'parameters',
-        'hardware_environments': 'hardware_environments'
+        'runtime_environments': 'runtime_environments'
     }
 
-    def __init__(self, parameters=None, hardware_environments=None):  # noqa: E501
+    def __init__(self, parameters=None, runtime_environments=None):  # noqa: E501
         """InlineResponse2001 - a model defined in Swagger"""  # noqa: E501
         self._parameters = None
-        self._hardware_environments = None
+        self._runtime_environments = None
         self.discriminator = None
         self.parameters = parameters
-        self.hardware_environments = hardware_environments
+        self.runtime_environments = runtime_environments
 
     @property
     def parameters(self):
         """Gets the parameters of this InlineResponse2001.  # noqa: E501
 
+        Parameters echoed back to user.  # noqa: E501
 
         :return: The parameters of this InlineResponse2001.  # noqa: E501
-        :rtype: InlineResponse2001Parameters
+        :rtype: object
         """
         return self._parameters
 
@@ -60,9 +61,10 @@ class InlineResponse2001(object):
     def parameters(self, parameters):
         """Sets the parameters of this InlineResponse2001.
 
+        Parameters echoed back to user.  # noqa: E501
 
         :param parameters: The parameters of this InlineResponse2001.  # noqa: E501
-        :type: InlineResponse2001Parameters
+        :type: object
         """
         if parameters is None:
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
@@ -70,27 +72,27 @@ class InlineResponse2001(object):
         self._parameters = parameters
 
     @property
-    def hardware_environments(self):
-        """Gets the hardware_environments of this InlineResponse2001.  # noqa: E501
+    def runtime_environments(self):
+        """Gets the runtime_environments of this InlineResponse2001.  # noqa: E501
 
 
-        :return: The hardware_environments of this InlineResponse2001.  # noqa: E501
-        :rtype: list[InlineResponse2001HardwareEnvironments]
+        :return: The runtime_environments of this InlineResponse2001.  # noqa: E501
+        :rtype: list[InlineResponse2001RuntimeEnvironments]
         """
-        return self._hardware_environments
+        return self._runtime_environments
 
-    @hardware_environments.setter
-    def hardware_environments(self, hardware_environments):
-        """Sets the hardware_environments of this InlineResponse2001.
+    @runtime_environments.setter
+    def runtime_environments(self, runtime_environments):
+        """Sets the runtime_environments of this InlineResponse2001.
 
 
-        :param hardware_environments: The hardware_environments of this InlineResponse2001.  # noqa: E501
-        :type: list[InlineResponse2001HardwareEnvironments]
+        :param runtime_environments: The runtime_environments of this InlineResponse2001.  # noqa: E501
+        :type: list[InlineResponse2001RuntimeEnvironments]
         """
-        if hardware_environments is None:
-            raise ValueError("Invalid value for `hardware_environments`, must not be `None`")  # noqa: E501
+        if runtime_environments is None:
+            raise ValueError("Invalid value for `runtime_environments`, must not be `None`")  # noqa: E501
 
-        self._hardware_environments = hardware_environments
+        self._runtime_environments = runtime_environments
 
     def to_dict(self):
         """Returns the model properties as a dict"""

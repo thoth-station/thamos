@@ -33,7 +33,7 @@ class GitHubApi(object):
         self.api_client = api_client
 
     def schedule_thamos_advise(self, body, **kwargs):  # noqa: E501
-        """Schedule Thamos advise.  # noqa: E501
+        """Schedule Thamos advise for GitHub App.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -42,7 +42,7 @@ class GitHubApi(object):
 
         :param async_req bool
         :param QebHwtThamosAdviseInput body: Thamos advise inputs. (required)
-        :return: None
+        :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -54,7 +54,7 @@ class GitHubApi(object):
             return data
 
     def schedule_thamos_advise_with_http_info(self, body, **kwargs):  # noqa: E501
-        """Schedule Thamos advise.  # noqa: E501
+        """Schedule Thamos advise for GitHub App.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -63,7 +63,7 @@ class GitHubApi(object):
 
         :param async_req bool
         :param QebHwtThamosAdviseInput body: Thamos advise inputs. (required)
-        :return: None
+        :return: AnalysisResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -102,6 +102,10 @@ class GitHubApi(object):
         body_params = None
         if 'body' in params:
             body_params = params['body']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
             ['application/json'])  # noqa: E501
@@ -117,7 +121,7 @@ class GitHubApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='AnalysisResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),

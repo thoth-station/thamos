@@ -215,7 +215,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of document ids for analyzer results.
@@ -229,7 +229,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 
@@ -261,7 +261,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-environment_name = 'environment_name_example' # str | Software environment name for build for which analyses should be retrieved. 
+environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved. 
 
 try:
     # List analyses for the given software environment for build.
@@ -275,7 +275,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **environment_name** | **str**| Software environment name for build for which analyses should be retrieved.  | 
+ **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  | 
 
 ### Return type
 
@@ -353,7 +353,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of software environments analyzed for build.
@@ -367,7 +367,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 
@@ -399,7 +399,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of software environments analyzed for run.
@@ -413,7 +413,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 
@@ -448,11 +448,11 @@ api_instance = thamos.swagger_client.ImageAnalysisApi()
 image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
-environment_type = 'environment_type_example' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional)
+environment_type = 'runtime' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional) (default to runtime)
 origin = 'origin_example' # str | A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-debug = true # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional)
-verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional)
-force = true # bool | Do not use cached results, always run analysis.  (optional)
+debug = false # bool | Run the given analyzer in a verbose mode so developers can debug analyzer.  (optional) (default to false)
+verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
+force = false # bool | Do not use cached results, always run analysis.  (optional) (default to false)
 
 try:
     # Analyze the given image asynchronously.
@@ -469,11 +469,11 @@ Name | Type | Description  | Notes
  **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
  **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
- **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] 
+ **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to runtime]
  **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] 
- **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] 
- **force** | **bool**| Do not use cached results, always run analysis.  | [optional] 
+ **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
+ **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
+ **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to false]
 
 ### Return type
 
@@ -508,7 +508,7 @@ api_instance = thamos.swagger_client.ImageAnalysisApi()
 image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
-verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional)
+verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
 
 try:
     # Get metadata for the given image
@@ -525,7 +525,7 @@ Name | Type | Description  | Notes
  **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
  **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
  **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
- **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] 
+ **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
 
 ### Return type
 

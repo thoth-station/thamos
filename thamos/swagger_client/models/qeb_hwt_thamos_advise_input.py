@@ -29,34 +29,92 @@ class QebHwtThamosAdviseInput(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'github_event_type': 'str',
+        'github_base_repo_url': 'str',
         'github_check_run_id': 'int',
+        'github_event_type': 'str',
+        'github_head_repo_url': 'str',
         'github_installation_id': 'int',
         'origin': 'str',
         'revision': 'str'
     }
 
     attribute_map = {
-        'github_event_type': 'github_event_type',
+        'github_base_repo_url': 'github_base_repo_url',
         'github_check_run_id': 'github_check_run_id',
+        'github_event_type': 'github_event_type',
+        'github_head_repo_url': 'github_head_repo_url',
         'github_installation_id': 'github_installation_id',
         'origin': 'origin',
         'revision': 'revision'
     }
 
-    def __init__(self, github_event_type=None, github_check_run_id=None, github_installation_id=None, origin=None, revision=None):  # noqa: E501
+    def __init__(self, github_base_repo_url=None, github_check_run_id=None, github_event_type=None, github_head_repo_url=None, github_installation_id=None, origin=None, revision=None):  # noqa: E501
         """QebHwtThamosAdviseInput - a model defined in Swagger"""  # noqa: E501
-        self._github_event_type = None
+        self._github_base_repo_url = None
         self._github_check_run_id = None
+        self._github_event_type = None
+        self._github_head_repo_url = None
         self._github_installation_id = None
         self._origin = None
         self._revision = None
         self.discriminator = None
-        self.github_event_type = github_event_type
+        self.github_base_repo_url = github_base_repo_url
         self.github_check_run_id = github_check_run_id
+        self.github_event_type = github_event_type
+        self.github_head_repo_url = github_head_repo_url
         self.github_installation_id = github_installation_id
         self.origin = origin
         self.revision = revision
+
+    @property
+    def github_base_repo_url(self):
+        """Gets the github_base_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
+
+        URL of the GitHub repository containing the Pull Request.  # noqa: E501
+
+        :return: The github_base_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
+        :rtype: str
+        """
+        return self._github_base_repo_url
+
+    @github_base_repo_url.setter
+    def github_base_repo_url(self, github_base_repo_url):
+        """Sets the github_base_repo_url of this QebHwtThamosAdviseInput.
+
+        URL of the GitHub repository containing the Pull Request.  # noqa: E501
+
+        :param github_base_repo_url: The github_base_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
+        :type: str
+        """
+        if github_base_repo_url is None:
+            raise ValueError("Invalid value for `github_base_repo_url`, must not be `None`")  # noqa: E501
+
+        self._github_base_repo_url = github_base_repo_url
+
+    @property
+    def github_check_run_id(self):
+        """Gets the github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
+
+        ID of the check-run that shall carry the thamos advise.  # noqa: E501
+
+        :return: The github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
+        :rtype: int
+        """
+        return self._github_check_run_id
+
+    @github_check_run_id.setter
+    def github_check_run_id(self, github_check_run_id):
+        """Sets the github_check_run_id of this QebHwtThamosAdviseInput.
+
+        ID of the check-run that shall carry the thamos advise.  # noqa: E501
+
+        :param github_check_run_id: The github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
+        :type: int
+        """
+        if github_check_run_id is None:
+            raise ValueError("Invalid value for `github_check_run_id`, must not be `None`")  # noqa: E501
+
+        self._github_check_run_id = github_check_run_id
 
     @property
     def github_event_type(self):
@@ -84,29 +142,29 @@ class QebHwtThamosAdviseInput(object):
         self._github_event_type = github_event_type
 
     @property
-    def github_check_run_id(self):
-        """Gets the github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
+    def github_head_repo_url(self):
+        """Gets the github_head_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
 
-        ID of the check-run that shall carry the thamos advise.  # noqa: E501
+        URL of the Pull Request's head commit.  # noqa: E501
 
-        :return: The github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
-        :rtype: int
+        :return: The github_head_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
+        :rtype: str
         """
-        return self._github_check_run_id
+        return self._github_head_repo_url
 
-    @github_check_run_id.setter
-    def github_check_run_id(self, github_check_run_id):
-        """Sets the github_check_run_id of this QebHwtThamosAdviseInput.
+    @github_head_repo_url.setter
+    def github_head_repo_url(self, github_head_repo_url):
+        """Sets the github_head_repo_url of this QebHwtThamosAdviseInput.
 
-        ID of the check-run that shall carry the thamos advise.  # noqa: E501
+        URL of the Pull Request's head commit.  # noqa: E501
 
-        :param github_check_run_id: The github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
-        :type: int
+        :param github_head_repo_url: The github_head_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
+        :type: str
         """
-        if github_check_run_id is None:
-            raise ValueError("Invalid value for `github_check_run_id`, must not be `None`")  # noqa: E501
+        if github_head_repo_url is None:
+            raise ValueError("Invalid value for `github_head_repo_url`, must not be `None`")  # noqa: E501
 
-        self._github_check_run_id = github_check_run_id
+        self._github_head_repo_url = github_head_repo_url
 
     @property
     def github_installation_id(self):
@@ -137,7 +195,7 @@ class QebHwtThamosAdviseInput(object):
     def origin(self):
         """Gets the origin of this QebHwtThamosAdviseInput.  # noqa: E501
 
-        URL of the GitHub repository containing the Pull Request.  # noqa: E501
+        Origin of the repo where the Pull Request was opened.  # noqa: E501
 
         :return: The origin of this QebHwtThamosAdviseInput.  # noqa: E501
         :rtype: str
@@ -148,7 +206,7 @@ class QebHwtThamosAdviseInput(object):
     def origin(self, origin):
         """Sets the origin of this QebHwtThamosAdviseInput.
 
-        URL of the GitHub repository containing the Pull Request.  # noqa: E501
+        Origin of the repo where the Pull Request was opened.  # noqa: E501
 
         :param origin: The origin of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: str

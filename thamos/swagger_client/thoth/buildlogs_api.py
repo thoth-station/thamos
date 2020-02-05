@@ -130,7 +130,7 @@ class BuildlogsApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str analysis_id: Id of analysis that results should be retrieved. (required)
+        :param str analysis_id: An id of requested analysis. (required)
         :return: AnalysisResultResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -151,7 +151,7 @@ class BuildlogsApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str analysis_id: Id of analysis that results should be retrieved. (required)
+        :param str analysis_id: An id of requested analysis. (required)
         :return: AnalysisResultResponse
                  If the method is called asynchronously,
                  returns the request thread.

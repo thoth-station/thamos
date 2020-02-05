@@ -70,7 +70,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.BuildlogsApi()
-analysis_id = 'analysis_id_example' # str | Id of analysis that results should be retrieved.
+analysis_id = 'analysis_id_example' # str | An id of requested analysis.
 
 try:
     # Retrieve a build analyzer result.
@@ -84,7 +84,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Id of analysis that results should be retrieved. | 
+ **analysis_id** | **str**| An id of requested analysis. | 
 
 ### Return type
 
@@ -116,7 +116,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.BuildlogsApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of document ids for build analyzer results.
@@ -130,7 +130,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 
@@ -162,7 +162,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.BuildlogsApi()
-page = 56 # int | Page offset in pagination. (optional)
+page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
 try:
     # Retrieve a list of document ids for stored build logs.
@@ -175,7 +175,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] 
+ **page** | **int**| Page offset in pagination. | [optional] [default to 0]
 
 ### Return type
 

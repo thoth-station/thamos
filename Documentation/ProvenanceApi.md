@@ -24,7 +24,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ProvenanceApi()
-analysis_id = 'analysis_id_example' # str | Id of analysis to be retrieved.
+analysis_id = 'analysis_id_example' # str | An id of requested analysis.
 
 try:
     # Retrieve a provenance check result.
@@ -38,7 +38,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Id of analysis to be retrieved. | 
+ **analysis_id** | **str**| An id of requested analysis. | 
 
 ### Return type
 
@@ -164,8 +164,8 @@ from pprint import pprint
 api_instance = thamos.swagger_client.ProvenanceApi()
 body = thamos.swagger_client.PythonStack() # PythonStack | Pipfile and Pipfile.lock as used by pipenv.
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-debug = true # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional)
-force = true # bool | Do not use cached results, always run provenance checks.  (optional)
+debug = false # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional) (default to false)
+force = false # bool | Do not use cached results, always run provenance checks.  (optional) (default to false)
 
 try:
     # Check provenance of packages stated in an application stack.
@@ -181,8 +181,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] 
- **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] 
+ **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to false]
+ **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] [default to false]
 
 ### Return type
 

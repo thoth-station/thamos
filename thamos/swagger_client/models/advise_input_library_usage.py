@@ -29,45 +29,22 @@ class AdviseInputLibraryUsage(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'version': 'str',
-        'report': 'object'
+        'report': 'object',
+        'version': 'str'
     }
 
     attribute_map = {
-        'version': 'version',
-        'report': 'report'
+        'report': 'report',
+        'version': 'version'
     }
 
-    def __init__(self, version=None, report=None):  # noqa: E501
+    def __init__(self, report=None, version=None):  # noqa: E501
         """AdviseInputLibraryUsage - a model defined in Swagger"""  # noqa: E501
-        self._version = None
         self._report = None
+        self._version = None
         self.discriminator = None
-        self.version = version
         self.report = report
-
-    @property
-    def version(self):
-        """Gets the version of this AdviseInputLibraryUsage.  # noqa: E501
-
-
-        :return: The version of this AdviseInputLibraryUsage.  # noqa: E501
-        :rtype: str
-        """
-        return self._version
-
-    @version.setter
-    def version(self, version):
-        """Sets the version of this AdviseInputLibraryUsage.
-
-
-        :param version: The version of this AdviseInputLibraryUsage.  # noqa: E501
-        :type: str
-        """
-        if version is None:
-            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
-
-        self._version = version
+        self.version = version
 
     @property
     def report(self):
@@ -91,6 +68,29 @@ class AdviseInputLibraryUsage(object):
             raise ValueError("Invalid value for `report`, must not be `None`")  # noqa: E501
 
         self._report = report
+
+    @property
+    def version(self):
+        """Gets the version of this AdviseInputLibraryUsage.  # noqa: E501
+
+
+        :return: The version of this AdviseInputLibraryUsage.  # noqa: E501
+        :rtype: str
+        """
+        return self._version
+
+    @version.setter
+    def version(self, version):
+        """Sets the version of this AdviseInputLibraryUsage.
+
+
+        :param version: The version of this AdviseInputLibraryUsage.  # noqa: E501
+        :type: str
+        """
+        if version is None:
+            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
+
+        self._version = version
 
     def to_dict(self):
         """Returns the model properties as a dict"""
