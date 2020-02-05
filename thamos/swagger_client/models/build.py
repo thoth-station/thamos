@@ -30,28 +30,28 @@ class Build(object):
     """
     swagger_types = {
         'base_image': 'str',
-        'output_image': 'str',
-        'build_log': 'BuildBuildLog'
+        'build_log': 'BuildBuildLog',
+        'output_image': 'str'
     }
 
     attribute_map = {
         'base_image': 'base_image',
-        'output_image': 'output_image',
-        'build_log': 'build_log'
+        'build_log': 'build_log',
+        'output_image': 'output_image'
     }
 
-    def __init__(self, base_image=None, output_image=None, build_log=None):  # noqa: E501
+    def __init__(self, base_image=None, build_log=None, output_image=None):  # noqa: E501
         """Build - a model defined in Swagger"""  # noqa: E501
         self._base_image = None
-        self._output_image = None
         self._build_log = None
+        self._output_image = None
         self.discriminator = None
         if base_image is not None:
             self.base_image = base_image
-        if output_image is not None:
-            self.output_image = output_image
         if build_log is not None:
             self.build_log = build_log
+        if output_image is not None:
+            self.output_image = output_image
 
     @property
     def base_image(self):
@@ -77,6 +77,27 @@ class Build(object):
         self._base_image = base_image
 
     @property
+    def build_log(self):
+        """Gets the build_log of this Build.  # noqa: E501
+
+
+        :return: The build_log of this Build.  # noqa: E501
+        :rtype: BuildBuildLog
+        """
+        return self._build_log
+
+    @build_log.setter
+    def build_log(self, build_log):
+        """Sets the build_log of this Build.
+
+
+        :param build_log: The build_log of this Build.  # noqa: E501
+        :type: BuildBuildLog
+        """
+
+        self._build_log = build_log
+
+    @property
     def output_image(self):
         """Gets the output_image of this Build.  # noqa: E501
 
@@ -98,27 +119,6 @@ class Build(object):
         """
 
         self._output_image = output_image
-
-    @property
-    def build_log(self):
-        """Gets the build_log of this Build.  # noqa: E501
-
-
-        :return: The build_log of this Build.  # noqa: E501
-        :rtype: BuildBuildLog
-        """
-        return self._build_log
-
-    @build_log.setter
-    def build_log(self, build_log):
-        """Sets the build_log of this Build.
-
-
-        :param build_log: The build_log of this Build.  # noqa: E501
-        :type: BuildBuildLog
-        """
-
-        self._build_log = build_log
 
     def to_dict(self):
         """Returns the model properties as a dict"""

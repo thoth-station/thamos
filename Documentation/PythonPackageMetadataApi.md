@@ -21,9 +21,9 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackageMetadataApi()
-name = 'name_example' # str | Name of the Python Package.
-version = 'version_example' # str | Version of the Python Package.
-index = 'index_example' # str | Index url of the Python Package.
+name = 'tensorflow' # str | Name of the Python Package. (default to tensorflow)
+version = '2.0.0' # str | Version of the Python Package. (default to 2.0.0)
+index = 'https://pypi.org/simple' # str | Index url of the Python Package. (default to https://pypi.org/simple)
 
 try:
     # Retrieve metadata relative to a Python Package from the Knowledge Graph. 
@@ -37,9 +37,9 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python Package. | 
- **version** | **str**| Version of the Python Package. | 
- **index** | **str**| Index url of the Python Package. | 
+ **name** | **str**| Name of the Python Package. | [default to tensorflow]
+ **version** | **str**| Version of the Python Package. | [default to 2.0.0]
+ **index** | **str**| Index url of the Python Package. | [default to https://pypi.org/simple]
 
 ### Return type
 

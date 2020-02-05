@@ -502,7 +502,7 @@ class ImageAnalysisApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str environment_name: Software environment name for build for which analyses should be retrieved.  (required)
+        :param str environment_name: Software environment name for run for which analyses should be retrieved.  (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -523,7 +523,7 @@ class ImageAnalysisApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str environment_name: Software environment name for build for which analyses should be retrieved.  (required)
+        :param str environment_name: Software environment name for run for which analyses should be retrieved.  (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.

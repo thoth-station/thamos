@@ -30,26 +30,26 @@ class PythonStack(object):
     """
     swagger_types = {
         'requirements': 'str',
-        'requirements_lock': 'str',
-        'requirements_format': 'list[str]'
+        'requirements_format': 'list[str]',
+        'requirements_lock': 'str'
     }
 
     attribute_map = {
         'requirements': 'requirements',
-        'requirements_lock': 'requirements_lock',
-        'requirements_format': 'requirements_format'
+        'requirements_format': 'requirements_format',
+        'requirements_lock': 'requirements_lock'
     }
 
-    def __init__(self, requirements=None, requirements_lock=None, requirements_format=None):  # noqa: E501
+    def __init__(self, requirements=None, requirements_format=None, requirements_lock=None):  # noqa: E501
         """PythonStack - a model defined in Swagger"""  # noqa: E501
         self._requirements = None
-        self._requirements_lock = None
         self._requirements_format = None
+        self._requirements_lock = None
         self.discriminator = None
         self.requirements = requirements
-        self.requirements_lock = requirements_lock
         if requirements_format is not None:
             self.requirements_format = requirements_format
+        self.requirements_lock = requirements_lock
 
     @property
     def requirements(self):
@@ -77,6 +77,29 @@ class PythonStack(object):
         self._requirements = requirements
 
     @property
+    def requirements_format(self):
+        """Gets the requirements_format of this PythonStack.  # noqa: E501
+
+        Lockfile format - defaults to pipenv if not explicitly specified.   # noqa: E501
+
+        :return: The requirements_format of this PythonStack.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._requirements_format
+
+    @requirements_format.setter
+    def requirements_format(self, requirements_format):
+        """Sets the requirements_format of this PythonStack.
+
+        Lockfile format - defaults to pipenv if not explicitly specified.   # noqa: E501
+
+        :param requirements_format: The requirements_format of this PythonStack.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._requirements_format = requirements_format
+
+    @property
     def requirements_lock(self):
         """Gets the requirements_lock of this PythonStack.  # noqa: E501
 
@@ -100,29 +123,6 @@ class PythonStack(object):
             raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501
 
         self._requirements_lock = requirements_lock
-
-    @property
-    def requirements_format(self):
-        """Gets the requirements_format of this PythonStack.  # noqa: E501
-
-        Lockfile format - defaults to pipenv if not explicitly specified.   # noqa: E501
-
-        :return: The requirements_format of this PythonStack.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._requirements_format
-
-    @requirements_format.setter
-    def requirements_format(self, requirements_format):
-        """Sets the requirements_format of this PythonStack.
-
-        Lockfile format - defaults to pipenv if not explicitly specified.   # noqa: E501
-
-        :param requirements_format: The requirements_format of this PythonStack.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._requirements_format = requirements_format
 
     def to_dict(self):
         """Returns the model properties as a dict"""
