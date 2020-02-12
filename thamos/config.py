@@ -35,6 +35,7 @@ from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
+from .exceptions import ServiceUnavailable
 from urllib.parse import urljoin
 
 _LOGGER = logging.getLogger(__name__)
@@ -229,9 +230,13 @@ class _Configuration:
             api_url, verify=self.tls_verify, headers={"Accept": "application/json"}
         )
 
+        if response.status_code == 503:
+            _LOGGER.warning("Thoth service at %r is unavailable (HTTP 503)", api_url)
+
         try:
             response.raise_for_status()
-            if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING:
+
+            if not (self.tls_verify or _THAMOS_DISABLE_TLS_WARNING):
                 _LOGGER.warning(
                     "TLS verification turned off, its highly recommended to use a secured connection, "
                     "see configuration file for configuration options"
@@ -240,6 +245,10 @@ class _Configuration:
             # Try without TLS - maybe router was not configured to use TLS.
             api_url = urljoin("http://" + host, "/api/v1")
             response = requests.get(api_url, headers={"Accept": "application/json"})
+
+            if response.status_code == 503:
+                raise ServiceUnavailable(f"Thoth service at {api_url!r} is unavailable (HTTP 503)")
+
             try:
                 response.raise_for_status()
                 if not _THAMOS_DISABLE_TLS_WARNING:

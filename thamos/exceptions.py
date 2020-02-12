@@ -34,6 +34,10 @@ class NoApiSupported(ThamosException):
     """Raised if client and Thoth server does not support same API versions."""
 
 
+class ServiceUnavailable(ThamosException):
+    """Raised if Thoth service is not available."""
+
+
 class UnknownAnalysisType(ThamosException):
     """Raised analysis type (adviser, package-extract, ...) cannot be determined from analysis identifier."""
 
