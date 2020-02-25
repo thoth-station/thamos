@@ -226,43 +226,25 @@ class _Configuration:
             else self.content.get("tls_verify", True)
         )
 
+        if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING:
+            _LOGGER.warning(
+                "TLS verification turned off, its highly recommended to use a secured connection, "
+                "see configuration file for configuration options"
+            )
+
         response = requests.get(
             api_url, verify=self.tls_verify, headers={"Accept": "application/json"}
         )
 
-        if response.status_code == 503:
-            _LOGGER.warning("Thoth service at %r is unavailable (HTTP 503)", api_url)
-
         try:
             response.raise_for_status()
-
-            if not (self.tls_verify or _THAMOS_DISABLE_TLS_WARNING):
-                _LOGGER.warning(
-                    "TLS verification turned off, its highly recommended to use a secured connection, "
-                    "see configuration file for configuration options"
-                )
-        except Exception:
-            # Try without TLS - maybe router was not configured to use TLS.
-            api_url = urljoin("http://" + host, "/api/v1")
-            response = requests.get(api_url, headers={"Accept": "application/json"})
-
+        except Exception as exc:
             if response.status_code == 503:
-                raise ServiceUnavailable(f"Thoth service at {api_url!r} is unavailable (HTTP 503)")
+                _LOGGER.error("Thoth service at %r is unavailable (HTTP 503)", api_url)
 
-            try:
-                response.raise_for_status()
-                if not _THAMOS_DISABLE_TLS_WARNING:
-                    _LOGGER.warning(
-                        "Using insecure connection to API service, please contact service provider to "
-                        "install TLS in order to secure network traffic"
-                    )
-            except Exception as exc:
-                raise NoApiSupported(
-                    "Server does not support API v1 required by Thamos client"
-                ) from exc
-
-        if response.status_code != 200:
-            raise InternalError("Cannot correctly determine API version to be used")
+            raise NoApiSupported(
+                "Server does not support API v1 required by Thamos client"
+            ) from exc
 
         self._api_url = api_url
         return self._api_url
