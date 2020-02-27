@@ -33,6 +33,7 @@ import urllib3
 from yaspin import yaspin
 from yaspin.spinners import Spinners
 from invectio import gather_library_usage
+from thoth.analyzer import run_command
 
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
@@ -193,6 +194,21 @@ def _is_s2i() -> bool:
     return "STI_SCRIPTS_PATH" is os.environ
 
 
+def _get_origin() -> typing.Optional[str]:
+    """Check git origin configured."""
+    result = run_command("git config --get remote.origin.url")
+    if result.return_code != 0:
+        _LOGGER.debug("Failed to obtain information about git origin: %s", result.stderr)
+        return None
+
+    origin = result.stdout.strip()
+    if origin:
+        _LOGGER.debug("Found git origin %r", origin)
+        return origin
+
+    return None
+
+
 @with_api_client
 def advise(
     api_client: ApiClient,
@@ -277,6 +293,7 @@ def advise(
         "debug": debug,
         "force": force,
         "is_s2i": _is_s2i(),
+        "origin": _get_origin(),
     }
 
     if limit is not None:
