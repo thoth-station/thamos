@@ -104,6 +104,7 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
 
     sleep_time = 0.5
     with spinner():
+        sleep(2)  # TODO: remove once we fully run on Argo workflows
         while True:
             response = status_func(analysis_id)
             if response.status.finished_at is not None:
