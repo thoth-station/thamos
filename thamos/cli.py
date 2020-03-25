@@ -381,6 +381,13 @@ def advise(
             sys.exit(0)
 
         result, error = results
+        if error:
+            if json_output:
+                print({"error": result["error_msg"]})
+            else:
+                print(result["error_msg"])
+            sys.exit(4)
+
         if not no_write:
             # Print report of the best one - thus index zero.
             if result["report"] and result["report"]["products"]:
@@ -394,20 +401,16 @@ def advise(
                 _print_header("Application stack guidance")
                 _print_report(result["report"]["stack_info"], json_output=json_output)
 
-            if not error:
-                pipfile = result["report"]["products"][0]["project"]["requirements"]
-                pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
-                _write_configuration(
-                    result["report"]["products"][0]["advised_runtime_environment"],
-                    recommendation_type,
-                    limit_latest_versions
-                )
-                _write_files(pipfile, pipfile_lock, configuration.requirements_format)
+            pipfile = result["report"]["products"][0]["project"]["requirements"]
+            pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
+            _write_configuration(
+                result["report"]["products"][0]["advised_runtime_environment"],
+                recommendation_type,
+                limit_latest_versions
+            )
+            _write_files(pipfile, pipfile_lock, configuration.requirements_format)
         else:
             click.echo(json.dumps(result, indent=2))
-
-        if error:
-            sys.exit(4)
 
     sys.exit(0)
 
