@@ -7,8 +7,7 @@ from setuptools.command.test import test as TestCommand
 
 def get_install_requires():
     with open('requirements.txt', 'r') as requirements_file:
-        res = requirements_file.readlines()
-        return [req.split(' ', maxsplit=1)[0] for req in res if req]
+        return [req for req in requirements_file.readlines() if req]
 
 
 def get_version():
