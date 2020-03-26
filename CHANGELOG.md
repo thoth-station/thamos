@@ -697,3 +697,16 @@
 * remove unusued parameter
 * Modify parameters for GitHub App
 * :pushpin: Automatic update of dependency pytest from 5.3.4 to 5.3.5
+
+## Release 0.8.2 (2020-03-26T01:03:53)
+* Add templates for Kebechet releases
+* Fix analusis error detection
+* A temporary workaround for workload-operator and analysis propagation
+* :pushpin: Automatic update of dependency pyyaml from 3.13 to 5.3.1
+* Initial dependency lock
+* Delete Pipfile.lock
+* :pushpin: Automatic update of dependency daiquiri from 2.0.0 to 2.1.0
+* Try to detect git origin with request
+* :pushpin: Automatic update of dependency requests from 2.22.0 to 2.23.0
+* Improve error handling when user-api is not available
+* Update .thoth.yaml
