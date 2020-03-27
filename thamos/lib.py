@@ -598,7 +598,23 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
             "Cannot determine analysis type from identifier: %r", analysis_id
         )
 
-    return method(analysis_id).log
+    json_log = method(analysis_id).log
+
+    if not json_log:
+        return json_log
+
+    result = ""
+    for line in json_log.splitlines():
+        try:
+            content = json.loads(line)
+            result += "{} {}: {}\n".format(content["asctime"], content["levelname"], content["message"])
+        except Exception:
+            # If the content parsed does not carry logger information or has not relevant
+            # entries, log the original message.
+            result += line
+            continue
+
+    return result
 
 
 @with_api_client
