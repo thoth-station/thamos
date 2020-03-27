@@ -30,6 +30,7 @@ import pprint
 import json
 import urllib3
 
+from termcolor import colored
 from yaspin import yaspin
 from yaspin.spinners import Spinners
 from invectio import gather_library_usage
@@ -607,7 +608,21 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
     for line in json_log.splitlines():
         try:
             content = json.loads(line)
-            result += "{} {}: {}\n".format(content["asctime"], content["levelname"], content["message"])
+            if not int(os.getenv("THAMOS_NO_EMOJI", 0)):
+                if content["levelname"] == "DEBUG":
+                    message = colored(content["message"], "cyan")
+                elif content["levelname"] == "INFO":
+                    message = colored(content["message"], "green")
+                elif content["levelname"] == "WARNING":
+                    message = colored(content["message"], "yellow", attrs=["bold"])
+                elif content["levelname"] in ("ERROR", "CRITICAL"):
+                    message = colored(content["message"], "red", attrs=["bold"])
+                else:
+                    message = content["message"]
+
+                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], message)
+            else:
+                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], content["message"])
         except Exception:
             # If the content parsed does not carry logger information or has not relevant
             # entries, log the original message.
