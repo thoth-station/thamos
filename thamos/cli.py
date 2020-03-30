@@ -120,6 +120,7 @@ def _write_configuration(
     advised_configuration: dict,
     recommendation_type: str = None,
     limit_latest_versions: int = None,
+    dev: bool = False,
 ) -> None:
     if not advised_configuration:
         _LOGGER.debug("No advises on configuration, nothing to adjust")
@@ -150,6 +151,7 @@ def _write_configuration(
                 runtime_environment_entry[
                     "limit_latest_versions"
                 ] = limit_latest_versions
+            runtime_environment_entry["dev"] = dev
             content["runtime_environments"][idx] = runtime_environment_entry
             break
     else:
@@ -344,6 +346,14 @@ def _print_version(ctx, json_output: bool = False):
     envvar="THAMOS_LIMIT_LATEST_VERSIONS",
     help="Specify number of latest versions for each package to consider.",
 )
+@click.option(
+    "--dev/--no-dev",
+    envvar="THAMOS_DEV",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Consider or do not consider development dependencies during the resolution.",
+)
 def advise(
     debug: bool = False,
     no_write: bool = False,
@@ -354,6 +364,7 @@ def advise(
     json_output: bool = False,
     limit_latest_versions: int = None,
     force: bool = False,
+    dev: bool = False,
 ):
     """Ask Thoth for recommendations on application stack."""
     with workdir():
@@ -370,6 +381,7 @@ def advise(
             force=force,
             limit_latest_versions=limit_latest_versions,
             no_static_analysis=no_static_analysis,
+            dev=dev,
         )
 
         if not results:
@@ -406,7 +418,8 @@ def advise(
             _write_configuration(
                 result["report"]["products"][0]["advised_runtime_environment"],
                 recommendation_type,
-                limit_latest_versions
+                limit_latest_versions,
+                dev,
             )
             _write_files(pipfile, pipfile_lock, configuration.requirements_format)
         else:

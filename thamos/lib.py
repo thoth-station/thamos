@@ -221,6 +221,7 @@ def advise(
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
     limit_latest_versions: int = None,
+    dev: bool = False,
     no_static_analysis: bool = False,
     nowait: bool = False,
     force: bool = False,
@@ -296,6 +297,7 @@ def advise(
         "force": force,
         "is_s2i": _is_s2i(),
         "origin": _get_origin(),
+        "dev": dev,
     }
 
     if limit is not None:
@@ -357,6 +359,7 @@ def advise_here(
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
     limit_latest_versions: int = None,
+    dev: bool = False,
     no_static_analysis: bool = False,
     nowait: bool = False,
     force: bool = False,
@@ -386,6 +389,7 @@ def advise_here(
             runtime_environment=runtime_environment,
             runtime_environment_name=runtime_environment_name,
             limit_latest_versions=limit_latest_versions,
+            dev=dev,
             no_static_analysis=no_static_analysis,
             nowait=nowait,
             force=force,
