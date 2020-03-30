@@ -147,6 +147,7 @@ Then, you need to provide following environment variables:
 * ``THAMOS_FORCE`` - set to `1` not use cached results, always force analysis on Thoth's side (note this option can be ignored by a Thoth operator based on deployment configuration).
 * ``THAMOS_VERBOSE`` - set to `1` to run thamos in verbose mode to show what's going on (verbosity on client side).
 * ``THAMOS_DEBUG`` - set to `1` to run analyzes (adviser, provenance checker, ...) on Thoth's backend side in debug mode, you can obtain logs by running ``thamos logs`` or directly on Thoth's user API; the analysis id gets printed into the console during the build process in OpenShift (verbosity on server side).
+* ``THAMOS_DEV`` - set to `1` to consider also development dependencies, this flag defaults to `0` - by enabling development dependencies, adviser will need to browse larger space of software stacks possibly ending with a worse software stack advised (development dependencies are usually not used during application deployment)
 
 See `OpenShift s2i documentation
 <https://docs.openshift.com/container-platform/3.9/dev_guide/builds/advanced_build_operations.html#dev-guide-assigning-builds-to-nodes>`_
