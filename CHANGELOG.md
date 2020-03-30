@@ -1060,3 +1060,7 @@
 * added the missing coala config
 * added github and zuul configs
 * Initial implementation
+
+## Release 0.9.1 (2020-03-30T20:42:00)
+* Update client to also include dev flag
+* Remove unused imports
