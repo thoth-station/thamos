@@ -198,7 +198,7 @@ def _is_s2i() -> bool:
 
 def _get_origin() -> typing.Optional[str]:
     """Check git origin configured."""
-    result = run_command("git config --get remote.origin.url")
+    result = run_command("git config --get remote.origin.url", raise_on_error=False)
     if result.return_code != 0:
         _LOGGER.debug("Failed to obtain information about git origin: %s", result.stderr)
         return None
