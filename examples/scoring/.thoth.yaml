@@ -5,12 +5,13 @@ host: khemenu.thoth-station.ninja
 tls_verify: false
 
 recommendation_type: stable
-requirements_format: pipenv
+requirements_format: pip
 
 runtime_environments:
-  - name: "fedora:31"
+  - name: "ubi:8"
     # Operating system for which the recommendations should be created:
     operating_system:
-      name: fedora
-      version: "31"
-    recommendation_type: STABLE
+      name: ubi
+      version: "8"
+    python_version: "3.6"
+    recommendation_type: stable
