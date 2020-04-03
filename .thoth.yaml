@@ -9,7 +9,6 @@ runtime_environments:
       version: "8"
     python_version: "3.6"
     recommendation_type: latest
-    limit_latest_versions: null
 
 managers:
   - name: pipfile-requirements
