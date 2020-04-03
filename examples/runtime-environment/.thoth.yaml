@@ -18,7 +18,7 @@ runtime_environments:
       cpu_family: 6
       cpu_model: 94
     # Software configuration of runtime environment:
-    python_version: "3.7"
+    # python_version: "3.7"
     cuda_version: null
     # Recommendation type - one of testing, stable, latest:
-    recommendation_type: STABLE
+    recommendation_type: stable
