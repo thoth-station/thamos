@@ -630,7 +630,7 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
         except Exception:
             # If the content parsed does not carry logger information or has not relevant
             # entries, log the original message.
-            result += line
+            result += line + "\n"
             continue
 
     return result
