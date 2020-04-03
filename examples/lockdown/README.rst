@@ -22,7 +22,7 @@ commands:
   # and your Pipfile and recommend you Pipfile.lock:
   sudo podman run --rm --tty --interactive \
     --volume `pwd`:/opt/redhat/thoth/thamos/workdir:Z \ 
-    docker://quay.io/thoth-station/thamos:v0.3.1 \
+    docker://quay.io/thoth-station/thamos:latest \
     thamos advise 
 
   # Check pinned down software stack in Pipfile.lock (previously this file was
