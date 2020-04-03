@@ -69,6 +69,7 @@ setup(
     author_email='fridolin@redhat.com',
     license='GPLv3+',
     packages=find_packages(),
+    long_description_content_type="text/x-rst",
     cmdclass={'test': Test},
     install_requires=get_install_requires(),
     command_options={
