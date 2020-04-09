@@ -33,6 +33,7 @@ import click
 from termcolor import colored
 import daiquiri
 from thoth.python import Project
+from thamos.exceptions import NoProjectDirError
 from thamos.config import config as configuration
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
@@ -260,13 +261,13 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 )
 def _print_version(ctx, json_output: bool = False):
     """Print Thamos and Thoth version and exit."""
-    exit_code = 0
+    api_url = None
     thoth_version = None
     try:
         thoth_version = configuration.get_thoth_version()
-    except Exception:
-        _LOGGER.exception("Failed to obtain version information of Thoth")
-        exit_code = 1
+        api_url = configuration.api_url
+    except NoProjectDirError as exc:
+        _LOGGER.warning("Cannot obtain Thoth backend information: %s", str(exc))
 
     if json_output:
         click.echo(
@@ -281,9 +282,11 @@ def _print_version(ctx, json_output: bool = False):
         )
     else:
         click.echo(f"Thamos Client version: {thamos_version!s}")
-        click.echo(f"Thoth API {configuration.api_url}: {thoth_version}")
+        click.echo(
+            f"Thoth API {api_url if api_url is not None else 'N/A'}: {thoth_version if thoth_version else 'N/A'}"
+        )
 
-    ctx.exit(exit_code)
+    ctx.exit(0)
 
 
 @cli.command("advise")
