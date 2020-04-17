@@ -373,8 +373,15 @@ def advise_here(
     github_base_repo_url: typing.Optional[str] = None
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
-    if not os.path.isfile("Pipfile"):
-        raise FileNotFoundError("No Pipfile found in current directory")
+    requirements_format = thoth_config.requirements_format
+    if requirements_format == "pipenv":
+        if not os.path.isfile("Pipfile"):
+            raise FileNotFoundError("No Pipfile found in current directory")
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        if not os.path.isfile("requirement.txt") and not os.path.isfile("requirement.in"):
+            raise FileNotFoundError("No requirements.txt/requirement.in found in current directory")
+    else:
+        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
 
     with open("Pipfile", "r") as pipfile:
         pipfile_lock_str = ""
