@@ -43,7 +43,11 @@ class UnknownAnalysisType(ThamosException):
 
 
 class NoRuntimeEnvironmentError(ThamosException):
-    """An exception raised if no runtime environment could be found."""
+    """An exception raised if no runtime environment could be found in configuration file."""
+
+
+class NoRequirementsFormatError(ThamosException):
+    """An exception raised if no requirements format could be found in configuration file."""
 
 
 class ConfigurationError(ThamosException):
