@@ -375,6 +375,7 @@ def advise_here(
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
+    # TODO: Move this logic directly to thoth-python
     if requirements_format == "pipenv":
         if not os.path.isfile("Pipfile"):
             raise FileNotFoundError("No Pipfile found in current directory")
