@@ -121,6 +121,7 @@ def _write_configuration(
     limit_latest_versions: int = None,
     dev: bool = False,
 ) -> None:
+    """Create thoth configuration file."""
     if not advised_configuration:
         _LOGGER.debug("No advises on configuration, nothing to adjust")
         return
