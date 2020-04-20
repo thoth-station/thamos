@@ -86,7 +86,7 @@ class _Configuration:
             )
 
         if not isinstance(requirements_format, str):
-            raise ConfigurationError("")
+            raise ConfigurationError("The data type for requirements_format should be str")
 
         if requirements_format not in ("pip", "pip-tools", "pipenv"):
             raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
@@ -182,7 +182,7 @@ class _Configuration:
             )
 
         if not isinstance(content["runtime_environments"], list):
-            raise ConfigurationError("")
+            raise ConfigurationError("The data type for requirements_format should be list")
 
         to_return = None
         seen_names = set()
