@@ -36,6 +36,7 @@ from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
 from .exceptions import ServiceUnavailable
+from .exceptions import NoRequirementsFormatError
 from urllib.parse import urljoin
 
 _LOGGER = logging.getLogger(__name__)
@@ -77,7 +78,20 @@ class _Configuration:
 
     @property
     def requirements_format(self) -> str:
-        return self.content.get("requirements_format", "pipenv")
+        requirements_format = self.content.get("requirements_format")
+        if not requirements_format:
+            raise NoRequirementsFormatError(
+                "No requirements format configuration stated in the configuration file "
+                "under 'requirements_format' configuration entry"
+            )
+
+        if not isinstance(requirements_format, str):
+            raise ConfigurationError("The data type for requirements_format should be str")
+
+        if requirements_format not in ("pip", "pip-tools", "pipenv"):
+            raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+
+        return requirements_format
 
     def get_thoth_version(self) -> str:
         """Get version of Thoth backend."""
@@ -168,7 +182,7 @@ class _Configuration:
             )
 
         if not isinstance(content["runtime_environments"], list):
-            raise ConfigurationError("")
+            raise ConfigurationError("The data type for requirements_format should be list")
 
         to_return = None
         seen_names = set()

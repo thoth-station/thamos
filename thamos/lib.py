@@ -35,6 +35,7 @@ from yaspin import yaspin
 from yaspin.spinners import Spinners
 from invectio import gather_library_usage
 from thoth.analyzer import run_command
+from thoth.python import Project
 
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
@@ -373,14 +374,16 @@ def advise_here(
     github_base_repo_url: typing.Optional[str] = None
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
-    if not os.path.isfile("Pipfile"):
-        raise FileNotFoundError("No Pipfile found in current directory")
+    requirements_format = thoth_config.requirements_format
+    if requirements_format == "pipenv":
+        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        project = Project.from_pip_compile_files(allow_without_lock=True)
+    else:
+        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
 
     with open("Pipfile", "r") as pipfile:
-        pipfile_lock_str = ""
-        if os.path.isfile("Pipfile.lock"):
-            with open("Pipfile.lock", "r") as pipfile_lock:
-                pipfile_lock_str = pipfile_lock.read()
+        pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
 
         return advise(
             pipfile=pipfile.read(),
