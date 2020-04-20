@@ -375,14 +375,9 @@ def advise_here(
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
-    # TODO: Move this logic directly to thoth-python
     if requirements_format == "pipenv":
-        if not os.path.isfile("Pipfile"):
-            raise FileNotFoundError("No Pipfile found in current directory")
         project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
-        if not os.path.isfile("requirement.txt") and not os.path.isfile("requirement.in"):
-            raise FileNotFoundError("No requirements.txt/requirement.in found in current directory")
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
         raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
