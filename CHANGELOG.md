@@ -1421,3 +1421,25 @@
 * added the missing coala config
 * added github and zuul configs
 * Initial implementation
+
+## Release 0.9.3 (2020-04-20T20:30:51)
+* :pushpin: Automatic update of dependency thoth-python from 0.9.1 to 0.9.2
+* Remove checks on files as they are in Thoth-python 0.9.2
+* Add TODO
+* Add explanation for ConfigurationError
+* Add files
+* Add check on advise_here
+* Add check on requirements format if missing from config file
+* Added missing docstring
+* :pushpin: Automatic update of dependency urllib3 from 1.25.8 to 1.25.9
+* Do not report exception if no configuration was found in the directory
+* Update lockdown scenario
+* :pushpin: Automatic update of dependency certifi from 2020.4.5 to 2020.4.5.1
+* :pushpin: Automatic update of dependency certifi from 2019.11.28 to 2020.4.5
+* Use RHEL 8
+* Update runtime environment example
+* No CentOS, use RHEL
+* Update scoring example
+* Add new line after each log line if structured logging is turned off
+* Long description content type missing in setup.py
+* Drop raw HTTP support
