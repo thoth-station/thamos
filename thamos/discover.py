@@ -21,6 +21,7 @@ import os
 import sys
 import logging
 import typing
+import sysconfig
 
 import distro
 import click
@@ -114,3 +115,8 @@ def discover_cpu() -> dict:
 
     _LOGGER.info("Detected CPU: %s", ", ".join((f"{k}: {v}" for k, v in result.items())))
     return result
+
+
+def discover_platform() -> str:
+    """Discover platform used."""
+    return sysconfig.get_platform()
