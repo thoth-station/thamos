@@ -30,6 +30,7 @@ from .discover import discover_cpu
 from .discover import discover_cuda_version
 from .discover import discover_distribution
 from .discover import discover_python_version
+from .discover import discover_platform
 from .exceptions import NoApiSupported
 from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
@@ -140,12 +141,14 @@ class _Configuration:
         cuda_version = f"'{cuda_version}" if cuda_version is not None else 'null'
         os_name, os_version = discover_distribution()
         python_version = discover_python_version()
+        platform = discover_platform()
 
         default_config = default_config.format(
             cuda_version=cuda_version,
             os_name=os_name,
             os_version=os_version,
             python_version=python_version,
+            platform=platform,
             **cpu_info,
             **(os.environ if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)) else {}),
         )

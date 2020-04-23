@@ -88,6 +88,7 @@ An example of configuration file template can be:
       cuda_version: {cuda_version}
       recommendation_type: stable
       limit_latest_versions: null
+      platform: '{platform}'
 
 Then, you need to supply this configuration file to the following command:
 
@@ -99,21 +100,25 @@ Listing of automatically expanded configuration options which are supplied the
 config sub-command (these options are optional and will be expanded based on HW
 or SW discovery):
 
-+------------------------+--------------------------------+----------+
-| Configuration option   | Explanation                    | Example  |
-+========================+================================+==========+
-| `os_name`              | name of operating system       | fedora   |
-+------------------------+--------------------------------+----------+
-| `os_version`           | version of operating system    |  30      |
-+------------------------+--------------------------------+----------+
-| `cpu_family`           | CPU family identifier          |  6       |
-+------------------------+--------------------------------+----------+
-| `cpu_model`            | CPU model identifier           |  94      |
-+------------------------+--------------------------------+----------+
-| `python_version`       | Python version (major.minor)   |  3.6     |
-+------------------------+--------------------------------+----------+
-| `cuda_version`         | CUDA version (major.minor)     |  9.0     |
-+------------------------+--------------------------------+----------+
++------------------------+--------------------------------+-----------------+
+| Configuration option   | Explanation                    | Example         |
++========================+================================+=================+
+| `os_name`              | name of operating system       | fedora          |
++------------------------+--------------------------------+-----------------+
+| `os_version`           | version of operating system    |  30             |
++------------------------+--------------------------------+-----------------+
+| `cpu_family`           | CPU family identifier          |  6              |
++------------------------+--------------------------------+-----------------+
+| `cpu_model`            | CPU model identifier           |  94             |
++------------------------+--------------------------------+-----------------+
+| `python_version`       | Python version (major.minor)   |  3.6            |
++------------------------+--------------------------------+-----------------+
+| `cuda_version`         | CUDA version (major.minor)     |  9.0            |
++------------------------+--------------------------------+-----------------+
+| `platform`             | Platform used.                 |  linux-x86_64   |
++------------------------+--------------------------------+-----------------+
+
+Platform corresponds to ``sysconfig.get_platform()`` call.
 
 These configuration options are optional and can be mixed with adjustment based
 on environment variables (see ``THOTH_SERVICE_HOST`` example above). Note the
