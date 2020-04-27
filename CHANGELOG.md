@@ -1443,3 +1443,8 @@
 * Add new line after each log line if structured logging is turned off
 * Long description content type missing in setup.py
 * Drop raw HTTP support
+
+## Release 0.9.4 (2020-04-27T22:43:12)
+* Implement retry mechanism to avoid flakes
+* Fix spelling
+* Provide platform in Thoth's configuration file
