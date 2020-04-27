@@ -56,6 +56,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 LAST_ANALYSIS_ID_FILE = ".thoth_last_analysis_id"
 
 _LOGGER = logging.getLogger(__name__)
+_RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
+_RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
 
 
 def with_api_client(func: typing.Callable):
@@ -106,10 +108,23 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
         spinner = _no_spinner
 
     sleep_time = 0.5
+    retries = 0
     with spinner():
         sleep(2)  # TODO: remove once we fully run on Argo workflows
         while True:
-            response = status_func(analysis_id)
+            try:
+                response = status_func(analysis_id)
+            except Exception as exc:
+                if retries >= _RETRY_ON_ERROR_COUNT:
+                    raise
+
+                retries += 1
+                _LOGGER.error("Failed to obtain status from Thoth: %s", str(exc))
+                _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+                sleep(_RETRY_ON_ERROR_SLEEP)
+                continue
+
+            retries = 0  # Reset counter as we obtained a valid response.
             if response.status.finished_at is not None:
                 break
             _LOGGER.debug(
@@ -154,16 +169,30 @@ def _retrieve_analysis_result(
     retrieve_func: callable, analysis_id: str
 ) -> typing.Optional[dict]:
     """Retrieve analysis result, raise error if analysis failed."""
-    try:
-        return retrieve_func(analysis_id)
-    except ApiException as exc:
-        _LOGGER.debug(
-            "Retrieved error response %s from server: %s", exc.status, exc.reason
-        )
-        response = json.loads(exc.body)
-        _LOGGER.debug("Error from server: %s", response)
-        _LOGGER.error("%s (analysis: %s)", response["error"], analysis_id)
-        return None
+    retries = 0
+    while True:
+        try:
+            return retrieve_func(analysis_id)
+        except ApiException as exc:
+            _LOGGER.debug(
+                "Retrieved error response %s from server: %s", exc.status, exc.reason
+            )
+            response = json.loads(exc.body)
+
+            if "error" in response:
+                # Error produced based on API endpoints semantics...
+                _LOGGER.debug("Error from Thoth: %s", response)
+                _LOGGER.error("%s (analysis: %s)", response["error"], analysis_id)
+            else:
+                # Other errors (e.g. internal server error).
+                _LOGGER.error("Error from Thoth: %s", response)
+
+            if retries >= _RETRY_ON_ERROR_COUNT:
+                return None
+
+            retries += 1
+            _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+            sleep(_RETRY_ON_ERROR_SLEEP)
 
 
 def _get_static_analysis() -> typing.Optional[dict]:
