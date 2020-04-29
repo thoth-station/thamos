@@ -50,6 +50,8 @@ class _Configuration:
     DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     DEFAULT_THOTH_CONFIG = os.path.join(DATA_DIR, "defaultThoth.yaml")
     CONFIG_NAME = ".thoth.yaml"
+    REQUIREMENTS_FORMATS = frozenset(("pip", "pip-tools", "pip-compile", "pipenv"))
+    _DEFAULT_REQUIREMENTS_FORMAT = "pipenv"
 
     def __init__(self):
         """Construct configuration instance."""
@@ -143,14 +145,26 @@ class _Configuration:
         python_version = discover_python_version()
         platform = discover_platform()
 
+        requirements_format = os.getenv("THAMOS_REQUIREMENTS_FORMAT", self._DEFAULT_REQUIREMENTS_FORMAT)
+        if requirements_format not in self.REQUIREMENTS_FORMATS:
+            # This avoids possibly dangerous environment variable expansion.
+            _LOGGER.warning(
+                "Unknown requirements format specified, forcing %r: %r",
+                self._DEFAULT_REQUIREMENTS_FORMAT,
+                requirements_format
+            )
+            requirements_format = self._DEFAULT_REQUIREMENTS_FORMAT
+
+        expand_env = bool(int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)))
         default_config = default_config.format(
             cuda_version=cuda_version,
             os_name=os_name,
             os_version=os_version,
             python_version=python_version,
             platform=platform,
+            requirements_format=requirements_format,
             **cpu_info,
-            **(os.environ if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)) else {}),
+            **(os.environ if expand_env else {}),
         )
 
         if not nowrite:
