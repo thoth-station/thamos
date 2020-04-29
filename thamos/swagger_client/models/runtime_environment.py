@@ -34,6 +34,7 @@ class RuntimeEnvironment(object):
         'ipython': 'object',
         'name': 'str',
         'operating_system': 'object',
+        'platform': 'str',
         'python_version': 'str'
     }
 
@@ -43,16 +44,18 @@ class RuntimeEnvironment(object):
         'ipython': 'ipython',
         'name': 'name',
         'operating_system': 'operating_system',
+        'platform': 'platform',
         'python_version': 'python_version'
     }
 
-    def __init__(self, cuda_version=None, hardware=None, ipython=None, name=None, operating_system=None, python_version=None):  # noqa: E501
+    def __init__(self, cuda_version=None, hardware=None, ipython=None, name=None, operating_system=None, platform=None, python_version=None):  # noqa: E501
         """RuntimeEnvironment - a model defined in Swagger"""  # noqa: E501
         self._cuda_version = None
         self._hardware = None
         self._ipython = None
         self._name = None
         self._operating_system = None
+        self._platform = None
         self._python_version = None
         self.discriminator = None
         if cuda_version is not None:
@@ -65,6 +68,8 @@ class RuntimeEnvironment(object):
             self.name = name
         if operating_system is not None:
             self.operating_system = operating_system
+        if platform is not None:
+            self.platform = platform
         if python_version is not None:
             self.python_version = python_version
 
@@ -182,6 +187,29 @@ class RuntimeEnvironment(object):
         """
 
         self._operating_system = operating_system
+
+    @property
+    def platform(self):
+        """Gets the platform of this RuntimeEnvironment.  # noqa: E501
+
+        Platform used - corresponds to sysconfig.get_platform() call.  # noqa: E501
+
+        :return: The platform of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
+        """
+        return self._platform
+
+    @platform.setter
+    def platform(self, platform):
+        """Sets the platform of this RuntimeEnvironment.
+
+        Platform used - corresponds to sysconfig.get_platform() call.  # noqa: E501
+
+        :param platform: The platform of this RuntimeEnvironment.  # noqa: E501
+        :type: str
+        """
+
+        self._platform = platform
 
     @property
     def python_version(self):
