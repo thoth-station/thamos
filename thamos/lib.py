@@ -710,9 +710,7 @@ def get_analysis_results(api_client: ApiClient, analysis_id: str):
     elif analysis_id.startswith("adviser-"):
         api_instance = AdviseApi(api_client)
         method = api_instance.get_advise_python
-        response = _retrieve_analysis_result(
-            api_instance.get_advise_python, analysis_id
-        )
+        response = _retrieve_analysis_result(method, analysis_id)
         return response.result, response.result["error"]
     else:
         raise UnknownAnalysisType(
