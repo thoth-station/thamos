@@ -1448,3 +1448,11 @@
 * Implement retry mechanism to avoid flakes
 * Fix spelling
 * Provide platform in Thoth's configuration file
+
+## Release 0.10.0 (2020-04-29T21:43:33)
+* Configure requirements format using env variables passed to build
+* Respect review comments
+* Regenerate client to reflect recent API schema changes
+* Document environment variables that can be used
+* Fix inconsistency in wait time printed
+* Remove unused variable
