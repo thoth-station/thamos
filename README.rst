@@ -153,6 +153,12 @@ Then, you need to provide following environment variables:
 * ``THAMOS_VERBOSE`` - set to `1` to run thamos in verbose mode to show what's going on (verbosity on client side).
 * ``THAMOS_DEBUG`` - set to `1` to run analyzes (adviser, provenance checker, ...) on Thoth's backend side in debug mode, you can obtain logs by running ``thamos logs`` or directly on Thoth's user API; the analysis id gets printed into the console during the build process in OpenShift (verbosity on server side).
 * ``THAMOS_DEV`` - set to `1` to consider also development dependencies, this flag defaults to `0` - by enabling development dependencies, adviser will need to browse larger space of software stacks possibly ending with a worse software stack advised (development dependencies are usually not used during application deployment)
+* ``THAMOS_DISABLE_CUDA`` - set to `1` to disable CUDA detection
+* ``THAMOS_NO_EMOJI`` - set to `1` to disable UTF-8 emojis (useful for dummy terminals)
+* ``THAMOS_RETRY_ON_ERROR_COUNT`` - number of retries performed if the API server is responding with an error HTTP status (defaults to 3), this option is not usually needed to be adjusted
+* ``THAMOS_RETRY_ON_ERROR_SLEEP`` - sleep time when an error on the API server is spotted (see ``THAMOS_RETRY_ON_ERROR_COUNT``), defaults to 3 seconds
+* ``THAMOS_NO_PROGRESSBAR`` - disable progress bar visualization, useful for dummy terminals
+* ``THAMOS_DISABLE_LAST_ANALYSIS_ID_FILE`` - set to one if you do not want to create a file that states last analysis id (used not to memorize the last analysis id across commands)
 
 See `OpenShift s2i documentation
 <https://docs.openshift.com/container-platform/3.9/dev_guide/builds/advanced_build_operations.html#dev-guide-assigning-builds-to-nodes>`_
