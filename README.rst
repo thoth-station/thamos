@@ -158,7 +158,7 @@ Then, you need to provide following environment variables:
 * ``THAMOS_RETRY_ON_ERROR_COUNT`` - number of retries performed if the API server is responding with an error HTTP status (defaults to 3), this option is not usually needed to be adjusted
 * ``THAMOS_RETRY_ON_ERROR_SLEEP`` - sleep time when an error on the API server is spotted (see ``THAMOS_RETRY_ON_ERROR_COUNT``), defaults to 3 seconds
 * ``THAMOS_NO_PROGRESSBAR`` - disable progress bar visualization, useful for dummy terminals
-* ``THAMOS_DISABLE_LAST_ANALYSIS_ID_FILE`` - set to one if you do not want to create a file that states last analysis id (used not to memorize the last analysis id across commands)
+* ``THAMOS_DISABLE_LAST_ANALYSIS_ID_FILE`` - set to `1`  if you do not want to create a file that states last analysis id (used not to memorize the last analysis id across commands)
 
 See `OpenShift s2i documentation
 <https://docs.openshift.com/container-platform/3.9/dev_guide/builds/advanced_build_operations.html#dev-guide-assigning-builds-to-nodes>`_
@@ -224,4 +224,3 @@ automatically placed into this repository in `thamos/swagger_client/` and
 <https://github.com/thoth-station/thamos/tree/master/Documentation>`_.  Thamos
 itself provides routines built on top of this automated generated code to
 simplify usage in ``thamos/lib``.
-
