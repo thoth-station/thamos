@@ -128,7 +128,7 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
             if response.status.finished_at is not None:
                 break
             _LOGGER.debug(
-                "Waiting for %r to finish for %s seconds (state: %s)",
+                "Waiting for %r to finish for %g seconds (state: %s)",
                 analysis_id,
                 sleep_time,
                 response.status.state,
