@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thamos
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ _WORKDIR_DEPTH_LEN = 33
 @contextmanager
 def workdir(file_lookup: str = None):
     """Find project directory and cd into it."""
-    file_lookup = file_lookup or "Pipfile"
+    file_lookup = file_lookup or ".thoth.yaml"
 
     project_dir = os.getcwd()
     for _ in range(_WORKDIR_DEPTH_LEN):
@@ -44,7 +44,7 @@ def workdir(file_lookup: str = None):
         project_dir = os.path.dirname(project_dir)
     else:
         raise NoProjectDirError(
-            f"No {file_lookup} found in the current directory {project_dir!r} or in any of its parent "
+            f"No {file_lookup} found in the current directory {os.getcwd()!r} or in any of its parent "
             f"directories, you can generate it using '{sys.argv[0]} config'"
         )
 

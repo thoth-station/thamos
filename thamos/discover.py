@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thamos
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import os
 import sys
 import logging
 import typing
+import sysconfig
 
 import distro
 import click
@@ -114,3 +115,8 @@ def discover_cpu() -> dict:
 
     _LOGGER.info("Detected CPU: %s", ", ".join((f"{k}: {v}" for k, v in result.items())))
     return result
+
+
+def discover_platform() -> str:
+    """Discover platform used."""
+    return sysconfig.get_platform()

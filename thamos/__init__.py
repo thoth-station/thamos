@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thamos
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,5 +18,5 @@
 """A CLI tool and library for interacting with Thoth."""
 
 __name__ = "thamos"
-__version__ = "0.5.3"
+__version__ = "0.10.0"
 __author__ = "Fridolin Pokorny <fridolin.pokorny@gmail.com>"

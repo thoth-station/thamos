@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thamos
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,13 +24,16 @@ import sys
 from shutil import get_terminal_size
 import json
 from functools import wraps
+from typing import Tuple
+from typing import Optional
 
-import contoml as toml
 import yaml
 from texttable import Texttable
 import click
 from termcolor import colored
 import daiquiri
+from thoth.python import Project
+from thamos.exceptions import NoProjectDirError
 from thamos.config import config as configuration
 from thamos.lib import advise as thoth_advise
 from thamos.lib import provenance_check as thoth_provenance_check
@@ -61,15 +64,6 @@ _TABLE_COLS_ALIGN = {
 }
 
 
-def _print_version(ctx, _, value):
-    """Print Kebechet version and exit."""
-    if not value or ctx.resilient_parsing:
-        return
-
-    click.echo(thamos_version)
-    ctx.exit()
-
-
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
     @wraps(func)
@@ -86,38 +80,31 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     return wrapper
 
 
-def _load_pipfiles() -> tuple:
-    """Load Pipfile and Pipfile.lock from the current directory."""
-    _LOGGER.debug("Loading Pipfile in %r", os.getcwd())
-    with open("Pipfile", "r") as pipfile_file:
-        pipfile_content = pipfile_file.read()
-
-    pipfile_lock_content = None
-    try:
-        _LOGGER.debug("Loading Pipfile.lock in %r", os.getcwd())
-        with open("Pipfile.lock", "r") as pipfile_lock_file:
-            pipfile_lock_content = pipfile_lock_file.read()
-    except FileNotFoundError:
-        _LOGGER.info("No Pipfile.lock found")
-
-    return pipfile_content, pipfile_lock_content
-
-
-def _write_pipfiles(pipfile: str, pipfile_lock: str) -> None:
-    """Write content of Pipfile and Pipfile.lock to the current directory."""
-    if pipfile:
-        _LOGGER.debug("Writing to Pipfile in %r", os.getcwd())
-        # TODO: enable prettify once https://github.com/jumpscale7/python-consistent-toml/issues/24 is fixed
-        toml.dump(pipfile, "Pipfile", prettify=False)
+def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
+    """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
+    if requirements_format == "pipenv":
+        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
+        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+    return project.pipfile.to_string(), project.pipfile_lock.to_string() if project.pipfile_lock else None
+
+
+def _write_files(requirements: str, requirements_lock: str, requirements_format: str) -> None:
+    """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
+    project = Project.from_dict(requirements, requirements_lock)
+    if requirements_format == "pipenv":
+        _LOGGER.debug("Writing to Pipfile/Pipfile.lock in %r", os.getcwd())
+        project.to_files()
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        _LOGGER.debug("Writing to requirements.in/requirements.txt in %r", os.getcwd())
+        project.to_pip_compile_files()
         _LOGGER.debug("No changes to Pipfile to write")
-
-    if pipfile_lock:
-        _LOGGER.debug("Writing to Pipfile.lock in %r", os.getcwd())
-        with open("Pipfile.lock", "w") as pipfile_lock_file:
-            json.dump(pipfile_lock, pipfile_lock_file, sort_keys=True, indent=4)
     else:
-        _LOGGER.debug("No changes to Pipfile.lock to write")
+        raise ValueError(
+            f"Unknown requirements format, supported are 'pipenv' and 'pip': {requirements_format!r}"
+        )
 
 
 def _print_header(header: str) -> None:
@@ -128,8 +115,13 @@ def _print_header(header: str) -> None:
     click.echo(padding * " " + "=" * len(header) + "  \n")
 
 
-def _write_configuration(advised_configuration: dict, recommendation_type: str = None,
-                         limit_latest_versions: int = None) -> None:
+def _write_configuration(
+    advised_configuration: dict,
+    recommendation_type: str = None,
+    limit_latest_versions: int = None,
+    dev: bool = False,
+) -> None:
+    """Create thoth configuration file."""
     if not advised_configuration:
         _LOGGER.debug("No advises on configuration, nothing to adjust")
         return
@@ -144,23 +136,28 @@ def _write_configuration(advised_configuration: dict, recommendation_type: str =
     with open(".thoth.yaml", "r") as thoth_yaml_file:
         content = yaml.safe_load(thoth_yaml_file.read())
 
-    for idx, runtime_environment_entry in enumerate(content.get("runtime_environments", [])):
+    for idx, runtime_environment_entry in enumerate(
+        content.get("runtime_environments", [])
+    ):
         if runtime_environment_entry.get("name") == advised_configuration["name"]:
             _LOGGER.debug(
                 "Adjusting configuration entry for %r based on recommendations",
-                advised_configuration["name"]
+                advised_configuration["name"],
             )
             runtime_environment_entry = advised_configuration
             if recommendation_type:
                 runtime_environment_entry["recommendation_type"] = recommendation_type
             if limit_latest_versions:
-                runtime_environment_entry["limit_latest_versions"] = limit_latest_versions
+                runtime_environment_entry[
+                    "limit_latest_versions"
+                ] = limit_latest_versions
+            runtime_environment_entry["dev"] = dev
             content["runtime_environments"][idx] = runtime_environment_entry
             break
     else:
         _LOGGER.error(
             "Cannot adjust Thoth's configuration based on advises: No runtime environment entry with name %r found",
-            advised_configuration["name"]
+            advised_configuration["name"],
         )
         return
 
@@ -223,14 +220,6 @@ def _print_report(report: dict, json_output: bool = False):
     help="Be verbose about what's going on.",
 )
 @click.option(
-    "--version",
-    is_flag=True,
-    is_eager=True,
-    callback=_print_version,
-    expose_value=False,
-    help="Print version and exit.",
-)
-@click.option(
     "--workdir",
     "-d",
     type=str,
@@ -245,7 +234,7 @@ def _print_report(report: dict, json_output: bool = False):
     help="Use selected host instead of the one stated in the configuration file.",
 )
 def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = None):
-    """A CLI tool for interacting with Thoth."""
+    """CLI tool for interacting with Thoth."""
     if ctx:
         ctx.auto_envvar_prefix = "THAMOS"
 
@@ -266,8 +255,48 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     os.environ["THAMOS_NO_PROGRESSBAR"] = os.getenv("THAMOS_NO_PROGRESSBAR", "0")
 
 
+@cli.command("version")
+@click.pass_context
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
+def _print_version(ctx, json_output: bool = False):
+    """Print Thamos and Thoth version and exit."""
+    api_url = None
+    thoth_version = None
+    try:
+        thoth_version = configuration.get_thoth_version()
+        api_url = configuration.api_url
+    except NoProjectDirError as exc:
+        _LOGGER.warning("Cannot obtain Thoth backend information: %s", str(exc))
+
+    if json_output:
+        click.echo(
+            json.dumps(
+                {
+                    "thamos_version": thamos_version,
+                    "thoth_version": thoth_version,
+                    "thoth_api_url": configuration.api_url,
+                },
+                indent=2,
+            )
+        )
+    else:
+        click.echo(f"Thamos Client version: {thamos_version!s}")
+        click.echo(
+            f"Thoth API {api_url if api_url is not None else 'N/A'}: {thoth_version if thoth_version else 'N/A'}"
+        )
+
+    ctx.exit(0)
+
+
 @cli.command("advise")
-@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--debug",
+    is_flag=True,
+    envvar="THAMOS_DEBUG",
+    help="Run analysis in debug mode on Thoth.",
+)
 @click.option(
     "--no-write",
     "-W",
@@ -279,6 +308,7 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     "-t",
     type=str,
     metavar="RECOMMENDATION_TYPE",
+    envvar="THAMOS_RECOMMENDATION_TYPE",
     help="Use selected recommendation type, do not load it from Thoth's config file.",
 )
 @click.option(
@@ -289,13 +319,17 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
 @click.option(
     "--no-static-analysis",
     is_flag=True,
+    envvar="THAMOS_NO_STATIC_ANALYSIS",
     help="Do not perform static analysis of source code files.",
 )
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
 @click.option(
-    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+    "--force",
+    is_flag=True,
+    envvar="THAMOS_FORCE",
+    help="Force analysis run bypassing server-side cache.",
 )
 @click.option(
     "--runtime-environment",
@@ -311,7 +345,16 @@ def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = 
     type=int,
     default=None,
     metavar="COUNT",
+    envvar="THAMOS_LIMIT_LATEST_VERSIONS",
     help="Specify number of latest versions for each package to consider.",
+)
+@click.option(
+    "--dev/--no-dev",
+    envvar="THAMOS_DEV",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Consider or do not consider development dependencies during the resolution.",
 )
 def advise(
     debug: bool = False,
@@ -323,10 +366,11 @@ def advise(
     json_output: bool = False,
     limit_latest_versions: int = None,
     force: bool = False,
+    dev: bool = False,
 ):
     """Ask Thoth for recommendations on application stack."""
     with workdir():
-        pipfile, pipfile_lock = _load_pipfiles()
+        pipfile, pipfile_lock = _load_files(requirements_format=configuration.requirements_format)
 
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise(
@@ -339,6 +383,7 @@ def advise(
             force=force,
             limit_latest_versions=limit_latest_versions,
             no_static_analysis=no_static_analysis,
+            dev=dev,
         )
 
         if not results:
@@ -350,33 +395,48 @@ def advise(
             sys.exit(0)
 
         result, error = results
+        if error:
+            if json_output:
+                print({"error": result["error_msg"]})
+            else:
+                print(result["error_msg"])
+            sys.exit(4)
 
         if not no_write:
             # Print report of the best one - thus index zero.
-            if result["report"][0][0]:
-                _print_header("Recommended stack report")
-                _print_report(result["report"][0][0], json_output=json_output)
+            if result["report"] and result["report"]["products"]:
+                if result["report"]["products"][0]["justification"]:
+                    _print_header("Recommended stack report")
+                    _print_report(result["report"]["products"][0]["justification"], json_output=json_output)
+                else:
+                    click.echo("No justification was made for the recommended stack")
 
-            if result["stack_info"]:
+            if result["report"] and result["report"]["stack_info"]:
                 _print_header("Application stack guidance")
-                _print_report(result["stack_info"], json_output=json_output)
+                _print_report(result["report"]["stack_info"], json_output=json_output)
 
-            if not error:
-                pipfile = result["report"][0][1]["requirements"]
-                pipfile_lock = result["report"][0][1]["requirements_locked"]
-                _write_configuration(result["advised_configuration"], recommendation_type, limit_latest_versions)
-                _write_pipfiles(pipfile, pipfile_lock)
+            pipfile = result["report"]["products"][0]["project"]["requirements"]
+            pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
+            _write_configuration(
+                result["report"]["products"][0]["advised_runtime_environment"],
+                recommendation_type,
+                limit_latest_versions,
+                dev,
+            )
+            _write_files(pipfile, pipfile_lock, configuration.requirements_format)
         else:
             click.echo(json.dumps(result, indent=2))
-
-        if error:
-            sys.exit(4)
 
     sys.exit(0)
 
 
 @cli.command("provenance-check")
-@click.option("--debug", is_flag=True, help="Run analysis in debug mode on Thoth.")
+@click.option(
+    "--debug",
+    is_flag=True,
+    envvar="THAMOS_DEBUG",
+    help="Run analysis in debug mode on Thoth.",
+)
 @click.option(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
@@ -386,7 +446,10 @@ def advise(
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
-    "--force", is_flag=True, help="Force analysis run bypassing server-side cache."
+    "--force",
+    is_flag=True,
+    envvar="THAMOS_FORCE",
+    help="Force analysis run bypassing server-side cache.",
 )
 @click.pass_context
 @handle_cli_exception
@@ -398,7 +461,10 @@ def provenance_check(
 ):
     """Check provenance of installed packages."""
     with workdir():
-        pipfile, pipfile_lock = _load_pipfiles()
+        if configuration.requirements_format != "pipenv":
+            raise ValueError("Provenance checks are available only for requirements managed by Pipenv")
+
+        pipfile, pipfile_lock = _load_files("pipenv")
         if not pipfile_lock:
             _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
             sys.exit(3)
@@ -429,14 +495,23 @@ def provenance_check(
 
 
 @cli.command("log")
-@click.argument("analysis_id", type=str)
-def log(analysis_id: str):
-    """Get log of running or finished analysis."""
-    click.echo(get_log(analysis_id))
+@click.argument("analysis_id", type=str, required=False)
+def log(analysis_id: str = None):
+    """Get log of running or finished analysis.
+
+    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    """
+    if not analysis_id:
+        with workdir():
+            log_str = get_log()
+    else:
+        log_str = get_log(analysis_id)
+
+    click.echo(log_str)
 
 
 @cli.command("status")
-@click.argument("analysis_id", type=str)
+@click.argument("analysis_id", type=str, required=False)
 @click.option(
     "--output-format",
     "-o",
@@ -444,9 +519,17 @@ def log(analysis_id: str):
     default="table",
     help="Specify output format for the status report.",
 )
-def status(analysis_id: str, output_format: str = None):
-    """Get status of an analysis."""
-    status_dict = get_status(analysis_id)
+def status(analysis_id: str = None, output_format: str = None):
+    """Get status of an analysis.
+
+    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    """
+    if not analysis_id:
+        with workdir():
+            status_dict = get_status()
+    else:
+        status_dict = get_status(analysis_id)
+
     if not output_format or output_format == "table":
         table = Texttable(max_width=get_terminal_size().columns)
         table.set_deco(Texttable.VLINES)
@@ -484,16 +567,30 @@ def config(no_interactive: bool = False, template: str = None):
     Perform autodiscovery of available hardware and software on the host and
     create a default configuration for Thoth (placed into .thoth.yaml).
     """
-    if not configuration.config_file_exists():
+    if template:
         _LOGGER.info(
-            "No configuration file found, creating one from a default configuration template"
+            "Creating configuration file from a configuration template %r", template
         )
         configuration.create_default_config(template)
-    elif no_interactive:
-        _LOGGER.info("Configuration file already present, no action performed in non-interactive mode")
+
+        if not no_interactive:
+            configuration.open_config_file()
+
+        return
+
+    if not configuration.config_file_exists():
+        _LOGGER.info(
+            "No configuration file found, creating one from a configuration template from %s",
+            "a default template" if template is None else template,
+        )
+        configuration.create_default_config(template)
 
     if not no_interactive:
         configuration.open_config_file()
+    elif no_interactive:
+        _LOGGER.info(
+            "Configuration file already present, no action performed in non-interactive mode"
+        )
 
 
 if __name__ == "__main__":

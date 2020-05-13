@@ -1,0 +1,6 @@
+daiquiri~=2.0
+numpy
+pandas
+pyyaml>=3
+tensorflow>=1.5
+scikit-learn>=0.1

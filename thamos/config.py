@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thamos
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,11 +30,14 @@ from .discover import discover_cpu
 from .discover import discover_cuda_version
 from .discover import discover_distribution
 from .discover import discover_python_version
+from .discover import discover_platform
 from .exceptions import NoApiSupported
 from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
+from .exceptions import ServiceUnavailable
+from .exceptions import NoRequirementsFormatError
 from urllib.parse import urljoin
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,6 +50,8 @@ class _Configuration:
     DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     DEFAULT_THOTH_CONFIG = os.path.join(DATA_DIR, "defaultThoth.yaml")
     CONFIG_NAME = ".thoth.yaml"
+    REQUIREMENTS_FORMATS = frozenset(("pip", "pip-tools", "pip-compile", "pipenv"))
+    _DEFAULT_REQUIREMENTS_FORMAT = "pipenv"
 
     def __init__(self):
         """Construct configuration instance."""
@@ -60,6 +65,10 @@ class _Configuration:
 
     @property
     def api_url(self):
+        """Get URL to Thoth's API."""
+        if not self._api_url:
+            self._api_url = self.api_discovery(self.content["host"])
+
         return self._api_url
 
     @property
@@ -69,6 +78,30 @@ class _Configuration:
             self.load_config()
 
         return self._configuration
+
+    @property
+    def requirements_format(self) -> str:
+        requirements_format = self.content.get("requirements_format")
+        if not requirements_format:
+            raise NoRequirementsFormatError(
+                "No requirements format configuration stated in the configuration file "
+                "under 'requirements_format' configuration entry"
+            )
+
+        if not isinstance(requirements_format, str):
+            raise ConfigurationError("The data type for requirements_format should be str")
+
+        if requirements_format not in ("pip", "pip-tools", "pipenv"):
+            raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+
+        return requirements_format
+
+    def get_thoth_version(self) -> str:
+        """Get version of Thoth backend."""
+        _LOGGER.debug("Contacting Thoth at %r to receive version information", self.api_url)
+        response = requests.head(self.api_url, verify=self.tls_verify)
+        response.raise_for_status()
+        return response.headers.get("X-Thoth-Version", "Not Available")
 
     def config_file_exists(self) -> bool:
         """Check if configuration file exists."""
@@ -90,15 +123,15 @@ class _Configuration:
 
                 self._configuration = yaml.safe_load(self._configuration)
 
-    def create_default_config(self, template: str = None):
+    def create_default_config(self, template: str = None, nowrite: bool = False) -> typing.Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
 
-        _LOGGER.debug(
-            "Reading default configuration from %r", self.DEFAULT_THOTH_CONFIG
-        )
         template = template or self.DEFAULT_THOTH_CONFIG
+        _LOGGER.debug(
+            "Reading configuration from %r", template
+        )
         with open(template, "r") as default_config_file:
             default_config = default_config_file.read()
 
@@ -110,21 +143,40 @@ class _Configuration:
         cuda_version = f"'{cuda_version}" if cuda_version is not None else 'null'
         os_name, os_version = discover_distribution()
         python_version = discover_python_version()
+        platform = discover_platform()
 
+        requirements_format = os.getenv("THAMOS_REQUIREMENTS_FORMAT", self._DEFAULT_REQUIREMENTS_FORMAT)
+        if requirements_format not in self.REQUIREMENTS_FORMATS:
+            # This avoids possibly dangerous environment variable expansion.
+            _LOGGER.warning(
+                "Unknown requirements format specified, forcing %r: %r",
+                self._DEFAULT_REQUIREMENTS_FORMAT,
+                requirements_format
+            )
+            requirements_format = self._DEFAULT_REQUIREMENTS_FORMAT
+
+        expand_env = bool(int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)))
         default_config = default_config.format(
             cuda_version=cuda_version,
             os_name=os_name,
             os_version=os_version,
             python_version=python_version,
-            **cpu_info
+            platform=platform,
+            requirements_format=requirements_format,
+            **cpu_info,
+            **(os.environ if expand_env else {}),
         )
 
-        _LOGGER.debug(
-            "Writing configuration file to %r",
-            os.path.join(os.getcwd(), self.CONFIG_NAME),
-        )
-        with open(self.CONFIG_NAME, "w") as config_file:
-            config_file.write(default_config)
+        if not nowrite:
+            _LOGGER.debug(
+                "Writing configuration file to %r",
+                os.path.join(os.getcwd(), self.CONFIG_NAME),
+            )
+
+            with open(self.CONFIG_NAME, "w") as config_file:
+                config_file.write(default_config)
+        else:
+            return yaml.safe_load(default_config)
 
     @staticmethod
     def open_config_file():
@@ -147,7 +199,7 @@ class _Configuration:
             )
 
         if not isinstance(content["runtime_environments"], list):
-            raise ConfigurationError("")
+            raise ConfigurationError("The data type for requirements_format should be list")
 
         to_return = None
         seen_names = set()
@@ -205,35 +257,25 @@ class _Configuration:
             else self.content.get("tls_verify", True)
         )
 
+        if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING:
+            _LOGGER.warning(
+                "TLS verification turned off, its highly recommended to use a secured connection, "
+                "see configuration file for configuration options"
+            )
+
         response = requests.get(
             api_url, verify=self.tls_verify, headers={"Accept": "application/json"}
         )
 
         try:
             response.raise_for_status()
-            if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING:
-                _LOGGER.warning(
-                    "TLS verification turned off, its highly recommended to use a secured connection, "
-                    "see configuration file for configuration options"
-                )
-        except Exception:
-            # Try without TLS - maybe router was not configured to use TLS.
-            api_url = urljoin("http://" + host, "/api/v1")
-            response = requests.get(api_url, headers={"Accept": "application/json"})
-            try:
-                response.raise_for_status()
-                if not _THAMOS_DISABLE_TLS_WARNING:
-                    _LOGGER.warning(
-                        "Using insecure connection to API service, please contact service provider to "
-                        "install TLS in order to secure network traffic"
-                    )
-            except Exception as exc:
-                raise NoApiSupported(
-                    "Server does not support API v1 required by Thamos client"
-                ) from exc
+        except Exception as exc:
+            if response.status_code == 503:
+                _LOGGER.error("Thoth service at %r is unavailable (HTTP 503)", api_url)
 
-        if response.status_code != 200:
-            raise InternalError("Cannot correctly determine API version to be used")
+            raise NoApiSupported(
+                "Server does not support API v1 required by Thamos client"
+            ) from exc
 
         self._api_url = api_url
         return self._api_url

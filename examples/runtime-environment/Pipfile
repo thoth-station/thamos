@@ -4,13 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-absl-py = "==0.6.1"
-astor = "==0.7.1"
-bleach = "==1.5.0"
-gast = "==0.2.0"
-markdown = "==3.0.1"
-olefile = "==0.42.1"
-pillow = "==5.0.0"
-tensorflow = "==1.9.0"
-webencodings = "==0.5.1"
-werkzeug = "==0.14.1"
+tensorflow = "<2"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = false
