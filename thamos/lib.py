@@ -173,7 +173,7 @@ def advise(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
-    metadata_is_kebechet: Optional[bool] = None,
+    is_kebechet: Optional[bool] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -269,7 +269,7 @@ def advise_here(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
-    metadata_is_kebechet: Optional[bool] = None
+    is_kebechet: Optional[bool] = None
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     if not os.path.isfile("Pipfile"):
@@ -293,7 +293,7 @@ def advise_here(
             limit=limit,
             count=count,
             debug=debug,
-            metadata_is_kebechet=metadata_is_kebechet,
+            is_kebechet=is_kebechet,
         )
 
 
