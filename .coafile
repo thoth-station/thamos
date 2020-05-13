@@ -1,27 +1,24 @@
 [all]
 bears = LineCountBear
-files = **.py, **.yaml, **.rst, **.md
-ignore = **/__pycache__/**, **/__pycache__, __pycache__, __pycache__/**, **/*.pyc, *.pyc
-max_lines_per_file = 1000
+files = **.py, **.yaml, **.rst **.md
+ignore = **/__pycache__/**, **/__pycache__, __pycache__, __pycache__/**, **/*.pyc, *.pyc, tests/**
+max_lines_per_file = 3000
+max_line_length = 120
 
 [all.python]
-bears = PycodestyleBear, PyDocStyleBear, FilenameBear
+bears = PycodestyleBear, PyDocStyleBear
 files = **.py
-file_naming_convention = camel
 language = Python
-max_line_length = 120
 editor = vim
-ignore = setup.py, thamos/swagger_client/**
+ignore = setup.py, tests/**, docs/source/conf.py, thamos/swagger_client/**
 
 [all.yaml]
-bears = YAMLLintBear, FilenameBear
+bears = YAMLLintBear
 files = **.yaml
-file_naming_convention = camel
 ignore = .zuul.yaml
 max_line_length = 120
 
 [zuul.yaml]
-bears = YAMLLintBear, FilenameBear
+bears = YAMLLintBear
 files = .zuul.yaml
-file_naming_convention = camel
 max_line_length = 180

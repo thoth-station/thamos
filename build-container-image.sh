@@ -23,14 +23,15 @@ if ! type buildah; then
 fi
 
 # update the local copy...
-buildah pull "docker://registry.fedoraproject.org/fedora:28"
+buildah pull "docker://registry.fedoraproject.org/fedora:30"
 
-ctr=$(buildah from "registry.fedoraproject.org/fedora:28")
+ctr=$(buildah from "registry.fedoraproject.org/fedora:30")
 mnt=$(buildah mount $ctr)
 
 buildah run $ctr -- pip3 install thamos
 
 # Cleanup
+buildah run $ctr -- dnf update -y --setopt=tsflags=nodocs
 buildah run $ctr -- dnf clean all
 buildah run $ctr -- rm -Rf /root/.cache
 rm -rf $mnt/usr/share/man $mnt/usr/share/info

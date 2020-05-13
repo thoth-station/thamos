@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thamos
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,12 +34,20 @@ class NoApiSupported(ThamosException):
     """Raised if client and Thoth server does not support same API versions."""
 
 
+class ServiceUnavailable(ThamosException):
+    """Raised if Thoth service is not available."""
+
+
 class UnknownAnalysisType(ThamosException):
     """Raised analysis type (adviser, package-extract, ...) cannot be determined from analysis identifier."""
 
 
 class NoRuntimeEnvironmentError(ThamosException):
-    """An exception raised if no runtime environment could be found."""
+    """An exception raised if no runtime environment could be found in configuration file."""
+
+
+class NoRequirementsFormatError(ThamosException):
+    """An exception raised if no requirements format could be found in configuration file."""
 
 
 class ConfigurationError(ThamosException):
