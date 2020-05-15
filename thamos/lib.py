@@ -36,6 +36,7 @@ from yaspin.spinners import Spinners
 from invectio import gather_library_usage
 from thoth.analyzer import run_command
 from thoth.python import Project
+from thoth.common import ThothAdviserIntegrationEnum
 
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
@@ -258,12 +259,12 @@ def advise(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
-    is_kebechet: typing.Optional[bool] = None,
     origin: str = None,
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
+    source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -326,10 +327,10 @@ def advise(
         "recommendation_type": recommendation_type,
         "debug": debug,
         "force": force,
-        "is_kebechet": metadata_is_kebechet,
         "is_s2i": _is_s2i(),
         "origin": _get_origin(),
         "dev": dev,
+        "source_type": source_type,
     }
 
     if limit is not None:
@@ -398,12 +399,12 @@ def advise_here(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
-    is_kebechet: typing.Optional[bool] = None,
     origin: str = None,
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
-    github_base_repo_url: typing.Optional[str] = None
+    github_base_repo_url: typing.Optional[str] = None,
+    source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
@@ -431,12 +432,12 @@ def advise_here(
             limit=limit,
             count=count,
             debug=debug,
-            is_kebechet=is_kebechet,
             origin=origin,
             github_event_type=github_event_type,
             github_check_run_id=github_check_run_id,
             github_installation_id=github_installation_id,
             github_base_repo_url=github_base_repo_url,
+            source_type=source_type,
         )
 
 
