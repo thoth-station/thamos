@@ -1456,3 +1456,12 @@
 * Document environment variables that can be used
 * Fix inconsistency in wait time printed
 * Remove unused variable
+
+## Release 0.10.1 (2020-05-18T09:06:19)
+* :sparkles: added standard project github templates
+* better version spec for pyyaml
+* manually locked pyyaml :arrow_up:
+* lib and CLI should have same behaviour
+* :pushpin: Automatic update of dependency toml from 0.10.0 to 0.10.1
+* :pushpin: Automatic update of dependency yaspin from 0.16.0 to 0.17.0
+* :pushpin: Automatic update of dependency pytest from 5.4.1 to 5.4.2
