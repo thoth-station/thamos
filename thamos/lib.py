@@ -415,30 +415,30 @@ def advise_here(
     else:
         raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
 
-    with open("Pipfile", "r") as pipfile:
-        pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
+    pipfile = project.pipfile.to_string()
+    pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
 
-        return advise(
-            pipfile=pipfile.read(),
-            pipfile_lock=pipfile_lock_str,
-            recommendation_type=recommendation_type,
-            runtime_environment=runtime_environment,
-            runtime_environment_name=runtime_environment_name,
-            limit_latest_versions=limit_latest_versions,
-            dev=dev,
-            no_static_analysis=no_static_analysis,
-            nowait=nowait,
-            force=force,
-            limit=limit,
-            count=count,
-            debug=debug,
-            origin=origin,
-            github_event_type=github_event_type,
-            github_check_run_id=github_check_run_id,
-            github_installation_id=github_installation_id,
-            github_base_repo_url=github_base_repo_url,
-            source_type=source_type,
-        )
+    return advise(
+        pipfile=pipfile,
+        pipfile_lock=pipfile_lock_str,
+        recommendation_type=recommendation_type,
+        runtime_environment=runtime_environment,
+        runtime_environment_name=runtime_environment_name,
+        limit_latest_versions=limit_latest_versions,
+        dev=dev,
+        no_static_analysis=no_static_analysis,
+        nowait=nowait,
+        force=force,
+        limit=limit,
+        count=count,
+        debug=debug,
+        origin=origin,
+        github_event_type=github_event_type,
+        github_check_run_id=github_check_run_id,
+        github_installation_id=github_installation_id,
+        github_base_repo_url=github_base_repo_url,
+        source_type=source_type,
+    )
 
 
 @with_api_client
