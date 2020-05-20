@@ -323,6 +323,9 @@ def advise(
     if recommendation_type:
         recommendation_type = recommendation_type.lower()
 
+    if _is_s2i():
+        source_type = ThothAdviserIntegrationEnum.S2I
+
     parameters = {
         "recommendation_type": recommendation_type,
         "debug": debug,
