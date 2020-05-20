@@ -87,8 +87,7 @@ def with_api_client(func: typing.Callable):
             f"{platform.system()} {platform.release()})"
         )
         result = func(api_client, *args, **kwargs)
-        _LOGGER.debug("Elapsed seconds processing request: %f",
-                      monotonic() - start)
+        _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
         return result
 
     return wrapper
@@ -150,10 +149,8 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
                     raise
 
                 retries += 1
-                _LOGGER.error(
-                    "Failed to obtain status from Thoth: %s", str(exc))
-                _LOGGER.warning(
-                    "Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+                _LOGGER.error("Failed to obtain status from Thoth: %s", str(exc))
+                _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
                 sleep(_RETRY_ON_ERROR_SLEEP)
                 continue
 
@@ -182,8 +179,7 @@ def _note_last_analysis_id(analysis_id: str) -> None:
         with open(LAST_ANALYSIS_ID_FILE, "w") as analysis_id_file:
             analysis_id_file.write(analysis_id)
     except Exception as exc:
-        _LOGGER.warning(
-            "Failed to write analysis id to a temporary file: %s", str(exc))
+        _LOGGER.warning("Failed to write analysis id to a temporary file: %s", str(exc))
 
 
 def _get_last_analysis_id() -> str:
@@ -216,8 +212,7 @@ def _retrieve_analysis_result(
             if "error" in response:
                 # Error produced based on API endpoints semantics...
                 _LOGGER.debug("Error from Thoth: %s", response)
-                _LOGGER.error("%s (analysis: %s)",
-                              response["error"], analysis_id)
+                _LOGGER.error("%s (analysis: %s)", response["error"], analysis_id)
             else:
                 # Other errors (e.g. internal server error).
                 _LOGGER.error("Error from Thoth: %s", response)
@@ -226,22 +221,18 @@ def _retrieve_analysis_result(
                 return None
 
             retries += 1
-            _LOGGER.warning(
-                "Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+            _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
 def _get_static_analysis() -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
-    _LOGGER.info(
-        "Performing static analysis of sources to gather library usage")
+    _LOGGER.info("Performing static analysis of sources to gather library usage")
     try:
-        library_usage = gather_library_usage(
-            ".", ignore_errors=True, without_standard_imports=True)
+        library_usage = gather_library_usage(".", ignore_errors=True, without_standard_imports=True)
     except FileNotFoundError:
-        _LOGGER.warning(
-            "No library usage was aggregated - no Python sources found")
+        _LOGGER.warning("No library usage was aggregated - no Python sources found")
         return None
 
     report = {}
@@ -267,11 +258,9 @@ def _is_s2i() -> bool:
 
 def _get_origin() -> typing.Optional[str]:
     """Check git origin configured."""
-    result = run_command(
-        "git config --get remote.origin.url", raise_on_error=False)
+    result = run_command("git config --get remote.origin.url", raise_on_error=False)
     if result.return_code != 0:
-        _LOGGER.debug(
-            "Failed to obtain information about git origin: %s", result.stderr)
+        _LOGGER.debug("Failed to obtain information about git origin: %s", result.stderr)
         return None
 
     origin = result.stdout.strip()
@@ -340,8 +329,7 @@ def advise(
     library_usage = None
     if not no_static_analysis:
         library_usage = _get_static_analysis()
-        _LOGGER.debug("Library usage:%s", "\n" +
-                      json.dumps(library_usage, indent=2) if library_usage else None)
+        _LOGGER.debug("Library usage:%s", "\n" + json.dumps(library_usage, indent=2) if library_usage else None)
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
 
@@ -413,9 +401,7 @@ def advise(
     _wait_for_analysis(api_instance.get_advise_python_status,
                        response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
-    response = _retrieve_analysis_result(
-        api_instance.get_advise_python, response.analysis_id
-    )
+    response = _retrieve_analysis_result(api_instance.get_advise_python, response.analysis_id)
     if not response:
         return None
 
