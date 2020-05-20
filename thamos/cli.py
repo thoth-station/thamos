@@ -382,7 +382,7 @@ def advise(
             debug=debug,
             nowait=no_wait,
             force=force,
-            source_type=ThothAdviserIntegrationEnum.CLI.value
+            source_type=ThothAdviserIntegrationEnum.CLI,
             limit_latest_versions=limit_latest_versions,
             no_static_analysis=no_static_analysis,
             dev=dev,
