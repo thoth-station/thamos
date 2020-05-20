@@ -100,7 +100,7 @@ def timeout(seconds=900, error_message="Thamos timeout encountered."):
     def decorator(func):
         def _handle_timeout(signum, frame):
             raise TimeoutError(error_message)
-        
+
         @wraps(func)
         def wrapper(*args, **kwargs):
             signal.signal(signal.SIGALRM, _handle_timeout)
