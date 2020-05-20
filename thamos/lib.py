@@ -304,7 +304,9 @@ def advise(
         )
 
     if runtime_environment is None:
-        runtime_environment = (thoth_config.get_runtime_environment(runtime_environment_name) or dict())
+        runtime_environment = (
+            thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+        )
 
     # We use the explicit one if provided at the end.
     if limit_latest_versions is None:
@@ -398,10 +400,11 @@ def advise(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(api_instance.get_advise_python_status,
-                       response.analysis_id)
+    _wait_for_analysis(api_instance.get_advise_python_status, response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
-    response = _retrieve_analysis_result(api_instance.get_advise_python, response.analysis_id)
+    response = _retrieve_analysis_result(
+        api_instance.get_advise_python, response.analysis_id
+    )
     if not response:
         return None
 
