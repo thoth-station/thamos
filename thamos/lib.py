@@ -36,6 +36,7 @@ from yaspin.spinners import Spinners
 from invectio import gather_library_usage
 from thoth.analyzer import run_command
 from thoth.python import Project
+from thoth.common import ThothAdviserIntegrationEnum
 
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
@@ -263,6 +264,7 @@ def advise(
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
+    source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -325,7 +327,7 @@ def advise(
         "recommendation_type": recommendation_type,
         "debug": debug,
         "force": force,
-        "is_s2i": _is_s2i(),
+        "source_type": source_type,
         "origin": _get_origin(),
         "dev": dev,
     }
@@ -384,23 +386,24 @@ def advise(
 
 
 def advise_here(
-    recommendation_type: str = None,
+    recommendation_type: typing.Optional[str] = None,
     *,
     runtime_environment: dict = None,
-    runtime_environment_name: str = None,
-    limit_latest_versions: int = None,
+    runtime_environment_name: typing.Optional[str] = None,
+    limit_latest_versions: typing.Optional[int] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
     nowait: bool = False,
     force: bool = False,
-    limit: int = None,
+    limit: typing.Optional[int] = None,
     count: int = 1,
     debug: bool = False,
-    origin: str = None,
+    origin: typing.Optional[str] = None,
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
-    github_base_repo_url: typing.Optional[str] = None
+    github_base_repo_url: typing.Optional[str] = None,
+    source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
@@ -429,6 +432,7 @@ def advise_here(
         count=count,
         debug=debug,
         origin=origin,
+        source_type=source_type,
         github_event_type=github_event_type,
         github_check_run_id=github_check_run_id,
         github_installation_id=github_installation_id,
