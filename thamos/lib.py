@@ -29,6 +29,7 @@ from functools import wraps
 import pprint
 import json
 import urllib3
+import signal
 
 from termcolor import colored
 from yaspin import yaspin
@@ -50,6 +51,7 @@ from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
 from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
+from .exceptions import TimeoutError
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -85,12 +87,35 @@ def with_api_client(func: typing.Callable):
             f"{platform.system()} {platform.release()})"
         )
         result = func(api_client, *args, **kwargs)
-        _LOGGER.debug("Elapsed seconds processing request: %f", monotonic() - start)
+        _LOGGER.debug("Elapsed seconds processing request: %f",
+                      monotonic() - start)
         return result
 
     return wrapper
 
 
+def timeout(seconds=900, error_message="Thamos timeout encountered."):
+    """Timeout decorater ensures thamos doesn't wait forever."""
+    ## Only signal only works with UNIX systems.
+    def decorator(func):
+        def _handle_timeout(signum, frame):
+            raise TimeoutError(error_message)
+
+        def wrapper(*args, **kwargs):
+            signal.signal(signal.SIGALRM, _handle_timeout)
+            signal.alarm(seconds)
+            try:
+                result = func(*args, **kwargs)
+            finally:
+                signal.alarm(0)
+            return result
+
+        return wraps(func)(wrapper)
+
+    return decorator
+
+
+@timeout(_THAMOS_TIMEOUT)
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
     @contextmanager
@@ -115,13 +140,19 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
         while True:
             try:
                 response = status_func(analysis_id)
+            except TimeoutError as exc:
+                _LOGGER.error(
+                    "Failed to obtain status from Thoth without timeout limit: %s", str(exc))
+                raise
             except Exception as exc:
                 if retries >= _RETRY_ON_ERROR_COUNT:
                     raise
 
                 retries += 1
-                _LOGGER.error("Failed to obtain status from Thoth: %s", str(exc))
-                _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+                _LOGGER.error(
+                    "Failed to obtain status from Thoth: %s", str(exc))
+                _LOGGER.warning(
+                    "Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
                 sleep(_RETRY_ON_ERROR_SLEEP)
                 continue
 
@@ -150,7 +181,8 @@ def _note_last_analysis_id(analysis_id: str) -> None:
         with open(LAST_ANALYSIS_ID_FILE, "w") as analysis_id_file:
             analysis_id_file.write(analysis_id)
     except Exception as exc:
-        _LOGGER.warning("Failed to write analysis id to a temporary file: %s", str(exc))
+        _LOGGER.warning(
+            "Failed to write analysis id to a temporary file: %s", str(exc))
 
 
 def _get_last_analysis_id() -> str:
@@ -183,7 +215,8 @@ def _retrieve_analysis_result(
             if "error" in response:
                 # Error produced based on API endpoints semantics...
                 _LOGGER.debug("Error from Thoth: %s", response)
-                _LOGGER.error("%s (analysis: %s)", response["error"], analysis_id)
+                _LOGGER.error("%s (analysis: %s)",
+                              response["error"], analysis_id)
             else:
                 # Other errors (e.g. internal server error).
                 _LOGGER.error("Error from Thoth: %s", response)
@@ -192,18 +225,22 @@ def _retrieve_analysis_result(
                 return None
 
             retries += 1
-            _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+            _LOGGER.warning(
+                "Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
 def _get_static_analysis() -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
-    _LOGGER.info("Performing static analysis of sources to gather library usage")
+    _LOGGER.info(
+        "Performing static analysis of sources to gather library usage")
     try:
-        library_usage = gather_library_usage(".", ignore_errors=True, without_standard_imports=True)
+        library_usage = gather_library_usage(
+            ".", ignore_errors=True, without_standard_imports=True)
     except FileNotFoundError:
-        _LOGGER.warning("No library usage was aggregated - no Python sources found")
+        _LOGGER.warning(
+            "No library usage was aggregated - no Python sources found")
         return None
 
     report = {}
@@ -229,9 +266,11 @@ def _is_s2i() -> bool:
 
 def _get_origin() -> typing.Optional[str]:
     """Check git origin configured."""
-    result = run_command("git config --get remote.origin.url", raise_on_error=False)
+    result = run_command(
+        "git config --get remote.origin.url", raise_on_error=False)
     if result.return_code != 0:
-        _LOGGER.debug("Failed to obtain information about git origin: %s", result.stderr)
+        _LOGGER.debug(
+            "Failed to obtain information about git origin: %s", result.stderr)
         return None
 
     origin = result.stdout.strip()
@@ -276,7 +315,8 @@ def advise(
 
     if runtime_environment is None:
         runtime_environment = (
-            thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+            thoth_config.get_runtime_environment(
+                runtime_environment_name) or dict()
         )
 
     # We use the explicit one if provided at the end.
@@ -302,9 +342,11 @@ def advise(
     library_usage = None
     if not no_static_analysis:
         library_usage = _get_static_analysis()
-        _LOGGER.debug("Library usage:%s", "\n" + json.dumps(library_usage, indent=2) if library_usage else None)
+        _LOGGER.debug("Library usage:%s", "\n" +
+                      json.dumps(library_usage, indent=2) if library_usage else None)
 
-    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
+    stack = PythonStack(requirements=pipfile,
+                        requirements_lock=pipfile_lock or "")
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
@@ -371,7 +413,8 @@ def advise(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(api_instance.get_advise_python_status, response.analysis_id)
+    _wait_for_analysis(api_instance.get_advise_python_status,
+                       response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_advise_python, response.analysis_id
@@ -406,11 +449,13 @@ def advise_here(
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
     if requirements_format == "pipenv":
-        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+        project = Project.from_files(
+            without_pipfile_lock=not os.path.exists("Pipfile.lock"))
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
-        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+        raise ValueError(
+            f"Unknown configuration option for requirements format: {requirements_format!r}")
 
     pipfile = project.pipfile.to_string()
     pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
@@ -468,8 +513,10 @@ def provenance_check(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(api_instance.get_provenance_python_status, response.analysis_id)
-    _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
+    _wait_for_analysis(
+        api_instance.get_provenance_python_status, response.analysis_id)
+    _LOGGER.debug("Retrieving provenance check result for %r",
+                  response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_provenance_python, response.analysis_id
     )
@@ -552,7 +599,8 @@ def image_analysis(
     _LOGGER.debug(
         "Retrieving image analysis result result for %r", response.analysis_id
     )
-    response = _retrieve_analysis_result(api_instance.get_analyze, response.analysis_id)
+    response = _retrieve_analysis_result(
+        api_instance.get_analyze, response.analysis_id)
     if not response:
         return None
 
@@ -606,7 +654,8 @@ def build_analysis(
             force=force,
         )
 
-    _LOGGER.info("Successfully submitted build analysis to %r", thoth_config.api_url)
+    _LOGGER.info("Successfully submitted build analysis to %r",
+                 thoth_config.api_url)
     if nowait:
         return response
 
@@ -651,15 +700,19 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
                 elif content["levelname"] == "INFO":
                     message = colored(content["message"], "green")
                 elif content["levelname"] == "WARNING":
-                    message = colored(content["message"], "yellow", attrs=["bold"])
+                    message = colored(
+                        content["message"], "yellow", attrs=["bold"])
                 elif content["levelname"] in ("ERROR", "CRITICAL"):
-                    message = colored(content["message"], "red", attrs=["bold"])
+                    message = colored(
+                        content["message"], "red", attrs=["bold"])
                 else:
                     message = content["message"]
 
-                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], message)
+                result += "{} {}: {}\n".format(
+                    content["asctime"], content["levelname"], message)
             else:
-                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], content["message"])
+                result += "{} {}: {}\n".format(
+                    content["asctime"], content["levelname"], content["message"])
         except Exception:
             # If the content parsed does not carry logger information or has not relevant
             # entries, log the original message.

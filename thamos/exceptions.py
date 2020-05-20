@@ -52,3 +52,7 @@ class NoRequirementsFormatError(ThamosException):
 
 class ConfigurationError(ThamosException):
     """An exception raised if there are issues with configuration file."""
+
+
+class TimeoutError(ThamosException):
+    """An exception raised if the API takes longer than timeout limit."""
