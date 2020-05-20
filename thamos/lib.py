@@ -315,10 +315,7 @@ def advise(
         )
 
     if runtime_environment is None:
-        runtime_environment = (
-            thoth_config.get_runtime_environment(
-                runtime_environment_name) or dict()
-        )
+        runtime_environment = (thoth_config.get_runtime_environment(runtime_environment_name) or dict())
 
     # We use the explicit one if provided at the end.
     if limit_latest_versions is None:
@@ -346,8 +343,7 @@ def advise(
         _LOGGER.debug("Library usage:%s", "\n" +
                       json.dumps(library_usage, indent=2) if library_usage else None)
 
-    stack = PythonStack(requirements=pipfile,
-                        requirements_lock=pipfile_lock or "")
+    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
 
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
@@ -450,13 +446,11 @@ def advise_here(
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
     if requirements_format == "pipenv":
-        project = Project.from_files(
-            without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
-        raise ValueError(
-            f"Unknown configuration option for requirements format: {requirements_format!r}")
+        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
 
     pipfile = project.pipfile.to_string()
     pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
@@ -514,10 +508,8 @@ def provenance_check(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(
-        api_instance.get_provenance_python_status, response.analysis_id)
-    _LOGGER.debug("Retrieving provenance check result for %r",
-                  response.analysis_id)
+    _wait_for_analysis(api_instance.get_provenance_python_status, response.analysis_id)
+    _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_provenance_python, response.analysis_id
     )
@@ -600,8 +592,7 @@ def image_analysis(
     _LOGGER.debug(
         "Retrieving image analysis result result for %r", response.analysis_id
     )
-    response = _retrieve_analysis_result(
-        api_instance.get_analyze, response.analysis_id)
+    response = _retrieve_analysis_result(api_instance.get_analyze, response.analysis_id)
     if not response:
         return None
 
@@ -655,8 +646,7 @@ def build_analysis(
             force=force,
         )
 
-    _LOGGER.info("Successfully submitted build analysis to %r",
-                 thoth_config.api_url)
+    _LOGGER.info("Successfully submitted build analysis to %r", thoth_config.api_url)
     if nowait:
         return response
 
@@ -701,19 +691,15 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
                 elif content["levelname"] == "INFO":
                     message = colored(content["message"], "green")
                 elif content["levelname"] == "WARNING":
-                    message = colored(
-                        content["message"], "yellow", attrs=["bold"])
+                    message = colored(content["message"], "yellow", attrs=["bold"])
                 elif content["levelname"] in ("ERROR", "CRITICAL"):
-                    message = colored(
-                        content["message"], "red", attrs=["bold"])
+                    message = colored(content["message"], "red", attrs=["bold"])
                 else:
                     message = content["message"]
 
-                result += "{} {}: {}\n".format(
-                    content["asctime"], content["levelname"], message)
+                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], message)
             else:
-                result += "{} {}: {}\n".format(
-                    content["asctime"], content["levelname"], content["message"])
+                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], content["message"])
         except Exception:
             # If the content parsed does not carry logger information or has not relevant
             # entries, log the original message.
