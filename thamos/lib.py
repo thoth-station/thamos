@@ -96,7 +96,7 @@ def with_api_client(func: typing.Callable):
 
 def timeout(seconds=900, error_message="Thamos timeout encountered."):
     """Timeout decorater ensures thamos doesn't wait forever."""
-    ## Only signal only works with UNIX systems.
+    # Only signal only works with UNIX systems.
     def decorator(func):
         def _handle_timeout(signum, frame):
             raise TimeoutError(error_message)
