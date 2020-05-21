@@ -21,6 +21,7 @@ import os
 import logging
 import typing
 import platform
+import time
 from time import sleep
 from time import monotonic
 from contextlib import contextmanager
@@ -29,7 +30,6 @@ from functools import wraps
 import pprint
 import json
 import urllib3
-import signal
 
 from termcolor import colored
 from yaspin import yaspin
@@ -93,29 +93,6 @@ def with_api_client(func: typing.Callable):
     return wrapper
 
 
-def timeout(seconds=900, error_message="Thamos timeout encountered."):
-    """Timeout decorater ensures thamos doesn't wait forever."""
-    # Only signal only works with UNIX systems.
-    def decorator(func):
-        def _handle_timeout(signum, frame):
-            raise TimeoutError(error_message)
-
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            signal.signal(signal.SIGALRM, _handle_timeout)
-            signal.alarm(seconds)
-            try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-            return result
-
-        return wrapper
-
-    return decorator
-
-
-@timeout(_THAMOS_TIMEOUT)
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
     @contextmanager
@@ -137,13 +114,13 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     retries = 0
     with spinner():
         sleep(2)  # TODO: remove once we fully run on Argo workflows
+        start_time = time.monotonic()
         while True:
+            if _THAMOS_TIMEOUT and time.monotonic() - start_time > _THAMOS_TIMEOUT:
+                _LOGGER.info(time.monotonic() - start_time)
+                raise TimeoutError(f"Thoth backend did not respond in time, timeout set to {_THAMOS_TIMEOUT}")
             try:
                 response = status_func(analysis_id)
-            except TimeoutError as exc:
-                _LOGGER.error(
-                    "Failed to obtain status from Thoth without timeout limit: %s", str(exc))
-                raise
             except Exception as exc:
                 if retries >= _RETRY_ON_ERROR_COUNT:
                     raise
