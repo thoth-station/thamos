@@ -21,7 +21,6 @@ import os
 import logging
 import typing
 import platform
-import time
 from time import sleep
 from time import monotonic
 from contextlib import contextmanager
@@ -114,10 +113,9 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     retries = 0
     with spinner():
         sleep(2)  # TODO: remove once we fully run on Argo workflows
-        start_time = time.monotonic()
+        start_time = monotonic()
         while True:
-            if _THAMOS_TIMEOUT and time.monotonic() - start_time > _THAMOS_TIMEOUT:
-                _LOGGER.info(time.monotonic() - start_time)
+            if _THAMOS_TIMEOUT and monotonic() - start_time > _THAMOS_TIMEOUT:
                 raise TimeoutError(f"Thoth backend did not respond in time, timeout set to {_THAMOS_TIMEOUT}")
             try:
                 response = status_func(analysis_id)
