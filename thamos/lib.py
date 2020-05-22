@@ -50,6 +50,7 @@ from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
 from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
+from .exceptions import TimeoutError
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -112,7 +113,10 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     retries = 0
     with spinner():
         sleep(2)  # TODO: remove once we fully run on Argo workflows
+        start_time = monotonic()
         while True:
+            if _THAMOS_TIMEOUT and monotonic() - start_time > _THAMOS_TIMEOUT:
+                raise TimeoutError(f"Thoth backend did not respond in time, timeout set to {_THAMOS_TIMEOUT}")
             try:
                 response = status_func(analysis_id)
             except Exception as exc:
