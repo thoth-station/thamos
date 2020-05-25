@@ -18,5 +18,5 @@
 """A CLI tool and library for interacting with Thoth."""
 
 __name__ = "thamos"
-__version__ = "0.10.1"
+__version__ = "0.10.2"
 __author__ = "Fridolin Pokorny <fridolin.pokorny@gmail.com>"

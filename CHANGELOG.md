@@ -1465,3 +1465,23 @@
 * :pushpin: Automatic update of dependency toml from 0.10.0 to 0.10.1
 * :pushpin: Automatic update of dependency yaspin from 0.16.0 to 0.17.0
 * :pushpin: Automatic update of dependency pytest from 5.4.1 to 5.4.2
+
+## Release 0.10.2 (2020-05-25T17:00:45)
+* Add missing docstring
+* adjust check
+* Check for S2I
+* Use correct enums
+* Introduce source_type flag
+* :pushpin: Automatic update of dependency pytest-cov from 2.8.1 to 2.9.0
+* :pushpin: Automatic update of dependency six from 1.14.0 to 1.15.0
+* Removed unncessary import
+* Removed alarm decorator
+* Revereted formatting changes
+* Revereted formatting changes
+* Revereted formatting changes
+* wrap moved up
+* wrap moved up
+* Coala fix
+* Added timeout decorater
+* Added default timeout to be 15mins
+* Added env variable to readme
