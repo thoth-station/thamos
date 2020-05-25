@@ -33,6 +33,7 @@ import click
 from termcolor import colored
 import daiquiri
 from thoth.python import Project
+from thoth.common import ThothAdviserIntegrationEnum
 from thamos.exceptions import NoProjectDirError
 from thamos.config import config as configuration
 from thamos.lib import advise as thoth_advise
@@ -381,6 +382,7 @@ def advise(
             debug=debug,
             nowait=no_wait,
             force=force,
+            source_type=ThothAdviserIntegrationEnum.CLI,
             limit_latest_versions=limit_latest_versions,
             no_static_analysis=no_static_analysis,
             dev=dev,
