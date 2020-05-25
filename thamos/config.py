@@ -81,6 +81,7 @@ class _Configuration:
 
     @property
     def requirements_format(self) -> str:
+        """Check requirements_format in configuration."""
         requirements_format = self.content.get("requirements_format")
         if not requirements_format:
             raise NoRequirementsFormatError(
