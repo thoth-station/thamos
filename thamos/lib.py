@@ -60,7 +60,7 @@ LAST_ANALYSIS_ID_FILE = ".thoth_last_analysis_id"
 _LOGGER = logging.getLogger(__name__)
 _RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
 _RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
-_THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 900))
+_THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
 
 
 def with_api_client(func: typing.Callable):
