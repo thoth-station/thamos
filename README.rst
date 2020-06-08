@@ -137,6 +137,80 @@ provided by `pip-tools <https://pypi.org/project/pip-tools/>`__ (actually same a
 * ``requirements_format: pipenv`` for `Pipenv <https://pipenv.kennethreitz.org/en/latest/>`__ compatible output
 * ``requirements_format: pip`` or ``requirements_format: pip-tools`` for `pip <https://pip.pypa.io/en/stable/user_guide/>`__ or `pip-tools <https://pypi.org/project/pip-tools/>`__ compatible output
 
+Support for multiple runtime environments
+=========================================
+
+Thoth performs recommendations based on your hardware and software environment,
+so called runtime environments. You can specify more than just one runtime
+environment that should be targetted during recommendations. This might be
+suitable if you would like to tweak some runtime environment specific
+configuration options. An example could be a deployment of a machine learning
+model to the cluster that uses CUDA, but you do not run CUDA locally (fast
+iterative development locally, subsequently training a model in the cluster on
+a large dataset). In such cases, you can specify two configuration entries in
+``.thoth.yaml`` file:
+
+.. code-block:: yaml
+
+  host: {THOTH_SERVICE_HOST}
+  tls_verify: true
+  requirements_format: pipenv
+
+  runtime_environments:
+    - name: 'cuda'  # <<<
+      operating_system:
+        name: fedora
+        version: '32'
+      hardware:
+        cpu_family: 6
+        cpu_model: 94
+      python_version: '3.8'
+      cuda_version: '10.1'  # <<<
+      recommendation_type: stable
+      platform: 'linux-x86_64'
+
+    - name: 'no_cuda'  # <<<
+      operating_system:
+        name: fedora
+        version: '32'
+      hardware:
+        cpu_family: 6
+        cpu_model: 94
+      python_version: '3.8'
+      cuda_version: null  # <<<
+      recommendation_type: stable
+      platform: 'linux-x86_64'
+
+The two runtime environments stated in the ``.thoth.yaml`` differ in
+``cuda_version`` configuration and their names.
+
+To trigger advises for runtime environment named ``cuda``, issue:
+
+.. code-block:: console
+
+  thamos advise --runtime-environment cuda
+
+To target the latter runtime environment named ``no_coda``, you can issue:
+
+.. code-block:: console
+
+  thamos advise --runtime-environment no_cuda
+
+This option can be also supplied via environment variable using
+``THAMOS_RUNTIME_ENVIRONMENT=no_cuda``.
+
+If the runtime environment is not provided explictly, Thamos will take the
+first runtime environment entry stated in the ``runtime_environment`` listing.
+For the example showed above it will default to ``cuda`` environment:
+
+.. code-block:: console
+
+  # defaults to the first one - "cuda"
+  thamos advise
+
+Multiple runtime environments can be used in conjunction with the automatically
+expanded configuration options and configuration file templating naturally.
+
 Using Thoth and thamos in OpenShift's s2i
 =========================================
 
