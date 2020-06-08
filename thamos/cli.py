@@ -338,6 +338,7 @@ def _print_version(ctx, json_output: bool = False):
     type=str,
     default=None,
     metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
     help="Specify explicitly runtime environment to get recommendations for; "
     "defaults to the first entry in the configuration file.",
 )
