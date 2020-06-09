@@ -1485,3 +1485,10 @@
 * Added timeout decorater
 * Added default timeout to be 15mins
 * Added env variable to readme
+
+## Release 0.10.3 (2020-06-09T23:26:20)
+* Regenerated swagger to fix thamos error
+* Document runtime environments in the config file
+* :pushpin: Automatic update of dependency certifi from 2020.4.5.1 to 2020.4.5.2
+* :pushpin: Automatic update of dependency pytest from 5.4.2 to 5.4.3
+* Increase timeout
