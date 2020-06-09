@@ -414,7 +414,7 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool is_s2i: A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build. 
+        :param str source_type: A flag marking what Thoth integration is requesting adviser:   - CLI: Thamos CLI.   - S2I: OpenShift's S2I (Source-to-Image) build.   - GITHUB_APP: Qeb-Hwt GitHub App.   - KEBECHET: Kebechet Bot.   - JUPYTER_NOTEBOOK: Jupyter Notebook (nb-requirements). 
         :param bool dev: Consider or do not consider development dependencies when resolving stacks. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
         :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
@@ -448,7 +448,7 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool is_s2i: A flag marking the given request coming from an OpenShift's S2I (Source-to-Image) build. 
+        :param str source_type: A flag marking what Thoth integration is requesting adviser:   - CLI: Thamos CLI.   - S2I: OpenShift's S2I (Source-to-Image) build.   - GITHUB_APP: Qeb-Hwt GitHub App.   - KEBECHET: Kebechet Bot.   - JUPYTER_NOTEBOOK: Jupyter Notebook (nb-requirements). 
         :param bool dev: Consider or do not consider development dependencies when resolving stacks. 
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it. 
         :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
@@ -462,7 +462,7 @@ class AdviseApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'is_s2i', 'dev', 'debug', 'limit_latest_versions', 'force', 'github_event_type', 'github_check_run_id', 'github_installation_id', 'github_base_repo_url']  # noqa: E501
+        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'source_type', 'dev', 'debug', 'limit_latest_versions', 'force', 'github_event_type', 'github_check_run_id', 'github_installation_id', 'github_base_repo_url']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -499,8 +499,8 @@ class AdviseApi(object):
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'origin' in params:
             query_params.append(('origin', params['origin']))  # noqa: E501
-        if 'is_s2i' in params:
-            query_params.append(('is_s2i', params['is_s2i']))  # noqa: E501
+        if 'source_type' in params:
+            query_params.append(('source_type', params['source_type']))  # noqa: E501
         if 'dev' in params:
             query_params.append(('dev', params['dev']))  # noqa: E501
         if 'debug' in params:
