@@ -335,7 +335,7 @@ def advise(
         "recommendation_type": recommendation_type,
         "debug": debug,
         "force": force,
-        "source_type": source_type.name,
+        "source_type": source_type.name.lower() if source_type is not None else None,
         "origin": _get_origin(),
         "dev": dev,
     }
@@ -440,7 +440,7 @@ def advise_here(
         count=count,
         debug=debug,
         origin=origin,
-        source_type=source_type.name,
+        source_type=source_type,
         github_event_type=github_event_type,
         github_check_run_id=github_check_run_id,
         github_installation_id=github_installation_id,
