@@ -19,6 +19,7 @@ requests = "*"
 termcolor = "*"
 invectio = "*"
 thoth-python = ">=0.9.0"
+thoth-common = "*"
 
 [dev-packages]
 toml = "*"
