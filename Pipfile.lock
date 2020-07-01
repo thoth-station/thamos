@@ -493,11 +493,11 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:7e4a97fa087f46616c2adb22268c5d2cf9fece990f96e91ab6700de7fd803c21",
-                "sha256:888f4d6f82d2a42f8c78a1c69c2210c02e8889445bdf5d803be0137ec9a471ea"
+                "sha256:2550322805a7e3b91ae3d3088946347b561124cd436f9f4a73e3bca14be4c5d0",
+                "sha256:f87326fd34a94ebe24a99f5eece4e03f48e40145d88a2214b5fa36e941a161b0"
             ],
             "index": "pypi",
-            "version": "==0.13.13"
+            "version": "==0.14.0"
         },
         "thoth-python": {
             "hashes": [
@@ -862,10 +862,10 @@
         },
         "joblib": {
             "hashes": [
-                "sha256:61e49189c84b3c5d99a969d314853f4d1d263316cc694bec17548ebaa9c47b6e",
-                "sha256:6825784ffda353cc8a1be573118085789e5b5d29401856b35b756645ab5aecb5"
+                "sha256:8f52bf24c64b608bf0b2563e0e47d6fcf516abc8cfafe10cfd98ad66d94f92d6",
+                "sha256:d348c5d4ae31496b2aa060d6d9b787864dd204f9480baaa52d18850cb43e9f49"
             ],
-            "version": "==0.15.1"
+            "version": "==0.16.0"
         },
         "jsonschema": {
             "hashes": [
