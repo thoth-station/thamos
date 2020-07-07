@@ -82,13 +82,8 @@ class _Configuration:
     @property
     def requirements_format(self) -> str:
         """Check requirements_format in configuration."""
-        requirements_format = self.content.get("requirements_format")
-        if not requirements_format:
-            raise NoRequirementsFormatError(
-                "No requirements format configuration stated in the configuration file "
-                "under 'requirements_format' configuration entry"
-            )
-
+        requirements_format = self.content.get("requirements_format") or "pipenv"
+        
         if not isinstance(requirements_format, str):
             raise ConfigurationError("The data type for requirements_format should be str")
 
