@@ -20,6 +20,7 @@
 import logging
 import os
 import typing
+from urllib.parse import urljoin
 
 import click
 import requests
@@ -245,7 +246,7 @@ class _Configuration:
 
     def api_discovery(self, host: str = None) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
-        api_url = f"https://{host}/api/v1"
+        api_url = urljoin("https://" + host, "api/v1")
         self.tls_verify = (
             self.tls_verify
             if self.tls_verify is not None
