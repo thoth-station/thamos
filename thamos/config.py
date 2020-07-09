@@ -38,7 +38,6 @@ from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
 from .exceptions import ServiceUnavailable
 from .exceptions import NoRequirementsFormatError
-from urllib.parse import urljoin
 
 _LOGGER = logging.getLogger(__name__)
 _THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
@@ -246,7 +245,7 @@ class _Configuration:
 
     def api_discovery(self, host: str = None) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
-        api_url = urljoin("https://" + host, "/api/v1")
+        api_url = f"https://{host}/api/v1"
         self.tls_verify = (
             self.tls_verify
             if self.tls_verify is not None
