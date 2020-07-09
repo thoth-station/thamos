@@ -2347,3 +2347,25 @@
 * added the missing coala config
 * added github and zuul configs
 * Initial implementation
+
+## Release 0.10.6 (2020-07-09T10:20:39)
+* Use urljoin not relative to base (#471)
+* Do not use urljoin logic for host (#470)
+* Default to pipenv (#468)
+* :pushpin: Automatic update of dependency thoth-common from 0.14.0 to 0.14.1 (#467)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.13 to 0.14.0 (#465)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.12 to 0.13.13 (#463)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.12 to 0.13.13 (#462)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.12 to 0.13.13 (#461)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.12 to 0.13.13 (#460)
+* :pushpin: Automatic update of dependency certifi from 2020.4.5.2 to 2020.6.20 (#459)
+* :pushpin: Automatic update of dependency certifi from 2020.4.5.2 to 2020.6.20 (#458)
+* :pushpin: Automatic update of dependency certifi from 2020.4.5.2 to 2020.6.20 (#457)
+* :pushpin: Automatic update of dependency certifi from 2020.4.5.2 to 2020.6.20 (#456)
+* Create OWNERS
+* :pushpin: Automatic update of dependency thoth-common from 0.13.11 to 0.13.12
+* :pushpin: Automatic update of dependency thoth-common from 0.13.11 to 0.13.12
+* :pushpin: Automatic update of dependency thoth-python from 0.9.2 to 0.10.0
+* :pushpin: Automatic update of dependency requests from 2.23.0 to 2.24.0
+* :pushpin: Automatic update of dependency pytest-timeout from 1.3.4 to 1.4.1
+* :pushpin: Automatic update of dependency pytest-cov from 2.9.0 to 2.10.0
