@@ -26,6 +26,7 @@ import json
 from functools import wraps
 from typing import Tuple
 from typing import Optional
+from typing import Set
 
 import yaml
 from texttable import Texttable
@@ -186,8 +187,8 @@ def _print_report(report: dict, json_output: bool = False):
     table = Texttable(max_width=get_terminal_size().columns)
     table.set_deco(Texttable.HEADER | Texttable.VLINES)
 
-    header = set()
-    to_remove = set()
+    header = set()  # type: Set[str]
+    to_remove = set()  # type: Set[str]
     for item in report:
         header = header.union(set(item.keys()))
         to_remove = to_remove.union(
@@ -197,13 +198,13 @@ def _print_report(report: dict, json_output: bool = False):
     # Remove fields that can be an array - these are addition details that are supressed from the table output.
     header = header - to_remove
 
-    header = list(sorted(header))
-    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, "l") for column in header])
-    table.header([item[0].upper() + item[1:].replace("_", " ") for item in header])
+    header_list = list(sorted(header))
+    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, "l") for column in header_list])
+    table.header([item[0].upper() + item[1:].replace("_", " ") for item in header_list])
 
     for item in report:
         row = []
-        for column in header:
+        for column in header_list:
             entry = item.get(column, "-")
 
             if not bool(int(os.getenv("THAMOS_NO_EMOJI", 0))) and isinstance(
@@ -443,7 +444,7 @@ def advise(
                 limit_latest_versions,
                 dev,
             )
-            _write_files(pipfile, pipfile_lock, configuration.requirements_format)
+            _write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
         else:
             click.echo(json.dumps(result, indent=2))
 
@@ -503,9 +504,10 @@ def provenance_check(
             sys.exit(0)
 
         report, error = results
-        _print_report(report, json_output=json_output) if report else _LOGGER.info(
-            "Provenance check passed!"
-        )
+        if report:
+            _print_report(report, json_output=json_output)
+        else:
+            _LOGGER.info("Provenance check passed!")
 
         if error:
             sys.exit(5)

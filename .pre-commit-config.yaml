@@ -40,7 +40,7 @@ repos:
     rev: v0.770
     hooks:
       - id: mypy
-        exclude: '^(docs|tasks|tests)|setup\.py|examples/*'
+        exclude: ^(docs|tasks|tests)|setup\.py|examples/*
         args: [--ignore-missing-imports]
         additional_dependencies: [attrs~=19.3]
 

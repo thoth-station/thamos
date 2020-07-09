@@ -167,7 +167,7 @@ class _Configuration:
             platform=platform,
             requirements_format=requirements_format,
             **cpu_info,
-            **(os.environ if expand_env else {}),
+            **(os.environ.__dict__ if expand_env else {}),
         )
 
         if not nowrite:
@@ -178,6 +178,7 @@ class _Configuration:
 
             with open(self.CONFIG_NAME, "w") as config_file:
                 config_file.write(default_config)
+            return None
         else:
             return yaml.safe_load(default_config)
 
@@ -253,7 +254,7 @@ class _Configuration:
 
         return to_return
 
-    def api_discovery(self, host: str = None) -> str:
+    def api_discovery(self, host: str) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
         api_url = urljoin("https://" + host, "api/v1")
         self.tls_verify = (

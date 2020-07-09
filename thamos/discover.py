@@ -23,6 +23,8 @@ import logging
 import typing
 import sysconfig
 
+from typing import Dict, Union
+
 import distro
 import click
 from thoth.analyzer import run_command
@@ -77,9 +79,13 @@ def discover_python_version() -> str:
     return f"{sys.version_info.major}.{sys.version_info.minor}"
 
 
-def discover_cpu() -> dict:
+def discover_cpu() -> Dict[str, Union[str, int, None]]:
     """Discover CPU model, model name and family."""
-    result = {"cpu_family": None, "cpu_model": None, "cpu_model_name": None}
+    result = {
+        "cpu_family": None,
+        "cpu_model": None,
+        "cpu_model_name": None,
+    }  # type: Dict[str, Union[str, int, None]]
 
     try:
         with open(_PROC_CPU_INFO, "r") as cpu_info_file:

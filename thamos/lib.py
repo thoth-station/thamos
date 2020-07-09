@@ -49,9 +49,12 @@ from .swagger_client import AdviseInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
+from .swagger_client.models import AnalysisResultResponse
 from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
 from .exceptions import TimeoutError
+
+from typing import Callable, Any, Union, Tuple, Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -94,7 +97,7 @@ def with_api_client(func: typing.Callable):
     return wrapper
 
 
-def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
+def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
     # noqa
     @contextmanager
@@ -105,7 +108,7 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
         yaspin,
         Spinners.clock,
         text=f"Waiting for response from Thoth (analysis: {analysis_id})...",
-    )
+    )  # type: Union[Callable[..., Any], partial[Any]]
     if _LOGGER.getEffectiveLevel() == logging.DEBUG or bool(
         int(os.getenv("THAMOS_NO_PROGRESSBAR", 1))
     ):
@@ -180,8 +183,8 @@ def _get_last_analysis_id() -> str:
 
 
 def _retrieve_analysis_result(
-    retrieve_func: callable, analysis_id: str
-) -> typing.Optional[dict]:
+    retrieve_func: Callable[..., Any], analysis_id: str
+) -> Any:
     """Retrieve analysis result, raise error if analysis failed."""
     retries = 0
     while True:
@@ -225,7 +228,7 @@ def _get_static_analysis() -> typing.Optional[dict]:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
         return None
 
-    report = {}
+    report = {}  # type: Dict[Any, Any]
     for file_record in library_usage["report"].values():
         for library, usage in file_record.items():
             # We could filter out some of the libraries which were used.
@@ -307,7 +310,7 @@ def advise(
             runtime_environment.pop("limit_latest_versions", None),
             thoth_config.content.get("limit_latest_versions", None),
             None,
-        )
+        )  # type: Tuple[Any, Any, Any]
         try:
             limit_latest_versions = next(filter(bool, priority))
         except StopIteration:
@@ -337,7 +340,7 @@ def advise(
         # Override latest versions limit specified explicitly in the runtime environment entry.
         runtime_environment.pop("limit_latest_versions", None)
 
-        runtime_environment = RuntimeEnvironment(**runtime_environment)
+        runtime_environment = RuntimeEnvironment(**runtime_environment)  # type: ignore
 
     advise_input = AdviseInput(
         stack, runtime_environment=runtime_environment, library_usage=library_usage
@@ -357,7 +360,7 @@ def advise(
         "source_type": source_type.name.lower() if source_type is not None else None,
         "origin": _get_origin(),
         "dev": dev,
-    }
+    }  # type: Dict[str, Any]
 
     if limit is not None:
         parameters["limit"] = limit
@@ -551,7 +554,7 @@ def image_analysis(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
-) -> typing.Union[typing.Dict, str]:
+) -> Union[Dict, str, None]:
     """Submit an image for analysis to Thoth."""
     if not image:
         raise ValueError("No image provided")
@@ -657,14 +660,16 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
         analysis_id = _get_last_analysis_id()
 
     if analysis_id.startswith("package-extract-"):
-        api_instance = ImageAnalysisApi(api_client)
-        method = api_instance.get_analyze_log
+        api_instance = ImageAnalysisApi(
+            api_client
+        )  # type: Union[ImageAnalysisApi, ProvenanceApi, AdviseApi]
+        method = api_instance.get_analyze_log  # type: ignore
     elif analysis_id.startswith("provenance-checker-"):
         api_instance = ProvenanceApi(api_client)
-        method = api_instance.get_provenance_python_log
+        method = api_instance.get_provenance_python_log  # type: ignore
     elif analysis_id.startswith("adviser-"):
         api_instance = AdviseApi(api_client)
-        method = api_instance.get_advise_python_log
+        method = api_instance.get_advise_python_log  # type: ignore
     else:
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
@@ -717,14 +722,16 @@ def get_status(api_client: ApiClient, analysis_id: str = None):
         analysis_id = _get_last_analysis_id()
 
     if analysis_id.startswith("package-extract-"):
-        api_instance = ImageAnalysisApi(api_client)
-        method = api_instance.get_analyze_status
+        api_instance = ImageAnalysisApi(
+            api_client
+        )  # type: Union[ImageAnalysisApi, ProvenanceApi, AdviseApi]
+        method = api_instance.get_analyze_status  # type: ignore
     elif analysis_id.startswith("provenance-checker-"):
         api_instance = ProvenanceApi(api_client)
-        method = api_instance.get_provenance_python_status
+        method = api_instance.get_provenance_python_status  # type: ignore
     elif analysis_id.startswith("adviser-"):
         api_instance = AdviseApi(api_client)
-        method = api_instance.get_advise_python_status
+        method = api_instance.get_advise_python_status  # type: ignore
     else:
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
@@ -737,18 +744,22 @@ def get_status(api_client: ApiClient, analysis_id: str = None):
 def get_analysis_results(api_client: ApiClient, analysis_id: str):
     """Get the analysis result from a given id."""
     if analysis_id.startswith("package-extract-"):
-        api_instance = ImageAnalysisApi(api_client)
-        method = api_instance.get_analyze
-        response = _retrieve_analysis_result(method, analysis_id)
+        api_instance = ImageAnalysisApi(
+            api_client
+        )  # type: Union[ImageAnalysisApi, ProvenanceApi, AdviseApi]
+        method = api_instance.get_analyze  # type: ignore
+        response = _retrieve_analysis_result(
+            method, analysis_id
+        )  # type: AnalysisResultResponse
         return response.result
     elif analysis_id.startswith("provenance-checker-"):
         api_instance = ProvenanceApi(api_client)
-        method = api_instance.get_provenance_python
+        method = api_instance.get_provenance_python  # type: ignore
         response = _retrieve_analysis_result(method, analysis_id)
         return response.result["report"], response.result["error"]
     elif analysis_id.startswith("adviser-"):
         api_instance = AdviseApi(api_client)
-        method = api_instance.get_advise_python
+        method = api_instance.get_advise_python  # type: ignore
         response = _retrieve_analysis_result(method, analysis_id)
         return response.result, response.result["error"]
     else:
