@@ -65,6 +65,7 @@ _THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
 
 def with_api_client(func: typing.Callable):
     """Load configuration entries from Thoth configuration file."""
+    # noqa
     @wraps(func)
     def wrapper(*args, **kwargs):
         config = Configuration()
@@ -95,6 +96,7 @@ def with_api_client(func: typing.Callable):
 
 def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
     """Wait for ongoing analysis to finish."""
+    # noqa
     @contextmanager
     def _no_spinner():
         yield
@@ -117,7 +119,9 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
         start_time = monotonic()
         while True:
             if _THAMOS_TIMEOUT and monotonic() - start_time > _THAMOS_TIMEOUT:
-                raise TimeoutError(f"Thoth backend did not respond in time, timeout set to {_THAMOS_TIMEOUT}")
+                raise TimeoutError(
+                    f"Thoth backend did not respond in time, timeout set to {_THAMOS_TIMEOUT}"
+                )
             try:
                 response = status_func(analysis_id)
             except Exception as exc:
@@ -126,7 +130,11 @@ def _wait_for_analysis(status_func: callable, analysis_id: str) -> None:
 
                 retries += 1
                 _LOGGER.error("Failed to obtain status from Thoth: %s", str(exc))
-                _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+                _LOGGER.warning(
+                    "Retrying in a few moments... (attempt %d/%d)",
+                    retries,
+                    _RETRY_ON_ERROR_COUNT,
+                )
                 sleep(_RETRY_ON_ERROR_SLEEP)
                 continue
 
@@ -197,7 +205,11 @@ def _retrieve_analysis_result(
                 return None
 
             retries += 1
-            _LOGGER.warning("Retrying in a few moments... (attempt %d/%d)", retries, _RETRY_ON_ERROR_COUNT)
+            _LOGGER.warning(
+                "Retrying in a few moments... (attempt %d/%d)",
+                retries,
+                _RETRY_ON_ERROR_COUNT,
+            )
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
@@ -206,7 +218,9 @@ def _get_static_analysis() -> typing.Optional[dict]:
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
     try:
-        library_usage = gather_library_usage(".", ignore_errors=True, without_standard_imports=True)
+        library_usage = gather_library_usage(
+            ".", ignore_errors=True, without_standard_imports=True
+        )
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
         return None
@@ -229,14 +243,16 @@ def _get_static_analysis() -> typing.Optional[dict]:
 def _is_s2i() -> bool:
     """Check if we run in an OpenShift s2i build."""
     # This environment variable is used by OpenShift's s2i build process.
-    return "STI_SCRIPTS_PATH" is os.environ
+    return "STI_SCRIPTS_PATH" == os.environ
 
 
 def _get_origin() -> typing.Optional[str]:
     """Check git origin configured."""
     result = run_command("git config --get remote.origin.url", raise_on_error=False)
     if result.return_code != 0:
-        _LOGGER.debug("Failed to obtain information about git origin: %s", result.stderr)
+        _LOGGER.debug(
+            "Failed to obtain information about git origin: %s", result.stderr
+        )
         return None
 
     origin = result.stdout.strip()
@@ -308,7 +324,10 @@ def advise(
     library_usage = None
     if not no_static_analysis:
         library_usage = _get_static_analysis()
-        _LOGGER.debug("Library usage:%s", "\n" + json.dumps(library_usage, indent=2) if library_usage else None)
+        _LOGGER.debug(
+            "Library usage:%s",
+            "\n" + json.dumps(library_usage, indent=2) if library_usage else None,
+        )
 
     stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock or "")
 
@@ -416,11 +435,15 @@ def advise_here(
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
     if requirements_format == "pipenv":
-        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+        project = Project.from_files(
+            without_pipfile_lock=not os.path.exists("Pipfile.lock")
+        )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
-        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+        raise ValueError(
+            f"Unknown configuration option for requirements format: {requirements_format!r}"
+        )
 
     pipfile = project.pipfile.to_string()
     pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
@@ -668,9 +691,13 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
                 else:
                     message = content["message"]
 
-                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], message)
+                result += "{} {}: {}\n".format(
+                    content["asctime"], content["levelname"], message
+                )
             else:
-                result += "{} {}: {}\n".format(content["asctime"], content["levelname"], content["message"])
+                result += "{} {}: {}\n".format(
+                    content["asctime"], content["levelname"], content["message"]
+                )
         except Exception:
             # If the content parsed does not carry logger information or has not relevant
             # entries, log the original message.

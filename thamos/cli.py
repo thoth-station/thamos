@@ -67,6 +67,7 @@ _TABLE_COLS_ALIGN = {
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
+    # noqa
     @wraps(func)
     def wrapper(ctx, *args, **kwargs):
         try:
@@ -84,15 +85,24 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
 def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
     """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
     if requirements_format == "pipenv":
-        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+        project = Project.from_files(
+            without_pipfile_lock=not os.path.exists("Pipfile.lock")
+        )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
-        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
-    return project.pipfile.to_string(), project.pipfile_lock.to_string() if project.pipfile_lock else None
+        raise ValueError(
+            f"Unknown configuration option for requirements format: {requirements_format!r}"
+        )
+    return (
+        project.pipfile.to_string(),
+        project.pipfile_lock.to_string() if project.pipfile_lock else None,
+    )
 
 
-def _write_files(requirements: str, requirements_lock: str, requirements_format: str) -> None:
+def _write_files(
+    requirements: str, requirements_lock: str, requirements_format: str
+) -> None:
     """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
     project = Project.from_dict(requirements, requirements_lock)
     if requirements_format == "pipenv":
@@ -372,7 +382,9 @@ def advise(
 ):
     """Ask Thoth for recommendations on application stack."""
     with workdir():
-        pipfile, pipfile_lock = _load_files(requirements_format=configuration.requirements_format)
+        pipfile, pipfile_lock = _load_files(
+            requirements_format=configuration.requirements_format
+        )
 
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise(
@@ -410,7 +422,10 @@ def advise(
             if result["report"] and result["report"]["products"]:
                 if result["report"]["products"][0]["justification"]:
                     _print_header("Recommended stack report")
-                    _print_report(result["report"]["products"][0]["justification"], json_output=json_output)
+                    _print_report(
+                        result["report"]["products"][0]["justification"],
+                        json_output=json_output,
+                    )
                 else:
                     click.echo("No justification was made for the recommended stack")
 
@@ -419,7 +434,9 @@ def advise(
                 _print_report(result["report"]["stack_info"], json_output=json_output)
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
-            pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
+            pipfile_lock = result["report"]["products"][0]["project"][
+                "requirements_locked"
+            ]
             _write_configuration(
                 result["report"]["products"][0]["advised_runtime_environment"],
                 recommendation_type,
@@ -465,7 +482,9 @@ def provenance_check(
     """Check provenance of installed packages."""
     with workdir():
         if configuration.requirements_format != "pipenv":
-            raise ValueError("Provenance checks are available only for requirements managed by Pipenv")
+            raise ValueError(
+                "Provenance checks are available only for requirements managed by Pipenv"
+            )
 
         pipfile, pipfile_lock = _load_files("pipenv")
         if not pipfile_lock:

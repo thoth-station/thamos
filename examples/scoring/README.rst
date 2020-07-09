@@ -18,7 +18,7 @@ commands:
   cd thamos/examples/scoring/
 
   # Browse the content of the lockdown example, see relevant files;
-  # see .thoth.yaml configuration file, Pipfile, Pipfile.lock 
+  # see .thoth.yaml configuration file, Pipfile, Pipfile.lock
   # and hello.py present:
   ls -a
   cat .thoth.yaml Pipfile Pipfile.lock hello.py
@@ -50,4 +50,3 @@ commands:
 
 
 **Note:** You need to be connected to Red Hat VPN as Thoth is currently hosted internally only.
-

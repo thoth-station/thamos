@@ -1,4 +1,25 @@
+include thamos-cli
 include requirements.txt
 include requirements-test.txt
 include thamos/data/defaultThoth.yaml
-
+include *.json
+include *.lock
+include *.md
+include *.sh
+include *.yaml
+include *.yml
+include LICENSE
+include OWNERS
+include Pipfile
+include examples/*/Pipfile
+recursive-include Documentation *.md
+recursive-include docs *.html
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include examples *.lock
+recursive-include examples *.py
+recursive-include examples *.rst
+recursive-include examples *.txt
+recursive-include examples *.yaml
+recursive-include tests *.json
+recursive-include tests *.py

@@ -21,9 +21,9 @@ commands:
   # Ask Thoth for advises, Thoth will respect .thoth.yaml configuration file
   # and your Pipfile and recommend you Pipfile.lock:
   sudo podman run --rm --tty --interactive \
-    --volume `pwd`:/opt/redhat/thoth/thamos/workdir:Z \ 
+    --volume `pwd`:/opt/redhat/thoth/thamos/workdir:Z \
     docker://quay.io/thoth-station/thamos:latest \
-    thamos advise 
+    thamos advise
 
   # Check pinned down software stack in Pipfile.lock (previously this file was
   # not present):
@@ -46,4 +46,3 @@ commands:
 
 
 **Note:** You need to be connected to Red Hat VPN as Thoth is currently hosted internally only.
-
