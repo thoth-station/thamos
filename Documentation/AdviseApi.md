@@ -39,7 +39,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Advise id returned on advise request. | 
+ **analysis_id** | **str**| Advise id returned on advise request. |
 
 ### Return type
 
@@ -85,7 +85,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of analysis for which log should be retrieved. | 
+ **analysis_id** | **str**| An id of analysis for which log should be retrieved. |
 
 ### Return type
 
@@ -131,7 +131,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested adviser run. | 
+ **analysis_id** | **str**| An id of requested adviser run. |
 
 ### Return type
 
@@ -236,20 +236,20 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. | 
+ **body** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. |
  **recommendation_type** | **str**| Recommendation type. | [default to stable]
- **count** | **int**| Number of software stacks that should be returned. | [optional] 
- **limit** | **int**| Limit number of software stacks scored. | [optional] 
- **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **source_type** | **str**| A flag marking what Thoth integration is requesting adviser:   - CLI: Thamos CLI.   - S2I: OpenShift&#x27;s S2I (Source-to-Image) build.   - GITHUB_APP: Qeb-Hwt GitHub App.   - KEBECHET: Kebechet Bot.   - JUPYTER_NOTEBOOK: Jupyter Notebook (nb-requirements).  | [optional] 
+ **count** | **int**| Number of software stacks that should be returned. | [optional]
+ **limit** | **int**| Limit number of software stacks scored. | [optional]
+ **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
+ **source_type** | **str**| A flag marking what Thoth integration is requesting adviser:   - CLI: Thamos CLI.   - S2I: OpenShift&#x27;s S2I (Source-to-Image) build.   - GITHUB_APP: Qeb-Hwt GitHub App.   - KEBECHET: Kebechet Bot.   - JUPYTER_NOTEBOOK: Jupyter Notebook (nb-requirements).  | [optional]
  **dev** | **bool**| Consider or do not consider development dependencies when resolving stacks.  | [optional] [default to false]
  **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
- **limit_latest_versions** | **int**| Limit number of packages considering only specific number of versions for each package. | [optional] 
+ **limit_latest_versions** | **int**| Limit number of packages considering only specific number of versions for each package. | [optional]
  **force** | **bool**| Do not use cached results, always run adviser.  | [optional] [default to false]
- **github_event_type** | **str**| GitHub&#x27;s event type. | [optional] 
- **github_check_run_id** | **int**| GitHub&#x27;s event id. | [optional] 
- **github_installation_id** | **int**| GitHub&#x27;s installation id. | [optional] 
- **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional] 
+ **github_event_type** | **str**| GitHub&#x27;s event type. | [optional]
+ **github_check_run_id** | **int**| GitHub&#x27;s event id. | [optional]
+ **github_installation_id** | **int**| GitHub&#x27;s installation id. | [optional]
+ **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional]
 
 ### Return type
 
@@ -265,4 +265,3 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

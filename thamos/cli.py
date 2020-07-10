@@ -26,6 +26,7 @@ import json
 from functools import wraps
 from typing import Tuple
 from typing import Optional
+from typing import Set
 
 import yaml
 from texttable import Texttable
@@ -67,6 +68,7 @@ _TABLE_COLS_ALIGN = {
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
+    # noqa
     @wraps(func)
     def wrapper(ctx, *args, **kwargs):
         try:
@@ -84,15 +86,24 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
 def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
     """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
     if requirements_format == "pipenv":
-        project = Project.from_files(without_pipfile_lock=not os.path.exists("Pipfile.lock"))
+        project = Project.from_files(
+            without_pipfile_lock=not os.path.exists("Pipfile.lock")
+        )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
-        raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
-    return project.pipfile.to_string(), project.pipfile_lock.to_string() if project.pipfile_lock else None
+        raise ValueError(
+            f"Unknown configuration option for requirements format: {requirements_format!r}"
+        )
+    return (
+        project.pipfile.to_string(),
+        project.pipfile_lock.to_string() if project.pipfile_lock else None,
+    )
 
 
-def _write_files(requirements: str, requirements_lock: str, requirements_format: str) -> None:
+def _write_files(
+    requirements: str, requirements_lock: str, requirements_format: str
+) -> None:
     """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
     project = Project.from_dict(requirements, requirements_lock)
     if requirements_format == "pipenv":
@@ -176,8 +187,8 @@ def _print_report(report: dict, json_output: bool = False):
     table = Texttable(max_width=get_terminal_size().columns)
     table.set_deco(Texttable.HEADER | Texttable.VLINES)
 
-    header = set()
-    to_remove = set()
+    header = set()  # type: Set[str]
+    to_remove = set()  # type: Set[str]
     for item in report:
         header = header.union(set(item.keys()))
         to_remove = to_remove.union(
@@ -187,13 +198,13 @@ def _print_report(report: dict, json_output: bool = False):
     # Remove fields that can be an array - these are addition details that are supressed from the table output.
     header = header - to_remove
 
-    header = list(sorted(header))
-    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, "l") for column in header])
-    table.header([item[0].upper() + item[1:].replace("_", " ") for item in header])
+    header_list = list(sorted(header))
+    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, "l") for column in header_list])
+    table.header([item[0].upper() + item[1:].replace("_", " ") for item in header_list])
 
     for item in report:
         row = []
-        for column in header:
+        for column in header_list:
             entry = item.get(column, "-")
 
             if not bool(int(os.getenv("THAMOS_NO_EMOJI", 0))) and isinstance(
@@ -372,7 +383,9 @@ def advise(
 ):
     """Ask Thoth for recommendations on application stack."""
     with workdir():
-        pipfile, pipfile_lock = _load_files(requirements_format=configuration.requirements_format)
+        pipfile, pipfile_lock = _load_files(
+            requirements_format=configuration.requirements_format
+        )
 
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise(
@@ -410,7 +423,10 @@ def advise(
             if result["report"] and result["report"]["products"]:
                 if result["report"]["products"][0]["justification"]:
                     _print_header("Recommended stack report")
-                    _print_report(result["report"]["products"][0]["justification"], json_output=json_output)
+                    _print_report(
+                        result["report"]["products"][0]["justification"],
+                        json_output=json_output,
+                    )
                 else:
                     click.echo("No justification was made for the recommended stack")
 
@@ -419,14 +435,16 @@ def advise(
                 _print_report(result["report"]["stack_info"], json_output=json_output)
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
-            pipfile_lock = result["report"]["products"][0]["project"]["requirements_locked"]
+            pipfile_lock = result["report"]["products"][0]["project"][
+                "requirements_locked"
+            ]
             _write_configuration(
                 result["report"]["products"][0]["advised_runtime_environment"],
                 recommendation_type,
                 limit_latest_versions,
                 dev,
             )
-            _write_files(pipfile, pipfile_lock, configuration.requirements_format)
+            _write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
         else:
             click.echo(json.dumps(result, indent=2))
 
@@ -465,7 +483,9 @@ def provenance_check(
     """Check provenance of installed packages."""
     with workdir():
         if configuration.requirements_format != "pipenv":
-            raise ValueError("Provenance checks are available only for requirements managed by Pipenv")
+            raise ValueError(
+                "Provenance checks are available only for requirements managed by Pipenv"
+            )
 
         pipfile, pipfile_lock = _load_files("pipenv")
         if not pipfile_lock:
@@ -484,9 +504,10 @@ def provenance_check(
             sys.exit(0)
 
         report, error = results
-        _print_report(report, json_output=json_output) if report else _LOGGER.info(
-            "Provenance check passed!"
-        )
+        if report:
+            _print_report(report, json_output=json_output)
+        else:
+            _LOGGER.info("Provenance check passed!")
 
         if error:
             sys.exit(5)

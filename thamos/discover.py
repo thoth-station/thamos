@@ -23,6 +23,8 @@ import logging
 import typing
 import sysconfig
 
+from typing import Dict, Union
+
 import distro
 import click
 from thoth.analyzer import run_command
@@ -57,7 +59,7 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
         )
         return None
 
-    cuda_version = version_info[1].strip()[len("release "):]
+    cuda_version = version_info[1].strip()[len("release ") :]
 
     if interactive:
         cuda_version = click.prompt("Please select CUDA version", default=cuda_version)
@@ -77,13 +79,13 @@ def discover_python_version() -> str:
     return f"{sys.version_info.major}.{sys.version_info.minor}"
 
 
-def discover_cpu() -> dict:
+def discover_cpu() -> Dict[str, Union[str, int, None]]:
     """Discover CPU model, model name and family."""
     result = {
         "cpu_family": None,
         "cpu_model": None,
-        "cpu_model_name": None
-    }
+        "cpu_model_name": None,
+    }  # type: Dict[str, Union[str, int, None]]
 
     try:
         with open(_PROC_CPU_INFO, "r") as cpu_info_file:
@@ -94,17 +96,29 @@ def discover_cpu() -> dict:
                 try:
                     result["cpu_model_name"] = line.split(":")[1].strip()
                 except Exception as exc:
-                    _LOGGER.warning("Failed to obtain CPU model name from %s: %s", str(exc), _PROC_CPU_INFO)
+                    _LOGGER.warning(
+                        "Failed to obtain CPU model name from %s: %s",
+                        str(exc),
+                        _PROC_CPU_INFO,
+                    )
             elif line.startswith("model\t") and result["cpu_model"] is None:
                 try:
                     result["cpu_model"] = int(line.split(":")[1])
                 except Exception as exc:
-                    _LOGGER.warning("Failed to obtain CPU model from %s: %s", str(exc), _PROC_CPU_INFO)
+                    _LOGGER.warning(
+                        "Failed to obtain CPU model from %s: %s",
+                        str(exc),
+                        _PROC_CPU_INFO,
+                    )
             elif line.startswith("cpu family") and result["cpu_family"] is None:
                 try:
                     result["cpu_family"] = int(line.split(":")[1])
                 except Exception as exc:
-                    _LOGGER.warning("Failed to obtain CPU family from %s: %s", str(exc), _PROC_CPU_INFO)
+                    _LOGGER.warning(
+                        "Failed to obtain CPU family from %s: %s",
+                        str(exc),
+                        _PROC_CPU_INFO,
+                    )
 
     except Exception as exc:
         _LOGGER.exception("Failed to obtain CPU specific information: %s", str(exc))
@@ -113,7 +127,9 @@ def discover_cpu() -> dict:
         # Assign a text representation - unknown for config file.
         result["cpu_model_name"] = "Unknown"
 
-    _LOGGER.info("Detected CPU: %s", ", ".join((f"{k}: {v}" for k, v in result.items())))
+    _LOGGER.info(
+        "Detected CPU: %s", ", ".join((f"{k}: {v}" for k, v in result.items()))
+    )
     return result
 
 

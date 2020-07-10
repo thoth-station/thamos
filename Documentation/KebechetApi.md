@@ -35,7 +35,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**dict(str, object)**](dict.md)| Body of a git service webhook | 
+ **body** | [**dict(str, object)**](dict.md)| Body of a git service webhook |
 
 ### Return type
 
@@ -80,7 +80,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**KebechetWebhookInput**](KebechetWebhookInput.md)| Body of a git service webhook | 
+ **body** | [**KebechetWebhookInput**](KebechetWebhookInput.md)| Body of a git service webhook |
 
 ### Return type
 
@@ -96,4 +96,3 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

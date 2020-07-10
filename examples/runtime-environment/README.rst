@@ -63,4 +63,3 @@ Thamos commands before `pipenv install`:
   pipenv install
 
 **Note:** You need to be connected to Red Hat VPN as Thoth is currently hosted internally only.
-

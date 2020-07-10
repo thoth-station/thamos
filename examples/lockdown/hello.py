@@ -12,9 +12,9 @@ import tensorflow as tf
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def hello_world():
     """Return a hello string."""
-    hello = tf.constant('Hello, TensorFlow!')
+    hello = tf.constant("Hello, TensorFlow!")
     sess = tf.Session()
     return sess.run(hello)

@@ -33,12 +33,9 @@ from .discover import discover_distribution
 from .discover import discover_python_version
 from .discover import discover_platform
 from .exceptions import NoApiSupported
-from .exceptions import InternalError
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
-from .exceptions import ServiceUnavailable
-from .exceptions import NoRequirementsFormatError
 
 _LOGGER = logging.getLogger(__name__)
 _THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
@@ -83,18 +80,24 @@ class _Configuration:
     def requirements_format(self) -> str:
         """Check requirements_format in configuration."""
         requirements_format = self.content.get("requirements_format") or "pipenv"
-        
+
         if not isinstance(requirements_format, str):
-            raise ConfigurationError("The data type for requirements_format should be str")
+            raise ConfigurationError(
+                "The data type for requirements_format should be str"
+            )
 
         if requirements_format not in ("pip", "pip-tools", "pipenv"):
-            raise ValueError(f"Unknown configuration option for requirements format: {requirements_format!r}")
+            raise ValueError(
+                f"Unknown configuration option for requirements format: {requirements_format!r}"
+            )
 
         return requirements_format
 
     def get_thoth_version(self) -> str:
         """Get version of Thoth backend."""
-        _LOGGER.debug("Contacting Thoth at %r to receive version information", self.api_url)
+        _LOGGER.debug(
+            "Contacting Thoth at %r to receive version information", self.api_url
+        )
         response = requests.head(self.api_url, verify=self.tls_verify)
         response.raise_for_status()
         return response.headers.get("X-Thoth-Version", "Not Available")
@@ -114,20 +117,22 @@ class _Configuration:
                 self._configuration = config_file.read()
 
                 if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)):
-                    _LOGGER.info("Expanding configuration file based on environment variables")
+                    _LOGGER.info(
+                        "Expanding configuration file based on environment variables"
+                    )
                     self._configuration = self._configuration.format(**os.environ)
 
                 self._configuration = yaml.safe_load(self._configuration)
 
-    def create_default_config(self, template: str = None, nowrite: bool = False) -> typing.Optional[dict]:
+    def create_default_config(
+        self, template: str = None, nowrite: bool = False
+    ) -> typing.Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
 
         template = template or self.DEFAULT_THOTH_CONFIG
-        _LOGGER.debug(
-            "Reading configuration from %r", template
-        )
+        _LOGGER.debug("Reading configuration from %r", template)
         with open(template, "r") as default_config_file:
             default_config = default_config_file.read()
 
@@ -136,18 +141,20 @@ class _Configuration:
         cpu_info = discover_cpu()
         cuda_version = discover_cuda_version()
         # Add quotes for textual representation in the config file.
-        cuda_version = f"'{cuda_version}" if cuda_version is not None else 'null'
+        cuda_version = f"'{cuda_version}" if cuda_version is not None else "null"
         os_name, os_version = discover_distribution()
         python_version = discover_python_version()
         platform = discover_platform()
 
-        requirements_format = os.getenv("THAMOS_REQUIREMENTS_FORMAT", self._DEFAULT_REQUIREMENTS_FORMAT)
+        requirements_format = os.getenv(
+            "THAMOS_REQUIREMENTS_FORMAT", self._DEFAULT_REQUIREMENTS_FORMAT
+        )
         if requirements_format not in self.REQUIREMENTS_FORMATS:
             # This avoids possibly dangerous environment variable expansion.
             _LOGGER.warning(
                 "Unknown requirements format specified, forcing %r: %r",
                 self._DEFAULT_REQUIREMENTS_FORMAT,
-                requirements_format
+                requirements_format,
             )
             requirements_format = self._DEFAULT_REQUIREMENTS_FORMAT
 
@@ -160,7 +167,7 @@ class _Configuration:
             platform=platform,
             requirements_format=requirements_format,
             **cpu_info,
-            **(os.environ if expand_env else {}),
+            **(os.environ.__dict__ if expand_env else {}),
         )
 
         if not nowrite:
@@ -171,6 +178,7 @@ class _Configuration:
 
             with open(self.CONFIG_NAME, "w") as config_file:
                 config_file.write(default_config)
+            return None
         else:
             return yaml.safe_load(default_config)
 
@@ -195,7 +203,9 @@ class _Configuration:
             )
 
         if not isinstance(content["runtime_environments"], list):
-            raise ConfigurationError("The data type for requirements_format should be list")
+            raise ConfigurationError(
+                "The data type for requirements_format should be list"
+            )
 
         to_return = None
         seen_names = set()
@@ -244,7 +254,7 @@ class _Configuration:
 
         return to_return
 
-    def api_discovery(self, host: str = None) -> str:
+    def api_discovery(self, host: str) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
         api_url = urljoin("https://" + host, "api/v1")
         self.tls_verify = (
