@@ -29,9 +29,9 @@ class PythonPackageIndexes(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {}
+    swagger_types = {}  # type: ignore
 
-    attribute_map = {}
+    attribute_map = {}  # type: ignore
 
     def __init__(self):  # noqa: E501
         """PythonPackageIndexes - a model defined in Swagger"""  # noqa: E501

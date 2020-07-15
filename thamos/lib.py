@@ -29,6 +29,7 @@ from functools import wraps
 import pprint
 import json
 import urllib3
+import requests
 
 from termcolor import colored
 from yaspin import yaspin
@@ -76,9 +77,7 @@ def with_api_client(func: typing.Callable):
         if not host:
             thoth_config.load_config()
             host = thoth_config.content.get("host") or config.host
-
         thoth_config.api_discovery(host)
-
         _LOGGER.debug("Using API: %s", thoth_config.api_url)
         config.host = thoth_config.api_url
         config.verify_ssl = thoth_config.tls_verify
@@ -95,6 +94,22 @@ def with_api_client(func: typing.Callable):
         return result
 
     return wrapper
+
+
+def get_advise_status(analysis_id: str) -> None:
+    """Handle the the multiple response types available while asking for result of a advise."""
+    config = Configuration()
+    host = thoth_config.explicit_host
+    if not host:
+        thoth_config.load_config()
+        host = thoth_config.content.get("host") or config.host
+    response = requests.Session().get(f"https://{host}/api/v1/advise/python/{analysis_id}")
+    res = json.loads(response.text)
+    # If results are already available we set status to 1.
+    if response.status_code == 200:
+        res["status"] = {"finished_at": 1}
+    response.raise_for_status()
+    return res
 
 
 def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> None:
@@ -142,6 +157,7 @@ def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> Non
                 continue
 
             retries = 0  # Reset counter as we obtained a valid response.
+            _LOGGER.info(response)
             if response.status.finished_at is not None:
                 break
             _LOGGER.debug(
@@ -383,8 +399,8 @@ def advise(
 
     if nowait:
         return response.analysis_id
-
-    _wait_for_analysis(api_instance.get_advise_python_status, response.analysis_id)
+    # We call custom status function for advise until swagger client supports mulitple response codes.
+    _wait_for_analysis(get_advise_status, response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_advise_python, response.analysis_id
