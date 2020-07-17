@@ -27,8 +27,6 @@ runtime_environments:
     cuda_version: {cuda_version}
     # Recommendation type - one of testing, stable, latest:
     recommendation_type: stable
-    # Number of latest versions considered during advises.
-    limit_latest_versions: null
     # Platform used for running the application - corresponds to sysconfig.get_platform() call (e.g. 'linux-x86_64')
     platform: {platform}
 
