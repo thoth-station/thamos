@@ -130,7 +130,6 @@ def _print_header(header: str) -> None:
 def _write_configuration(
     advised_configuration: dict,
     recommendation_type: str = None,
-    limit_latest_versions: int = None,
     dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""
@@ -159,10 +158,6 @@ def _write_configuration(
             runtime_environment_entry = advised_configuration
             if recommendation_type:
                 runtime_environment_entry["recommendation_type"] = recommendation_type
-            if limit_latest_versions:
-                runtime_environment_entry[
-                    "limit_latest_versions"
-                ] = limit_latest_versions
             runtime_environment_entry["dev"] = dev
             content["runtime_environments"][idx] = runtime_environment_entry
             break
@@ -354,14 +349,6 @@ def _print_version(ctx, json_output: bool = False):
     "defaults to the first entry in the configuration file.",
 )
 @click.option(
-    "--limit-latest-versions",
-    type=int,
-    default=None,
-    metavar="COUNT",
-    envvar="THAMOS_LIMIT_LATEST_VERSIONS",
-    help="Specify number of latest versions for each package to consider.",
-)
-@click.option(
     "--dev/--no-dev",
     envvar="THAMOS_DEV",
     is_flag=True,
@@ -377,7 +364,6 @@ def advise(
     no_wait: bool = False,
     no_static_analysis: bool = False,
     json_output: bool = False,
-    limit_latest_versions: int = None,
     force: bool = False,
     dev: bool = False,
 ):
@@ -397,7 +383,6 @@ def advise(
             nowait=no_wait,
             force=force,
             source_type=ThothAdviserIntegrationEnum.CLI,
-            limit_latest_versions=limit_latest_versions,
             no_static_analysis=no_static_analysis,
             dev=dev,
         )
@@ -441,7 +426,6 @@ def advise(
             _write_configuration(
                 result["report"]["products"][0]["advised_runtime_environment"],
                 recommendation_type,
-                limit_latest_versions,
                 dev,
             )
             _write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
