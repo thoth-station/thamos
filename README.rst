@@ -87,7 +87,6 @@ An example of configuration file template can be:
       python_version: '{python_version}'
       cuda_version: {cuda_version}
       recommendation_type: stable
-      limit_latest_versions: null
       platform: '{platform}'
 
 Then, you need to supply this configuration file to the following command:

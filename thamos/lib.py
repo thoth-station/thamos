@@ -275,7 +275,6 @@ def advise(
     *,
     runtime_environment: dict = None,
     runtime_environment_name: str = None,
-    limit_latest_versions: int = None,
     dev: bool = False,
     no_static_analysis: bool = False,
     nowait: bool = False,
@@ -304,18 +303,6 @@ def advise(
             thoth_config.get_runtime_environment(runtime_environment_name) or dict()
         )
 
-    # We use the explicit one if provided at the end.
-    if limit_latest_versions is None:
-        priority = (
-            runtime_environment.pop("limit_latest_versions", None),
-            thoth_config.content.get("limit_latest_versions", None),
-            None,
-        )  # type: Tuple[Any, Any, Any]
-        try:
-            limit_latest_versions = next(filter(bool, priority))
-        except StopIteration:
-            limit_latest_versions = None
-
     if recommendation_type is None:
         priority = (
             runtime_environment.pop("recommendation_type", None),
@@ -337,8 +324,6 @@ def advise(
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
         runtime_environment.pop("recommendation_type", None)
-        # Override latest versions limit specified explicitly in the runtime environment entry.
-        runtime_environment.pop("limit_latest_versions", None)
 
         runtime_environment = RuntimeEnvironment(**runtime_environment)  # type: ignore
 
@@ -367,9 +352,6 @@ def advise(
 
     if count is not None:
         parameters["count"] = count
-
-    if limit_latest_versions is not None:
-        parameters["limit_latest_versions"] = limit_latest_versions
 
     if origin is not None:
         parameters["origin"] = origin
@@ -420,7 +402,6 @@ def advise_here(
     *,
     runtime_environment: dict = None,
     runtime_environment_name: typing.Optional[str] = None,
-    limit_latest_versions: typing.Optional[int] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
     nowait: bool = False,
@@ -457,7 +438,6 @@ def advise_here(
         recommendation_type=recommendation_type,
         runtime_environment=runtime_environment,
         runtime_environment_name=runtime_environment_name,
-        limit_latest_versions=limit_latest_versions,
         dev=dev,
         no_static_analysis=no_static_analysis,
         nowait=nowait,
