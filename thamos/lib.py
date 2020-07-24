@@ -54,7 +54,7 @@ from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
 from .exceptions import TimeoutError
 
-from typing import Callable, Any, Union, Tuple, Dict
+from typing import Callable, Any, Union, Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

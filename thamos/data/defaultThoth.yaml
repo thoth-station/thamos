@@ -25,7 +25,12 @@ runtime_environments:
     # Software configuration of runtime environment:
     python_version: '{python_version}'
     cuda_version: {cuda_version}
-    # Recommendation type - one of testing, stable, latest:
+    # Recommendation type - one of:
+    #  * testing
+    #  * stable
+    #  * latest
+    #  * performance
+    #  * security
     recommendation_type: stable
     # Platform used for running the application - corresponds to sysconfig.get_platform() call (e.g. 'linux-x86_64')
     platform: {platform}
