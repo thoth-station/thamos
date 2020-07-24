@@ -573,11 +573,11 @@
         },
         "yaspin": {
             "hashes": [
-                "sha256:4330b240e3cb7ad990dbdc9c72891fecb1e1668cc19f0e44440bb01ffe2b1e56",
-                "sha256:f8406d345ae046cb7330a4e581d7a959f6f7718a38002da6142b3bcaaa0367b1"
+                "sha256:d37ba19d627e8b889a522df50b785acc02ffb11c42a5b867c09233caa5da2add",
+                "sha256:f8fba206fcb76f4f53c57c89def157b23ded9acc1b7914cb2ee4ef765642ea4c"
             ],
             "index": "pypi",
-            "version": "==0.17.0"
+            "version": "==0.18.0"
         }
     },
     "develop": {
