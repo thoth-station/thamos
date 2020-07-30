@@ -30,8 +30,6 @@ class AnalysisStatusResponseStatus(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "container": "str",
-        "exit_code": "int",
         "finished_at": "str",
         "reason": "str",
         "started_at": "str",
@@ -39,8 +37,6 @@ class AnalysisStatusResponseStatus(object):
     }
 
     attribute_map = {
-        "container": "container",
-        "exit_code": "exit_code",
         "finished_at": "finished_at",
         "reason": "reason",
         "started_at": "started_at",
@@ -48,74 +44,18 @@ class AnalysisStatusResponseStatus(object):
     }
 
     def __init__(
-        self,
-        container=None,
-        exit_code=None,
-        finished_at=None,
-        reason=None,
-        started_at=None,
-        state=None,
+        self, finished_at=None, reason=None, started_at=None, state=None
     ):  # noqa: E501
         """AnalysisStatusResponseStatus - a model defined in Swagger"""  # noqa: E501
-        self._container = None
-        self._exit_code = None
         self._finished_at = None
         self._reason = None
         self._started_at = None
         self._state = None
         self.discriminator = None
-        self.container = container
-        self.exit_code = exit_code
         self.finished_at = finished_at
         self.reason = reason
         self.started_at = started_at
         self.state = state
-
-    @property
-    def container(self):
-        """Gets the container of this AnalysisStatusResponseStatus.  # noqa: E501
-
-        SHA of container image in which the analysis is done.  # noqa: E501
-
-        :return: The container of this AnalysisStatusResponseStatus.  # noqa: E501
-        :rtype: str
-        """
-        return self._container
-
-    @container.setter
-    def container(self, container):
-        """Sets the container of this AnalysisStatusResponseStatus.
-
-        SHA of container image in which the analysis is done.  # noqa: E501
-
-        :param container: The container of this AnalysisStatusResponseStatus.  # noqa: E501
-        :type: str
-        """
-
-        self._container = container
-
-    @property
-    def exit_code(self):
-        """Gets the exit_code of this AnalysisStatusResponseStatus.  # noqa: E501
-
-        Return code of the process perfoming analysis.  # noqa: E501
-
-        :return: The exit_code of this AnalysisStatusResponseStatus.  # noqa: E501
-        :rtype: int
-        """
-        return self._exit_code
-
-    @exit_code.setter
-    def exit_code(self, exit_code):
-        """Sets the exit_code of this AnalysisStatusResponseStatus.
-
-        Return code of the process perfoming analysis.  # noqa: E501
-
-        :param exit_code: The exit_code of this AnalysisStatusResponseStatus.  # noqa: E501
-        :type: int
-        """
-
-        self._exit_code = exit_code
 
     @property
     def finished_at(self):

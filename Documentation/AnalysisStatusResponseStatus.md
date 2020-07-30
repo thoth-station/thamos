@@ -3,8 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**container** | **str** | SHA of container image in which the analysis is done. |
-**exit_code** | **int** | Return code of the process perfoming analysis. |
 **finished_at** | **str** | Datetime in ISO format informing about when the analysis has finished.  |
 **reason** | **str** | Reasoning on finished run. |
 **started_at** | **str** | Datetime in ISO format informing about when the analysis has started.  |

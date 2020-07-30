@@ -41,9 +41,6 @@ from thamos.swagger_client.models.analysis_status_response import AnalysisStatus
 from thamos.swagger_client.models.analysis_status_response_status import (
     AnalysisStatusResponseStatus,
 )
-from thamos.swagger_client.models.analysis_unfinished_result_response import (
-    AnalysisUnfinishedResultResponse,
-)
 from thamos.swagger_client.models.build import Build
 from thamos.swagger_client.models.build_analysis_response import BuildAnalysisResponse
 from thamos.swagger_client.models.build_analysis_response_base_image_analysis import (

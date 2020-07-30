@@ -443,10 +443,9 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.
-        :param str source_type: A flag marking what Thoth integration is requesting adviser:   - CLI: Thamos CLI.   - S2I: OpenShift's S2I (Source-to-Image) build.   - GITHUB_APP: Qeb-Hwt GitHub App.   - KEBECHET: Kebechet Bot.   - JUPYTER_NOTEBOOK: Jupyter Notebook (nb-requirements).
+        :param str source_type: A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift's S2I (Source-to-Image) build.   - github_app: Qeb-Hwt GitHub App.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).
         :param bool dev: Consider or do not consider development dependencies when resolving stacks.
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it.
-        :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
         :param bool force: Do not use cached results, always run adviser.
         :param str github_event_type: GitHub's event type.
         :param int github_check_run_id: GitHub's event id.
@@ -483,10 +482,9 @@ class AdviseApi(object):
         :param int count: Number of software stacks that should be returned.
         :param int limit: Limit number of software stacks scored.
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.
-        :param str source_type: A flag marking what Thoth integration is requesting adviser:   - CLI: Thamos CLI.   - S2I: OpenShift's S2I (Source-to-Image) build.   - GITHUB_APP: Qeb-Hwt GitHub App.   - KEBECHET: Kebechet Bot.   - JUPYTER_NOTEBOOK: Jupyter Notebook (nb-requirements).
+        :param str source_type: A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift's S2I (Source-to-Image) build.   - github_app: Qeb-Hwt GitHub App.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).
         :param bool dev: Consider or do not consider development dependencies when resolving stacks.
         :param bool debug: Run the given adviser in a verbose mode so developers can debug it.
-        :param int limit_latest_versions: Limit number of packages considering only specific number of versions for each package.
         :param bool force: Do not use cached results, always run adviser.
         :param str github_event_type: GitHub's event type.
         :param int github_check_run_id: GitHub's event id.
@@ -506,7 +504,6 @@ class AdviseApi(object):
             "source_type",
             "dev",
             "debug",
-            "limit_latest_versions",
             "force",
             "github_event_type",
             "github_check_run_id",
@@ -559,10 +556,6 @@ class AdviseApi(object):
             query_params.append(("dev", params["dev"]))  # noqa: E501
         if "debug" in params:
             query_params.append(("debug", params["debug"]))  # noqa: E501
-        if "limit_latest_versions" in params:
-            query_params.append(
-                ("limit_latest_versions", params["limit_latest_versions"])
-            )  # noqa: E501
         if "force" in params:
             query_params.append(("force", params["force"]))  # noqa: E501
         if "github_event_type" in params:

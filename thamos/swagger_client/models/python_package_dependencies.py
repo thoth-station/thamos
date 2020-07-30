@@ -29,9 +29,9 @@ class PythonPackageDependencies(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {}  # type: ignore
+    swagger_types = {}
 
-    attribute_map = {}  # type: ignore
+    attribute_map = {}
 
     def __init__(self):  # noqa: E501
         """PythonPackageDependencies - a model defined in Swagger"""  # noqa: E501
