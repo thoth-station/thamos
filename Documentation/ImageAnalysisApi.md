@@ -45,7 +45,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Id of analysis that results should be retrieved. |
+ **analysis_id** | **str**| Id of analysis that results should be retrieved. | 
 
 ### Return type
 
@@ -91,7 +91,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image_hash** | **str**| Image hash for identifying image (including hash type, now supported only \&quot;sha256\&quot;). |
+ **image_hash** | **str**| Image hash for identifying image (including hash type, now supported only \&quot;sha256\&quot;). | 
 
 ### Return type
 
@@ -137,7 +137,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. |
+ **analysis_id** | **str**| An id of requested analysis. | 
 
 ### Return type
 
@@ -183,7 +183,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. |
+ **analysis_id** | **str**| An id of requested analysis. | 
 
 ### Return type
 
@@ -261,7 +261,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved.
+environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved. 
 
 try:
     # List analyses for the given software environment for build.
@@ -275,7 +275,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  |
+ **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  | 
 
 ### Return type
 
@@ -307,7 +307,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved.
+environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved. 
 
 try:
     # List analyses for the given software environment for run.
@@ -321,7 +321,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  |
+ **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  | 
 
 ### Return type
 
@@ -445,7 +445,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-image = 'image_example' # str | Name of image - can also specify remote registry to pull image from.
+image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
 environment_type = 'runtime' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional) (default to runtime)
@@ -466,11 +466,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image** | **str**| Name of image - can also specify remote registry to pull image from.  |
- **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional]
- **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional]
+ **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
+ **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
+ **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
  **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to runtime]
- **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
+ **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
  **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
  **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
  **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to false]
@@ -505,7 +505,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ImageAnalysisApi()
-image = 'image_example' # str | Name of image - can also specify remote registry to pull image from.
+image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
 verify_tls = true # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to true)
@@ -522,9 +522,9 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image** | **str**| Name of image - can also specify remote registry to pull image from.  |
- **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional]
- **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional]
+ **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
+ **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
+ **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
  **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to true]
 
 ### Return type
@@ -541,3 +541,4 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
