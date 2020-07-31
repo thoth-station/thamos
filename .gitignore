@@ -106,4 +106,5 @@ venv.bak/
 # Ignore swagger-codegen temporary output and swagger-codegen itself.
 swagger-codegen-output/
 swagger-codegen/
+openapi-generator-cli.jar
 .vscode
