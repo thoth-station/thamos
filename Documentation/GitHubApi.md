@@ -6,36 +6,46 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**schedule_thamos_advise**](GitHubApi.md#schedule_thamos_advise) | **POST** /qeb-hwt | Schedule Thamos advise for GitHub App.
 
+
 # **schedule_thamos_advise**
-> AnalysisResponse schedule_thamos_advise(body)
+> AnalysisResponse schedule_thamos_advise(qeb_hwt_thamos_advise_input)
 
 Schedule Thamos advise for GitHub App.
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
 import thamos.swagger_client
 from thamos.swagger_client.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://test.thoth-station.ninja/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = thamos.swagger_client.Configuration(
+    host = "https://test.thoth-station.ninja/api/v1"
+)
 
-# create an instance of the API class
-api_instance = thamos.swagger_client.GitHubApi()
-body = thamos.swagger_client.QebHwtThamosAdviseInput() # QebHwtThamosAdviseInput | Thamos advise inputs.
 
-try:
-    # Schedule Thamos advise for GitHub App.
-    api_response = api_instance.schedule_thamos_advise(body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling GitHubApi->schedule_thamos_advise: %s\n" % e)
+# Enter a context with an instance of the API client
+with thamos.swagger_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = thamos.swagger_client.GitHubApi(api_client)
+    qeb_hwt_thamos_advise_input = thamos.swagger_client.QebHwtThamosAdviseInput() # QebHwtThamosAdviseInput | Thamos advise inputs.
+
+    try:
+        # Schedule Thamos advise for GitHub App.
+        api_response = api_instance.schedule_thamos_advise(qeb_hwt_thamos_advise_input)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling GitHubApi->schedule_thamos_advise: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**QebHwtThamosAdviseInput**](QebHwtThamosAdviseInput.md)| Thamos advise inputs. |
+ **qeb_hwt_thamos_advise_input** | [**QebHwtThamosAdviseInput**](QebHwtThamosAdviseInput.md)| Thamos advise inputs. | 
 
 ### Return type
 
@@ -50,4 +60,11 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Successful response with analyzer id. |  -  |
+**400** | On invalid request. |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

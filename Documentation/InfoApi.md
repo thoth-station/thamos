@@ -8,29 +8,39 @@ Method | HTTP request | Description
 [**list_runtime_environments**](InfoApi.md#list_runtime_environments) | **GET** /runtime-environment | Retrieve a list of supported runtime environments
 [**list_software_environments**](InfoApi.md#list_software_environments) | **GET** /software-environment | Retrieve a list of supported software environments
 
+
 # **list_hardware_environments**
 > InlineResponse200 list_hardware_environments(page=page)
 
 Retrieve a list of supported hardware environments
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
 import thamos.swagger_client
 from thamos.swagger_client.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://test.thoth-station.ninja/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = thamos.swagger_client.Configuration(
+    host = "https://test.thoth-station.ninja/api/v1"
+)
 
-# create an instance of the API class
-api_instance = thamos.swagger_client.InfoApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
-try:
-    # Retrieve a list of supported hardware environments
-    api_response = api_instance.list_hardware_environments(page=page)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling InfoApi->list_hardware_environments: %s\n" % e)
+# Enter a context with an instance of the API client
+with thamos.swagger_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = thamos.swagger_client.InfoApi(api_client)
+    page = 0 # int | Page offset in pagination. (optional) (default to 0)
+
+    try:
+        # Retrieve a list of supported hardware environments
+        api_response = api_instance.list_hardware_environments(page=page)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling InfoApi->list_hardware_environments: %s\n" % e)
 ```
 
 ### Parameters
@@ -52,6 +62,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A list of supported hardware environments. |  -  |
+**400** | On invalid request. |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runtime_environments**
@@ -60,22 +76,31 @@ No authorization required
 Retrieve a list of supported runtime environments
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
 import thamos.swagger_client
 from thamos.swagger_client.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://test.thoth-station.ninja/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = thamos.swagger_client.Configuration(
+    host = "https://test.thoth-station.ninja/api/v1"
+)
 
-# create an instance of the API class
-api_instance = thamos.swagger_client.InfoApi()
 
-try:
-    # Retrieve a list of supported runtime environments
-    api_response = api_instance.list_runtime_environments()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling InfoApi->list_runtime_environments: %s\n" % e)
+# Enter a context with an instance of the API client
+with thamos.swagger_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = thamos.swagger_client.InfoApi(api_client)
+    
+    try:
+        # Retrieve a list of supported runtime environments
+        api_response = api_instance.list_runtime_environments()
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling InfoApi->list_runtime_environments: %s\n" % e)
 ```
 
 ### Parameters
@@ -94,6 +119,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A list of supported runtime environments. |  -  |
+**400** | On invalid request. |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_software_environments**
@@ -102,23 +133,32 @@ No authorization required
 Retrieve a list of supported software environments
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
 import thamos.swagger_client
 from thamos.swagger_client.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://test.thoth-station.ninja/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = thamos.swagger_client.Configuration(
+    host = "https://test.thoth-station.ninja/api/v1"
+)
 
-# create an instance of the API class
-api_instance = thamos.swagger_client.InfoApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
 
-try:
-    # Retrieve a list of supported software environments
-    api_response = api_instance.list_software_environments(page=page)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling InfoApi->list_software_environments: %s\n" % e)
+# Enter a context with an instance of the API client
+with thamos.swagger_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = thamos.swagger_client.InfoApi(api_client)
+    page = 0 # int | Page offset in pagination. (optional) (default to 0)
+
+    try:
+        # Retrieve a list of supported software environments
+        api_response = api_instance.list_software_environments(page=page)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling InfoApi->list_software_environments: %s\n" % e)
 ```
 
 ### Parameters
@@ -140,4 +180,11 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A list of supported software environments. |  -  |
+**400** | On invalid request. |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

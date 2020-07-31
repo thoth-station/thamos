@@ -7,35 +7,45 @@ Method | HTTP request | Description
 [**schedule_kebechet**](KebechetApi.md#schedule_kebechet) | **POST** /kebechet | Schedule kebechet instance from webhook
 [**schedule_kebechet_webhook**](KebechetApi.md#schedule_kebechet_webhook) | **POST** /kebechet-webhook | Schedule kebechet instance from webhook
 
+
 # **schedule_kebechet**
-> schedule_kebechet(body)
+> schedule_kebechet(request_body)
 
 Schedule kebechet instance from webhook
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
 import thamos.swagger_client
 from thamos.swagger_client.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://test.thoth-station.ninja/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = thamos.swagger_client.Configuration(
+    host = "https://test.thoth-station.ninja/api/v1"
+)
 
-# create an instance of the API class
-api_instance = thamos.swagger_client.KebechetApi()
-body = NULL # dict(str, object) | Body of a git service webhook
 
-try:
-    # Schedule kebechet instance from webhook
-    api_instance.schedule_kebechet(body)
-except ApiException as e:
-    print("Exception when calling KebechetApi->schedule_kebechet: %s\n" % e)
+# Enter a context with an instance of the API client
+with thamos.swagger_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = thamos.swagger_client.KebechetApi(api_client)
+    request_body = None # dict(str, object) | Body of a git service webhook
+
+    try:
+        # Schedule kebechet instance from webhook
+        api_instance.schedule_kebechet(request_body)
+    except ApiException as e:
+        print("Exception when calling KebechetApi->schedule_kebechet: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**dict(str, object)**](dict.md)| Body of a git service webhook |
+ **request_body** | [**dict(str, object)**](object.md)| Body of a git service webhook | 
 
 ### Return type
 
@@ -49,6 +59,13 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: Not defined
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Accepted |  -  |
+**400** | Invalid |  -  |
+**501** | Functionality not supported |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -58,29 +75,38 @@ No authorization required
 Schedule kebechet instance from webhook
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
 import thamos.swagger_client
 from thamos.swagger_client.rest import ApiException
 from pprint import pprint
+# Defining the host is optional and defaults to https://test.thoth-station.ninja/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = thamos.swagger_client.Configuration(
+    host = "https://test.thoth-station.ninja/api/v1"
+)
 
-# create an instance of the API class
-api_instance = thamos.swagger_client.KebechetApi()
-body = thamos.swagger_client.KebechetWebhookInput() # KebechetWebhookInput | Body of a git service webhook
 
-try:
-    # Schedule kebechet instance from webhook
-    api_instance.schedule_kebechet_webhook(body)
-except ApiException as e:
-    print("Exception when calling KebechetApi->schedule_kebechet_webhook: %s\n" % e)
+# Enter a context with an instance of the API client
+with thamos.swagger_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = thamos.swagger_client.KebechetApi(api_client)
+    body = None # object | Body of a git service webhook
+
+    try:
+        # Schedule kebechet instance from webhook
+        api_instance.schedule_kebechet_webhook(body)
+    except ApiException as e:
+        print("Exception when calling KebechetApi->schedule_kebechet_webhook: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**KebechetWebhookInput**](KebechetWebhookInput.md)| Body of a git service webhook |
+ **body** | **object**| Body of a git service webhook | 
 
 ### Return type
 
@@ -95,4 +121,12 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: Not defined
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Accepted |  -  |
+**400** | Invalid |  -  |
+**501** | Functionality not supported |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
