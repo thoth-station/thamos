@@ -48,7 +48,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **document_id** | **str**| Build log to be retrieved. | 
+ **document_id** | **str**| Build log to be retrieved. |
 
 ### Return type
 
@@ -110,7 +110,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of requested analysis. |
 
 ### Return type
 
@@ -293,7 +293,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **log** | [**Log**](Log.md)| Build log to be stored. | 
+ **log** | [**Log**](Log.md)| Build log to be stored. |
 
 ### Return type
 
@@ -315,4 +315,3 @@ No authorization required
 **400** | On invalid request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

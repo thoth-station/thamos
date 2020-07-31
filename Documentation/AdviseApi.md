@@ -49,7 +49,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Advise id returned on advise request. | 
+ **analysis_id** | **str**| Advise id returned on advise request. |
 
 ### Return type
 
@@ -112,7 +112,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of analysis for which log should be retrieved. | 
+ **analysis_id** | **str**| An id of analysis for which log should be retrieved. |
 
 ### Return type
 
@@ -174,7 +174,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested adviser run. | 
+ **analysis_id** | **str**| An id of requested adviser run. |
 
 ### Return type
 
@@ -310,18 +310,18 @@ github_base_repo_url = 'github_base_repo_url_example' # str | URL of the GitHub 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **recommendation_type** | **str**| Recommendation type. | [default to &#39;stable&#39;]
- **advise_input** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. | 
- **count** | **int**| Number of software stacks that should be returned. | [optional] 
- **limit** | **int**| Limit number of software stacks scored. | [optional] 
- **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
- **source_type** | **str**| A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift&#39;s S2I (Source-to-Image) build.   - github_app: Qeb-Hwt GitHub App.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).  | [optional] 
+ **advise_input** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information. |
+ **count** | **int**| Number of software stacks that should be returned. | [optional]
+ **limit** | **int**| Limit number of software stacks scored. | [optional]
+ **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
+ **source_type** | **str**| A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift&#39;s S2I (Source-to-Image) build.   - github_app: Qeb-Hwt GitHub App.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).  | [optional]
  **dev** | **bool**| Consider or do not consider development dependencies when resolving stacks.  | [optional] [default to False]
  **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to False]
  **force** | **bool**| Do not use cached results, always run adviser.  | [optional] [default to False]
- **github_event_type** | **str**| GitHub&#39;s event type. | [optional] 
- **github_check_run_id** | **int**| GitHub&#39;s event id. | [optional] 
- **github_installation_id** | **int**| GitHub&#39;s installation id. | [optional] 
- **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional] 
+ **github_event_type** | **str**| GitHub&#39;s event type. | [optional]
+ **github_check_run_id** | **int**| GitHub&#39;s event id. | [optional]
+ **github_installation_id** | **int**| GitHub&#39;s installation id. | [optional]
+ **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional]
 
 ### Return type
 
@@ -343,4 +343,3 @@ No authorization required
 **400** | On invalid request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

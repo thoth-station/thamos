@@ -33,26 +33,36 @@ class AnalysisResultResponseMetadata(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'analyzer': 'str',
-        'analyzer_version': 'str',
-        'arguments': 'object',
-        'datetime': 'str',
-        'distribution': 'AnalysisResultResponseMetadataDistribution',
-        'hostname': 'str',
-        'python': 'AnalysisResultResponseMetadataPython'
+        "analyzer": "str",
+        "analyzer_version": "str",
+        "arguments": "object",
+        "datetime": "str",
+        "distribution": "AnalysisResultResponseMetadataDistribution",
+        "hostname": "str",
+        "python": "AnalysisResultResponseMetadataPython",
     }
 
     attribute_map = {
-        'analyzer': 'analyzer',
-        'analyzer_version': 'analyzer_version',
-        'arguments': 'arguments',
-        'datetime': 'datetime',
-        'distribution': 'distribution',
-        'hostname': 'hostname',
-        'python': 'python'
+        "analyzer": "analyzer",
+        "analyzer_version": "analyzer_version",
+        "arguments": "arguments",
+        "datetime": "datetime",
+        "distribution": "distribution",
+        "hostname": "hostname",
+        "python": "python",
     }
 
-    def __init__(self, analyzer=None, analyzer_version=None, arguments=None, datetime=None, distribution=None, hostname=None, python=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        analyzer=None,
+        analyzer_version=None,
+        arguments=None,
+        datetime=None,
+        distribution=None,
+        hostname=None,
+        python=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """AnalysisResultResponseMetadata - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -95,8 +105,12 @@ class AnalysisResultResponseMetadata(object):
         :param analyzer: The analyzer of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and analyzer is None:  # noqa: E501
-            raise ValueError("Invalid value for `analyzer`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and analyzer is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `analyzer`, must not be `None`"
+            )  # noqa: E501
 
         self._analyzer = analyzer
 
@@ -120,8 +134,13 @@ class AnalysisResultResponseMetadata(object):
         :param analyzer_version: The analyzer_version of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and analyzer_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `analyzer_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and analyzer_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `analyzer_version`, must not be `None`"
+            )  # noqa: E501
 
         self._analyzer_version = analyzer_version
 
@@ -145,8 +164,12 @@ class AnalysisResultResponseMetadata(object):
         :param arguments: The arguments of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: object
         """
-        if self.local_vars_configuration.client_side_validation and arguments is None:  # noqa: E501
-            raise ValueError("Invalid value for `arguments`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and arguments is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `arguments`, must not be `None`"
+            )  # noqa: E501
 
         self._arguments = arguments
 
@@ -170,8 +193,12 @@ class AnalysisResultResponseMetadata(object):
         :param datetime: The datetime of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and datetime is None:  # noqa: E501
-            raise ValueError("Invalid value for `datetime`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and datetime is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `datetime`, must not be `None`"
+            )  # noqa: E501
 
         self._datetime = datetime
 
@@ -193,8 +220,13 @@ class AnalysisResultResponseMetadata(object):
         :param distribution: The distribution of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: AnalysisResultResponseMetadataDistribution
         """
-        if self.local_vars_configuration.client_side_validation and distribution is None:  # noqa: E501
-            raise ValueError("Invalid value for `distribution`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and distribution is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `distribution`, must not be `None`"
+            )  # noqa: E501
 
         self._distribution = distribution
 
@@ -218,8 +250,12 @@ class AnalysisResultResponseMetadata(object):
         :param hostname: The hostname of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and hostname is None:  # noqa: E501
-            raise ValueError("Invalid value for `hostname`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and hostname is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `hostname`, must not be `None`"
+            )  # noqa: E501
 
         self._hostname = hostname
 
@@ -241,8 +277,12 @@ class AnalysisResultResponseMetadata(object):
         :param python: The python of this AnalysisResultResponseMetadata.  # noqa: E501
         :type: AnalysisResultResponseMetadataPython
         """
-        if self.local_vars_configuration.client_side_validation and python is None:  # noqa: E501
-            raise ValueError("Invalid value for `python`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and python is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `python`, must not be `None`"
+            )  # noqa: E501
 
         self._python = python
 
@@ -253,18 +293,20 @@ class AnalysisResultResponseMetadata(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

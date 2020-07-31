@@ -33,26 +33,36 @@ class AnalysisResultResponseMetadataPython(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'api_version': 'int',
-        'implementation_name': 'str',
-        'major': 'int',
-        'micro': 'int',
-        'minor': 'int',
-        'releaselevel': 'str',
-        'serial': 'int'
+        "api_version": "int",
+        "implementation_name": "str",
+        "major": "int",
+        "micro": "int",
+        "minor": "int",
+        "releaselevel": "str",
+        "serial": "int",
     }
 
     attribute_map = {
-        'api_version': 'api_version',
-        'implementation_name': 'implementation_name',
-        'major': 'major',
-        'micro': 'micro',
-        'minor': 'minor',
-        'releaselevel': 'releaselevel',
-        'serial': 'serial'
+        "api_version": "api_version",
+        "implementation_name": "implementation_name",
+        "major": "major",
+        "micro": "micro",
+        "minor": "minor",
+        "releaselevel": "releaselevel",
+        "serial": "serial",
     }
 
-    def __init__(self, api_version=None, implementation_name=None, major=None, micro=None, minor=None, releaselevel=None, serial=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        api_version=None,
+        implementation_name=None,
+        major=None,
+        micro=None,
+        minor=None,
+        releaselevel=None,
+        serial=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """AnalysisResultResponseMetadataPython - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -93,8 +103,12 @@ class AnalysisResultResponseMetadataPython(object):
         :param api_version: The api_version of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and api_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `api_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and api_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `api_version`, must not be `None`"
+            )  # noqa: E501
 
         self._api_version = api_version
 
@@ -116,8 +130,13 @@ class AnalysisResultResponseMetadataPython(object):
         :param implementation_name: The implementation_name of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and implementation_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `implementation_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and implementation_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `implementation_name`, must not be `None`"
+            )  # noqa: E501
 
         self._implementation_name = implementation_name
 
@@ -139,8 +158,12 @@ class AnalysisResultResponseMetadataPython(object):
         :param major: The major of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and major is None:  # noqa: E501
-            raise ValueError("Invalid value for `major`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and major is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `major`, must not be `None`"
+            )  # noqa: E501
 
         self._major = major
 
@@ -162,8 +185,12 @@ class AnalysisResultResponseMetadataPython(object):
         :param micro: The micro of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and micro is None:  # noqa: E501
-            raise ValueError("Invalid value for `micro`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and micro is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `micro`, must not be `None`"
+            )  # noqa: E501
 
         self._micro = micro
 
@@ -185,8 +212,12 @@ class AnalysisResultResponseMetadataPython(object):
         :param minor: The minor of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and minor is None:  # noqa: E501
-            raise ValueError("Invalid value for `minor`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and minor is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `minor`, must not be `None`"
+            )  # noqa: E501
 
         self._minor = minor
 
@@ -208,8 +239,13 @@ class AnalysisResultResponseMetadataPython(object):
         :param releaselevel: The releaselevel of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and releaselevel is None:  # noqa: E501
-            raise ValueError("Invalid value for `releaselevel`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and releaselevel is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `releaselevel`, must not be `None`"
+            )  # noqa: E501
 
         self._releaselevel = releaselevel
 
@@ -231,8 +267,12 @@ class AnalysisResultResponseMetadataPython(object):
         :param serial: The serial of this AnalysisResultResponseMetadataPython.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and serial is None:  # noqa: E501
-            raise ValueError("Invalid value for `serial`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and serial is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `serial`, must not be `None`"
+            )  # noqa: E501
 
         self._serial = serial
 
@@ -243,18 +283,20 @@ class AnalysisResultResponseMetadataPython(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

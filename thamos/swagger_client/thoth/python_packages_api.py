@@ -18,10 +18,7 @@ import re  # noqa: F401
 import six
 
 from thamos.swagger_client.api_client import ApiClient
-from thamos.swagger_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from thamos.swagger_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class PythonPackagesApi(object):
@@ -36,7 +33,9 @@ class PythonPackagesApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def get_python_package_dependencies(self, name, version, index, **kwargs):  # noqa: E501
+    def get_python_package_dependencies(
+        self, name, version, index, **kwargs
+    ):  # noqa: E501
         """Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -51,7 +50,7 @@ class PythonPackagesApi(object):
         :param str os_name: Name of operating system to consider as environment where package is installed in.
         :param str os_version: Version of operating system to consider as environment where package is installed in.
         :param str python_version: Version of Python interpreter used to install the given package.
-        :param bool marker_evaluation_result: Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account. 
+        :param bool marker_evaluation_result: Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -63,10 +62,14 @@ class PythonPackagesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_python_package_dependencies_with_http_info(name, version, index, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_python_package_dependencies_with_http_info(
+            name, version, index, **kwargs
+        )  # noqa: E501
 
-    def get_python_package_dependencies_with_http_info(self, name, version, index, **kwargs):  # noqa: E501
+    def get_python_package_dependencies_with_http_info(
+        self, name, version, index, **kwargs
+    ):  # noqa: E501
         """Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -81,7 +84,7 @@ class PythonPackagesApi(object):
         :param str os_name: Name of operating system to consider as environment where package is installed in.
         :param str os_version: Version of operating system to consider as environment where package is installed in.
         :param str python_version: Version of Python interpreter used to install the given package.
-        :param bool marker_evaluation_result: Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account. 
+        :param bool marker_evaluation_result: Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -99,63 +102,101 @@ class PythonPackagesApi(object):
         local_var_params = locals()
 
         all_params = [
-            'name',
-            'version',
-            'index',
-            'os_name',
-            'os_version',
-            'python_version',
-            'marker_evaluation_result'
+            "name",
+            "version",
+            "index",
+            "os_name",
+            "os_version",
+            "python_version",
+            "marker_evaluation_result",
         ]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_python_package_dependencies" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'name' is set
-        if self.api_client.client_side_validation and ('name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `name` when calling `get_python_package_dependencies`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "name" not in local_var_params
+            or local_var_params["name"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `name` when calling `get_python_package_dependencies`"
+            )  # noqa: E501
         # verify the required parameter 'version' is set
-        if self.api_client.client_side_validation and ('version' not in local_var_params or  # noqa: E501
-                                                        local_var_params['version'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `version` when calling `get_python_package_dependencies`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "version" not in local_var_params
+            or local_var_params["version"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `version` when calling `get_python_package_dependencies`"
+            )  # noqa: E501
         # verify the required parameter 'index' is set
-        if self.api_client.client_side_validation and ('index' not in local_var_params or  # noqa: E501
-                                                        local_var_params['index'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `index` when calling `get_python_package_dependencies`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "index" not in local_var_params
+            or local_var_params["index"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `index` when calling `get_python_package_dependencies`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
-            query_params.append(('name', local_var_params['name']))  # noqa: E501
-        if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
-            query_params.append(('version', local_var_params['version']))  # noqa: E501
-        if 'index' in local_var_params and local_var_params['index'] is not None:  # noqa: E501
-            query_params.append(('index', local_var_params['index']))  # noqa: E501
-        if 'os_name' in local_var_params and local_var_params['os_name'] is not None:  # noqa: E501
-            query_params.append(('os_name', local_var_params['os_name']))  # noqa: E501
-        if 'os_version' in local_var_params and local_var_params['os_version'] is not None:  # noqa: E501
-            query_params.append(('os_version', local_var_params['os_version']))  # noqa: E501
-        if 'python_version' in local_var_params and local_var_params['python_version'] is not None:  # noqa: E501
-            query_params.append(('python_version', local_var_params['python_version']))  # noqa: E501
-        if 'marker_evaluation_result' in local_var_params and local_var_params['marker_evaluation_result'] is not None:  # noqa: E501
-            query_params.append(('marker_evaluation_result', local_var_params['marker_evaluation_result']))  # noqa: E501
+        if (
+            "name" in local_var_params and local_var_params["name"] is not None
+        ):  # noqa: E501
+            query_params.append(("name", local_var_params["name"]))  # noqa: E501
+        if (
+            "version" in local_var_params and local_var_params["version"] is not None
+        ):  # noqa: E501
+            query_params.append(("version", local_var_params["version"]))  # noqa: E501
+        if (
+            "index" in local_var_params and local_var_params["index"] is not None
+        ):  # noqa: E501
+            query_params.append(("index", local_var_params["index"]))  # noqa: E501
+        if (
+            "os_name" in local_var_params and local_var_params["os_name"] is not None
+        ):  # noqa: E501
+            query_params.append(("os_name", local_var_params["os_name"]))  # noqa: E501
+        if (
+            "os_version" in local_var_params
+            and local_var_params["os_version"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("os_version", local_var_params["os_version"])
+            )  # noqa: E501
+        if (
+            "python_version" in local_var_params
+            and local_var_params["python_version"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("python_version", local_var_params["python_version"])
+            )  # noqa: E501
+        if (
+            "marker_evaluation_result" in local_var_params
+            and local_var_params["marker_evaluation_result"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                (
+                    "marker_evaluation_result",
+                    local_var_params["marker_evaluation_result"],
+                )
+            )  # noqa: E501
 
         header_params = {}
 
@@ -164,27 +205,32 @@ class PythonPackagesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/python/dependencies', 'GET',
+            "/python/dependencies",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[object]',  # noqa: E501
+            response_type="list[object]",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_python_package_versions_count(self, **kwargs):  # noqa: E501
         """Retrieve information from the Knowledge Graph with regards to total number of Python packages.   # noqa: E501
@@ -209,8 +255,10 @@ class PythonPackagesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_python_package_versions_count_with_http_info(**kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_python_package_versions_count_with_http_info(
+            **kwargs
+        )  # noqa: E501
 
     def get_python_package_versions_count_with_http_info(self, **kwargs):  # noqa: E501
         """Retrieve information from the Knowledge Graph with regards to total number of Python packages.   # noqa: E501
@@ -240,40 +288,42 @@ class PythonPackagesApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'name',
-            'version',
-            'index'
-        ]
+        all_params = ["name", "version", "index"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_python_package_versions_count" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
-            query_params.append(('name', local_var_params['name']))  # noqa: E501
-        if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
-            query_params.append(('version', local_var_params['version']))  # noqa: E501
-        if 'index' in local_var_params and local_var_params['index'] is not None:  # noqa: E501
-            query_params.append(('index', local_var_params['index']))  # noqa: E501
+        if (
+            "name" in local_var_params and local_var_params["name"] is not None
+        ):  # noqa: E501
+            query_params.append(("name", local_var_params["name"]))  # noqa: E501
+        if (
+            "version" in local_var_params and local_var_params["version"] is not None
+        ):  # noqa: E501
+            query_params.append(("version", local_var_params["version"]))  # noqa: E501
+        if (
+            "index" in local_var_params and local_var_params["index"] is not None
+        ):  # noqa: E501
+            query_params.append(("index", local_var_params["index"]))  # noqa: E501
 
         header_params = {}
 
@@ -282,27 +332,32 @@ class PythonPackagesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/python/packages/count', 'GET',
+            "/python/packages/count",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='PythonPackagesCountInfoResponse',  # noqa: E501
+            response_type="PythonPackagesCountInfoResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_python_package_indexes(self, **kwargs):  # noqa: E501
         """List registered Python package indexes.  # noqa: E501
@@ -324,7 +379,7 @@ class PythonPackagesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_python_package_indexes_with_http_info(**kwargs)  # noqa: E501
 
     def list_python_package_indexes_with_http_info(self, **kwargs):  # noqa: E501
@@ -352,25 +407,24 @@ class PythonPackagesApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-        ]
+        all_params = []
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_python_package_indexes" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
@@ -385,24 +439,29 @@ class PythonPackagesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/python-package-index', 'GET',
+            "/python-package-index",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[object]',  # noqa: E501
+            response_type="list[object]",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

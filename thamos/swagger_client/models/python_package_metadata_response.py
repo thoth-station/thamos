@@ -33,50 +33,72 @@ class PythonPackageMetadataResponse(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'author': 'str',
-        'author_email': 'str',
-        'classifier': 'str',
-        'description_content_type': 'str',
-        'download_url': 'str',
-        'home_page': 'str',
-        'keywords': 'str',
-        'license': 'str',
-        'maintainer': 'str',
-        'maintainer_email': 'str',
-        'metadata_version': 'str',
-        'name': 'str',
-        'platform': 'str',
-        'project_url': 'str',
-        'provides_extra': 'str',
-        'requires_dist': 'str',
-        'requires_python': 'str',
-        'summary': 'str',
-        'version': 'str'
+        "author": "str",
+        "author_email": "str",
+        "classifier": "str",
+        "description_content_type": "str",
+        "download_url": "str",
+        "home_page": "str",
+        "keywords": "str",
+        "license": "str",
+        "maintainer": "str",
+        "maintainer_email": "str",
+        "metadata_version": "str",
+        "name": "str",
+        "platform": "str",
+        "project_url": "str",
+        "provides_extra": "str",
+        "requires_dist": "str",
+        "requires_python": "str",
+        "summary": "str",
+        "version": "str",
     }
 
     attribute_map = {
-        'author': 'author',
-        'author_email': 'author_email',
-        'classifier': 'classifier',
-        'description_content_type': 'description_content_type',
-        'download_url': 'download_url',
-        'home_page': 'home_page',
-        'keywords': 'keywords',
-        'license': 'license',
-        'maintainer': 'maintainer',
-        'maintainer_email': 'maintainer_email',
-        'metadata_version': 'metadata_version',
-        'name': 'name',
-        'platform': 'platform',
-        'project_url': 'project_url',
-        'provides_extra': 'provides_extra',
-        'requires_dist': 'requires_dist',
-        'requires_python': 'requires_python',
-        'summary': 'summary',
-        'version': 'version'
+        "author": "author",
+        "author_email": "author_email",
+        "classifier": "classifier",
+        "description_content_type": "description_content_type",
+        "download_url": "download_url",
+        "home_page": "home_page",
+        "keywords": "keywords",
+        "license": "license",
+        "maintainer": "maintainer",
+        "maintainer_email": "maintainer_email",
+        "metadata_version": "metadata_version",
+        "name": "name",
+        "platform": "platform",
+        "project_url": "project_url",
+        "provides_extra": "provides_extra",
+        "requires_dist": "requires_dist",
+        "requires_python": "requires_python",
+        "summary": "summary",
+        "version": "version",
     }
 
-    def __init__(self, author=None, author_email=None, classifier=None, description_content_type=None, download_url=None, home_page=None, keywords=None, license=None, maintainer=None, maintainer_email=None, metadata_version=None, name=None, platform=None, project_url=None, provides_extra=None, requires_dist=None, requires_python=None, summary=None, version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        author=None,
+        author_email=None,
+        classifier=None,
+        description_content_type=None,
+        download_url=None,
+        home_page=None,
+        keywords=None,
+        license=None,
+        maintainer=None,
+        maintainer_email=None,
+        metadata_version=None,
+        name=None,
+        platform=None,
+        project_url=None,
+        provides_extra=None,
+        requires_dist=None,
+        requires_python=None,
+        summary=None,
+        version=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """PythonPackageMetadataResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -567,18 +589,20 @@ class PythonPackageMetadataResponse(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

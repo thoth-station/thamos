@@ -33,26 +33,36 @@ class QebHwtThamosAdviseInput(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'github_base_repo_url': 'str',
-        'github_check_run_id': 'int',
-        'github_event_type': 'str',
-        'github_head_repo_url': 'str',
-        'github_installation_id': 'int',
-        'origin': 'str',
-        'revision': 'str'
+        "github_base_repo_url": "str",
+        "github_check_run_id": "int",
+        "github_event_type": "str",
+        "github_head_repo_url": "str",
+        "github_installation_id": "int",
+        "origin": "str",
+        "revision": "str",
     }
 
     attribute_map = {
-        'github_base_repo_url': 'github_base_repo_url',
-        'github_check_run_id': 'github_check_run_id',
-        'github_event_type': 'github_event_type',
-        'github_head_repo_url': 'github_head_repo_url',
-        'github_installation_id': 'github_installation_id',
-        'origin': 'origin',
-        'revision': 'revision'
+        "github_base_repo_url": "github_base_repo_url",
+        "github_check_run_id": "github_check_run_id",
+        "github_event_type": "github_event_type",
+        "github_head_repo_url": "github_head_repo_url",
+        "github_installation_id": "github_installation_id",
+        "origin": "origin",
+        "revision": "revision",
     }
 
-    def __init__(self, github_base_repo_url=None, github_check_run_id=None, github_event_type=None, github_head_repo_url=None, github_installation_id=None, origin=None, revision=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        github_base_repo_url=None,
+        github_check_run_id=None,
+        github_event_type=None,
+        github_head_repo_url=None,
+        github_installation_id=None,
+        origin=None,
+        revision=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """QebHwtThamosAdviseInput - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -95,8 +105,13 @@ class QebHwtThamosAdviseInput(object):
         :param github_base_repo_url: The github_base_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and github_base_repo_url is None:  # noqa: E501
-            raise ValueError("Invalid value for `github_base_repo_url`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and github_base_repo_url is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `github_base_repo_url`, must not be `None`"
+            )  # noqa: E501
 
         self._github_base_repo_url = github_base_repo_url
 
@@ -120,8 +135,13 @@ class QebHwtThamosAdviseInput(object):
         :param github_check_run_id: The github_check_run_id of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and github_check_run_id is None:  # noqa: E501
-            raise ValueError("Invalid value for `github_check_run_id`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and github_check_run_id is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `github_check_run_id`, must not be `None`"
+            )  # noqa: E501
 
         self._github_check_run_id = github_check_run_id
 
@@ -145,8 +165,13 @@ class QebHwtThamosAdviseInput(object):
         :param github_event_type: The github_event_type of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and github_event_type is None:  # noqa: E501
-            raise ValueError("Invalid value for `github_event_type`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and github_event_type is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `github_event_type`, must not be `None`"
+            )  # noqa: E501
 
         self._github_event_type = github_event_type
 
@@ -170,8 +195,13 @@ class QebHwtThamosAdviseInput(object):
         :param github_head_repo_url: The github_head_repo_url of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and github_head_repo_url is None:  # noqa: E501
-            raise ValueError("Invalid value for `github_head_repo_url`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and github_head_repo_url is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `github_head_repo_url`, must not be `None`"
+            )  # noqa: E501
 
         self._github_head_repo_url = github_head_repo_url
 
@@ -195,8 +225,13 @@ class QebHwtThamosAdviseInput(object):
         :param github_installation_id: The github_installation_id of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and github_installation_id is None:  # noqa: E501
-            raise ValueError("Invalid value for `github_installation_id`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and github_installation_id is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `github_installation_id`, must not be `None`"
+            )  # noqa: E501
 
         self._github_installation_id = github_installation_id
 
@@ -220,8 +255,12 @@ class QebHwtThamosAdviseInput(object):
         :param origin: The origin of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and origin is None:  # noqa: E501
-            raise ValueError("Invalid value for `origin`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and origin is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `origin`, must not be `None`"
+            )  # noqa: E501
 
         self._origin = origin
 
@@ -245,8 +284,12 @@ class QebHwtThamosAdviseInput(object):
         :param revision: The revision of this QebHwtThamosAdviseInput.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and revision is None:  # noqa: E501
-            raise ValueError("Invalid value for `revision`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and revision is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `revision`, must not be `None`"
+            )  # noqa: E501
 
         self._revision = revision
 
@@ -257,18 +300,20 @@ class QebHwtThamosAdviseInput(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

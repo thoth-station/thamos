@@ -4,14 +4,12 @@ Runtime environment description, see Thamos configuration for more info.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cuda_version** | **str** | Nvidia CUDA version which the application uses. | [optional] 
-**hardware** | [**object**](.md) | Hardware configuration used. | [optional] 
-**ipython** | [**object**](.md) | Additional information captured when recommendations were requested for Jupyter Notebook environments.  | [optional] 
-**name** | **str** | User defined name of the runtime environment. | [optional] 
-**operating_system** | [**object**](.md) | Operating system used. | [optional] 
-**platform** | **str** | Platform used - corresponds to sysconfig.get_platform() call. | [optional] 
-**python_version** | **str** | Python version on which the application runs on. | [optional] 
+**cuda_version** | **str** | Nvidia CUDA version which the application uses. | [optional]
+**hardware** | [**object**](.md) | Hardware configuration used. | [optional]
+**ipython** | [**object**](.md) | Additional information captured when recommendations were requested for Jupyter Notebook environments.  | [optional]
+**name** | **str** | User defined name of the runtime environment. | [optional]
+**operating_system** | [**object**](.md) | Operating system used. | [optional]
+**platform** | **str** | Platform used - corresponds to sysconfig.get_platform() call. | [optional]
+**python_version** | **str** | Python version on which the application runs on. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

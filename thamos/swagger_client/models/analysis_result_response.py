@@ -32,17 +32,13 @@ class AnalysisResultResponse(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {
-        'metadata': 'AnalysisResultResponseMetadata',
-        'result': 'object'
-    }
+    openapi_types = {"metadata": "AnalysisResultResponseMetadata", "result": "object"}
 
-    attribute_map = {
-        'metadata': 'metadata',
-        'result': 'result'
-    }
+    attribute_map = {"metadata": "metadata", "result": "result"}
 
-    def __init__(self, metadata=None, result=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self, metadata=None, result=None, local_vars_configuration=None
+    ):  # noqa: E501
         """AnalysisResultResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -73,8 +69,12 @@ class AnalysisResultResponse(object):
         :param metadata: The metadata of this AnalysisResultResponse.  # noqa: E501
         :type: AnalysisResultResponseMetadata
         """
-        if self.local_vars_configuration.client_side_validation and metadata is None:  # noqa: E501
-            raise ValueError("Invalid value for `metadata`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and metadata is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `metadata`, must not be `None`"
+            )  # noqa: E501
 
         self._metadata = metadata
 
@@ -98,8 +98,12 @@ class AnalysisResultResponse(object):
         :param result: The result of this AnalysisResultResponse.  # noqa: E501
         :type: object
         """
-        if self.local_vars_configuration.client_side_validation and result is None:  # noqa: E501
-            raise ValueError("Invalid value for `result`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and result is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `result`, must not be `None`"
+            )  # noqa: E501
 
         self._result = result
 
@@ -110,18 +114,20 @@ class AnalysisResultResponse(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

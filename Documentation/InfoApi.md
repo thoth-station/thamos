@@ -94,7 +94,7 @@ configuration = thamos.swagger_client.Configuration(
 with thamos.swagger_client.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = thamos.swagger_client.InfoApi(api_client)
-    
+
     try:
         # Retrieve a list of supported runtime environments
         api_response = api_instance.list_runtime_environments()
@@ -187,4 +187,3 @@ No authorization required
 **400** | On invalid request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

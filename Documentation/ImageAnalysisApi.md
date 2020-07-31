@@ -55,7 +55,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| Id of analysis that results should be retrieved. | 
+ **analysis_id** | **str**| Id of analysis that results should be retrieved. |
 
 ### Return type
 
@@ -118,7 +118,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image_hash** | **str**| Image hash for identifying image (including hash type, now supported only \&quot;sha256\&quot;). | 
+ **image_hash** | **str**| Image hash for identifying image (including hash type, now supported only \&quot;sha256\&quot;). |
 
 ### Return type
 
@@ -181,7 +181,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of requested analysis. |
 
 ### Return type
 
@@ -243,7 +243,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of requested analysis. |
 
 ### Return type
 
@@ -352,7 +352,7 @@ configuration = thamos.swagger_client.Configuration(
 with thamos.swagger_client.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = thamos.swagger_client.ImageAnalysisApi(api_client)
-    environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved. 
+    environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved.
 
     try:
         # List analyses for the given software environment for build.
@@ -366,7 +366,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  | 
+ **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  |
 
 ### Return type
 
@@ -413,7 +413,7 @@ configuration = thamos.swagger_client.Configuration(
 with thamos.swagger_client.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = thamos.swagger_client.ImageAnalysisApi(api_client)
-    environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved. 
+    environment_name = 'environment_name_example' # str | Software environment name for run for which analyses should be retrieved.
 
     try:
         # List analyses for the given software environment for run.
@@ -427,7 +427,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  | 
+ **environment_name** | **str**| Software environment name for run for which analyses should be retrieved.  |
 
 ### Return type
 
@@ -596,7 +596,7 @@ configuration = thamos.swagger_client.Configuration(
 with thamos.swagger_client.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = thamos.swagger_client.ImageAnalysisApi(api_client)
-    image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
+    image = 'image_example' # str | Name of image - can also specify remote registry to pull image from.
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
 environment_type = 'runtime' # str | Type of environment (runtime or buildtime) which is being analyzed.  (optional) (default to 'runtime')
@@ -617,11 +617,11 @@ force = False # bool | Do not use cached results, always run analysis.  (optiona
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
- **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
- **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
+ **image** | **str**| Name of image - can also specify remote registry to pull image from.  |
+ **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional]
+ **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional]
  **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to &#39;runtime&#39;]
- **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
+ **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
  **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to False]
  **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to True]
  **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to False]
@@ -671,7 +671,7 @@ configuration = thamos.swagger_client.Configuration(
 with thamos.swagger_client.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = thamos.swagger_client.ImageAnalysisApi(api_client)
-    image = 'image_example' # str | Name of image - can also specify remote registry to pull image from. 
+    image = 'image_example' # str | Name of image - can also specify remote registry to pull image from.
 registry_user = 'registry_user_example' # str | Registry user to be used for pulling images from registry.  (optional)
 registry_password = 'registry_password_example' # str | Registry password or token to be used for pulling images from registry.  (optional)
 verify_tls = True # bool | Verify TLS certificates of registry from where images are pulled from.  (optional) (default to True)
@@ -688,9 +688,9 @@ verify_tls = True # bool | Verify TLS certificates of registry from where images
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **image** | **str**| Name of image - can also specify remote registry to pull image from.  | 
- **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
- **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional] 
+ **image** | **str**| Name of image - can also specify remote registry to pull image from.  |
+ **registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional]
+ **registry_password** | **str**| Registry password or token to be used for pulling images from registry.  | [optional]
  **verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from.  | [optional] [default to True]
 
 ### Return type
@@ -714,4 +714,3 @@ No authorization required
 **403** | If user is not authorized to pull image. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

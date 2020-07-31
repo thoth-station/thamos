@@ -45,7 +45,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **request_body** | [**dict(str, object)**](object.md)| Body of a git service webhook | 
+ **request_body** | [**dict(str, object)**](object.md)| Body of a git service webhook |
 
 ### Return type
 
@@ -106,7 +106,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **object**| Body of a git service webhook | 
+ **body** | **object**| Body of a git service webhook |
 
 ### Return type
 
@@ -129,4 +129,3 @@ No authorization required
 **501** | Functionality not supported |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

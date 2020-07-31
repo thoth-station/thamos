@@ -33,16 +33,18 @@ class InlineResponse200(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'hardware_environments': 'list[InlineResponse200HardwareEnvironments]',
-        'parameters': 'InlineResponse200Parameters'
+        "hardware_environments": "list[InlineResponse200HardwareEnvironments]",
+        "parameters": "InlineResponse200Parameters",
     }
 
     attribute_map = {
-        'hardware_environments': 'hardware_environments',
-        'parameters': 'parameters'
+        "hardware_environments": "hardware_environments",
+        "parameters": "parameters",
     }
 
-    def __init__(self, hardware_environments=None, parameters=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self, hardware_environments=None, parameters=None, local_vars_configuration=None
+    ):  # noqa: E501
         """InlineResponse200 - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -73,8 +75,13 @@ class InlineResponse200(object):
         :param hardware_environments: The hardware_environments of this InlineResponse200.  # noqa: E501
         :type: list[InlineResponse200HardwareEnvironments]
         """
-        if self.local_vars_configuration.client_side_validation and hardware_environments is None:  # noqa: E501
-            raise ValueError("Invalid value for `hardware_environments`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and hardware_environments is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `hardware_environments`, must not be `None`"
+            )  # noqa: E501
 
         self._hardware_environments = hardware_environments
 
@@ -96,8 +103,12 @@ class InlineResponse200(object):
         :param parameters: The parameters of this InlineResponse200.  # noqa: E501
         :type: InlineResponse200Parameters
         """
-        if self.local_vars_configuration.client_side_validation and parameters is None:  # noqa: E501
-            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and parameters is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `parameters`, must not be `None`"
+            )  # noqa: E501
 
         self._parameters = parameters
 
@@ -108,18 +119,20 @@ class InlineResponse200(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

@@ -18,10 +18,7 @@ import re  # noqa: F401
 import six
 
 from thamos.swagger_client.api_client import ApiClient
-from thamos.swagger_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from thamos.swagger_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class BuildlogsApi(object):
@@ -57,7 +54,7 @@ class BuildlogsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_buildlog_with_http_info(document_id, **kwargs)  # noqa: E501
 
     def get_buildlog_with_http_info(self, document_id, **kwargs):  # noqa: E501
@@ -86,36 +83,38 @@ class BuildlogsApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'document_id'
-        ]
+        all_params = ["document_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_buildlog" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'document_id' is set
-        if self.api_client.client_side_validation and ('document_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['document_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `document_id` when calling `get_buildlog`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "document_id" not in local_var_params
+            or local_var_params["document_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `document_id` when calling `get_buildlog`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'document_id' in local_var_params:
-            path_params['document_id'] = local_var_params['document_id']  # noqa: E501
+        if "document_id" in local_var_params:
+            path_params["document_id"] = local_var_params["document_id"]  # noqa: E501
 
         query_params = []
 
@@ -129,7 +128,8 @@ class BuildlogsApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/buildlog/{document_id}', 'GET',
+            "/buildlog/{document_id}",
+            "GET",
             path_params,
             query_params,
             header_params,
@@ -138,11 +138,14 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_buildlog_analyze(self, analysis_id, **kwargs):  # noqa: E501
         """Retrieve a build analyzer result.  # noqa: E501
@@ -165,8 +168,10 @@ class BuildlogsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_buildlog_analyze_with_http_info(analysis_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_buildlog_analyze_with_http_info(
+            analysis_id, **kwargs
+        )  # noqa: E501
 
     def get_buildlog_analyze_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
         """Retrieve a build analyzer result.  # noqa: E501
@@ -194,36 +199,38 @@ class BuildlogsApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_buildlog_analyze" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_buildlog_analyze`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_buildlog_analyze`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -234,27 +241,32 @@ class BuildlogsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/buildlog-analyze/{analysis_id}', 'GET',
+            "/buildlog-analyze/{analysis_id}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResultResponse',  # noqa: E501
+            response_type="AnalysisResultResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_buildlog_analyze(self, **kwargs):  # noqa: E501
         """Retrieve a list of document ids for build analyzer results.  # noqa: E501
@@ -277,7 +289,7 @@ class BuildlogsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_buildlog_analyze_with_http_info(**kwargs)  # noqa: E501
 
     def list_buildlog_analyze_with_http_info(self, **kwargs):  # noqa: E501
@@ -306,34 +318,34 @@ class BuildlogsApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'page'
-        ]
+        all_params = ["page"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_buildlog_analyze" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page' in local_var_params and local_var_params['page'] is not None:  # noqa: E501
-            query_params.append(('page', local_var_params['page']))  # noqa: E501
+        if (
+            "page" in local_var_params and local_var_params["page"] is not None
+        ):  # noqa: E501
+            query_params.append(("page", local_var_params["page"]))  # noqa: E501
 
         header_params = {}
 
@@ -342,27 +354,32 @@ class BuildlogsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/buildlog-analyze', 'GET',
+            "/buildlog-analyze",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisListingResponse',  # noqa: E501
+            response_type="AnalysisListingResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_buildlogs(self, **kwargs):  # noqa: E501
         """Retrieve a list of document ids for stored build logs.  # noqa: E501
@@ -385,7 +402,7 @@ class BuildlogsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_buildlogs_with_http_info(**kwargs)  # noqa: E501
 
     def list_buildlogs_with_http_info(self, **kwargs):  # noqa: E501
@@ -414,34 +431,34 @@ class BuildlogsApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'page'
-        ]
+        all_params = ["page"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_buildlogs" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page' in local_var_params and local_var_params['page'] is not None:  # noqa: E501
-            query_params.append(('page', local_var_params['page']))  # noqa: E501
+        if (
+            "page" in local_var_params and local_var_params["page"] is not None
+        ):  # noqa: E501
+            query_params.append(("page", local_var_params["page"]))  # noqa: E501
 
         header_params = {}
 
@@ -453,7 +470,8 @@ class BuildlogsApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/buildlog', 'GET',
+            "/buildlog",
+            "GET",
             path_params,
             query_params,
             header_params,
@@ -462,11 +480,14 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def post_buildlog(self, log, **kwargs):  # noqa: E501
         """Store the given build log.  # noqa: E501
@@ -489,7 +510,7 @@ class BuildlogsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.post_buildlog_with_http_info(log, **kwargs)  # noqa: E501
 
     def post_buildlog_with_http_info(self, log, **kwargs):  # noqa: E501
@@ -518,30 +539,32 @@ class BuildlogsApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'log'
-        ]
+        all_params = ["log"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method post_buildlog" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'log' is set
-        if self.api_client.client_side_validation and ('log' not in local_var_params or  # noqa: E501
-                                                        local_var_params['log'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `log` when calling `post_buildlog`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "log" not in local_var_params
+            or local_var_params["log"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `log` when calling `post_buildlog`"
+            )  # noqa: E501
 
         collection_formats = {}
 
@@ -555,17 +578,21 @@ class BuildlogsApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'log' in local_var_params:
-            body_params = local_var_params['log']
+        if "log" in local_var_params:
+            body_params = local_var_params["log"]
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/buildlog', 'POST',
+            "/buildlog",
+            "POST",
             path_params,
             query_params,
             header_params,
@@ -574,8 +601,11 @@ class BuildlogsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

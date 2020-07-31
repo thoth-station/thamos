@@ -33,26 +33,36 @@ class RuntimeEnvironment(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'cuda_version': 'str',
-        'hardware': 'object',
-        'ipython': 'object',
-        'name': 'str',
-        'operating_system': 'object',
-        'platform': 'str',
-        'python_version': 'str'
+        "cuda_version": "str",
+        "hardware": "object",
+        "ipython": "object",
+        "name": "str",
+        "operating_system": "object",
+        "platform": "str",
+        "python_version": "str",
     }
 
     attribute_map = {
-        'cuda_version': 'cuda_version',
-        'hardware': 'hardware',
-        'ipython': 'ipython',
-        'name': 'name',
-        'operating_system': 'operating_system',
-        'platform': 'platform',
-        'python_version': 'python_version'
+        "cuda_version": "cuda_version",
+        "hardware": "hardware",
+        "ipython": "ipython",
+        "name": "name",
+        "operating_system": "operating_system",
+        "platform": "platform",
+        "python_version": "python_version",
     }
 
-    def __init__(self, cuda_version=None, hardware=None, ipython=None, name=None, operating_system=None, platform=None, python_version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        cuda_version=None,
+        hardware=None,
+        ipython=None,
+        name=None,
+        operating_system=None,
+        platform=None,
+        python_version=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """RuntimeEnvironment - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -246,18 +256,20 @@ class RuntimeEnvironment(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

@@ -18,10 +18,7 @@ import re  # noqa: F401
 import six
 
 from thamos.swagger_client.api_client import ApiClient
-from thamos.swagger_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from thamos.swagger_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class BuildAnalysisApi(object):
@@ -46,13 +43,13 @@ class BuildAnalysisApi(object):
 
         :param async_req bool: execute request asynchronously
         :param Build build: Fill up the Build details such as output imagestream, base imagestream, and build log. (required)
-        :param str registry_user: Registry user to be used for pulling images from registry. 
-        :param str registry_password: Registry password or token to be used for pulling images from registry. 
-        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed. 
-        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
-        :param bool registry_verify_tls: Verify TLS certificates of registry from where images are pulled from. 
-        :param bool force: Do not use cached results, always run analysis. 
+        :param str registry_user: Registry user to be used for pulling images from registry.
+        :param str registry_password: Registry password or token to be used for pulling images from registry.
+        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed.
+        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.
+        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer.
+        :param bool registry_verify_tls: Verify TLS certificates of registry from where images are pulled from.
+        :param bool force: Do not use cached results, always run analysis.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -64,7 +61,7 @@ class BuildAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.post_build_with_http_info(build, **kwargs)  # noqa: E501
 
     def post_build_with_http_info(self, build, **kwargs):  # noqa: E501
@@ -77,13 +74,13 @@ class BuildAnalysisApi(object):
 
         :param async_req bool: execute request asynchronously
         :param Build build: Fill up the Build details such as output imagestream, base imagestream, and build log. (required)
-        :param str registry_user: Registry user to be used for pulling images from registry. 
-        :param str registry_password: Registry password or token to be used for pulling images from registry. 
-        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed. 
-        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
-        :param bool registry_verify_tls: Verify TLS certificates of registry from where images are pulled from. 
-        :param bool force: Do not use cached results, always run analysis. 
+        :param str registry_user: Registry user to be used for pulling images from registry.
+        :param str registry_password: Registry password or token to be used for pulling images from registry.
+        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed.
+        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.
+        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer.
+        :param bool registry_verify_tls: Verify TLS certificates of registry from where images are pulled from.
+        :param bool force: Do not use cached results, always run analysis.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -101,56 +98,86 @@ class BuildAnalysisApi(object):
         local_var_params = locals()
 
         all_params = [
-            'build',
-            'registry_user',
-            'registry_password',
-            'environment_type',
-            'origin',
-            'debug',
-            'registry_verify_tls',
-            'force'
+            "build",
+            "registry_user",
+            "registry_password",
+            "environment_type",
+            "origin",
+            "debug",
+            "registry_verify_tls",
+            "force",
         ]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method post_build" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'build' is set
-        if self.api_client.client_side_validation and ('build' not in local_var_params or  # noqa: E501
-                                                        local_var_params['build'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `build` when calling `post_build`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "build" not in local_var_params
+            or local_var_params["build"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `build` when calling `post_build`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'registry_user' in local_var_params and local_var_params['registry_user'] is not None:  # noqa: E501
-            query_params.append(('registry_user', local_var_params['registry_user']))  # noqa: E501
-        if 'registry_password' in local_var_params and local_var_params['registry_password'] is not None:  # noqa: E501
-            query_params.append(('registry_password', local_var_params['registry_password']))  # noqa: E501
-        if 'environment_type' in local_var_params and local_var_params['environment_type'] is not None:  # noqa: E501
-            query_params.append(('environment_type', local_var_params['environment_type']))  # noqa: E501
-        if 'origin' in local_var_params and local_var_params['origin'] is not None:  # noqa: E501
-            query_params.append(('origin', local_var_params['origin']))  # noqa: E501
-        if 'debug' in local_var_params and local_var_params['debug'] is not None:  # noqa: E501
-            query_params.append(('debug', local_var_params['debug']))  # noqa: E501
-        if 'registry_verify_tls' in local_var_params and local_var_params['registry_verify_tls'] is not None:  # noqa: E501
-            query_params.append(('registry_verify_tls', local_var_params['registry_verify_tls']))  # noqa: E501
-        if 'force' in local_var_params and local_var_params['force'] is not None:  # noqa: E501
-            query_params.append(('force', local_var_params['force']))  # noqa: E501
+        if (
+            "registry_user" in local_var_params
+            and local_var_params["registry_user"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_user", local_var_params["registry_user"])
+            )  # noqa: E501
+        if (
+            "registry_password" in local_var_params
+            and local_var_params["registry_password"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_password", local_var_params["registry_password"])
+            )  # noqa: E501
+        if (
+            "environment_type" in local_var_params
+            and local_var_params["environment_type"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("environment_type", local_var_params["environment_type"])
+            )  # noqa: E501
+        if (
+            "origin" in local_var_params and local_var_params["origin"] is not None
+        ):  # noqa: E501
+            query_params.append(("origin", local_var_params["origin"]))  # noqa: E501
+        if (
+            "debug" in local_var_params and local_var_params["debug"] is not None
+        ):  # noqa: E501
+            query_params.append(("debug", local_var_params["debug"]))  # noqa: E501
+        if (
+            "registry_verify_tls" in local_var_params
+            and local_var_params["registry_verify_tls"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_verify_tls", local_var_params["registry_verify_tls"])
+            )  # noqa: E501
+        if (
+            "force" in local_var_params and local_var_params["force"] is not None
+        ):  # noqa: E501
+            query_params.append(("force", local_var_params["force"]))  # noqa: E501
 
         header_params = {}
 
@@ -158,31 +185,39 @@ class BuildAnalysisApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'build' in local_var_params:
-            body_params = local_var_params['build']
+        if "build" in local_var_params:
+            body_params = local_var_params["build"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/build-analysis', 'POST',
+            "/build-analysis",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='BuildAnalysisResponse',  # noqa: E501
+            response_type="BuildAnalysisResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

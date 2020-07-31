@@ -45,7 +45,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **qeb_hwt_thamos_advise_input** | [**QebHwtThamosAdviseInput**](QebHwtThamosAdviseInput.md)| Thamos advise inputs. | 
+ **qeb_hwt_thamos_advise_input** | [**QebHwtThamosAdviseInput**](QebHwtThamosAdviseInput.md)| Thamos advise inputs. |
 
 ### Return type
 
@@ -67,4 +67,3 @@ No authorization required
 **400** | On invalid request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

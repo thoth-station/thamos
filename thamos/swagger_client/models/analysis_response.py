@@ -32,19 +32,21 @@ class AnalysisResponse(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {
-        'analysis_id': 'str',
-        'cached': 'bool',
-        'parameters': 'object'
-    }
+    openapi_types = {"analysis_id": "str", "cached": "bool", "parameters": "object"}
 
     attribute_map = {
-        'analysis_id': 'analysis_id',
-        'cached': 'cached',
-        'parameters': 'parameters'
+        "analysis_id": "analysis_id",
+        "cached": "cached",
+        "parameters": "parameters",
     }
 
-    def __init__(self, analysis_id=None, cached=None, parameters=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        analysis_id=None,
+        cached=None,
+        parameters=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """AnalysisResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -79,8 +81,12 @@ class AnalysisResponse(object):
         :param analysis_id: The analysis_id of this AnalysisResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and analysis_id is None:  # noqa: E501
-            raise ValueError("Invalid value for `analysis_id`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and analysis_id is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `analysis_id`, must not be `None`"
+            )  # noqa: E501
 
         self._analysis_id = analysis_id
 
@@ -104,8 +110,12 @@ class AnalysisResponse(object):
         :param cached: The cached of this AnalysisResponse.  # noqa: E501
         :type: bool
         """
-        if self.local_vars_configuration.client_side_validation and cached is None:  # noqa: E501
-            raise ValueError("Invalid value for `cached`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and cached is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cached`, must not be `None`"
+            )  # noqa: E501
 
         self._cached = cached
 
@@ -129,8 +139,12 @@ class AnalysisResponse(object):
         :param parameters: The parameters of this AnalysisResponse.  # noqa: E501
         :type: object
         """
-        if self.local_vars_configuration.client_side_validation and parameters is None:  # noqa: E501
-            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and parameters is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `parameters`, must not be `None`"
+            )  # noqa: E501
 
         self._parameters = parameters
 
@@ -141,18 +155,20 @@ class AnalysisResponse(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

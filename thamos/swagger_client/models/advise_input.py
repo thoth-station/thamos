@@ -33,18 +33,24 @@ class AdviseInput(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'application_stack': 'PythonStack',
-        'library_usage': 'AdviseInputLibraryUsage',
-        'runtime_environment': 'RuntimeEnvironment'
+        "application_stack": "PythonStack",
+        "library_usage": "AdviseInputLibraryUsage",
+        "runtime_environment": "RuntimeEnvironment",
     }
 
     attribute_map = {
-        'application_stack': 'application_stack',
-        'library_usage': 'library_usage',
-        'runtime_environment': 'runtime_environment'
+        "application_stack": "application_stack",
+        "library_usage": "library_usage",
+        "runtime_environment": "runtime_environment",
     }
 
-    def __init__(self, application_stack=None, library_usage=None, runtime_environment=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        application_stack=None,
+        library_usage=None,
+        runtime_environment=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """AdviseInput - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -79,8 +85,13 @@ class AdviseInput(object):
         :param application_stack: The application_stack of this AdviseInput.  # noqa: E501
         :type: PythonStack
         """
-        if self.local_vars_configuration.client_side_validation and application_stack is None:  # noqa: E501
-            raise ValueError("Invalid value for `application_stack`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and application_stack is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `application_stack`, must not be `None`"
+            )  # noqa: E501
 
         self._application_stack = application_stack
 
@@ -133,18 +144,20 @@ class AdviseInput(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

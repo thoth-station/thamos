@@ -48,7 +48,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of requested analysis. |
 
 ### Return type
 
@@ -111,7 +111,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. | 
+ **analysis_id** | **str**| An id of requested analysis. |
 
 ### Return type
 
@@ -173,7 +173,7 @@ with thamos.swagger_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested provenance check. | 
+ **analysis_id** | **str**| An id of requested provenance check. |
 
 ### Return type
 
@@ -238,8 +238,8 @@ force = False # bool | Do not use cached results, always run provenance checks. 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **python_stack** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
- **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
+ **python_stack** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. |
+ **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
  **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to False]
  **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] [default to False]
 
@@ -263,4 +263,3 @@ No authorization required
 **400** | On invalid request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

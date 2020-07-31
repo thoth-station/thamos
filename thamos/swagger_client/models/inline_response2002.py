@@ -33,16 +33,18 @@ class InlineResponse2002(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'parameters': 'InlineResponse200Parameters',
-        'software_environments': 'list[InlineResponse2002SoftwareEnvironments]'
+        "parameters": "InlineResponse200Parameters",
+        "software_environments": "list[InlineResponse2002SoftwareEnvironments]",
     }
 
     attribute_map = {
-        'parameters': 'parameters',
-        'software_environments': 'software_environments'
+        "parameters": "parameters",
+        "software_environments": "software_environments",
     }
 
-    def __init__(self, parameters=None, software_environments=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self, parameters=None, software_environments=None, local_vars_configuration=None
+    ):  # noqa: E501
         """InlineResponse2002 - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -73,8 +75,12 @@ class InlineResponse2002(object):
         :param parameters: The parameters of this InlineResponse2002.  # noqa: E501
         :type: InlineResponse200Parameters
         """
-        if self.local_vars_configuration.client_side_validation and parameters is None:  # noqa: E501
-            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and parameters is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `parameters`, must not be `None`"
+            )  # noqa: E501
 
         self._parameters = parameters
 
@@ -96,8 +102,13 @@ class InlineResponse2002(object):
         :param software_environments: The software_environments of this InlineResponse2002.  # noqa: E501
         :type: list[InlineResponse2002SoftwareEnvironments]
         """
-        if self.local_vars_configuration.client_side_validation and software_environments is None:  # noqa: E501
-            raise ValueError("Invalid value for `software_environments`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and software_environments is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `software_environments`, must not be `None`"
+            )  # noqa: E501
 
         self._software_environments = software_environments
 
@@ -108,18 +119,20 @@ class InlineResponse2002(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

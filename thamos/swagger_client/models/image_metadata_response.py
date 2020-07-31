@@ -33,32 +33,45 @@ class ImageMetadataResponse(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'architecture': 'str',
-        'created': 'str',
-        'digest': 'str',
-        'docker_version': 'str',
-        'labels': 'object',
-        'layers': 'list[str]',
-        'name': 'str',
-        'os': 'str',
-        'repo_tags': 'list[str]',
-        'tag': 'str'
+        "architecture": "str",
+        "created": "str",
+        "digest": "str",
+        "docker_version": "str",
+        "labels": "object",
+        "layers": "list[str]",
+        "name": "str",
+        "os": "str",
+        "repo_tags": "list[str]",
+        "tag": "str",
     }
 
     attribute_map = {
-        'architecture': 'architecture',
-        'created': 'created',
-        'digest': 'digest',
-        'docker_version': 'docker_version',
-        'labels': 'labels',
-        'layers': 'layers',
-        'name': 'name',
-        'os': 'os',
-        'repo_tags': 'repo_tags',
-        'tag': 'tag'
+        "architecture": "architecture",
+        "created": "created",
+        "digest": "digest",
+        "docker_version": "docker_version",
+        "labels": "labels",
+        "layers": "layers",
+        "name": "name",
+        "os": "os",
+        "repo_tags": "repo_tags",
+        "tag": "tag",
     }
 
-    def __init__(self, architecture=None, created=None, digest=None, docker_version=None, labels=None, layers=None, name=None, os=None, repo_tags=None, tag=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        architecture=None,
+        created=None,
+        digest=None,
+        docker_version=None,
+        labels=None,
+        layers=None,
+        name=None,
+        os=None,
+        repo_tags=None,
+        tag=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """ImageMetadataResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -107,8 +120,13 @@ class ImageMetadataResponse(object):
         :param architecture: The architecture of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and architecture is None:  # noqa: E501
-            raise ValueError("Invalid value for `architecture`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and architecture is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `architecture`, must not be `None`"
+            )  # noqa: E501
 
         self._architecture = architecture
 
@@ -132,8 +150,12 @@ class ImageMetadataResponse(object):
         :param created: The created of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and created is None:  # noqa: E501
-            raise ValueError("Invalid value for `created`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and created is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created`, must not be `None`"
+            )  # noqa: E501
 
         self._created = created
 
@@ -157,8 +179,12 @@ class ImageMetadataResponse(object):
         :param digest: The digest of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and digest is None:  # noqa: E501
-            raise ValueError("Invalid value for `digest`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and digest is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `digest`, must not be `None`"
+            )  # noqa: E501
 
         self._digest = digest
 
@@ -182,8 +208,13 @@ class ImageMetadataResponse(object):
         :param docker_version: The docker_version of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and docker_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `docker_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and docker_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `docker_version`, must not be `None`"
+            )  # noqa: E501
 
         self._docker_version = docker_version
 
@@ -207,8 +238,12 @@ class ImageMetadataResponse(object):
         :param labels: The labels of this ImageMetadataResponse.  # noqa: E501
         :type: object
         """
-        if self.local_vars_configuration.client_side_validation and labels is None:  # noqa: E501
-            raise ValueError("Invalid value for `labels`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and labels is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `labels`, must not be `None`"
+            )  # noqa: E501
 
         self._labels = labels
 
@@ -230,8 +265,12 @@ class ImageMetadataResponse(object):
         :param layers: The layers of this ImageMetadataResponse.  # noqa: E501
         :type: list[str]
         """
-        if self.local_vars_configuration.client_side_validation and layers is None:  # noqa: E501
-            raise ValueError("Invalid value for `layers`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and layers is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `layers`, must not be `None`"
+            )  # noqa: E501
 
         self._layers = layers
 
@@ -255,8 +294,12 @@ class ImageMetadataResponse(object):
         :param name: The name of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -280,7 +323,9 @@ class ImageMetadataResponse(object):
         :param os: The os of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and os is None:  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and os is None
+        ):  # noqa: E501
             raise ValueError("Invalid value for `os`, must not be `None`")  # noqa: E501
 
         self._os = os
@@ -303,8 +348,12 @@ class ImageMetadataResponse(object):
         :param repo_tags: The repo_tags of this ImageMetadataResponse.  # noqa: E501
         :type: list[str]
         """
-        if self.local_vars_configuration.client_side_validation and repo_tags is None:  # noqa: E501
-            raise ValueError("Invalid value for `repo_tags`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and repo_tags is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `repo_tags`, must not be `None`"
+            )  # noqa: E501
 
         self._repo_tags = repo_tags
 
@@ -328,8 +377,12 @@ class ImageMetadataResponse(object):
         :param tag: The tag of this ImageMetadataResponse.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and tag is None:  # noqa: E501
-            raise ValueError("Invalid value for `tag`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and tag is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `tag`, must not be `None`"
+            )  # noqa: E501
 
         self._tag = tag
 
@@ -340,18 +393,20 @@ class ImageMetadataResponse(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

@@ -18,10 +18,7 @@ import re  # noqa: F401
 import six
 
 from thamos.swagger_client.api_client import ApiClient
-from thamos.swagger_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from thamos.swagger_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class GitHubApi(object):
@@ -36,7 +33,9 @@ class GitHubApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def schedule_thamos_advise(self, qeb_hwt_thamos_advise_input, **kwargs):  # noqa: E501
+    def schedule_thamos_advise(
+        self, qeb_hwt_thamos_advise_input, **kwargs
+    ):  # noqa: E501
         """Schedule Thamos advise for GitHub App.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -57,10 +56,14 @@ class GitHubApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.schedule_thamos_advise_with_http_info(qeb_hwt_thamos_advise_input, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.schedule_thamos_advise_with_http_info(
+            qeb_hwt_thamos_advise_input, **kwargs
+        )  # noqa: E501
 
-    def schedule_thamos_advise_with_http_info(self, qeb_hwt_thamos_advise_input, **kwargs):  # noqa: E501
+    def schedule_thamos_advise_with_http_info(
+        self, qeb_hwt_thamos_advise_input, **kwargs
+    ):  # noqa: E501
         """Schedule Thamos advise for GitHub App.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -86,30 +89,32 @@ class GitHubApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'qeb_hwt_thamos_advise_input'
-        ]
+        all_params = ["qeb_hwt_thamos_advise_input"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method schedule_thamos_advise" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'qeb_hwt_thamos_advise_input' is set
-        if self.api_client.client_side_validation and ('qeb_hwt_thamos_advise_input' not in local_var_params or  # noqa: E501
-                                                        local_var_params['qeb_hwt_thamos_advise_input'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `qeb_hwt_thamos_advise_input` when calling `schedule_thamos_advise`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "qeb_hwt_thamos_advise_input" not in local_var_params
+            or local_var_params["qeb_hwt_thamos_advise_input"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `qeb_hwt_thamos_advise_input` when calling `schedule_thamos_advise`"
+            )  # noqa: E501
 
         collection_formats = {}
 
@@ -123,31 +128,39 @@ class GitHubApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'qeb_hwt_thamos_advise_input' in local_var_params:
-            body_params = local_var_params['qeb_hwt_thamos_advise_input']
+        if "qeb_hwt_thamos_advise_input" in local_var_params:
+            body_params = local_var_params["qeb_hwt_thamos_advise_input"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/qeb-hwt', 'POST',
+            "/qeb-hwt",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResponse',  # noqa: E501
+            response_type="AnalysisResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

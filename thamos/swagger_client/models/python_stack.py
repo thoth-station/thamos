@@ -33,18 +33,24 @@ class PythonStack(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'requirements': 'str',
-        'requirements_format': 'list[str]',
-        'requirements_lock': 'str'
+        "requirements": "str",
+        "requirements_format": "list[str]",
+        "requirements_lock": "str",
     }
 
     attribute_map = {
-        'requirements': 'requirements',
-        'requirements_format': 'requirements_format',
-        'requirements_lock': 'requirements_lock'
+        "requirements": "requirements",
+        "requirements_format": "requirements_format",
+        "requirements_lock": "requirements_lock",
     }
 
-    def __init__(self, requirements=None, requirements_format=None, requirements_lock=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        requirements=None,
+        requirements_format=None,
+        requirements_lock=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """PythonStack - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -80,11 +86,21 @@ class PythonStack(object):
         :param requirements: The requirements of this PythonStack.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and requirements is None:  # noqa: E501
-            raise ValueError("Invalid value for `requirements`, must not be `None`")  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                requirements is not None and len(requirements) < 1):
-            raise ValueError("Invalid value for `requirements`, length must be greater than or equal to `1`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and requirements is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `requirements`, must not be `None`"
+            )  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and requirements is not None
+            and len(requirements) < 1
+        ):
+            raise ValueError(
+                "Invalid value for `requirements`, length must be greater than or equal to `1`"
+            )  # noqa: E501
 
         self._requirements = requirements
 
@@ -109,12 +125,18 @@ class PythonStack(object):
         :type: list[str]
         """
         allowed_values = ["pipenv", "requirements"]  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                not set(requirements_format).issubset(set(allowed_values))):  # noqa: E501
+        if self.local_vars_configuration.client_side_validation and not set(
+            requirements_format
+        ).issubset(
+            set(allowed_values)
+        ):  # noqa: E501
             raise ValueError(
-                "Invalid values for `requirements_format` [{0}], must be a subset of [{1}]"  # noqa: E501
-                .format(", ".join(map(str, set(requirements_format) - set(allowed_values))),  # noqa: E501
-                        ", ".join(map(str, allowed_values)))
+                "Invalid values for `requirements_format` [{0}], must be a subset of [{1}]".format(  # noqa: E501
+                    ", ".join(
+                        map(str, set(requirements_format) - set(allowed_values))
+                    ),  # noqa: E501
+                    ", ".join(map(str, allowed_values)),
+                )
             )
 
         self._requirements_format = requirements_format
@@ -139,8 +161,13 @@ class PythonStack(object):
         :param requirements_lock: The requirements_lock of this PythonStack.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and requirements_lock is None:  # noqa: E501
-            raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and requirements_lock is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `requirements_lock`, must not be `None`"
+            )  # noqa: E501
 
         self._requirements_lock = requirements_lock
 
@@ -151,18 +178,20 @@ class PythonStack(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

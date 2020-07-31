@@ -33,20 +33,27 @@ class AnalysisStatusResponseStatus(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'finished_at': 'str',
-        'reason': 'str',
-        'started_at': 'str',
-        'state': 'str'
+        "finished_at": "str",
+        "reason": "str",
+        "started_at": "str",
+        "state": "str",
     }
 
     attribute_map = {
-        'finished_at': 'finished_at',
-        'reason': 'reason',
-        'started_at': 'started_at',
-        'state': 'state'
+        "finished_at": "finished_at",
+        "reason": "reason",
+        "started_at": "started_at",
+        "state": "state",
     }
 
-    def __init__(self, finished_at=None, reason=None, started_at=None, state=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        finished_at=None,
+        reason=None,
+        started_at=None,
+        state=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """AnalysisStatusResponseStatus - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -150,8 +157,12 @@ class AnalysisStatusResponseStatus(object):
         :param state: The state of this AnalysisStatusResponseStatus.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and state is None:  # noqa: E501
-            raise ValueError("Invalid value for `state`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and state is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `state`, must not be `None`"
+            )  # noqa: E501
 
         self._state = state
 
@@ -162,18 +173,20 @@ class AnalysisStatusResponseStatus(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

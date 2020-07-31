@@ -18,10 +18,7 @@ import re  # noqa: F401
 import six
 
 from thamos.swagger_client.api_client import ApiClient
-from thamos.swagger_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from thamos.swagger_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class ImageAnalysisApi(object):
@@ -57,7 +54,7 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_analyze_with_http_info(analysis_id, **kwargs)  # noqa: E501
 
     def get_analyze_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
@@ -86,36 +83,38 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_analyze" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_analyze`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_analyze`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -126,27 +125,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/analyze/{analysis_id}', 'GET',
+            "/analyze/{analysis_id}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResultResponse',  # noqa: E501
+            response_type="AnalysisResultResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_analyze_by_hash(self, image_hash, **kwargs):  # noqa: E501
         """Retrieve an analyzer result.  # noqa: E501
@@ -169,8 +173,10 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_analyze_by_hash_with_http_info(image_hash, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_analyze_by_hash_with_http_info(
+            image_hash, **kwargs
+        )  # noqa: E501
 
     def get_analyze_by_hash_with_http_info(self, image_hash, **kwargs):  # noqa: E501
         """Retrieve an analyzer result.  # noqa: E501
@@ -198,36 +204,38 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'image_hash'
-        ]
+        all_params = ["image_hash"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_analyze_by_hash" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'image_hash' is set
-        if self.api_client.client_side_validation and ('image_hash' not in local_var_params or  # noqa: E501
-                                                        local_var_params['image_hash'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `image_hash` when calling `get_analyze_by_hash`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "image_hash" not in local_var_params
+            or local_var_params["image_hash"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `image_hash` when calling `get_analyze_by_hash`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'image_hash' in local_var_params:
-            path_params['image_hash'] = local_var_params['image_hash']  # noqa: E501
+        if "image_hash" in local_var_params:
+            path_params["image_hash"] = local_var_params["image_hash"]  # noqa: E501
 
         query_params = []
 
@@ -238,27 +246,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/analyze/by-hash/{image_hash}', 'GET',
+            "/analyze/by-hash/{image_hash}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResultResponse',  # noqa: E501
+            response_type="AnalysisResultResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_analyze_log(self, analysis_id, **kwargs):  # noqa: E501
         """Show logs of an analysis.  # noqa: E501
@@ -281,7 +294,7 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_analyze_log_with_http_info(analysis_id, **kwargs)  # noqa: E501
 
     def get_analyze_log_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
@@ -310,36 +323,38 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_analyze_log" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_analyze_log`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_analyze_log`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -350,27 +365,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/analyze/{analysis_id}/log', 'GET',
+            "/analyze/{analysis_id}/log",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisLogResponse',  # noqa: E501
+            response_type="AnalysisLogResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_analyze_status(self, analysis_id, **kwargs):  # noqa: E501
         """Show analysis status.  # noqa: E501
@@ -393,8 +413,10 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_analyze_status_with_http_info(analysis_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_analyze_status_with_http_info(
+            analysis_id, **kwargs
+        )  # noqa: E501
 
     def get_analyze_status_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
         """Show analysis status.  # noqa: E501
@@ -422,36 +444,38 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_analyze_status" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_analyze_status`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_analyze_status`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -462,27 +486,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/analyze/{analysis_id}/status', 'GET',
+            "/analyze/{analysis_id}/status",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisStatusResponse',  # noqa: E501
+            response_type="AnalysisStatusResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_analyze(self, **kwargs):  # noqa: E501
         """Retrieve a list of document ids for analyzer results.  # noqa: E501
@@ -505,7 +534,7 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_analyze_with_http_info(**kwargs)  # noqa: E501
 
     def list_analyze_with_http_info(self, **kwargs):  # noqa: E501
@@ -534,34 +563,34 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'page'
-        ]
+        all_params = ["page"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_analyze" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page' in local_var_params and local_var_params['page'] is not None:  # noqa: E501
-            query_params.append(('page', local_var_params['page']))  # noqa: E501
+        if (
+            "page" in local_var_params and local_var_params["page"] is not None
+        ):  # noqa: E501
+            query_params.append(("page", local_var_params["page"]))  # noqa: E501
 
         header_params = {}
 
@@ -570,29 +599,36 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/analyze', 'GET',
+            "/analyze",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisListingResponse',  # noqa: E501
+            response_type="AnalysisListingResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def list_software_environment_analyses_for_build(self, environment_name, **kwargs):  # noqa: E501
+    def list_software_environment_analyses_for_build(
+        self, environment_name, **kwargs
+    ):  # noqa: E501
         """List analyses for the given software environment for build.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -613,10 +649,14 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_software_environment_analyses_for_build_with_http_info(environment_name, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_software_environment_analyses_for_build_with_http_info(
+            environment_name, **kwargs
+        )  # noqa: E501
 
-    def list_software_environment_analyses_for_build_with_http_info(self, environment_name, **kwargs):  # noqa: E501
+    def list_software_environment_analyses_for_build_with_http_info(
+        self, environment_name, **kwargs
+    ):  # noqa: E501
         """List analyses for the given software environment for build.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -642,36 +682,40 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'environment_name'
-        ]
+        all_params = ["environment_name"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_software_environment_analyses_for_build" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'environment_name' is set
-        if self.api_client.client_side_validation and ('environment_name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['environment_name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `environment_name` when calling `list_software_environment_analyses_for_build`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "environment_name" not in local_var_params
+            or local_var_params["environment_name"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `environment_name` when calling `list_software_environment_analyses_for_build`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'environment_name' in local_var_params:
-            path_params['environment_name'] = local_var_params['environment_name']  # noqa: E501
+        if "environment_name" in local_var_params:
+            path_params["environment_name"] = local_var_params[
+                "environment_name"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -682,29 +726,36 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/build-software-environment/analyses/{environment_name}', 'GET',
+            "/build-software-environment/analyses/{environment_name}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type="object",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def list_software_environment_analyses_for_run(self, environment_name, **kwargs):  # noqa: E501
+    def list_software_environment_analyses_for_run(
+        self, environment_name, **kwargs
+    ):  # noqa: E501
         """List analyses for the given software environment for run.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -725,10 +776,14 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_software_environment_analyses_for_run_with_http_info(environment_name, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_software_environment_analyses_for_run_with_http_info(
+            environment_name, **kwargs
+        )  # noqa: E501
 
-    def list_software_environment_analyses_for_run_with_http_info(self, environment_name, **kwargs):  # noqa: E501
+    def list_software_environment_analyses_for_run_with_http_info(
+        self, environment_name, **kwargs
+    ):  # noqa: E501
         """List analyses for the given software environment for run.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -754,36 +809,40 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'environment_name'
-        ]
+        all_params = ["environment_name"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_software_environment_analyses_for_run" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'environment_name' is set
-        if self.api_client.client_side_validation and ('environment_name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['environment_name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `environment_name` when calling `list_software_environment_analyses_for_run`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "environment_name" not in local_var_params
+            or local_var_params["environment_name"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `environment_name` when calling `list_software_environment_analyses_for_run`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'environment_name' in local_var_params:
-            path_params['environment_name'] = local_var_params['environment_name']  # noqa: E501
+        if "environment_name" in local_var_params:
+            path_params["environment_name"] = local_var_params[
+                "environment_name"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -794,27 +853,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/run-software-environment/analyses/{environment_name}', 'GET',
+            "/run-software-environment/analyses/{environment_name}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type="object",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_software_environments_for_build(self, **kwargs):  # noqa: E501
         """Retrieve a list of software environments analyzed for build.  # noqa: E501
@@ -837,10 +901,14 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_software_environments_for_build_with_http_info(**kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_software_environments_for_build_with_http_info(
+            **kwargs
+        )  # noqa: E501
 
-    def list_software_environments_for_build_with_http_info(self, **kwargs):  # noqa: E501
+    def list_software_environments_for_build_with_http_info(
+        self, **kwargs
+    ):  # noqa: E501
         """Retrieve a list of software environments analyzed for build.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -866,34 +934,34 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'page'
-        ]
+        all_params = ["page"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_software_environments_for_build" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page' in local_var_params and local_var_params['page'] is not None:  # noqa: E501
-            query_params.append(('page', local_var_params['page']))  # noqa: E501
+        if (
+            "page" in local_var_params and local_var_params["page"] is not None
+        ):  # noqa: E501
+            query_params.append(("page", local_var_params["page"]))  # noqa: E501
 
         header_params = {}
 
@@ -902,27 +970,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/build-software-environment', 'GET',
+            "/build-software-environment",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type="object",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_software_environments_for_run(self, **kwargs):  # noqa: E501
         """Retrieve a list of software environments analyzed for run.  # noqa: E501
@@ -945,8 +1018,10 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_software_environments_for_run_with_http_info(**kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_software_environments_for_run_with_http_info(
+            **kwargs
+        )  # noqa: E501
 
     def list_software_environments_for_run_with_http_info(self, **kwargs):  # noqa: E501
         """Retrieve a list of software environments analyzed for run.  # noqa: E501
@@ -974,34 +1049,34 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'page'
-        ]
+        all_params = ["page"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_software_environments_for_run" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'page' in local_var_params and local_var_params['page'] is not None:  # noqa: E501
-            query_params.append(('page', local_var_params['page']))  # noqa: E501
+        if (
+            "page" in local_var_params and local_var_params["page"] is not None
+        ):  # noqa: E501
+            query_params.append(("page", local_var_params["page"]))  # noqa: E501
 
         header_params = {}
 
@@ -1010,27 +1085,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/run-software-environment', 'GET',
+            "/run-software-environment",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type="object",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def post_analyze(self, image, **kwargs):  # noqa: E501
         """Analyze the given image asynchronously.  # noqa: E501
@@ -1042,13 +1122,13 @@ class ImageAnalysisApi(object):
 
         :param async_req bool: execute request asynchronously
         :param str image: Name of image - can also specify remote registry to pull image from.  (required)
-        :param str registry_user: Registry user to be used for pulling images from registry. 
-        :param str registry_password: Registry password or token to be used for pulling images from registry. 
-        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed. 
-        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
-        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
-        :param bool force: Do not use cached results, always run analysis. 
+        :param str registry_user: Registry user to be used for pulling images from registry.
+        :param str registry_password: Registry password or token to be used for pulling images from registry.
+        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed.
+        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.
+        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer.
+        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from.
+        :param bool force: Do not use cached results, always run analysis.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1060,7 +1140,7 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.post_analyze_with_http_info(image, **kwargs)  # noqa: E501
 
     def post_analyze_with_http_info(self, image, **kwargs):  # noqa: E501
@@ -1073,13 +1153,13 @@ class ImageAnalysisApi(object):
 
         :param async_req bool: execute request asynchronously
         :param str image: Name of image - can also specify remote registry to pull image from.  (required)
-        :param str registry_user: Registry user to be used for pulling images from registry. 
-        :param str registry_password: Registry password or token to be used for pulling images from registry. 
-        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed. 
-        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer. 
-        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
-        :param bool force: Do not use cached results, always run analysis. 
+        :param str registry_user: Registry user to be used for pulling images from registry.
+        :param str registry_password: Registry password or token to be used for pulling images from registry.
+        :param str environment_type: Type of environment (runtime or buildtime) which is being analyzed.
+        :param str origin: A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.
+        :param bool debug: Run the given analyzer in a verbose mode so developers can debug analyzer.
+        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from.
+        :param bool force: Do not use cached results, always run analysis.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1097,58 +1177,90 @@ class ImageAnalysisApi(object):
         local_var_params = locals()
 
         all_params = [
-            'image',
-            'registry_user',
-            'registry_password',
-            'environment_type',
-            'origin',
-            'debug',
-            'verify_tls',
-            'force'
+            "image",
+            "registry_user",
+            "registry_password",
+            "environment_type",
+            "origin",
+            "debug",
+            "verify_tls",
+            "force",
         ]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method post_analyze" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'image' is set
-        if self.api_client.client_side_validation and ('image' not in local_var_params or  # noqa: E501
-                                                        local_var_params['image'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `image` when calling `post_analyze`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "image" not in local_var_params
+            or local_var_params["image"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `image` when calling `post_analyze`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'image' in local_var_params and local_var_params['image'] is not None:  # noqa: E501
-            query_params.append(('image', local_var_params['image']))  # noqa: E501
-        if 'registry_user' in local_var_params and local_var_params['registry_user'] is not None:  # noqa: E501
-            query_params.append(('registry_user', local_var_params['registry_user']))  # noqa: E501
-        if 'registry_password' in local_var_params and local_var_params['registry_password'] is not None:  # noqa: E501
-            query_params.append(('registry_password', local_var_params['registry_password']))  # noqa: E501
-        if 'environment_type' in local_var_params and local_var_params['environment_type'] is not None:  # noqa: E501
-            query_params.append(('environment_type', local_var_params['environment_type']))  # noqa: E501
-        if 'origin' in local_var_params and local_var_params['origin'] is not None:  # noqa: E501
-            query_params.append(('origin', local_var_params['origin']))  # noqa: E501
-        if 'debug' in local_var_params and local_var_params['debug'] is not None:  # noqa: E501
-            query_params.append(('debug', local_var_params['debug']))  # noqa: E501
-        if 'verify_tls' in local_var_params and local_var_params['verify_tls'] is not None:  # noqa: E501
-            query_params.append(('verify_tls', local_var_params['verify_tls']))  # noqa: E501
-        if 'force' in local_var_params and local_var_params['force'] is not None:  # noqa: E501
-            query_params.append(('force', local_var_params['force']))  # noqa: E501
+        if (
+            "image" in local_var_params and local_var_params["image"] is not None
+        ):  # noqa: E501
+            query_params.append(("image", local_var_params["image"]))  # noqa: E501
+        if (
+            "registry_user" in local_var_params
+            and local_var_params["registry_user"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_user", local_var_params["registry_user"])
+            )  # noqa: E501
+        if (
+            "registry_password" in local_var_params
+            and local_var_params["registry_password"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_password", local_var_params["registry_password"])
+            )  # noqa: E501
+        if (
+            "environment_type" in local_var_params
+            and local_var_params["environment_type"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("environment_type", local_var_params["environment_type"])
+            )  # noqa: E501
+        if (
+            "origin" in local_var_params and local_var_params["origin"] is not None
+        ):  # noqa: E501
+            query_params.append(("origin", local_var_params["origin"]))  # noqa: E501
+        if (
+            "debug" in local_var_params and local_var_params["debug"] is not None
+        ):  # noqa: E501
+            query_params.append(("debug", local_var_params["debug"]))  # noqa: E501
+        if (
+            "verify_tls" in local_var_params
+            and local_var_params["verify_tls"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("verify_tls", local_var_params["verify_tls"])
+            )  # noqa: E501
+        if (
+            "force" in local_var_params and local_var_params["force"] is not None
+        ):  # noqa: E501
+            query_params.append(("force", local_var_params["force"]))  # noqa: E501
 
         header_params = {}
 
@@ -1157,27 +1269,32 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/analyze', 'POST',
+            "/analyze",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResponse',  # noqa: E501
+            response_type="AnalysisResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def post_image_metadata(self, image, **kwargs):  # noqa: E501
         """Get metadata for the given image  # noqa: E501
@@ -1189,9 +1306,9 @@ class ImageAnalysisApi(object):
 
         :param async_req bool: execute request asynchronously
         :param str image: Name of image - can also specify remote registry to pull image from.  (required)
-        :param str registry_user: Registry user to be used for pulling images from registry. 
-        :param str registry_password: Registry password or token to be used for pulling images from registry. 
-        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
+        :param str registry_user: Registry user to be used for pulling images from registry.
+        :param str registry_password: Registry password or token to be used for pulling images from registry.
+        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1203,7 +1320,7 @@ class ImageAnalysisApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.post_image_metadata_with_http_info(image, **kwargs)  # noqa: E501
 
     def post_image_metadata_with_http_info(self, image, **kwargs):  # noqa: E501
@@ -1216,9 +1333,9 @@ class ImageAnalysisApi(object):
 
         :param async_req bool: execute request asynchronously
         :param str image: Name of image - can also specify remote registry to pull image from.  (required)
-        :param str registry_user: Registry user to be used for pulling images from registry. 
-        :param str registry_password: Registry password or token to be used for pulling images from registry. 
-        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from. 
+        :param str registry_user: Registry user to be used for pulling images from registry.
+        :param str registry_password: Registry password or token to be used for pulling images from registry.
+        :param bool verify_tls: Verify TLS certificates of registry from where images are pulled from.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1235,47 +1352,63 @@ class ImageAnalysisApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'image',
-            'registry_user',
-            'registry_password',
-            'verify_tls'
-        ]
+        all_params = ["image", "registry_user", "registry_password", "verify_tls"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method post_image_metadata" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'image' is set
-        if self.api_client.client_side_validation and ('image' not in local_var_params or  # noqa: E501
-                                                        local_var_params['image'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `image` when calling `post_image_metadata`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "image" not in local_var_params
+            or local_var_params["image"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `image` when calling `post_image_metadata`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'image' in local_var_params and local_var_params['image'] is not None:  # noqa: E501
-            query_params.append(('image', local_var_params['image']))  # noqa: E501
-        if 'registry_user' in local_var_params and local_var_params['registry_user'] is not None:  # noqa: E501
-            query_params.append(('registry_user', local_var_params['registry_user']))  # noqa: E501
-        if 'registry_password' in local_var_params and local_var_params['registry_password'] is not None:  # noqa: E501
-            query_params.append(('registry_password', local_var_params['registry_password']))  # noqa: E501
-        if 'verify_tls' in local_var_params and local_var_params['verify_tls'] is not None:  # noqa: E501
-            query_params.append(('verify_tls', local_var_params['verify_tls']))  # noqa: E501
+        if (
+            "image" in local_var_params and local_var_params["image"] is not None
+        ):  # noqa: E501
+            query_params.append(("image", local_var_params["image"]))  # noqa: E501
+        if (
+            "registry_user" in local_var_params
+            and local_var_params["registry_user"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_user", local_var_params["registry_user"])
+            )  # noqa: E501
+        if (
+            "registry_password" in local_var_params
+            and local_var_params["registry_password"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("registry_password", local_var_params["registry_password"])
+            )  # noqa: E501
+        if (
+            "verify_tls" in local_var_params
+            and local_var_params["verify_tls"] is not None
+        ):  # noqa: E501
+            query_params.append(
+                ("verify_tls", local_var_params["verify_tls"])
+            )  # noqa: E501
 
         header_params = {}
 
@@ -1284,24 +1417,29 @@ class ImageAnalysisApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/image/metadata', 'POST',
+            "/image/metadata",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='ImageMetadataResponse',  # noqa: E501
+            response_type="ImageMetadataResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

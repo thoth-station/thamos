@@ -18,10 +18,7 @@ import re  # noqa: F401
 import six
 
 from thamos.swagger_client.api_client import ApiClient
-from thamos.swagger_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from thamos.swagger_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class ProvenanceApi(object):
@@ -57,8 +54,10 @@ class ProvenanceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_provenance_python_with_http_info(analysis_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_provenance_python_with_http_info(
+            analysis_id, **kwargs
+        )  # noqa: E501
 
     def get_provenance_python_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
         """Retrieve a provenance check result.  # noqa: E501
@@ -86,36 +85,38 @@ class ProvenanceApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_provenance_python" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_provenance_python`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_provenance_python`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -126,27 +127,32 @@ class ProvenanceApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/provenance/python/{analysis_id}', 'GET',
+            "/provenance/python/{analysis_id}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResultResponse',  # noqa: E501
+            response_type="AnalysisResultResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_provenance_python_log(self, analysis_id, **kwargs):  # noqa: E501
         """Show logs of a provenance checks.  # noqa: E501
@@ -169,10 +175,14 @@ class ProvenanceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_provenance_python_log_with_http_info(analysis_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_provenance_python_log_with_http_info(
+            analysis_id, **kwargs
+        )  # noqa: E501
 
-    def get_provenance_python_log_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
+    def get_provenance_python_log_with_http_info(
+        self, analysis_id, **kwargs
+    ):  # noqa: E501
         """Show logs of a provenance checks.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -198,36 +208,38 @@ class ProvenanceApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_provenance_python_log" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_provenance_python_log`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_provenance_python_log`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -238,27 +250,32 @@ class ProvenanceApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/provenance/python/{analysis_id}/log', 'GET',
+            "/provenance/python/{analysis_id}/log",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisLogResponse',  # noqa: E501
+            response_type="AnalysisLogResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_provenance_python_status(self, analysis_id, **kwargs):  # noqa: E501
         """Show status of a provenance check.  # noqa: E501
@@ -281,10 +298,14 @@ class ProvenanceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_provenance_python_status_with_http_info(analysis_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_provenance_python_status_with_http_info(
+            analysis_id, **kwargs
+        )  # noqa: E501
 
-    def get_provenance_python_status_with_http_info(self, analysis_id, **kwargs):  # noqa: E501
+    def get_provenance_python_status_with_http_info(
+        self, analysis_id, **kwargs
+    ):  # noqa: E501
         """Show status of a provenance check.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -310,36 +331,38 @@ class ProvenanceApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'analysis_id'
-        ]
+        all_params = ["analysis_id"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_provenance_python_status" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'analysis_id' is set
-        if self.api_client.client_side_validation and ('analysis_id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['analysis_id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `analysis_id` when calling `get_provenance_python_status`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "analysis_id" not in local_var_params
+            or local_var_params["analysis_id"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `analysis_id` when calling `get_provenance_python_status`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'analysis_id' in local_var_params:
-            path_params['analysis_id'] = local_var_params['analysis_id']  # noqa: E501
+        if "analysis_id" in local_var_params:
+            path_params["analysis_id"] = local_var_params["analysis_id"]  # noqa: E501
 
         query_params = []
 
@@ -350,27 +373,32 @@ class ProvenanceApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/provenance/python/{analysis_id}/status', 'GET',
+            "/provenance/python/{analysis_id}/status",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisStatusResponse',  # noqa: E501
+            response_type="AnalysisStatusResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def post_provenance_python(self, python_stack, **kwargs):  # noqa: E501
         """Check provenance of packages stated in an application stack.  # noqa: E501
@@ -382,9 +410,9 @@ class ProvenanceApi(object):
 
         :param async_req bool: execute request asynchronously
         :param PythonStack python_stack: Pipfile and Pipfile.lock as used by pipenv. (required)
-        :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool debug: Run the provenance checker in a verbose mode so developers can debug it. 
-        :param bool force: Do not use cached results, always run provenance checks. 
+        :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.
+        :param bool debug: Run the provenance checker in a verbose mode so developers can debug it.
+        :param bool force: Do not use cached results, always run provenance checks.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -396,10 +424,14 @@ class ProvenanceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.post_provenance_python_with_http_info(python_stack, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.post_provenance_python_with_http_info(
+            python_stack, **kwargs
+        )  # noqa: E501
 
-    def post_provenance_python_with_http_info(self, python_stack, **kwargs):  # noqa: E501
+    def post_provenance_python_with_http_info(
+        self, python_stack, **kwargs
+    ):  # noqa: E501
         """Check provenance of packages stated in an application stack.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -409,9 +441,9 @@ class ProvenanceApi(object):
 
         :param async_req bool: execute request asynchronously
         :param PythonStack python_stack: Pipfile and Pipfile.lock as used by pipenv. (required)
-        :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
-        :param bool debug: Run the provenance checker in a verbose mode so developers can debug it. 
-        :param bool force: Do not use cached results, always run provenance checks. 
+        :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.
+        :param bool debug: Run the provenance checker in a verbose mode so developers can debug it.
+        :param bool force: Do not use cached results, always run provenance checks.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -428,45 +460,50 @@ class ProvenanceApi(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'python_stack',
-            'origin',
-            'debug',
-            'force'
-        ]
+        all_params = ["python_stack", "origin", "debug", "force"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method post_provenance_python" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'python_stack' is set
-        if self.api_client.client_side_validation and ('python_stack' not in local_var_params or  # noqa: E501
-                                                        local_var_params['python_stack'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `python_stack` when calling `post_provenance_python`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "python_stack" not in local_var_params
+            or local_var_params["python_stack"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `python_stack` when calling `post_provenance_python`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'origin' in local_var_params and local_var_params['origin'] is not None:  # noqa: E501
-            query_params.append(('origin', local_var_params['origin']))  # noqa: E501
-        if 'debug' in local_var_params and local_var_params['debug'] is not None:  # noqa: E501
-            query_params.append(('debug', local_var_params['debug']))  # noqa: E501
-        if 'force' in local_var_params and local_var_params['force'] is not None:  # noqa: E501
-            query_params.append(('force', local_var_params['force']))  # noqa: E501
+        if (
+            "origin" in local_var_params and local_var_params["origin"] is not None
+        ):  # noqa: E501
+            query_params.append(("origin", local_var_params["origin"]))  # noqa: E501
+        if (
+            "debug" in local_var_params and local_var_params["debug"] is not None
+        ):  # noqa: E501
+            query_params.append(("debug", local_var_params["debug"]))  # noqa: E501
+        if (
+            "force" in local_var_params and local_var_params["force"] is not None
+        ):  # noqa: E501
+            query_params.append(("force", local_var_params["force"]))  # noqa: E501
 
         header_params = {}
 
@@ -474,31 +511,39 @@ class ProvenanceApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'python_stack' in local_var_params:
-            body_params = local_var_params['python_stack']
+        if "python_stack" in local_var_params:
+            body_params = local_var_params["python_stack"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/provenance/python', 'POST',
+            "/provenance/python",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AnalysisResponse',  # noqa: E501
+            response_type="AnalysisResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

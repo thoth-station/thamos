@@ -33,28 +33,39 @@ class InlineResponse2002SoftwareEnvironments(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'cuda_version': 'str',
-        'environment_name': 'str',
-        'environment_type': 'str',
-        'image_name': 'str',
-        'image_sha': 'str',
-        'os_name': 'str',
-        'os_version': 'str',
-        'python_version': 'str'
+        "cuda_version": "str",
+        "environment_name": "str",
+        "environment_type": "str",
+        "image_name": "str",
+        "image_sha": "str",
+        "os_name": "str",
+        "os_version": "str",
+        "python_version": "str",
     }
 
     attribute_map = {
-        'cuda_version': 'cuda_version',
-        'environment_name': 'environment_name',
-        'environment_type': 'environment_type',
-        'image_name': 'image_name',
-        'image_sha': 'image_sha',
-        'os_name': 'os_name',
-        'os_version': 'os_version',
-        'python_version': 'python_version'
+        "cuda_version": "cuda_version",
+        "environment_name": "environment_name",
+        "environment_type": "environment_type",
+        "image_name": "image_name",
+        "image_sha": "image_sha",
+        "os_name": "os_name",
+        "os_version": "os_version",
+        "python_version": "python_version",
     }
 
-    def __init__(self, cuda_version=None, environment_name=None, environment_type=None, image_name=None, image_sha=None, os_name=None, os_version=None, python_version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        cuda_version=None,
+        environment_name=None,
+        environment_type=None,
+        image_name=None,
+        image_sha=None,
+        os_name=None,
+        os_version=None,
+        python_version=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """InlineResponse2002SoftwareEnvironments - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -99,8 +110,13 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param cuda_version: The cuda_version of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and cuda_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `cuda_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and cuda_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cuda_version`, must not be `None`"
+            )  # noqa: E501
 
         self._cuda_version = cuda_version
 
@@ -124,8 +140,13 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param environment_name: The environment_name of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and environment_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `environment_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and environment_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `environment_name`, must not be `None`"
+            )  # noqa: E501
 
         self._environment_name = environment_name
 
@@ -149,8 +170,13 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param environment_type: The environment_type of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and environment_type is None:  # noqa: E501
-            raise ValueError("Invalid value for `environment_type`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and environment_type is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `environment_type`, must not be `None`"
+            )  # noqa: E501
 
         self._environment_type = environment_type
 
@@ -174,8 +200,12 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param image_name: The image_name of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and image_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `image_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and image_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `image_name`, must not be `None`"
+            )  # noqa: E501
 
         self._image_name = image_name
 
@@ -199,8 +229,12 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param image_sha: The image_sha of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and image_sha is None:  # noqa: E501
-            raise ValueError("Invalid value for `image_sha`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and image_sha is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `image_sha`, must not be `None`"
+            )  # noqa: E501
 
         self._image_sha = image_sha
 
@@ -224,8 +258,12 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param os_name: The os_name of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and os_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `os_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and os_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `os_name`, must not be `None`"
+            )  # noqa: E501
 
         self._os_name = os_name
 
@@ -249,8 +287,12 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param os_version: The os_version of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and os_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `os_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and os_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `os_version`, must not be `None`"
+            )  # noqa: E501
 
         self._os_version = os_version
 
@@ -274,8 +316,13 @@ class InlineResponse2002SoftwareEnvironments(object):
         :param python_version: The python_version of this InlineResponse2002SoftwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and python_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `python_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and python_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `python_version`, must not be `None`"
+            )  # noqa: E501
 
         self._python_version = python_version
 
@@ -286,18 +333,20 @@ class InlineResponse2002SoftwareEnvironments(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

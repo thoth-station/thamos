@@ -32,19 +32,13 @@ class AnalysisResultResponseMetadataDistributionVersionParts(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {
-        'build_number': 'str',
-        'major': 'str',
-        'minor': 'str'
-    }
+    openapi_types = {"build_number": "str", "major": "str", "minor": "str"}
 
-    attribute_map = {
-        'build_number': 'build_number',
-        'major': 'major',
-        'minor': 'minor'
-    }
+    attribute_map = {"build_number": "build_number", "major": "major", "minor": "minor"}
 
-    def __init__(self, build_number=None, major=None, minor=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self, build_number=None, major=None, minor=None, local_vars_configuration=None
+    ):  # noqa: E501
         """AnalysisResultResponseMetadataDistributionVersionParts - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -77,8 +71,13 @@ class AnalysisResultResponseMetadataDistributionVersionParts(object):
         :param build_number: The build_number of this AnalysisResultResponseMetadataDistributionVersionParts.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and build_number is None:  # noqa: E501
-            raise ValueError("Invalid value for `build_number`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and build_number is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `build_number`, must not be `None`"
+            )  # noqa: E501
 
         self._build_number = build_number
 
@@ -100,8 +99,12 @@ class AnalysisResultResponseMetadataDistributionVersionParts(object):
         :param major: The major of this AnalysisResultResponseMetadataDistributionVersionParts.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and major is None:  # noqa: E501
-            raise ValueError("Invalid value for `major`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and major is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `major`, must not be `None`"
+            )  # noqa: E501
 
         self._major = major
 
@@ -123,8 +126,12 @@ class AnalysisResultResponseMetadataDistributionVersionParts(object):
         :param minor: The minor of this AnalysisResultResponseMetadataDistributionVersionParts.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and minor is None:  # noqa: E501
-            raise ValueError("Invalid value for `minor`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and minor is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `minor`, must not be `None`"
+            )  # noqa: E501
 
         self._minor = minor
 
@@ -135,18 +142,20 @@ class AnalysisResultResponseMetadataDistributionVersionParts(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 
@@ -162,14 +171,18 @@ class AnalysisResultResponseMetadataDistributionVersionParts(object):
 
     def __eq__(self, other):
         """Returns true if both objects are equal"""
-        if not isinstance(other, AnalysisResultResponseMetadataDistributionVersionParts):
+        if not isinstance(
+            other, AnalysisResultResponseMetadataDistributionVersionParts
+        ):
             return False
 
         return self.to_dict() == other.to_dict()
 
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
-        if not isinstance(other, AnalysisResultResponseMetadataDistributionVersionParts):
+        if not isinstance(
+            other, AnalysisResultResponseMetadataDistributionVersionParts
+        ):
             return True
 
         return self.to_dict() != other.to_dict()

@@ -32,19 +32,21 @@ class InlineResponse2001RuntimeEnvironments(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {
-        'os_name': 'str',
-        'os_version': 'str',
-        'python_version': 'str'
-    }
+    openapi_types = {"os_name": "str", "os_version": "str", "python_version": "str"}
 
     attribute_map = {
-        'os_name': 'os_name',
-        'os_version': 'os_version',
-        'python_version': 'python_version'
+        "os_name": "os_name",
+        "os_version": "os_version",
+        "python_version": "python_version",
     }
 
-    def __init__(self, os_name=None, os_version=None, python_version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        os_name=None,
+        os_version=None,
+        python_version=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """InlineResponse2001RuntimeEnvironments - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -79,8 +81,12 @@ class InlineResponse2001RuntimeEnvironments(object):
         :param os_name: The os_name of this InlineResponse2001RuntimeEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and os_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `os_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and os_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `os_name`, must not be `None`"
+            )  # noqa: E501
 
         self._os_name = os_name
 
@@ -104,8 +110,12 @@ class InlineResponse2001RuntimeEnvironments(object):
         :param os_version: The os_version of this InlineResponse2001RuntimeEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and os_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `os_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and os_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `os_version`, must not be `None`"
+            )  # noqa: E501
 
         self._os_version = os_version
 
@@ -129,8 +139,13 @@ class InlineResponse2001RuntimeEnvironments(object):
         :param python_version: The python_version of this InlineResponse2001RuntimeEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and python_version is None:  # noqa: E501
-            raise ValueError("Invalid value for `python_version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and python_version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `python_version`, must not be `None`"
+            )  # noqa: E501
 
         self._python_version = python_version
 
@@ -141,18 +156,20 @@ class InlineResponse2001RuntimeEnvironments(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

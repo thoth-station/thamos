@@ -33,34 +33,48 @@ class InlineResponse200HardwareEnvironments(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'cpu_cores': 'int',
-        'cpu_family': 'int',
-        'cpu_model': 'int',
-        'cpu_model_name': 'str',
-        'cpu_physical_cpus': 'int',
-        'cpu_vendor': 'int',
-        'gpu_cores': 'int',
-        'gpu_memory_size': 'int',
-        'gpu_model_name': 'str',
-        'gpu_vendor': 'str',
-        'ram_size': 'int'
+        "cpu_cores": "int",
+        "cpu_family": "int",
+        "cpu_model": "int",
+        "cpu_model_name": "str",
+        "cpu_physical_cpus": "int",
+        "cpu_vendor": "int",
+        "gpu_cores": "int",
+        "gpu_memory_size": "int",
+        "gpu_model_name": "str",
+        "gpu_vendor": "str",
+        "ram_size": "int",
     }
 
     attribute_map = {
-        'cpu_cores': 'cpu_cores',
-        'cpu_family': 'cpu_family',
-        'cpu_model': 'cpu_model',
-        'cpu_model_name': 'cpu_model_name',
-        'cpu_physical_cpus': 'cpu_physical_cpus',
-        'cpu_vendor': 'cpu_vendor',
-        'gpu_cores': 'gpu_cores',
-        'gpu_memory_size': 'gpu_memory_size',
-        'gpu_model_name': 'gpu_model_name',
-        'gpu_vendor': 'gpu_vendor',
-        'ram_size': 'ram_size'
+        "cpu_cores": "cpu_cores",
+        "cpu_family": "cpu_family",
+        "cpu_model": "cpu_model",
+        "cpu_model_name": "cpu_model_name",
+        "cpu_physical_cpus": "cpu_physical_cpus",
+        "cpu_vendor": "cpu_vendor",
+        "gpu_cores": "gpu_cores",
+        "gpu_memory_size": "gpu_memory_size",
+        "gpu_model_name": "gpu_model_name",
+        "gpu_vendor": "gpu_vendor",
+        "ram_size": "ram_size",
     }
 
-    def __init__(self, cpu_cores=None, cpu_family=None, cpu_model=None, cpu_model_name=None, cpu_physical_cpus=None, cpu_vendor=None, gpu_cores=None, gpu_memory_size=None, gpu_model_name=None, gpu_vendor=None, ram_size=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        cpu_cores=None,
+        cpu_family=None,
+        cpu_model=None,
+        cpu_model_name=None,
+        cpu_physical_cpus=None,
+        cpu_vendor=None,
+        gpu_cores=None,
+        gpu_memory_size=None,
+        gpu_model_name=None,
+        gpu_vendor=None,
+        ram_size=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """InlineResponse200HardwareEnvironments - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -111,8 +125,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_cores: The cpu_cores of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and cpu_cores is None:  # noqa: E501
-            raise ValueError("Invalid value for `cpu_cores`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and cpu_cores is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cpu_cores`, must not be `None`"
+            )  # noqa: E501
 
         self._cpu_cores = cpu_cores
 
@@ -136,8 +154,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_family: The cpu_family of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and cpu_family is None:  # noqa: E501
-            raise ValueError("Invalid value for `cpu_family`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and cpu_family is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cpu_family`, must not be `None`"
+            )  # noqa: E501
 
         self._cpu_family = cpu_family
 
@@ -161,8 +183,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_model: The cpu_model of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and cpu_model is None:  # noqa: E501
-            raise ValueError("Invalid value for `cpu_model`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and cpu_model is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cpu_model`, must not be `None`"
+            )  # noqa: E501
 
         self._cpu_model = cpu_model
 
@@ -186,8 +212,13 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_model_name: The cpu_model_name of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and cpu_model_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `cpu_model_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and cpu_model_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cpu_model_name`, must not be `None`"
+            )  # noqa: E501
 
         self._cpu_model_name = cpu_model_name
 
@@ -211,8 +242,13 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_physical_cpus: The cpu_physical_cpus of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and cpu_physical_cpus is None:  # noqa: E501
-            raise ValueError("Invalid value for `cpu_physical_cpus`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and cpu_physical_cpus is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cpu_physical_cpus`, must not be `None`"
+            )  # noqa: E501
 
         self._cpu_physical_cpus = cpu_physical_cpus
 
@@ -236,8 +272,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_vendor: The cpu_vendor of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and cpu_vendor is None:  # noqa: E501
-            raise ValueError("Invalid value for `cpu_vendor`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and cpu_vendor is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `cpu_vendor`, must not be `None`"
+            )  # noqa: E501
 
         self._cpu_vendor = cpu_vendor
 
@@ -261,8 +301,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_cores: The gpu_cores of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and gpu_cores is None:  # noqa: E501
-            raise ValueError("Invalid value for `gpu_cores`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and gpu_cores is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `gpu_cores`, must not be `None`"
+            )  # noqa: E501
 
         self._gpu_cores = gpu_cores
 
@@ -286,8 +330,13 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_memory_size: The gpu_memory_size of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and gpu_memory_size is None:  # noqa: E501
-            raise ValueError("Invalid value for `gpu_memory_size`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and gpu_memory_size is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `gpu_memory_size`, must not be `None`"
+            )  # noqa: E501
 
         self._gpu_memory_size = gpu_memory_size
 
@@ -311,8 +360,13 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_model_name: The gpu_model_name of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and gpu_model_name is None:  # noqa: E501
-            raise ValueError("Invalid value for `gpu_model_name`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and gpu_model_name is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `gpu_model_name`, must not be `None`"
+            )  # noqa: E501
 
         self._gpu_model_name = gpu_model_name
 
@@ -336,8 +390,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_vendor: The gpu_vendor of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and gpu_vendor is None:  # noqa: E501
-            raise ValueError("Invalid value for `gpu_vendor`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and gpu_vendor is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `gpu_vendor`, must not be `None`"
+            )  # noqa: E501
 
         self._gpu_vendor = gpu_vendor
 
@@ -361,8 +419,12 @@ class InlineResponse200HardwareEnvironments(object):
         :param ram_size: The ram_size of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if self.local_vars_configuration.client_side_validation and ram_size is None:  # noqa: E501
-            raise ValueError("Invalid value for `ram_size`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and ram_size is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `ram_size`, must not be `None`"
+            )  # noqa: E501
 
         self._ram_size = ram_size
 
@@ -373,18 +435,20 @@ class InlineResponse200HardwareEnvironments(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

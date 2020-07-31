@@ -32,17 +32,13 @@ class PythonPackagesCountInfoResponseError(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {
-        'error': 'str',
-        'parameters': 'object'
-    }
+    openapi_types = {"error": "str", "parameters": "object"}
 
-    attribute_map = {
-        'error': 'error',
-        'parameters': 'parameters'
-    }
+    attribute_map = {"error": "error", "parameters": "parameters"}
 
-    def __init__(self, error=None, parameters=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self, error=None, parameters=None, local_vars_configuration=None
+    ):  # noqa: E501
         """PythonPackagesCountInfoResponseError - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -75,8 +71,12 @@ class PythonPackagesCountInfoResponseError(object):
         :param error: The error of this PythonPackagesCountInfoResponseError.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and error is None:  # noqa: E501
-            raise ValueError("Invalid value for `error`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and error is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `error`, must not be `None`"
+            )  # noqa: E501
 
         self._error = error
 
@@ -100,8 +100,12 @@ class PythonPackagesCountInfoResponseError(object):
         :param parameters: The parameters of this PythonPackagesCountInfoResponseError.  # noqa: E501
         :type: object
         """
-        if self.local_vars_configuration.client_side_validation and parameters is None:  # noqa: E501
-            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and parameters is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `parameters`, must not be `None`"
+            )  # noqa: E501
 
         self._parameters = parameters
 
@@ -112,18 +116,20 @@ class PythonPackagesCountInfoResponseError(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

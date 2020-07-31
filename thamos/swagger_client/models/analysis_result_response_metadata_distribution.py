@@ -33,22 +33,30 @@ class AnalysisResultResponseMetadataDistribution(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'codename': 'str',
-        'id': 'str',
-        'like': 'str',
-        'version': 'str',
-        'version_parts': 'AnalysisResultResponseMetadataDistributionVersionParts'
+        "codename": "str",
+        "id": "str",
+        "like": "str",
+        "version": "str",
+        "version_parts": "AnalysisResultResponseMetadataDistributionVersionParts",
     }
 
     attribute_map = {
-        'codename': 'codename',
-        'id': 'id',
-        'like': 'like',
-        'version': 'version',
-        'version_parts': 'version_parts'
+        "codename": "codename",
+        "id": "id",
+        "like": "like",
+        "version": "version",
+        "version_parts": "version_parts",
     }
 
-    def __init__(self, codename=None, id=None, like=None, version=None, version_parts=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        codename=None,
+        id=None,
+        like=None,
+        version=None,
+        version_parts=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """AnalysisResultResponseMetadataDistribution - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -87,8 +95,12 @@ class AnalysisResultResponseMetadataDistribution(object):
         :param codename: The codename of this AnalysisResultResponseMetadataDistribution.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and codename is None:  # noqa: E501
-            raise ValueError("Invalid value for `codename`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and codename is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `codename`, must not be `None`"
+            )  # noqa: E501
 
         self._codename = codename
 
@@ -112,7 +124,9 @@ class AnalysisResultResponseMetadataDistribution(object):
         :param id: The id of this AnalysisResultResponseMetadataDistribution.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and id is None:  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and id is None
+        ):  # noqa: E501
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
         self._id = id
@@ -137,8 +151,12 @@ class AnalysisResultResponseMetadataDistribution(object):
         :param like: The like of this AnalysisResultResponseMetadataDistribution.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and like is None:  # noqa: E501
-            raise ValueError("Invalid value for `like`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and like is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `like`, must not be `None`"
+            )  # noqa: E501
 
         self._like = like
 
@@ -162,8 +180,12 @@ class AnalysisResultResponseMetadataDistribution(object):
         :param version: The version of this AnalysisResultResponseMetadataDistribution.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and version is None:  # noqa: E501
-            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation and version is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `version`, must not be `None`"
+            )  # noqa: E501
 
         self._version = version
 
@@ -185,8 +207,13 @@ class AnalysisResultResponseMetadataDistribution(object):
         :param version_parts: The version_parts of this AnalysisResultResponseMetadataDistribution.  # noqa: E501
         :type: AnalysisResultResponseMetadataDistributionVersionParts
         """
-        if self.local_vars_configuration.client_side_validation and version_parts is None:  # noqa: E501
-            raise ValueError("Invalid value for `version_parts`, must not be `None`")  # noqa: E501
+        if (
+            self.local_vars_configuration.client_side_validation
+            and version_parts is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Invalid value for `version_parts`, must not be `None`"
+            )  # noqa: E501
 
         self._version_parts = version_parts
 
@@ -197,18 +224,20 @@ class AnalysisResultResponseMetadataDistribution(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 
