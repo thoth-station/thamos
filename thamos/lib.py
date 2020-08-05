@@ -96,20 +96,25 @@ def with_api_client(func: typing.Callable):
     return wrapper
 
 
-def get_advise_status(analysis_id: str) -> None:
+def get_advise_status(analysis_id: str) -> typing.Optional[dict]:
     """Handle the the multiple response types available while asking for result of a advise."""
     config = Configuration()
     host = thoth_config.explicit_host
     if not host:
         thoth_config.load_config()
         host = thoth_config.content.get("host") or config.host
-    response = requests.Session().get(f"https://{host}/api/v1/advise/python/{analysis_id}")
-    res = json.loads(response.text)
+    response = requests.Session().get(
+        f"https://{host}/api/v1/advise/python/{analysis_id}"
+    )
+    if response.status_code == 202:
+        res = json.loads(response.text)
+        return res
     # If results are already available we set status to 1.
-    if response.status_code == 200:
+    elif response.status_code == 200:
         res["status"] = {"finished_at": 1}
+        return res
     response.raise_for_status()
-    return res
+    return None
 
 
 def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> None:
