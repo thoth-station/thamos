@@ -65,6 +65,11 @@ _LOGGER = logging.getLogger(__name__)
 _RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
 _RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
 _THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
+_SOURCE = {
+    "advise": "advise/python",
+    "provenance": "provenance/python",
+    "analyze": "analyze",
+}
 
 
 def with_api_client(func: typing.Callable):
@@ -96,25 +101,26 @@ def with_api_client(func: typing.Callable):
     return wrapper
 
 
-def get_advise_status(analysis_id: str) -> typing.Optional[dict]:
-    """Handle the the multiple response types available while asking for result of a advise."""
+def is_analysis_ready(analysis_id: str) -> bool:
+    """Handle the the multiple response types available while asking for result of a anaylsis result."""
     config = Configuration()
     host = thoth_config.explicit_host
     if not host:
         thoth_config.load_config()
         host = thoth_config.content.get("host") or config.host
+    source = analysis_id.rsplit("-", 1)[0]
+    source_url = _SOURCE.get(source)
     response = requests.Session().get(
-        f"https://{host}/api/v1/advise/python/{analysis_id}"
+        f"https://{host}/api/v1/{source_url}/{analysis_id}"
     )
     if response.status_code == 202:
-        res = json.loads(response.text)
-        return res
-    # If results are already available we set status to 1.
+        return False
+    # Return true if result is ready.
     elif response.status_code == 200:
-        res["status"] = {"finished_at": 1}
-        return res
-    response.raise_for_status()
-    return None
+        return True
+    else:
+        raise ApiException(http_resp=response.status_code)
+    return False
 
 
 def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> None:
@@ -162,14 +168,13 @@ def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> Non
                 continue
 
             retries = 0  # Reset counter as we obtained a valid response.
-            _LOGGER.info(response)
-            if response.status.finished_at is not None:
+            if response:
                 break
             _LOGGER.debug(
                 "Waiting for %r to finish for %g seconds (state: %s)",
                 analysis_id,
                 sleep_time,
-                response.status.state,
+                response,
             )
 
             sleep(sleep_time)
@@ -405,7 +410,7 @@ def advise(
     if nowait:
         return response.analysis_id
     # We call custom status function for advise until swagger client supports mulitple response codes.
-    _wait_for_analysis(get_advise_status, response.analysis_id)
+    _wait_for_analysis(is_analysis_ready, response.analysis_id)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_advise_python, response.analysis_id
@@ -506,7 +511,7 @@ def provenance_check(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(api_instance.get_provenance_python_status, response.analysis_id)
+    _wait_for_analysis(is_analysis_ready, response.analysis_id)
     _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_provenance_python, response.analysis_id
@@ -586,7 +591,7 @@ def image_analysis(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(api_instance.get_analyze_status, response.analysis_id)
+    _wait_for_analysis(is_analysis_ready, response.analysis_id)
     _LOGGER.debug(
         "Retrieving image analysis result result for %r", response.analysis_id
     )
