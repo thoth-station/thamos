@@ -2369,3 +2369,22 @@
 * :pushpin: Automatic update of dependency requests from 2.23.0 to 2.24.0
 * :pushpin: Automatic update of dependency pytest-timeout from 1.3.4 to 1.4.1
 * :pushpin: Automatic update of dependency pytest-cov from 2.9.0 to 2.10.0
+
+## Release 0.11.0 (2020-08-07T16:44:50)
+* Swtich advise to result route (#475)
+* :pushpin: Automatic update of dependency yaspin from 0.18.0 to 1.0.0 (#490)
+* Running_swagger_codegen (#485)
+* :pushpin: Automatic update of dependency pytest from 5.4.3 to 6.0.1 (#487)
+* :pushpin: Automatic update of dependency thoth-common from 0.14.2 to 0.16.0 (#486)
+* :arrow_down: removed the files as they are no longer required
+* :pushpin: Automatic update of dependency pytest-timeout from 1.4.1 to 1.4.2 (#484)
+* :pushpin: Automatic update of dependency pytest-timeout from 1.4.1 to 1.4.2 (#483)
+* :pushpin: Automatic update of dependency pytest-timeout from 1.4.1 to 1.4.2 (#482)
+* :pushpin: Automatic update of dependency thoth-common from 0.14.1 to 0.14.2 (#481)
+* :pushpin: Automatic update of dependency thoth-common from 0.14.1 to 0.14.2 (#480)
+* :pushpin: Automatic update of dependency yaspin from 0.17.0 to 0.18.0 (#479)
+* :pushpin: Automatic update of dependency urllib3 from 1.25.9 to 1.25.10 (#478)
+* Extend recommendation type (#477)
+* Remove latest versions limitation (#476)
+* MyPy typing solved
+* add pre-commit and fix all except mypy errors
