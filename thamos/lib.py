@@ -54,6 +54,7 @@ from .swagger_client.models import AnalysisResultResponse
 from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
 from .exceptions import TimeoutError
+from .exceptions import ServiceUnavailable
 
 from typing import Callable, Any, Union, Dict
 
@@ -119,7 +120,7 @@ def is_analysis_ready(analysis_id: str) -> bool:
     elif response.status_code == 200:
         return True
     else:
-        raise ApiException(http_resp=response.status_code)
+        raise ServiceUnavailable(response.status_code)
     return False
 
 
