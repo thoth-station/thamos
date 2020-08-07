@@ -66,7 +66,7 @@ _RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
 _RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
 _THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
 _SOURCE = {
-    "advise": "advise/python",
+    "adviser": "advise/python",
     "provenance": "provenance/python",
     "analyze": "analyze",
 }
