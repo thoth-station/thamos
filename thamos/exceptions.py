@@ -56,3 +56,7 @@ class ConfigurationError(ThamosException):
 
 class TimeoutError(ThamosException):
     """An exception raised if the API takes longer than timeout limit."""
+
+
+class ApiError(ThamosException):
+    """An exception raised if the API doesn't return expected status code."""
