@@ -2388,3 +2388,7 @@
 * Remove latest versions limitation (#476)
 * MyPy typing solved
 * add pre-commit and fix all except mypy errors
+
+## Release 0.11.1 (2020-08-12T13:03:05)
+* :pushpin: Automatic update of dependency thoth-python from 0.10.0 to 0.10.1 (#494)
+* Fixed wrong exception (#493)
