@@ -54,3 +54,8 @@ managers:
       # Automatically maintain a changelog file stating features of new
       # releases:
       changelog_file: true
+      # Use AI/ML to group messages in a smart way.
+      changelog_smart: true
+  - name: update
+    configuration:
+      labels: [bot]
