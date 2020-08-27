@@ -56,10 +56,10 @@
         },
         "attrs": {
             "hashes": [
-                "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c",
-                "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"
+                "sha256:0ef97238856430dcf9228e07f316aefc17e8939fc8507e18c6501b761ef1a42a",
+                "sha256:2867b7b9f8326499ab5b0e2d12801fa5c98842d2cbd22b35112ae04bf85b4dff"
             ],
-            "version": "==19.3.0"
+            "version": "==20.1.0"
         },
         "beautifulsoup4": {
             "hashes": [
@@ -459,10 +459,10 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:21b17d6aa064c0fb703a7c00f77cf6c9c497cf2f83345c28892980a5e742d116",
-                "sha256:4fc97114c77d005467b9b1a29f042e2bc01923cb683b0ef0bbda46e79fa12532"
+                "sha256:09cbc253c827a88064c5ed548d24fb4294568bfe9b1816a857fa5a423d4ce762",
+                "sha256:1d654ac57be9967dae67545fb759f6e7594de07f487c21a276e6466dd52e83f1"
             ],
-            "version": "==0.16.3"
+            "version": "==0.17.0"
         },
         "six": {
             "hashes": [
@@ -520,12 +520,12 @@
         },
         "typing-extensions": {
             "hashes": [
-                "sha256:6e95524d8a547a91e08f404ae485bbb71962de46967e1b71a0cb89af24e761c5",
-                "sha256:79ee589a3caca649a9bfd2a8de4709837400dfa00b6cc81962a1e6a1815969ae",
-                "sha256:f8d2bd89d25bc39dabe7d23df520442fa1d8969b82544370e03d88b5a591c392"
+                "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918",
+                "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c",
+                "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"
             ],
-            "markers": "python_version < '3.7'",
-            "version": "==3.7.4.2"
+            "markers": "python_version < '3.8'",
+            "version": "==3.7.4.3"
         },
         "tzlocal": {
             "hashes": [
@@ -604,10 +604,10 @@
         },
         "attrs": {
             "hashes": [
-                "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c",
-                "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"
+                "sha256:0ef97238856430dcf9228e07f316aefc17e8939fc8507e18c6501b761ef1a42a",
+                "sha256:2867b7b9f8326499ab5b0e2d12801fa5c98842d2cbd22b35112ae04bf85b4dff"
             ],
-            "version": "==19.3.0"
+            "version": "==20.1.0"
         },
         "autoflake": {
             "hashes": [
@@ -747,10 +747,10 @@
         },
         "cpplint": {
             "hashes": [
-                "sha256:78c72b74a3ed337466a62d8d562310d759f55d3ae734bd50f10c2dc6679b1331",
-                "sha256:94084e0b3af5827bb678715a049bce67b6ab88821f21ee0d242be43c4d3821a6"
+                "sha256:a4fb2df986485fbe82603ab9a2832f8668b7253956eac2bfafb1374950eed01f",
+                "sha256:c5d70711f06a7a8bfdc09bd7a19c13e114e009a70c8dc16caad1e5f0d2f3cc71"
             ],
-            "version": "==1.5.3"
+            "version": "==1.5.4"
         },
         "decorator": {
             "hashes": [
@@ -1126,11 +1126,11 @@
         },
         "pytest-cov": {
             "hashes": [
-                "sha256:1a629dc9f48e53512fcbfda6b07de490c374b0c83c55ff7a1720b3fccff0ac87",
-                "sha256:6e6d18092dce6fad667cd7020deed816f858ad3b49d5b5e2b1cc1c97a4dba65c"
+                "sha256:45ec2d5182f89a81fc3eb29e3d1ed3113b9e9a873bcddb2a71faaab066110191",
+                "sha256:47bd0ce14056fdd79f93e1713f88fad7bdcc583dcd7783da86ef2f085a0bb88e"
             ],
             "index": "pypi",
-            "version": "==2.10.0"
+            "version": "==2.10.1"
         },
         "pytest-timeout": {
             "hashes": [
@@ -1226,9 +1226,9 @@
         },
         "sarge": {
             "hashes": [
-                "sha256:da8cc90883f8e5ab4af0d746438f608662f5f2a35da2e858517927edefa134b0"
+                "sha256:f48fb904e64f10ad6bef62422eaf4736acfd9b13ab64ba44822637a9dbb53265"
             ],
-            "version": "==0.1.5.post0"
+            "version": "==0.1.6"
         },
         "scspell3k": {
             "hashes": [
