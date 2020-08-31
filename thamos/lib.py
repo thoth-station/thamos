@@ -111,19 +111,16 @@ def is_analysis_ready(analysis_id: str) -> bool:
         host = thoth_config.content.get("host") or config.host
     source = analysis_id.rsplit("-", 1)[0]
     source_url = _SOURCE.get(source)
-    response = requests.Session().get(
-        f"https://{host}/api/v1/{source_url}/{analysis_id}"
-    )
+    response = requests.get(f"https://{host}/api/v1/{source_url}/{analysis_id}")
     if response.status_code == 202:
         return False
-    # Return true if result is ready.
-    elif response.status_code == 200:
+    elif response.status_code in (200, 400):
+        # Return true if result is ready.
         return True
-    else:
-        raise ApiError(
-            f"Thoth Backend didn't respond with correct status code. Returned code - {response.status_code}"
-        )
-    return False
+
+    raise ApiError(
+        f"Thoth Backend didn't respond with correct status code. Returned code - {response.status_code}"
+    )
 
 
 def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> None:
