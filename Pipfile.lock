@@ -131,10 +131,10 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:2f34dd810090d0d4c9d5787c4ad7b4413d1fbfb941e13682c7a2298d3b6cdcc8",
-                "sha256:ce1fb80b5c6d3dd038babcc43e221edeafefc72d983b3dc28b67b996f76f00b9"
+                "sha256:982e1f82cace752134660b4c0ff660761b32146a55abb3ad6d225529012af87c",
+                "sha256:f2498ad9cac3d2942d6c509ba18c4639656b366681881a1805f44f2a0c2d46f1"
             ],
-            "version": "==1.20.1"
+            "version": "==1.21.0"
         },
         "idna": {
             "hashes": [
@@ -459,10 +459,10 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:09cbc253c827a88064c5ed548d24fb4294568bfe9b1816a857fa5a423d4ce762",
-                "sha256:1d654ac57be9967dae67545fb759f6e7594de07f487c21a276e6466dd52e83f1"
+                "sha256:2c770e7bf72d6419bb82b3bb950f3789fc24bd6a0ba191369607a96289acd63b",
+                "sha256:ad2c514aab9ed40d3f9f3245675727f672ea3d85b3b7a5956af93f405ba7aee0"
             ],
-            "version": "==0.17.0"
+            "version": "==0.17.1"
         },
         "six": {
             "hashes": [
@@ -497,11 +497,11 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:08f5942d54e85cce69067f6e4b3f07f079ef273b2b09ae8df711d8228ec56b2b",
-                "sha256:7ee03535ccc369d822817c9ce62c7b3ffee37632fd10425d07f646012d7ee60d"
+                "sha256:a4e750d2787841125cb30b1860bc0abdd535390812b217198c43a6fc13b2fe51",
+                "sha256:e7d517654e42dd0c29a1d9af51fcdb0d7708d206768c4ec3dfbcd582c0b2e7cc"
             ],
             "index": "pypi",
-            "version": "==0.16.1"
+            "version": "==0.17.0"
         },
         "thoth-python": {
             "hashes": [
@@ -982,10 +982,10 @@
         },
         "more-itertools": {
             "hashes": [
-                "sha256:68c70cc7167bdf5c7c9d8f6954a7837089c6a36bf565383919bb595efb8a17e5",
-                "sha256:b78134b2063dd214000685165d81c154522c3ee0a1c0d4d113c80361c234c5a2"
+                "sha256:6f83822ae94818eae2612063a5101a7311e68ae8002005b5e05f03fd74a86a20",
+                "sha256:9b30f12df9393f0d28af9210ff8efe48d10c94f73e5daf886f10c4b0b0b4f03c"
             ],
-            "version": "==8.4.0"
+            "version": "==8.5.0"
         },
         "munkres3": {
             "hashes": [
