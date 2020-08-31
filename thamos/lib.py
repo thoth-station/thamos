@@ -220,6 +220,10 @@ def _retrieve_analysis_result(
         try:
             return retrieve_func(analysis_id)
         except ApiException as exc:
+            if exc.status == 400:
+                # Re-raise if the exception is bad request (e.g. analysis did not finish successfully).
+                raise
+
             _LOGGER.debug(
                 "Retrieved error response %s from server: %s", exc.status, exc.reason
             )
