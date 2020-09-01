@@ -2392,3 +2392,19 @@
 ## Release 0.11.1 (2020-08-12T13:03:05)
 * :pushpin: Automatic update of dependency thoth-python from 0.10.0 to 0.10.1 (#494)
 * Fixed wrong exception (#493)
+
+## Release 0.12.0 (2020-09-01T12:53:00)
+### Features
+* Produce TLS related warning just once per session in logs (#501)
+* Update default .thoth.yaml generated (#497)
+### Bug Fixes
+* Do not retry client requests if the analysis was not successful (#503)
+### Improvements
+* Perform status obtaining request only for debug level (#500)
+* Give up querying server if the response signalizes unsuccessful request
+### Non-functional
+* Add GitHub pull request template
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-common from 0.16.1 to 0.17.0 (#505)
+* :pushpin: Automatic update of dependency pytest-cov from 2.10.0 to 2.10.1 (#499)
+* :pushpin: Automatic update of dependency thoth-common from 0.16.0 to 0.16.1 (#498)
