@@ -170,12 +170,14 @@ def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> Non
             retries = 0  # Reset counter as we obtained a valid response.
             if response:
                 break
-            _LOGGER.debug(
-                "Waiting for %r to finish for %g seconds (state: %s)",
-                analysis_id,
-                sleep_time,
-                response,
-            )
+
+            if _LOGGER.getEffectiveLevel() <= logging.DEBUG:
+                _LOGGER.debug(
+                    "Waiting for %r to finish for %g seconds (state: %s)",
+                    analysis_id,
+                    sleep_time,
+                    (get_status(analysis_id) or {}).get("state", "N/A"),
+                )
 
             sleep(sleep_time)
             sleep_time = min(sleep_time * 2, 8)
