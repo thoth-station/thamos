@@ -49,6 +49,7 @@ class _Configuration:
     CONFIG_NAME = ".thoth.yaml"
     REQUIREMENTS_FORMATS = frozenset(("pip", "pip-tools", "pip-compile", "pipenv"))
     _DEFAULT_REQUIREMENTS_FORMAT = "pipenv"
+    _TLS_WARNING_LOGGED = False
 
     def __init__(self):
         """Construct configuration instance."""
@@ -263,7 +264,8 @@ class _Configuration:
             else self.content.get("tls_verify", True)
         )
 
-        if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING:
+        if not self.tls_verify and not _THAMOS_DISABLE_TLS_WARNING and not self._TLS_WARNING_LOGGED:
+            self._TLS_WARNING_LOGGED = True
             _LOGGER.warning(
                 "TLS verification turned off, its highly recommended to use a secured connection, "
                 "see configuration file for configuration options"
