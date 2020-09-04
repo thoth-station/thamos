@@ -2408,3 +2408,9 @@
 * :pushpin: Automatic update of dependency thoth-common from 0.16.1 to 0.17.0 (#505)
 * :pushpin: Automatic update of dependency pytest-cov from 2.10.0 to 2.10.1 (#499)
 * :pushpin: Automatic update of dependency thoth-common from 0.16.0 to 0.16.1 (#498)
+
+## Release 0.12.1 (2020-09-04T08:53:14)
+### Features
+* Fix environment dict expansion (#511)
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-common from 0.17.0 to 0.17.2 (#509)
