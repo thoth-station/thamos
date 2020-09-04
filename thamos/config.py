@@ -168,7 +168,7 @@ class _Configuration:
             platform=platform,
             requirements_format=requirements_format,
             **cpu_info,
-            **(os.environ.__dict__ if expand_env else {}),
+            **(dict(os.environ) if expand_env else {}),
         )
 
         if not nowrite:
