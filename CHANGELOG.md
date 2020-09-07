@@ -2414,3 +2414,11 @@
 * Fix environment dict expansion (#511)
 ### Automatic Updates
 * :pushpin: Automatic update of dependency thoth-common from 0.17.0 to 0.17.2 (#509)
+
+## Release 0.12.2 (2020-09-07T20:04:14)
+### Bug Fixes
+* Raise appropriate exception when Thoth backend is down (#515)
+### Improvements
+* Fix URL when obtaining results for provenance and image analyses
+### Automatic Updates
+* :pushpin: Automatic update of dependency texttable from 1.6.2 to 1.6.3 (#519)
