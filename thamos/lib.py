@@ -68,8 +68,8 @@ _RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
 _THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
 _SOURCE = {
     "adviser": "advise/python",
-    "provenance": "provenance/python",
-    "analyze": "analyze",
+    "provenance-checker": "provenance/python",
+    "package-extract": "analyze",
 }
 
 
