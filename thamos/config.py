@@ -36,6 +36,7 @@ from .exceptions import NoApiSupported
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
+from .exceptions import ServiceUnavailable
 
 _LOGGER = logging.getLogger(__name__)
 _THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
@@ -280,6 +281,7 @@ class _Configuration:
         except Exception as exc:
             if response.status_code == 503:
                 _LOGGER.error("Thoth service at %r is unavailable (HTTP 503)", api_url)
+                raise ServiceUnavailable(str(exc))
 
             raise NoApiSupported(
                 "Server does not support API v1 required by Thamos client"
