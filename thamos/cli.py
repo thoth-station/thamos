@@ -215,7 +215,30 @@ def _print_report(report: dict, json_output: bool = False, title: Optional[str] 
     console.print(table, justify="center")
 
 
-@click.group()
+class AliasedGroup(click.Group):
+    """Provide clever command aliases."""
+
+    def get_command(self, ctx, cmd_name):
+        """Get command to be executed based on the prefix.
+
+        https://click.palletsprojects.com/en/7.x/advanced/#command-aliases
+        """
+        if cmd_name == "logs":
+            # Address `thamos logs` vs `thamos log` confusion.
+            cmd_name = "log"
+
+        rv = click.Group.get_command(self, ctx, cmd_name)
+        if rv is not None:
+            return rv
+        matches = [x for x in self.list_commands(ctx) if x.startswith(cmd_name)]
+        if not matches:
+            return None
+        elif len(matches) == 1:
+            return click.Group.get_command(self, ctx, matches[0])
+        ctx.fail("Too many matches: %s" % ", ".join(sorted(matches)))
+
+
+@click.group(cls=AliasedGroup)
 @click.pass_context
 @click.option(
     "-v",
