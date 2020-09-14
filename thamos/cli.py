@@ -21,7 +21,6 @@ import logging
 import typing
 import os
 import sys
-from shutil import get_terminal_size
 import json
 from functools import wraps
 from typing import Tuple
@@ -29,9 +28,11 @@ from typing import Optional
 from typing import Set
 
 import yaml
-from texttable import Texttable
 import click
-from termcolor import colored
+from rich.console import Console
+from rich.text import Text
+from rich.table import Table
+from rich import box
 import daiquiri
 from thoth.python import Project
 from thoth.common import ThothAdviserIntegrationEnum
@@ -50,11 +51,11 @@ daiquiri.setup(level=logging.INFO)
 _LOGGER = logging.getLogger("thamos")
 
 _EMOJI = {
-    "WARNING": colored("\u26a0\ufe0f WARNING", "yellow"),
-    "ERROR": colored("\u274c ERROR", "red", attrs=["bold"]),
-    "INFO": colored("\u2714\ufe0f INFO", "green"),
-    "LATEST": colored("\U0001f44c LATEST", "green"),
-    "CVE": colored("\u2620\uFE0F  CVE \u2620\uFE0F", "red"),
+    "WARNING": Text("\u26a0\ufe0f WARNING", style="yellow"),
+    "ERROR": Text("\u274c ERROR", style="bold red"),
+    "INFO": Text("\u2714\ufe0f INFO", "green"),
+    "LATEST": Text("\U0001f44c LATEST", "cyan"),
+    "CVE": Text("\u2620\uFE0F  CVE \u2620\uFE0F", "red"),
 }
 
 # Align of columns in table - default is left, values stated here are adjusted otherwise.
@@ -119,14 +120,6 @@ def _write_files(
         )
 
 
-def _print_header(header: str) -> None:
-    """Print header to terminal respecting terminal size."""
-    terminal_size = get_terminal_size()
-    padding = (terminal_size.columns - len(header) - 2) // 2
-    click.echo(padding * " " + header)
-    click.echo(padding * " " + "=" * len(header) + "  \n")
-
-
 def _write_configuration(
     advised_configuration: dict, recommendation_type: str = None, dev: bool = False,
 ) -> None:
@@ -171,14 +164,19 @@ def _write_configuration(
         yaml.safe_dump(content, thoth_yaml_file)
 
 
-def _print_report(report: dict, json_output: bool = False):
+def _print_report(report: dict, json_output: bool = False, title: Optional[str] = None):
     """Print reasoning to user."""
     if json_output:
         click.echo(json.dumps(report, sort_keys=True, indent=2))
         return
 
-    table = Texttable(max_width=get_terminal_size().columns)
-    table.set_deco(Texttable.HEADER | Texttable.VLINES)
+    console = Console()
+    table = Table(
+        show_header=True,
+        header_style="bold green",
+        title=title,
+        box=box.MINIMAL_DOUBLE_HEAD,
+    )
 
     header = set()  # type: Set[str]
     to_remove = set()  # type: Set[str]
@@ -192,8 +190,10 @@ def _print_report(report: dict, json_output: bool = False):
     header = header - to_remove
 
     header_list = list(sorted(header))
-    table.set_cols_align([_TABLE_COLS_ALIGN.get(column, "l") for column in header_list])
-    table.header([item[0].upper() + item[1:].replace("_", " ") for item in header_list])
+    for item in header_list:
+        table.add_column(
+            item.replace("_", " ").capitalize(), style="cyan", no_wrap=True
+        )
 
     for item in report:
         row = []
@@ -210,9 +210,9 @@ def _print_report(report: dict, json_output: bool = False):
 
             row.append(entry)
 
-        table.add_row(row)
+        table.add_row(*row)
 
-    click.echo(table.draw())
+    console.print(table, justify="center")
 
 
 @click.group()
@@ -405,17 +405,20 @@ def advise(
             # Print report of the best one - thus index zero.
             if result["report"] and result["report"]["products"]:
                 if result["report"]["products"][0]["justification"]:
-                    _print_header("Recommended stack report")
                     _print_report(
                         result["report"]["products"][0]["justification"],
                         json_output=json_output,
+                        title="Recommended stack report",
                     )
                 else:
                     click.echo("No justification was made for the recommended stack")
 
             if result["report"] and result["report"]["stack_info"]:
-                _print_header("Application stack guidance")
-                _print_report(result["report"]["stack_info"], json_output=json_output)
+                _print_report(
+                    result["report"]["stack_info"],
+                    json_output=json_output,
+                    title="Application stack guidance",
+                )
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
@@ -487,7 +490,9 @@ def provenance_check(
 
         report, error = results
         if report:
-            _print_report(report, json_output=json_output)
+            _print_report(
+                report, json_output=json_output, title="Provenance check report"
+            )
         else:
             _LOGGER.info("Provenance check passed!")
 
@@ -537,10 +542,18 @@ def status(analysis_id: str = None, output_format: str = None):
         status_dict = get_status(analysis_id)
 
     if not output_format or output_format == "table":
-        table = Texttable(max_width=get_terminal_size().columns)
-        table.set_deco(Texttable.VLINES)
-        table.add_rows(list(status_dict.items()), header=False)
-        output = table.draw()
+        table = Table()
+
+        for key in status_dict.keys():
+            table.add_column(
+                key.replace("_", " ").capitalize(), style="cyan", no_wrap=True
+            )
+
+        table.add_row(*status_dict.values())
+
+        console = Console()
+        console.print(table, justify="center")
+        return
     elif output_format == "json":
         output = json.dumps(status_dict, indent=2)
     elif output_format == "yaml":
