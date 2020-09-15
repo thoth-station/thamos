@@ -28,6 +28,12 @@ As Thamos notes analysis ids for better UX of ``thamos log``, it's recommended t
 add ``.thoth_last_analysis_id`` file to ``.gitignore``.
 
 
+Recommendation types
+====================
+
+See `this document <https://thoth-station.ninja/recommendation-types/>`__ for a
+detailed info on the recommendation types Thoth provides.
+
 Adjusting configuration based on environment variables
 ======================================================
 
