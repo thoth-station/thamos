@@ -2422,3 +2422,10 @@
 * Fix URL when obtaining results for provenance and image analyses
 ### Automatic Updates
 * :pushpin: Automatic update of dependency texttable from 1.6.2 to 1.6.3 (#519)
+
+## Release 1.0.0 (2020-09-15T09:04:07)
+### Features
+* Provide aliased groups for commands (#521)
+* Fix missing requirements
+### Improvements
+* Use rich output to improve console output (#518)
