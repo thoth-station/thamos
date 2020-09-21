@@ -309,6 +309,7 @@ def advise(
     runtime_environment_name: str = None,
     dev: bool = False,
     no_static_analysis: bool = False,
+    no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
     limit: int = None,
@@ -342,6 +343,12 @@ def advise(
             "stable",
         )
         recommendation_type = next(filter(bool, priority))
+
+    if no_user_stack and pipfile_lock:
+        _LOGGER.warning(
+            "The user stack found in the lock file will not be supplied as requested"
+        )
+        pipfile_lock = ""
 
     library_usage = None
     if not no_static_analysis:
@@ -436,6 +443,7 @@ def advise_here(
     runtime_environment_name: typing.Optional[str] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
+    no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
     limit: typing.Optional[int] = None,
@@ -472,6 +480,7 @@ def advise_here(
         runtime_environment_name=runtime_environment_name,
         dev=dev,
         no_static_analysis=no_static_analysis,
+        no_user_stack=no_user_stack,
         nowait=nowait,
         force=force,
         limit=limit,

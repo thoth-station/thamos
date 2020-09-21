@@ -236,6 +236,7 @@ Then, you need to provide following environment variables:
 * ``THAMOS_DEV`` - set to `1` to consider also development dependencies, this flag defaults to `0` - by enabling development dependencies, adviser will need to browse larger space of software stacks possibly ending with a worse software stack advised (development dependencies are usually not used during application deployment)
 * ``THAMOS_DISABLE_CUDA`` - set to `1` to disable CUDA detection
 * ``THAMOS_NO_EMOJI`` - set to `1` to disable UTF-8 emojis (useful for dummy terminals)
+* ``THAMOS_NO_USER_STACK`` - set to `1` to disable sending lock file present in the directory - this lock file is used as a base when searching a better lock file for user needs
 * ``THAMOS_RETRY_ON_ERROR_COUNT`` - number of retries performed if the API server is responding with an error HTTP status (defaults to 3), this option is not usually needed to be adjusted
 * ``THAMOS_RETRY_ON_ERROR_SLEEP`` - sleep time when an error on the API server is spotted (see ``THAMOS_RETRY_ON_ERROR_COUNT``), defaults to 3 seconds
 * ``THAMOS_NO_PROGRESSBAR`` - disable progress bar visualization, useful for dummy terminals

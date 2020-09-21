@@ -345,6 +345,13 @@ def _print_version(ctx, json_output: bool = False):
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
+    "--no-user-stack",
+    is_flag=True,
+    help="Do not submit lock file with the request, the lock file is normally used as a base for "
+    "comparision to recommend a better stack than the one used.",
+    envvar="THAMOS_NO_USER_STACK",
+)
+@click.option(
     "--no-static-analysis",
     is_flag=True,
     envvar="THAMOS_NO_STATIC_ANALYSIS",
@@ -387,6 +394,7 @@ def advise(
     json_output: bool = False,
     force: bool = False,
     dev: bool = False,
+    no_user_stack: bool = False,
 ):
     """Ask Thoth for recommendations on application stack."""
     with workdir():
@@ -406,6 +414,7 @@ def advise(
             source_type=ThothAdviserIntegrationEnum.CLI,
             no_static_analysis=no_static_analysis,
             dev=dev,
+            no_user_stack=no_user_stack,
         )
 
         if not results:
