@@ -347,7 +347,7 @@ def _print_version(ctx, json_output: bool = False):
 @click.option(
     "--no-user-stack",
     is_flag=True,
-    help="Do not submit lock file with the request, the lock file is normally used as a base for "
+    help="Do not submit lock file with the request, this lock file is normally used as a base for "
     "comparision to recommend a better stack than the one used.",
     envvar="THAMOS_NO_USER_STACK",
 )
