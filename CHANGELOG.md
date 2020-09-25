@@ -2429,3 +2429,16 @@
 * Fix missing requirements
 ### Improvements
 * Use rich output to improve console output (#518)
+
+## Release 1.0.1 (2020-09-25T06:19:54)
+### Features
+* Link document with recommendation types
+### Bug Fixes
+* Allow users not to submit lock file with the request (#532)
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-common from 0.19.0 to 0.20.0 (#536)
+* :pushpin: Automatic update of dependency thoth-python from 0.10.1 to 0.10.2 (#535)
+* :pushpin: Automatic update of dependency rich from 6.2.0 to 7.0.0 (#533)
+* :pushpin: Automatic update of dependency rich from 6.1.2 to 6.2.0 (#525)
+* :pushpin: Automatic update of dependency thoth-common from 0.18.3 to 0.19.0 (#531)
+* :pushpin: Automatic update of dependency thoth-common from 0.18.3 to 0.19.0 (#530)
