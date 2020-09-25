@@ -1,15 +1,15 @@
 # thamos.swagger_client.PythonPackageMetadataApi
 
-All URIs are relative to *https://test.thoth-station.ninja/api/v1*
+All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_package_metadata**](PythonPackageMetadataApi.md#get_package_metadata) | **GET** /python/package/metadata | Retrieve metadata relative to a Python Package from the Knowledge Graph.
+[**get_package_metadata**](PythonPackageMetadataApi.md#get_package_metadata) | **GET** /python/package/metadata | Retrieve metadata relative to a Python Package from the Knowledge Graph. 
 
 # **get_package_metadata**
 > PythonPackageMetadataResponse get_package_metadata(name, version, index)
 
-Retrieve metadata relative to a Python Package from the Knowledge Graph.
+Retrieve metadata relative to a Python Package from the Knowledge Graph. 
 
 ### Example
 ```python
@@ -26,7 +26,7 @@ version = '2.0.0' # str | Version of the Python Package. (default to 2.0.0)
 index = 'https://pypi.org/simple' # str | Index url of the Python Package. (default to https://pypi.org/simple)
 
 try:
-    # Retrieve metadata relative to a Python Package from the Knowledge Graph.
+    # Retrieve metadata relative to a Python Package from the Knowledge Graph. 
     api_response = api_instance.get_package_metadata(name, version, index)
     pprint(api_response)
 except ApiException as e:
@@ -55,3 +55,4 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
