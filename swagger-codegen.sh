@@ -41,6 +41,7 @@ rm -rf thamos/swagger_client
 cp -r swagger-codegen-output/thamos/swagger_client/ thamos/swagger_client
 # There is a bug in swagger-codegen - it does not respect sub-package for some files, this is a simple workaround.
 find swagger-codegen-output/thamos.swagger_client/ -iname '*.py' -exec sed -i 's/^from thoth/from thamos.swagger_client.thoth/' {} \+
+find swagger-codegen-output/docs -iname '*.md' -exec sed -i 's|All URIs are relative to .*|All URIs are relative to https://test.thoth-station.ninja/api/v1|' {} \+
 cp -r swagger-codegen-output/thamos.swagger_client/* thamos/swagger_client
 cp -r swagger-codegen-output/docs Documentation
 
