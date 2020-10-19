@@ -428,9 +428,19 @@ def advise(
         result, error = results
         if error:
             if json_output:
-                print({"error": result["error_msg"]})
+                json.dump(result, sys.stdout, indent=2)
             else:
-                print(result["error_msg"])
+                stack_info = result.get("report", {}).get("stack_info")
+                if stack_info:
+                    _print_report(
+                        stack_info,
+                        json_output=json_output,
+                        title="Application stack guidance",
+                    )
+                print(
+                    result.get("error_msg")
+                    or "No error message was provided by the service."
+                )
             sys.exit(4)
 
         if not no_write:
