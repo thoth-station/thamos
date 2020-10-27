@@ -121,7 +121,9 @@ def _write_files(
 
 
 def _write_configuration(
-    advised_configuration: dict, recommendation_type: str = None, dev: bool = False,
+    advised_configuration: dict,
+    recommendation_type: str = None,
+    dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""
     if not advised_configuration:
