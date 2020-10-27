@@ -2448,3 +2448,10 @@
 * Regenerate client (#539)
 ### Bug Fixes
 * Provide stack info when adviser fails
+
+## Release 1.1.1 (2020-10-27T23:59:27)
+### Features
+* Fix report missing case (#553)
+* pre-commit initiated reformatting
+### Bug Fixes
+* fixed some pre-commit config, added mypy ini file to ignore the misc errors (hello is a duplicate module)
