@@ -2442,3 +2442,9 @@
 * :pushpin: Automatic update of dependency rich from 6.1.2 to 6.2.0 (#525)
 * :pushpin: Automatic update of dependency thoth-common from 0.18.3 to 0.19.0 (#531)
 * :pushpin: Automatic update of dependency thoth-common from 0.18.3 to 0.19.0 (#530)
+
+## Release 1.1.0 (2020-10-27T10:30:07)
+### Features
+* Regenerate client (#539)
+### Bug Fixes
+* Provide stack info when adviser fails
