@@ -432,7 +432,7 @@ def advise(
             if json_output:
                 json.dump(result, sys.stdout, indent=2)
             else:
-                stack_info = result.get("report", {}).get("stack_info")
+                stack_info = (result.get("report") or {}).get("stack_info")
                 if stack_info:
                     _print_report(
                         stack_info,
@@ -443,6 +443,7 @@ def advise(
                     result.get("error_msg")
                     or "No error message was provided by the service."
                 )
+
             sys.exit(4)
 
         if not no_write:

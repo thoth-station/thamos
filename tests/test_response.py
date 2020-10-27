@@ -39,9 +39,7 @@ class TestResponse(ThamosTestCase):
             pipfile_lock = response["result"]["report"]["products"][0]["project"][
                 "requirements_locked"
             ]
-            _write_files(
-                dict(pipfile), dict(pipfile_lock), requirements_format="pipenv"
-            )
+            _write_files(pipfile, pipfile_lock, requirements_format="pipenv")
 
             written_pipfile = toml.loads(Path("Pipfile").read_text())
             assert written_pipfile == {
