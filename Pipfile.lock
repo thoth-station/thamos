@@ -658,11 +658,11 @@
         },
         "yaspin": {
             "hashes": [
-                "sha256:97f4a08af09f14890cb7bad584327182716a758728bfd12ad73176e6955661da",
-                "sha256:ff3e157a9b04a3f3ec0b30905fc2bfee921f55d87ad34a2e260ce0c2160d3b07"
+                "sha256:2742b0648ce0d56d5c6fd950453f474c712cb88f161e54b40e987ba53a19b845",
+                "sha256:72e9cdbc0e797ef886c373fef2bcd6526a704a470696f9d78d0bb27951fe659a"
             ],
             "index": "pypi",
-            "version": "==1.0.0"
+            "version": "==1.2.0"
         }
     },
     "develop": {
