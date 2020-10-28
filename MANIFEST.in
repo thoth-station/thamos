@@ -12,6 +12,7 @@ include LICENSE
 include OWNERS
 include Pipfile
 include examples/*/Pipfile
+include .mypy.ini
 recursive-include Documentation *.md
 recursive-include docs *.html
 recursive-include docs *.py
