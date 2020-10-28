@@ -2448,3 +2448,18 @@
 * Regenerate client (#539)
 ### Bug Fixes
 * Provide stack info when adviser fails
+
+## Release 1.1.1 (2020-10-28T08:30:23)
+### Features
+* Fix report missing case (#553)
+* pre-commit initiated reformatting
+### Bug Fixes
+* :star: pre-commit fixes (#562)
+* fixed some pre-commit config, added mypy ini file to ignore the misc errors (hello is a duplicate module)
+### Automatic Updates
+* :pushpin: Automatic update of dependency urllib3 from 1.25.10 to 1.25.11 (#561)
+* :pushpin: Automatic update of dependency urllib3 from 1.25.10 to 1.25.11 (#555)
+* :pushpin: Automatic update of dependency yaspin from 1.0.0 to 1.2.0 (#556)
+* :pushpin: Automatic update of dependency rich from 7.0.0 to 9.1.0 (#558)
+* :pushpin: Automatic update of dependency pytest from 6.0.2 to 6.1.1 (#559)
+* :pushpin: Automatic update of dependency thoth-common from 0.20.0 to 0.20.2 (#557)
