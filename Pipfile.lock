@@ -476,11 +476,11 @@
         },
         "rich": {
             "hashes": [
-                "sha256:291700f5c09fae83676f44781d01a292c39efad9505dd4724899646b794f9afb",
-                "sha256:941c679ea681f0915eb986e48c38fa74f661f31bf815a3be696b27588469faf3"
+                "sha256:05f1cf4dc191c483867b098d8572546de266440d61911d8270069023e325d14a",
+                "sha256:5dd934a0f8953b59d9a5d8d58864012174f0b5ad2de687fd04f4df195f7f7066"
             ],
             "index": "pypi",
-            "version": "==7.0.0"
+            "version": "==9.1.0"
         },
         "rsa": {
             "hashes": [
