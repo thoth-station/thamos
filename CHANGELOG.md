@@ -2463,3 +2463,16 @@
 * :pushpin: Automatic update of dependency rich from 7.0.0 to 9.1.0 (#558)
 * :pushpin: Automatic update of dependency pytest from 6.0.2 to 6.1.1 (#559)
 * :pushpin: Automatic update of dependency thoth-common from 0.20.0 to 0.20.2 (#557)
+
+## Release 1.2.0 (2020-11-03T15:30:51)
+### Features
+* Fold on overflow when printing output (#570)
+### Improvements
+* Add logger name and padding to logs output (#568)
+### Automatic Updates
+* :pushpin: Automatic update of dependency toml from 0.10.1 to 0.10.2 (#576)
+* :pushpin: Automatic update of dependency toml from 0.10.1 to 0.10.2 (#575)
+* :pushpin: Automatic update of dependency toml from 0.10.1 to 0.10.2 (#574)
+* :pushpin: Automatic update of dependency thoth-common from 0.20.2 to 0.20.4 (#573)
+* :pushpin: Automatic update of dependency thoth-common from 0.20.2 to 0.20.4 (#572)
+* :pushpin: Automatic update of dependency pytest from 6.1.1 to 6.1.2 (#567)
