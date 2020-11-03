@@ -194,7 +194,7 @@ def _print_report(report: dict, json_output: bool = False, title: Optional[str] 
     header_list = list(sorted(header))
     for item in header_list:
         table.add_column(
-            item.replace("_", " ").capitalize(), style="cyan", no_wrap=True
+            item.replace("_", " ").capitalize(), style="cyan", overflow="fold"
         )
 
     for item in report:
@@ -209,6 +209,9 @@ def _print_report(report: dict, json_output: bool = False, title: Optional[str] 
 
             if isinstance(entry, list):
                 entry = ", ".join(entry)
+
+            if isinstance(entry, str) and entry.startswith(("https://", "http://")):
+                entry = f"[link {entry}]{entry}"
 
             row.append(entry)
 
@@ -591,7 +594,9 @@ def status(analysis_id: str = None, output_format: str = None):
 
         for key in status_dict.keys():
             table.add_column(
-                key.replace("_", " ").capitalize(), style="cyan", no_wrap=True
+                key.replace("_", " ").capitalize(),
+                style="cyan",
+                overflow="fold",
             )
 
         table.add_row(*status_dict.values())
