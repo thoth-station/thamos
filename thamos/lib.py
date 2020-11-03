@@ -717,12 +717,15 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
                 else:
                     message = content["message"]
 
-                result += "{} {}: {}\n".format(
-                    content["asctime"], content["levelname"], message
+                result += "{} {:<27} {}: {}\n".format(
+                    content["asctime"], content["name"], content["levelname"], message
                 )
             else:
-                result += "{} {}: {}\n".format(
-                    content["asctime"], content["levelname"], content["message"]
+                result += "{} {:<27} {}: {}\n".format(
+                    content["asctime"],
+                    content["name"],
+                    content["levelname"],
+                    content["message"],
                 )
         except Exception:
             # If the content parsed does not carry logger information or has not relevant
