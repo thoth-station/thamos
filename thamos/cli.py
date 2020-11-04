@@ -34,6 +34,7 @@ from rich.text import Text
 from rich.table import Table
 from rich import box
 import daiquiri
+import micropipenv
 from thoth.python import Project
 from thoth.common import ThothAdviserIntegrationEnum
 from thamos.exceptions import NoProjectDirError
@@ -121,9 +122,7 @@ def _write_files(
 
 
 def _write_configuration(
-    advised_configuration: dict,
-    recommendation_type: str = None,
-    dev: bool = False,
+    advised_configuration: dict, recommendation_type: str = None, dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""
     if not advised_configuration:
@@ -323,6 +322,30 @@ def _print_version(ctx, json_output: bool = False):
     ctx.exit(0)
 
 
+@cli.command("install")
+@click.option(
+    "--dev/--no-dev",
+    is_flag=True,
+    default=False,
+    envvar="THAMOS_DEV",
+    show_default=True,
+    help="Consider or do not consider development dependencies during the installation process.",
+)
+def install(dev: bool) -> None:
+    """Install dependencies as stated in Pipfile.lock or requirements.txt.
+
+    This command assumes requirements files are present and dependencies are already resolved.
+    If that's not the case, issue `thamos advise` before calling this.
+    """
+    with workdir():
+        method = (
+            "pipenv"
+            if configuration.requirements_format == "pipenv"
+            else "requirements"
+        )
+        micropipenv.install(method=method, deploy=True, dev=dev)
+
+
 @cli.command("advise")
 @click.option(
     "--debug",
@@ -389,6 +412,14 @@ def _print_version(ctx, json_output: bool = False):
     show_default=True,
     help="Consider or do not consider development dependencies during the resolution.",
 )
+@click.option(
+    "--install",
+    envvar="THAMOS_INSTALL",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Install dependencies once the advise is done.",
+)
 def advise(
     debug: bool = False,
     no_write: bool = False,
@@ -400,8 +431,16 @@ def advise(
     force: bool = False,
     dev: bool = False,
     no_user_stack: bool = False,
+    install: bool = False,
 ):
     """Ask Thoth for recommendations on application stack."""
+    if install and no_wait:
+        _LOGGER.error("Cannot install dependencies as --no-wait was provided")
+        sys.exit(1)
+    if install and no_write:
+        _LOGGER.error("Cannot install dependencies if lock files are not written")
+        sys.exit(1)
+
     with workdir():
         pipfile, pipfile_lock = _load_files(
             requirements_format=configuration.requirements_format
@@ -478,6 +517,14 @@ def advise(
                 dev,
             )
             _write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
+
+            if install:
+                method = (
+                    "pipenv"
+                    if configuration.requirements_format == "pipenv"
+                    else "requirements"
+                )
+                micropipenv.install(method=method, deploy=True, dev=dev)
         else:
             click.echo(json.dumps(result, indent=2))
 
@@ -594,9 +641,7 @@ def status(analysis_id: str = None, output_format: str = None):
 
         for key in status_dict.keys():
             table.add_column(
-                key.replace("_", " ").capitalize(),
-                style="cyan",
-                overflow="fold",
+                key.replace("_", " ").capitalize(), style="cyan", overflow="fold",
             )
 
         table.add_row(*status_dict.values())
