@@ -20,6 +20,7 @@ invectio = "*"
 thoth-python = ">=0.9.0"
 thoth-common = "*"
 rich = "*"
+micropipenv = "*"
 
 [dev-packages]
 toml = "*"
