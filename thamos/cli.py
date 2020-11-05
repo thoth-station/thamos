@@ -450,6 +450,13 @@ def advise(
             sys.exit(4)
 
         if not no_write:
+            if result["report"] and result["report"]["stack_info"]:
+                _print_report(
+                    result["report"]["stack_info"],
+                    json_output=json_output,
+                    title="Application stack guidance",
+                )
+
             # Print report of the best one - thus index zero.
             if result["report"] and result["report"]["products"]:
                 if result["report"]["products"][0]["justification"]:
@@ -460,13 +467,6 @@ def advise(
                     )
                 else:
                     click.echo("No justification was made for the recommended stack")
-
-            if result["report"] and result["report"]["stack_info"]:
-                _print_report(
-                    result["report"]["stack_info"],
-                    json_output=json_output,
-                    title="Application stack guidance",
-                )
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
