@@ -2476,3 +2476,16 @@
 * :pushpin: Automatic update of dependency thoth-common from 0.20.2 to 0.20.4 (#573)
 * :pushpin: Automatic update of dependency thoth-common from 0.20.2 to 0.20.4 (#572)
 * :pushpin: Automatic update of dependency pytest from 6.1.1 to 6.1.2 (#567)
+
+## Release 1.3.0 (2020-11-10T10:50:54)
+### Features
+* Implement thamos install command (#581)
+### Improvements
+* Switch recommended stack report and stack info (#582)
+### Automatic Updates
+* :pushpin: Automatic update of dependency rich from 9.1.0 to 9.2.0 (#589)
+* :pushpin: Automatic update of dependency rich from 9.1.0 to 9.2.0 (#588)
+* :pushpin: Automatic update of dependency daiquiri from 2.1.1 to 3.0.0 (#587)
+* :pushpin: Automatic update of dependency invectio from 0.0.7 to 0.1.0 (#586)
+* :pushpin: Automatic update of dependency daiquiri from 2.1.1 to 3.0.0 (#585)
+* :pushpin: Automatic update of dependency certifi from 2020.6.20 to 2020.11.8 (#584)
