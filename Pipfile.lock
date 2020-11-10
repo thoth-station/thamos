@@ -296,10 +296,11 @@
         },
         "micropipenv": {
             "hashes": [
-                "sha256:b8f5a54d1ed3712dc17fd584334ddf0f87a4aa85d5b570d455fbaace4fbb61f6"
+                "sha256:49622a9674e68de212aefff566ddbfd8ef23133f78ba0f7e47aacd1e604b5663",
+                "sha256:8d3343e62277ac1b4d246dd9beea0845546b076d34739ec2bac7e9e4ce2a7cef"
             ],
             "index": "pypi",
-            "version": "==1.0.0"
+            "version": "==1.0.1"
         },
         "mock": {
             "hashes": [
