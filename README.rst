@@ -262,7 +262,7 @@ Using Thamos as a library
    # Set global context.
    # Host to Thoth's User API. API discovery will be done
    # transparently and the most appropriate API version will be used.
-   config.explicit_host = "thoth-user-api.redhat.com"
+   config.explicit_host = "khemenu.thoth-station.ninja"
    # TLS verification when communicating with Thoth API.
    config.tls_verify = True
 
