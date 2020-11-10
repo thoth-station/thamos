@@ -2489,3 +2489,12 @@
 * :pushpin: Automatic update of dependency invectio from 0.0.7 to 0.1.0 (#586)
 * :pushpin: Automatic update of dependency daiquiri from 2.1.1 to 3.0.0 (#585)
 * :pushpin: Automatic update of dependency certifi from 2020.6.20 to 2020.11.8 (#584)
+
+## Release 1.3.1 (2020-11-10T16:57:41)
+### Features
+* Remove sleep before first attempt to obtain results (#569)
+* Adjust host to User API in the README (#597)
+### Automatic Updates
+* :pushpin: Automatic update of dependency rich from 9.1.0 to 9.2.0 (#595)
+* :pushpin: Automatic update of dependency micropipenv from 1.0.0 to 1.0.1 (#594)
+* :pushpin: Automatic update of dependency rich from 9.1.0 to 9.2.0 (#593)
