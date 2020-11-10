@@ -188,11 +188,11 @@
         },
         "invectio": {
             "hashes": [
-                "sha256:23131d513a6072a8443e81129cfeb186d679ab903bffe2d8c4a03d341e6448da",
-                "sha256:f7e6934cdb6d45de99ef7a4e3f839b079a9549740d68efc5fe7a4bf56439f553"
+                "sha256:4a720cc25cd8390af8555fd68a36e6a119f45a7870a31b818922342015c9b912",
+                "sha256:831b5de477e76fa07ed81b298cddf55b9886c0124217442cae21d8bb90e191ca"
             ],
             "index": "pypi",
-            "version": "==0.0.7"
+            "version": "==0.1.0"
         },
         "jinja2": {
             "hashes": [
