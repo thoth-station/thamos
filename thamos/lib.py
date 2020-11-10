@@ -144,7 +144,6 @@ def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> Non
     sleep_time = 0.5
     retries = 0
     with spinner():
-        sleep(2)  # TODO: remove once we fully run on Argo workflows
         start_time = monotonic()
         while True:
             if _THAMOS_TIMEOUT and monotonic() - start_time > _THAMOS_TIMEOUT:
