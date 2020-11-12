@@ -706,9 +706,9 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
             content = json.loads(line)
             if not int(os.getenv("THAMOS_NO_EMOJI", 0)):
                 if content["levelname"] == "DEBUG":
-                    message = colored(content["message"], "cyan")
-                elif content["levelname"] == "INFO":
                     message = colored(content["message"], "green")
+                elif content["levelname"] == "INFO":
+                    message = colored(content["message"], "cyan")
                 elif content["levelname"] == "WARNING":
                     message = colored(content["message"], "yellow", attrs=["bold"])
                 elif content["levelname"] in ("ERROR", "CRITICAL"):
