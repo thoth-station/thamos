@@ -266,7 +266,7 @@ def _get_static_analysis() -> typing.Optional[dict]:
             if library not in report:
                 report[library] = set()
 
-            report[library].extend(usage)
+            report[library].update(usage)
 
     return {
         "report": {k: list(v) for k, v in report.items()},
