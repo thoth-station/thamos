@@ -264,12 +264,12 @@ def _get_static_analysis() -> typing.Optional[dict]:
         for library, usage in file_record.items():
             # We could filter out some of the libraries which were used.
             if library not in report:
-                report[library] = []
+                report[library] = set()
 
             report[library].extend(usage)
 
     return {
-        "report": report,
+        "report": {k: list(v) for k, v in report.items()},
         "version": library_usage["version"],
     }
 
