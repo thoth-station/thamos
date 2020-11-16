@@ -122,9 +122,7 @@ def _write_files(
 
 
 def _write_configuration(
-    advised_configuration: dict,
-    recommendation_type: str = None,
-    dev: bool = False,
+    advised_configuration: dict, recommendation_type: str = None, dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""
     if not advised_configuration:
@@ -422,6 +420,15 @@ def install(dev: bool) -> None:
     show_default=True,
     help="Install dependencies once the advise is done.",
 )
+@click.option(
+    "--write-advised-manifest-changes",
+    envvar="THAMOS_WRITE_ADVISED_MANIFEST_CHANGES",
+    type=str,
+    metavar="FILE",
+    default=None,
+    show_default=True,
+    help="Write advised manifest changes to a file.",
+)
 def advise(
     debug: bool = False,
     no_write: bool = False,
@@ -434,6 +441,7 @@ def advise(
     dev: bool = False,
     no_user_stack: bool = False,
     install: bool = False,
+    write_advised_manifest_changes: Optional[str] = None,
 ):
     """Ask Thoth for recommendations on application stack."""
     if install and no_wait:
@@ -519,6 +527,18 @@ def advise(
                 dev,
             )
             _write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
+
+            if write_advised_manifest_changes:
+                advised_manifest_changes = result["report"]["products"][0][
+                    "project"
+                ].get("advised_manifest_changes")
+                with open(
+                    write_advised_manifest_changes, "w"
+                ) as advised_manifest_changes_file:
+                    json.dump(
+                        advised_manifest_changes or {}, advised_manifest_changes_file
+                    )
+                    advised_manifest_changes_file.write("\n")
 
             if install:
                 method = (
@@ -643,9 +663,7 @@ def status(analysis_id: str = None, output_format: str = None):
 
         for key in status_dict.keys():
             table.add_column(
-                key.replace("_", " ").capitalize(),
-                style="cyan",
-                overflow="fold",
+                key.replace("_", " ").capitalize(), style="cyan", overflow="fold",
             )
 
         table.add_row(*status_dict.values())
