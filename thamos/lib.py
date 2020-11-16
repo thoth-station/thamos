@@ -38,6 +38,7 @@ from invectio import gather_library_usage
 from thoth.analyzer import run_command
 from thoth.python import Project
 from thoth.common import ThothAdviserIntegrationEnum
+from thoth.common import get_justification_link as jl
 
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
@@ -148,7 +149,8 @@ def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> Non
         while True:
             if _THAMOS_TIMEOUT and monotonic() - start_time > _THAMOS_TIMEOUT:
                 raise TimeoutError(
-                    f"Thoth backend did not respond in time, timeout set to {_THAMOS_TIMEOUT}"
+                    f"Thoth backend did not respond in time, timeout set "
+                    f"to {_THAMOS_TIMEOUT} - see {jl('thamos_timeout')}"
                 )
             try:
                 response = status_func(analysis_id)
