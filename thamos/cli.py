@@ -37,6 +37,7 @@ import daiquiri
 import micropipenv
 from thoth.python import Project
 from thoth.common import ThothAdviserIntegrationEnum
+from thoth.common import get_justification_link as jl
 from thamos.exceptions import NoProjectDirError
 from thamos.config import config as configuration
 from thamos.lib import advise as thoth_advise
@@ -122,7 +123,9 @@ def _write_files(
 
 
 def _write_configuration(
-    advised_configuration: dict, recommendation_type: str = None, dev: bool = False,
+    advised_configuration: dict,
+    recommendation_type: str = None,
+    dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""
     if not advised_configuration:
@@ -343,6 +346,12 @@ def install(dev: bool) -> None:
             if configuration.requirements_format == "pipenv"
             else "requirements"
         )
+
+        if not dev and method == "pipenv":
+            _LOGGER.warning(
+                "Development dependencies will not be installed - see %s", jl("no_dev")
+            )
+
         micropipenv.install(method=method, deploy=True, dev=dev)
 
 
@@ -455,6 +464,12 @@ def advise(
         pipfile, pipfile_lock = _load_files(
             requirements_format=configuration.requirements_format
         )
+
+        if not dev and configuration.requirements_format == "pipenv":
+            _LOGGER.warning(
+                "Development dependencies will not be considered during the resolution process - see %s",
+                jl("no_dev"),
+            )
 
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise(
@@ -663,7 +678,9 @@ def status(analysis_id: str = None, output_format: str = None):
 
         for key in status_dict.keys():
             table.add_column(
-                key.replace("_", " ").capitalize(), style="cyan", overflow="fold",
+                key.replace("_", " ").capitalize(),
+                style="cyan",
+                overflow="fold",
             )
 
         table.add_row(*status_dict.values())
