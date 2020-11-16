@@ -88,10 +88,14 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
 def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
     """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
     if requirements_format == "pipenv":
+        _LOGGER.info("Using Pipenv files located in the project root directory")
         project = Project.from_files(
             without_pipfile_lock=not os.path.exists("Pipfile.lock")
         )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        _LOGGER.info(
+            "Using requirements.txt file located in the project root directory"
+        )
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
         raise ValueError(
@@ -122,7 +126,9 @@ def _write_files(
 
 
 def _write_configuration(
-    advised_configuration: dict, recommendation_type: str = None, dev: bool = False,
+    advised_configuration: dict,
+    recommendation_type: str = None,
+    dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""
     if not advised_configuration:
@@ -663,7 +669,9 @@ def status(analysis_id: str = None, output_format: str = None):
 
         for key in status_dict.keys():
             table.add_column(
-                key.replace("_", " ").capitalize(), style="cyan", overflow="fold",
+                key.replace("_", " ").capitalize(),
+                style="cyan",
+                overflow="fold",
             )
 
         table.add_row(*status_dict.values())
