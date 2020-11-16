@@ -18,6 +18,7 @@
 """Utility and helper functions for Thamos."""
 
 from contextlib import contextmanager
+import logging
 import os
 import sys
 
@@ -26,6 +27,7 @@ from .exceptions import NoProjectDirError
 # Limit traversing to parent directories so we handle root - we do not loop over and over in root and we also
 # handle cyclic symlinks natively.
 _WORKDIR_DEPTH_LEN = 33
+_LOGGER = logging.getLogger(__name__)
 
 
 @contextmanager
@@ -34,10 +36,13 @@ def workdir(file_lookup: str = None):
     file_lookup = file_lookup or ".thoth.yaml"
 
     project_dir = os.getcwd()
+    original_project_dir = project_dir
     for _ in range(_WORKDIR_DEPTH_LEN):
         file = os.path.join(project_dir, file_lookup)
         if os.path.isfile(file):
             with cwd(project_dir):
+                if project_dir != original_project_dir:
+                    _LOGGER.warning("Using %r as project root directory", project_dir)
                 yield project_dir
             break
 
