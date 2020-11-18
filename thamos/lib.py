@@ -460,7 +460,6 @@ def advise_here(
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
     if requirements_format == "pipenv":
-        # TODO: refactor this logic with cli which has duplicate of this.
         _LOGGER.info("Using Pipenv files located in the project root directory")
         pipfile_lock_exists = os.path.exists("Pipfile.lock")
 
