@@ -460,10 +460,35 @@ def advise_here(
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
     if requirements_format == "pipenv":
+        # TODO: refactor this logic with cli which has duplicate of this.
+        _LOGGER.info("Using Pipenv files located in the project root directory")
+        pipfile_lock_exists = os.path.exists("Pipfile.lock")
+
+        if pipfile_lock_exists:
+            _LOGGER.info(
+                "Submitting Pipfile.lock as a base for user's stack scoring - see %s",
+                jl("user_stack"),
+            )
+
         project = Project.from_files(
             without_pipfile_lock=not os.path.exists("Pipfile.lock")
         )
+
+        if (
+            pipfile_lock_exists
+            and project.pipfile_lock.meta.hash["sha256"]
+            != project.pipfile.hash()["sha256"]
+        ):
+            _LOGGER.error(
+                "Pipfile hash stated in Pipfile.lock %r does not correspond to Pipfile hash %r - was Pipfile "
+                "adjusted? This error is not critical.",
+                project.pipfile_lock.meta.hash["sha256"][:6],
+                project.pipfile.hash()["sha256"][:6],
+            )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        _LOGGER.info(
+            "Using requirements.txt file located in the project root directory"
+        )
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
         raise ValueError(
