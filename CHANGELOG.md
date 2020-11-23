@@ -2498,3 +2498,25 @@
 * :pushpin: Automatic update of dependency rich from 9.1.0 to 9.2.0 (#595)
 * :pushpin: Automatic update of dependency micropipenv from 1.0.0 to 1.0.1 (#594)
 * :pushpin: Automatic update of dependency rich from 9.1.0 to 9.2.0 (#593)
+
+## Release 1.4.0 (2020-11-23T13:50:23)
+### Features
+* Introduce advise_using_config to enable supplying config file (#623)
+* Notify users about hash mismatch in Pipenv files (#618)
+* Notify users that development dependencies will not be installed (#616)
+* Add a link to justification on timeout (#611)
+* Notify users about requirements used and project root (#610)
+* Add option for writing advised manifest changes (#605)
+* Set has no extend method but update (#608)
+* Remove duplicit records in library usage (#600)
+### Improvements
+* Adjust datatype of parameters in _write_files method (#625)
+### Other
+* Refactor duplicate logic (#621)
+* Match colors shown in logs with logs in CLI (#601)
+### Automatic Updates
+* :pushpin: Automatic update of dependency requests from 2.24.0 to 2.25.0 (#607)
+* :pushpin: Automatic update of dependency requests from 2.24.0 to 2.25.0 (#606)
+* :pushpin: Automatic update of dependency requests from 2.24.0 to 2.25.0 (#604)
+* :pushpin: Automatic update of dependency urllib3 from 1.25.11 to 1.26.2 (#603)
+* :pushpin: Automatic update of dependency urllib3 from 1.25.11 to 1.26.2 (#602)
