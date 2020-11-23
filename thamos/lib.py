@@ -299,6 +299,59 @@ def _get_origin() -> typing.Optional[str]:
     return None
 
 
+def advise_using_config(
+    pipfile: str,
+    pipfile_lock: str,
+    config: str = None,
+    *,
+    runtime_environment_name: str = None,
+    recommendation_type: str = None,
+    dev: bool = False,
+    no_static_analysis: bool = False,
+    no_user_stack: bool = False,
+    nowait: bool = False,
+    force: bool = False,
+    limit: int = None,
+    count: int = 1,
+    debug: bool = False,
+    origin: str = None,
+    github_event_type: typing.Optional[str] = None,
+    github_check_run_id: typing.Optional[int] = None,
+    github_installation_id: typing.Optional[int] = None,
+    github_base_repo_url: typing.Optional[str] = None,
+    source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
+) -> typing.Optional[typing.Tuple[typing.Dict[str, typing.Any], bool]]:
+    """Trigger advise, respecting the configuration file supplied directly as a string or as a file path."""
+    try:
+        thoth_config.load_config_from_file(config)
+    except (FileNotFoundError, IOError):
+        thoth_config.load_config_from_string(config)
+
+    return advise(
+        pipfile=pipfile,
+        pipfile_lock=pipfile_lock,
+        recommendation_type=recommendation_type,
+        runtime_environment=thoth_config.get_runtime_environment(
+            runtime_environment_name
+        ),
+        runtime_environment_name=runtime_environment_name,
+        dev=dev,
+        no_static_analysis=no_static_analysis,
+        no_user_stack=no_user_stack,
+        nowait=nowait,
+        force=force,
+        limit=limit,
+        count=count,
+        debug=debug,
+        origin=origin,
+        github_event_type=github_event_type,
+        github_check_run_id=github_check_run_id,
+        github_installation_id=github_installation_id,
+        github_base_repo_url=github_base_repo_url,
+        source_type=source_type,
+    )
+
+
 @with_api_client
 def advise(
     api_client: ApiClient,
@@ -327,14 +380,19 @@ def advise(
     if not pipfile:
         raise ValueError("No Pipfile content provided for advises")
 
-    if runtime_environment and runtime_environment_name:
-        raise ValueError(
-            "Cannot use runtime_environment and runtime_environment_name at the same time"
-        )
-
     if runtime_environment is None:
         runtime_environment = (
             thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+        )
+
+    if runtime_environment_name is None and runtime_environment:
+        runtime_environment_name = runtime_environment.get("name")
+
+    if (runtime_environment and runtime_environment_name) and runtime_environment.get(
+        "name"
+    ) != runtime_environment_name:
+        raise ValueError(
+            "Runtime environment name supplied does not match with the one stated in the config file"
         )
 
     if recommendation_type is None:

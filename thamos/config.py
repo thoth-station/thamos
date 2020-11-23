@@ -112,19 +112,31 @@ class _Configuration:
         except NoProjectDirError:
             return False
 
-    def load_config(self):
-        """Load configuration file."""
+    def load_config_from_string(self, config_str: str) -> None:
+        """Load configuration from a string."""
+        if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)):
+            _LOGGER.info("Expanding configuration file based on environment variables")
+            config_str = config_str.format(**os.environ)
+
+        self._configuration = yaml.safe_load(config_str)
+
+    def load_config_from_file(self, config_path: str) -> None:
+        """Load configuration from a file."""
+        with open(config_path, "r") as config_file:
+            self._configuration = config_file.read()
+
+            if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)):
+                _LOGGER.info(
+                    "Expanding configuration file based on environment variables"
+                )
+                self._configuration = self._configuration.format(**os.environ)
+
+            self._configuration = yaml.safe_load(self._configuration)
+
+    def load_config(self) -> None:
+        """Load configuration from a file."""
         with workdir(config.CONFIG_NAME):
-            with open(config.CONFIG_NAME, "r") as config_file:
-                self._configuration = config_file.read()
-
-                if int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)):
-                    _LOGGER.info(
-                        "Expanding configuration file based on environment variables"
-                    )
-                    self._configuration = self._configuration.format(**os.environ)
-
-                self._configuration = yaml.safe_load(self._configuration)
+            self.load_config_from_file(config.CONFIG_NAME)
 
     def create_default_config(
         self, template: str = None, nowrite: bool = False
