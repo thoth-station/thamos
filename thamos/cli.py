@@ -26,6 +26,7 @@ from functools import wraps
 from typing import Tuple
 from typing import Optional
 from typing import Set
+from typing import Dict, Any
 
 import yaml
 import click
@@ -129,7 +130,7 @@ def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
 
 
 def _write_files(
-    requirements: str, requirements_lock: str, requirements_format: str
+    requirements: Dict[str, Any], requirements_lock: Dict[str, Any], requirements_format: str
 ) -> None:
     """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
     project = Project.from_dict(requirements, requirements_lock)
