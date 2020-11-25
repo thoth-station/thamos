@@ -31,6 +31,7 @@ import json
 import urllib3
 import requests
 
+import micropipenv
 from termcolor import colored
 from yaspin import yaspin
 from yaspin.spinners import Spinners
@@ -39,6 +40,7 @@ from thoth.analyzer import run_command
 from thoth.python import Project
 from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
+from thoth.common import cwd
 
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
@@ -56,6 +58,7 @@ from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
 from .exceptions import TimeoutError
 from .exceptions import ApiError
+from .exceptions import NoRequirementsFile
 
 from typing import Callable, Any, Union, Dict
 
@@ -873,3 +876,45 @@ def get_analysis_results(api_client: ApiClient, analysis_id: str):
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
         )
+
+
+def install_using_config(config: str, runtime_environment_name: typing.Optional[str] = None, dev: bool = False) -> None:
+    """Perform installation given the configuration supplied."""
+    try:
+        thoth_config.load_config_from_file(config)
+    except (FileNotFoundError, IOError):
+        thoth_config.load_config_from_string(config)
+
+    install(runtime_environment_name=runtime_environment_name, dev=dev)
+
+
+def install(runtime_environment_name: typing.Optional[str] = None, dev: bool = False) -> None:
+    """Perform installation of packages for the given runtime environment.
+
+    If the runtime environment is not specified, the first environment stated in the configuration is used.
+    """
+    method = (
+        "pipenv"
+        if thoth_config.requirements_format == "pipenv"
+        else "requirements"
+    )
+
+    if not dev and method == "pipenv":
+        _LOGGER.warning(
+            "Development dependencies will not be installed - see %s", jl("no_dev")
+        )
+
+    with cwd(thoth_config.get_overlays_directory(runtime_environment_name)):
+        if method == "pipenv":
+            if not os.path.isfile("Pipfile.lock"):
+                raise NoRequirementsFile(
+                    f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies"
+                )
+        else:
+            if not os.path.isfile("requirements.txt"):
+                raise NoRequirementsFile(
+                    f"No requirements.txt file found in {os.getcwd()!r} needed to install dependencies"
+                )
+
+        _LOGGER.info("Using %r installation method to install dependencies stated in %r", method, os.getcwd())
+        micropipenv.install(method=method, deploy=True, dev=dev)
