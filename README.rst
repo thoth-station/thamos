@@ -216,6 +216,68 @@ For the example showed above it will default to ``cuda`` environment:
 Multiple runtime environments can be used in conjunction with the automatically
 expanded configuration options and configuration file templating naturally.
 
+By default, all the files produced during advises are stored in the project
+root directory. To maintain multiple lock files specific for runtime
+environments, it is possible to configure "overlays" directory in Thamos
+configuration file.
+
+Overlays directory
+==================
+
+Multiple directories carrying requirement files can be configured using
+``overlays_dir`` configuration option in ``.thoth.yaml`` file. This
+configuration is configured on a global scope and all the runtime environments
+inherit path from it.
+
+An example configuration file states ``overlays_dir``:
+
+.. code-block:: yaml
+
+  host: {THOTH_SERVICE_HOST}
+  tls_verify: true
+  requirements_format: pipenv
+  overlays_dir: overlays
+
+  runtime_environments:
+    - name: 'fedora:33'
+      operating_system:
+        name: fedora
+        version: '33'
+      python_version: '3.8'
+
+    - name: 'ubi:8'
+      operating_system:
+        name: rhel
+        version: '8'
+      python_version: '3.8'
+
+In such case, the directrory structure respecting the configuration supplied
+should be:
+
+.. code-block:: console
+
+  .
+  ├── app.py
+  ├── overlays
+  │   ├── fedora:33
+  │   │   └── Pipfile
+  │   │   └── Pipfile.lock
+  │   └── ubi:8
+  │       └── Pipfile.lock  # Will match Pipfile stated in the project root.
+  ├── Pipfile
+  └── .thoth.yaml
+
+Each directory in the ``overlays`` directory should respect the runtime
+environment name stated in ``.thoth.yaml`` file and carries files specific for
+the given runtime environment. A separate ``Pipfile`` file can be present in
+the runtime environment directory if required (e.g. adjusted Python version or
+requirements directly). Otherwise the one stated in the project root is picked
+by default.
+
+Similarly as for Pipenv files, requirement files respecting `pip-tools
+<https://pypi.org/project/pip-tools>`__ can be used (``requirements.in`` and
+``requirements.txt``)
+
 Using Thoth and thamos in OpenShift's s2i
 =========================================
 
