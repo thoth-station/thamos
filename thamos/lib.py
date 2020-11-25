@@ -878,7 +878,11 @@ def get_analysis_results(api_client: ApiClient, analysis_id: str):
         )
 
 
-def install_using_config(config: str, runtime_environment_name: typing.Optional[str] = None, dev: bool = False) -> None:
+def install_using_config(
+    config: str,
+    runtime_environment_name: typing.Optional[str] = None,
+    dev: bool = False,
+) -> None:
     """Perform installation given the configuration supplied."""
     try:
         thoth_config.load_config_from_file(config)
@@ -888,15 +892,15 @@ def install_using_config(config: str, runtime_environment_name: typing.Optional[
     install(runtime_environment_name=runtime_environment_name, dev=dev)
 
 
-def install(runtime_environment_name: typing.Optional[str] = None, dev: bool = False) -> None:
+def install(
+    runtime_environment_name: typing.Optional[str] = None, dev: bool = False
+) -> None:
     """Perform installation of packages for the given runtime environment.
 
     If the runtime environment is not specified, the first environment stated in the configuration is used.
     """
     method = (
-        "pipenv"
-        if thoth_config.requirements_format == "pipenv"
-        else "requirements"
+        "pipenv" if thoth_config.requirements_format == "pipenv" else "requirements"
     )
 
     if not dev and method == "pipenv":
@@ -916,5 +920,9 @@ def install(runtime_environment_name: typing.Optional[str] = None, dev: bool = F
                     f"No requirements.txt file found in {os.getcwd()!r} needed to install dependencies"
                 )
 
-        _LOGGER.info("Using %r installation method to install dependencies stated in %r", method, os.getcwd())
+        _LOGGER.info(
+            "Using %r installation method to install dependencies stated in %r",
+            method,
+            os.getcwd(),
+        )
         micropipenv.install(method=method, deploy=True, dev=dev)

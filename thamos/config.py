@@ -23,7 +23,6 @@ import typing
 from urllib.parse import urljoin
 from jsonschema import validate
 
-from thoth.common import cwd
 import click
 import requests
 import yaml
@@ -512,9 +511,13 @@ class _Configuration:
             )
             raise
 
-    def get_overlays_directory(self, runtime_environment_name: str) -> str:
+    def get_overlays_directory(
+        self, runtime_environment_name: typing.Optional[str] = None
+    ) -> str:
         """Get path to an overlays directory."""
-        runtime_environment_config = self.get_runtime_environment(runtime_environment_name)
+        runtime_environment_config = self.get_runtime_environment(
+            runtime_environment_name
+        )
         overlays_dir = self.content.get("overlays_dir")
 
         with workdir(self.CONFIG_NAME):
