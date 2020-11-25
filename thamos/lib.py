@@ -914,6 +914,10 @@ def install(
                 raise NoRequirementsFile(
                     f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies"
                 )
+            if not os.path.isfile("Pipfile"):  # Required for computing digests.
+                raise NoRequirementsFile(
+                    f"No Pipfile found in {os.getcwd()!r} needed for the installation process"
+                )
         else:
             if not os.path.isfile("requirements.txt"):
                 raise NoRequirementsFile(

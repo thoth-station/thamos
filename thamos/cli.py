@@ -91,7 +91,7 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
 def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
     """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
     if requirements_format == "pipenv":
-        _LOGGER.info("Using Pipenv files located in the project root directory")
+        _LOGGER.info("Using Pipenv files located in %r directory", os.getcwd())
         pipfile_lock_exists = os.path.exists("Pipfile.lock")
 
         if pipfile_lock_exists:
@@ -116,9 +116,7 @@ def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
                 project.pipfile.hash()["sha256"][:6],
             )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
-        _LOGGER.info(
-            "Using requirements.txt file located in the project root directory"
-        )
+        _LOGGER.info("Using requirements.txt file located in %r directory", os.getcwd())
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
         raise ValueError(
@@ -598,6 +596,16 @@ def advise(
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to get recommendations for; "
+    "defaults to the first entry in the configuration file.",
+)
+@click.option(
     "--force",
     is_flag=True,
     envvar="THAMOS_FORCE",
@@ -610,9 +618,10 @@ def provenance_check(
     no_wait: bool = False,
     json_output: bool = False,
     force: bool = False,
+    runtime_environment: typing.Optional[str] = None,
 ):
     """Check provenance of installed packages."""
-    with workdir():
+    with cwd(configuration.get_overlays_directory(runtime_environment)):
         if configuration.requirements_format != "pipenv":
             raise ValueError(
                 "Provenance checks are available only for requirements managed by Pipenv"

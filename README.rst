@@ -263,16 +263,13 @@ should be:
   │   │   └── Pipfile
   │   │   └── Pipfile.lock
   │   └── ubi:8
-  │       └── Pipfile.lock  # Will match Pipfile stated in the project root.
-  ├── Pipfile
+  │   │   └── Pipfile
+  │   │   └── Pipfile.lock
   └── .thoth.yaml
 
 Each directory in the ``overlays`` directory should respect the runtime
 environment name stated in ``.thoth.yaml`` file and carries files specific for
-the given runtime environment. A separate ``Pipfile`` file can be present in
-the runtime environment directory if required (e.g. adjusted Python version or
-requirements directly). Otherwise the one stated in the project root is picked
-by default.
+the given runtime environment.
 
 Similarly as for Pipenv files, requirement files respecting `pip-tools
 <https://pypi.org/project/pip-tools>`__ can be used (``requirements.in`` and
