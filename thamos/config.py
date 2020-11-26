@@ -511,5 +511,21 @@ class _Configuration:
             )
             raise
 
+    def get_overlays_directory(
+        self, runtime_environment_name: typing.Optional[str] = None
+    ) -> str:
+        """Get path to an overlays directory."""
+        runtime_environment_config = self.get_runtime_environment(
+            runtime_environment_name
+        )
+        overlays_dir = self.content.get("overlays_dir")
+
+        with workdir(self.CONFIG_NAME):
+            # No overlays directory configured.
+            if overlays_dir is None:
+                return os.getcwd()
+
+            return os.path.join(overlays_dir, runtime_environment_config["name"])
+
 
 config = _Configuration()

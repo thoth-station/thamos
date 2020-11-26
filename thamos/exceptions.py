@@ -60,3 +60,7 @@ class TimeoutError(ThamosException):
 
 class ApiError(ThamosException):
     """An exception raised if the API doesn't return expected status code."""
+
+
+class NoRequirementsFile(ThamosException):
+    """An exception raised when requirements file is not present."""

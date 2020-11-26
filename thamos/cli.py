@@ -35,8 +35,8 @@ from rich.text import Text
 from rich.table import Table
 from rich import box
 import daiquiri
-import micropipenv
 from thoth.python import Project
+from thoth.common import cwd
 from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
 from thamos.exceptions import NoProjectDirError
@@ -44,6 +44,7 @@ from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import get_log
+from thamos.lib import install as thamos_install
 from thamos.lib import get_status
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
@@ -90,7 +91,7 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
 def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
     """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
     if requirements_format == "pipenv":
-        _LOGGER.info("Using Pipenv files located in the project root directory")
+        _LOGGER.info("Using Pipenv files located in %r directory", os.getcwd())
         pipfile_lock_exists = os.path.exists("Pipfile.lock")
 
         if pipfile_lock_exists:
@@ -115,9 +116,7 @@ def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
                 project.pipfile.hash()["sha256"][:6],
             )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
-        _LOGGER.info(
-            "Using requirements.txt file located in the project root directory"
-        )
+        _LOGGER.info("Using requirements.txt file located in %r directory", os.getcwd())
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:
         raise ValueError(
@@ -361,25 +360,22 @@ def _print_version(ctx, json_output: bool = False):
     show_default=True,
     help="Consider or do not consider development dependencies during the installation process.",
 )
-def install(dev: bool) -> None:
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment for which the installation process should be done.",
+)
+def install(runtime_environment: str, dev: bool) -> None:
     """Install dependencies as stated in Pipfile.lock or requirements.txt.
 
     This command assumes requirements files are present and dependencies are already resolved.
     If that's not the case, issue `thamos advise` before calling this.
     """
-    with workdir():
-        method = (
-            "pipenv"
-            if configuration.requirements_format == "pipenv"
-            else "requirements"
-        )
-
-        if not dev and method == "pipenv":
-            _LOGGER.warning(
-                "Development dependencies will not be installed - see %s", jl("no_dev")
-            )
-
-        micropipenv.install(method=method, deploy=True, dev=dev)
+    thamos_install(runtime_environment_name=runtime_environment, dev=dev)
 
 
 @cli.command("advise")
@@ -487,7 +483,7 @@ def advise(
         _LOGGER.error("Cannot install dependencies if lock files are not written")
         sys.exit(1)
 
-    with workdir():
+    with cwd(configuration.get_overlays_directory(runtime_environment)):
         if not dev and configuration.requirements_format == "pipenv":
             _LOGGER.warning(
                 "Development dependencies will not be considered during the resolution process - see %s",
@@ -577,12 +573,7 @@ def advise(
                     advised_manifest_changes_file.write("\n")
 
             if install:
-                method = (
-                    "pipenv"
-                    if configuration.requirements_format == "pipenv"
-                    else "requirements"
-                )
-                micropipenv.install(method=method, deploy=True, dev=dev)
+                thamos_install(runtime_environment_name=runtime_environment, dev=dev)
         else:
             click.echo(json.dumps(result, indent=2))
 
@@ -605,6 +596,16 @@ def advise(
     help="Do not wait for analysis to finish, just submit it.",
 )
 @click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to get recommendations for; "
+    "defaults to the first entry in the configuration file.",
+)
+@click.option(
     "--force",
     is_flag=True,
     envvar="THAMOS_FORCE",
@@ -617,9 +618,10 @@ def provenance_check(
     no_wait: bool = False,
     json_output: bool = False,
     force: bool = False,
+    runtime_environment: typing.Optional[str] = None,
 ):
     """Check provenance of installed packages."""
-    with workdir():
+    with cwd(configuration.get_overlays_directory(runtime_environment)):
         if configuration.requirements_format != "pipenv":
             raise ValueError(
                 "Provenance checks are available only for requirements managed by Pipenv"
