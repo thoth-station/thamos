@@ -130,7 +130,9 @@ def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
 
 
 def _write_files(
-    requirements: Dict[str, Any], requirements_lock: Dict[str, Any], requirements_format: str
+    requirements: Dict[str, Any],
+    requirements_lock: Dict[str, Any],
+    requirements_format: str,
 ) -> None:
     """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
     project = Project.from_dict(requirements, requirements_lock)
@@ -765,5 +767,65 @@ def config(no_interactive: bool = False, template: str = None):
         )
 
 
-if __name__ == "__main__":
-    cli()
+@cli.command("check")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to check configuration file against.",
+)
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+def check(runtime_environment: Optional[str], output_format: str) -> None:
+    """Check configuration file and runtime environment."""
+    result = configuration.check(runtime_environment_name=runtime_environment)
+
+    if output_format == "yaml":
+        yaml.safe_dump(result, sys.stdout)
+    elif output_format == "json":
+        json.dump(result, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    elif output_format == "table":
+        table = Table()
+
+        header = set()
+        for item in result:
+            for key in item.keys():
+                header.add(key)
+
+        header_sorted = sorted(header)
+        for item in header_sorted:
+            table.add_column(
+                item.replace("_", " ").capitalize(),
+                style="cyan",
+                overflow="fold",
+            )
+
+        for item in result:
+            row = []
+            for key in header_sorted:
+                entry = item.get(key)
+                if not bool(int(os.getenv("THAMOS_NO_EMOJI", 0))) and isinstance(
+                    entry, str
+                ):
+                    entry = _EMOJI.get(entry, entry)
+
+                row.append(entry if entry is not None else "-")
+
+            table.add_row(*row)
+
+        console = Console()
+        console.print(table, justify="center")
+
+    sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
+
+
+__name__ == "__main__" and cli()

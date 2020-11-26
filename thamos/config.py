@@ -21,6 +21,7 @@ import logging
 import os
 import typing
 from urllib.parse import urljoin
+from jsonschema import validate
 
 import click
 import requests
@@ -40,6 +41,77 @@ from .exceptions import ServiceUnavailable
 
 _LOGGER = logging.getLogger(__name__)
 _THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
+
+# The schema is enforcing all the options. This will make sure the right version of Thamos is
+# installed and no configuration options are silently ignored.
+_CONFIG_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "host": {"type": "string", "format": "hostname"},
+        "tls_verify": {"type": "boolean"},
+        "requirements_format": {
+            "type": "string",
+            "enum": ["pipenv", "pip", "pip-tools"],
+        },
+        "runtime_environments": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "cuda_version": {"type": "string"},
+                    "hardware": {
+                        "type": "object",
+                        "properties": {
+                            "cpu_family": {"type": "integer"},
+                            "cpu_model": {"type": "integer"},
+                        },
+                        "required": [],
+                        "additionalProperties": False,
+                    },
+                    "name": {"type": "string", "pattern": r"^[a-zA-Z0-9:_-]+$"},
+                    "operating_system": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "version": {"type": "string"},
+                        },
+                        "required": ["name", "version"],
+                        "additionalProperties": False,
+                    },
+                    "platform": {"type": "string"},
+                    "python_version": {
+                        "type": "string",
+                        "pattern": r"^[0-9]+\.[0-9]+$",
+                    },
+                    "recommendation_type": {
+                        "type": "string",
+                        "enum": [
+                            "latest",
+                            "stable",
+                            "performance",
+                            "security",
+                            "testing",
+                        ],
+                    },
+                },
+                "additionalProperties": False,
+                "required": ["name"],
+            },
+        },
+        "managers": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                },
+                "additionalProperties": True,
+                "required": ["name"],
+            },
+        },
+    },
+    "required": ["host", "runtime_environments"],
+}
 
 
 class _Configuration:
@@ -305,6 +377,139 @@ class _Configuration:
 
         self._api_url = api_url
         return self._api_url
+
+    def check_runtime_environment(
+        self, runtime_environment_name: str
+    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        """Check the given runtime environment entry."""
+        runtime_environment = self.get_runtime_environment(runtime_environment_name)
+
+        result = []
+
+        # CUDA
+        cuda_version = discover_cuda_version()
+        if runtime_environment.get("cuda_version") != cuda_version:
+            if (
+                cuda_version is None
+                or isinstance(cuda_version, str)
+                and isinstance(runtime_environment.get("cuda_version"), str)
+            ):
+                message_type = "ERROR"
+            else:
+                message_type = "WARNING"
+
+            result.append(
+                {
+                    "type": message_type,
+                    "runtime_environment": runtime_environment_name,
+                    "message": f"CUDA version declared in the configuration file "
+                    f"({runtime_environment['cuda_version']!r}) does not match the one detected ({cuda_version!r})",
+                }
+            )
+
+        # Operating system
+        if runtime_environment.get("operating_system"):
+            conf_os_name = runtime_environment["operating_system"].get("name")
+            conf_os_version = runtime_environment["operating_system"].get("version")
+
+            os_name, os_version = discover_distribution()
+            if conf_os_name != os_name:
+                result.append(
+                    {
+                        "type": "ERROR",
+                        "runtime_environment": runtime_environment_name,
+                        "message": f"Operating system name stated in the configuration file ({conf_os_name!r}) "
+                        f"does not match the one detected ({os_name!r})",
+                    }
+                )
+            elif conf_os_version != os_version:
+                result.append(
+                    {
+                        "type": "ERROR",
+                        "runtime_environment": runtime_environment_name,
+                        "message": f"Operating system version stated in the configuration file ({conf_os_version!r}) "
+                        f"does not match the one detected ({os_version!r})",
+                    }
+                )
+
+        # Python version
+        python_version = discover_python_version()
+        conf_python_version = runtime_environment.get("python_version")
+        if python_version != conf_python_version:
+            result.append(
+                {
+                    "type": "ERROR",
+                    "runtime_environment": runtime_environment_name,
+                    "message": f"Python version detected ({python_version!r}) does not match the one stated in the "
+                    f"configuration file ({conf_python_version!r})",
+                }
+            )
+
+        # Check hardware
+        conf_cpu_family = runtime_environment.get("hardware", {}).get("cpu_family")
+        conf_cpu_model = runtime_environment.get("hardware", {}).get("cpu_model")
+
+        cpu_info = discover_cpu()
+        if cpu_info.get("cpu_family") != conf_cpu_family:
+            result.append(
+                {
+                    "type": "ERROR" if conf_cpu_family is not None else "WARNING",
+                    "runtime_environment": runtime_environment_name,
+                    "message": f"CPU model stated in the configuration file ({conf_cpu_family}) does not match the "
+                    f"one detected ({cpu_info.get('cpu_family')})",
+                }
+            )
+
+        if cpu_info.get("cpu_model") != conf_cpu_model:
+            result.append(
+                {
+                    "type": "ERROR" if conf_cpu_model is not None else "WARNING",
+                    "runtime_environment": runtime_environment_name,
+                    "message": f"CPU model stated in the configuration file ({conf_cpu_model}) does not match the "
+                    f"one detected ({cpu_info.get('cpu_model')})",
+                }
+            )
+
+        return result
+
+    def check(
+        self, runtime_environment_name: typing.Optional[str] = None
+    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        """Check the configuration file and produce a report."""
+        result = []
+
+        self.check_schema()
+
+        # warn on multiple runtime environments when no overlay is used
+        if (
+            len(self.content["runtime_environments"]) > 1
+            and self.content.get("overlays_dir") is None
+        ):
+            result.append(
+                {
+                    "message": "Multiple runtime environments defined but no overlays directory configured",
+                    "type": "WARNING",
+                }
+            )
+
+        if runtime_environment_name is not None:
+            result.extend(self.check_runtime_environment(runtime_environment_name))
+        else:
+            for entry in self.content.get("runtime_environments") or []:
+                result.extend(self.check_runtime_environment(entry["name"]))
+
+        return result
+
+    def check_schema(self) -> None:
+        """Check the configuration file schema."""
+        try:
+            validate(instance=self.content, schema=_CONFIG_SCHEMA)
+        except Exception:
+            _LOGGER.error(
+                "Schema validation failed: please make sure you run Thamos which supports the supplied "
+                "configuration file"
+            )
+            raise
 
 
 config = _Configuration()
