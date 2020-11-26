@@ -2520,3 +2520,8 @@
 * :pushpin: Automatic update of dependency requests from 2.24.0 to 2.25.0 (#604)
 * :pushpin: Automatic update of dependency urllib3 from 1.25.11 to 1.26.2 (#603)
 * :pushpin: Automatic update of dependency urllib3 from 1.25.11 to 1.26.2 (#602)
+
+## Release 1.5.0 (2020-11-26T16:52:14)
+### Features
+* Introduce overlays to thamos (#631)
+* Introduce thamos check command (#632)
