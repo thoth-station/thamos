@@ -2525,3 +2525,9 @@
 ### Features
 * Introduce overlays to thamos (#631)
 * Introduce thamos check command (#632)
+
+## Release 1.5.1 (2020-11-30T09:47:24)
+### Features
+* Improve obtaining Thoth backend version information (#642)
+* Add missing jsonschema to requirements.txt (#641)
+* :honeybee: Deliver missing package module to pypi github issue template (#638)
