@@ -2531,3 +2531,8 @@
 * Improve obtaining Thoth backend version information (#642)
 * Add missing jsonschema to requirements.txt (#641)
 * :honeybee: Deliver missing package module to pypi github issue template (#638)
+
+## Release 1.5.2 (2020-11-30T20:56:57)
+### Features
+* Fix s2i detection (#649)
+* :arrow_up: Automatic update of dependencies by kebechet. (#647)
