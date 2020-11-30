@@ -16,3 +16,4 @@ thoth-python >=0.9.0
 thoth-common
 rich
 micropipenv
+jsonschema
