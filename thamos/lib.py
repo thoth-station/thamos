@@ -282,7 +282,7 @@ def _get_static_analysis() -> typing.Optional[dict]:
 def _is_s2i() -> bool:
     """Check if we run in an OpenShift s2i build."""
     # This environment variable is used by OpenShift's s2i build process.
-    return "STI_SCRIPTS_PATH" == os.environ
+    return "STI_SCRIPTS_PATH" in os.environ
 
 
 def _get_origin() -> typing.Optional[str]:
