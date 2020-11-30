@@ -330,6 +330,13 @@ def _print_version(ctx, json_output: bool = False):
         api_url = configuration.api_url
     except NoProjectDirError as exc:
         _LOGGER.warning("Cannot obtain Thoth backend information: %s", str(exc))
+    except Exception as exc:
+        if _LOGGER.getEffectiveLevel() <= logging.DEBUG:
+            _log = _LOGGER.exception
+        else:
+            _log = _LOGGER.error
+
+        _log("Failed to obtain Thoth backend version: %s", str(exc))
 
     if json_output:
         click.echo(

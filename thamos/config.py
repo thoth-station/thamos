@@ -41,6 +41,7 @@ from .exceptions import ServiceUnavailable
 
 _LOGGER = logging.getLogger(__name__)
 _THAMOS_DISABLE_TLS_WARNING = bool(int(os.getenv("THAMOS_DISABLE_TLS_WARNING", 0)))
+_API_CONNECTION_TIMEOUT = int(os.getenv("THAMOS_API_CONNECTION_TIMEOUT", 5))
 
 # The schema is enforcing all the options. This will make sure the right version of Thamos is
 # installed and no configuration options are silently ignored.
@@ -172,7 +173,9 @@ class _Configuration:
         _LOGGER.debug(
             "Contacting Thoth at %r to receive version information", self.api_url
         )
-        response = requests.head(self.api_url, verify=self.tls_verify)
+        response = requests.head(
+            self.api_url, verify=self.tls_verify, timeout=_API_CONNECTION_TIMEOUT
+        )
         response.raise_for_status()
         return response.headers.get("X-Thoth-Version", "Not Available")
 
