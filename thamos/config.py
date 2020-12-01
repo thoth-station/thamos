@@ -415,6 +415,16 @@ class _Configuration:
             conf_os_name = runtime_environment["operating_system"].get("name")
             conf_os_version = runtime_environment["operating_system"].get("version")
 
+            if conf_os_name == "ubi":
+                result.append(
+                    {
+                        "type": "INFO",
+                        "runtime_environment": runtime_environment_name,
+                        "message": "UBI container images are ABI compatible with RHEL container images",
+                    }
+                )
+                conf_os_name = "rhel"
+
             os_name, os_version = discover_distribution()
             if conf_os_name != os_name:
                 result.append(
