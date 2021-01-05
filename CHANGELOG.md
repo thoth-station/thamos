@@ -2536,3 +2536,12 @@
 ### Features
 * Fix s2i detection (#649)
 * :arrow_up: Automatic update of dependencies by kebechet. (#647)
+
+## Release 1.5.3 (2021-01-05T12:05:48)
+### Features
+* Port to Python 3.8 (#663)
+* Remove coala from requirements (#662)
+* :arrow_up: Automatic update of dependencies by kebechet. (#657)
+* Treat UBI and RHEL as synonyms (#654)
+### Improvements
+* Load configuration just once and avoid misleading warnings (#659)
