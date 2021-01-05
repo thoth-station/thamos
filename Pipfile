@@ -25,7 +25,6 @@ jsonschema = "*"
 
 [dev-packages]
 toml = "*"
-coala-bears = "*"
 pytest-timeout = "*"
 pytest-cov = "*"
 pytest = "*"
