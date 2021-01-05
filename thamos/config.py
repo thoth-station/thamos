@@ -418,8 +418,12 @@ class _Configuration:
 
         # Operating system
         if runtime_environment.get("operating_system"):
-            conf_os_name = map_os_name(runtime_environment["operating_system"].get("name"))
-            conf_os_version = normalize_os_version(conf_os_name, runtime_environment["operating_system"].get("version"))
+            conf_os_name = map_os_name(
+                runtime_environment["operating_system"].get("name")
+            )
+            conf_os_version = normalize_os_version(
+                conf_os_name, runtime_environment["operating_system"].get("version")
+            )
 
             if conf_os_name == "ubi":
                 result.append(
