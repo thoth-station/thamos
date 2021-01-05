@@ -521,7 +521,9 @@ def advise_here(
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
     if requirements_format == "pipenv":
-        _LOGGER.info("Using Pipenv files located in the project root directory")
+        _LOGGER.info(
+            "Using Pipenv files to manage dependencies located in %r", os.getcwd()
+        )
         pipfile_lock_exists = os.path.exists("Pipfile.lock")
 
         if pipfile_lock_exists:
@@ -547,7 +549,8 @@ def advise_here(
             )
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         _LOGGER.info(
-            "Using requirements.txt file located in the project root directory"
+            "Using requirements.txt file to manage dependencies located in %r",
+            os.getcwd(),
         )
         project = Project.from_pip_compile_files(allow_without_lock=True)
     else:

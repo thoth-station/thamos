@@ -208,10 +208,11 @@ class _Configuration:
 
             self._configuration = yaml.safe_load(self._configuration)
 
-    def load_config(self) -> None:
+    def load_config(self, force: bool = False) -> None:
         """Load configuration from a file."""
-        with workdir(config.CONFIG_NAME):
-            self.load_config_from_file(config.CONFIG_NAME)
+        if not self._configuration and not force:
+            with workdir(config.CONFIG_NAME):
+                self.load_config_from_file(config.CONFIG_NAME)
 
     def create_default_config(
         self, template: str = None, nowrite: bool = False

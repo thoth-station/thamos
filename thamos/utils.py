@@ -17,6 +17,7 @@
 
 """Utility and helper functions for Thamos."""
 
+from typing import Optional
 from contextlib import contextmanager
 import logging
 import os
@@ -31,7 +32,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @contextmanager
-def workdir(file_lookup: str = None):
+def workdir(file_lookup: Optional[str] = None, warn_on_dir_change: bool = True) -> None:
     """Find project directory and cd into it."""
     file_lookup = file_lookup or ".thoth.yaml"
 
@@ -41,7 +42,7 @@ def workdir(file_lookup: str = None):
         file = os.path.join(project_dir, file_lookup)
         if os.path.isfile(file):
             with cwd(project_dir):
-                if project_dir != original_project_dir:
+                if project_dir != original_project_dir and warn_on_dir_change:
                     _LOGGER.warning("Using %r as project root directory", project_dir)
                 yield project_dir
             break
