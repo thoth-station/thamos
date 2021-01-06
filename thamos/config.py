@@ -27,6 +27,9 @@ import click
 import requests
 import yaml
 
+from thoth.common import normalize_os_version
+from thoth.common import map_os_name
+
 from .utils import workdir
 from .discover import discover_cpu
 from .discover import discover_cuda_version
@@ -233,6 +236,8 @@ class _Configuration:
         # Add quotes for textual representation in the config file.
         cuda_version = f"'{cuda_version}" if cuda_version is not None else "null"
         os_name, os_version = discover_distribution()
+        os_name = map_os_name(os_name)
+        os_version = normalize_os_version(os_name, os_version)
         python_version = discover_python_version()
         platform = discover_platform()
 
@@ -413,8 +418,12 @@ class _Configuration:
 
         # Operating system
         if runtime_environment.get("operating_system"):
-            conf_os_name = runtime_environment["operating_system"].get("name")
-            conf_os_version = runtime_environment["operating_system"].get("version")
+            conf_os_name = map_os_name(
+                runtime_environment["operating_system"].get("name")
+            )
+            conf_os_version = normalize_os_version(
+                conf_os_name, runtime_environment["operating_system"].get("version")
+            )
 
             if conf_os_name == "ubi":
                 result.append(
@@ -427,6 +436,8 @@ class _Configuration:
                 conf_os_name = "rhel"
 
             os_name, os_version = discover_distribution()
+            os_name = map_os_name(os_name)
+            os_version = normalize_os_version(os_name, os_version)
             if conf_os_name != os_name:
                 result.append(
                     {
