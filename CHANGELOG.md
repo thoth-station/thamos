@@ -2545,3 +2545,10 @@
 * Treat UBI and RHEL as synonyms (#654)
 ### Improvements
 * Load configuration just once and avoid misleading warnings (#659)
+
+## Release 1.5.4 (2021-01-06T06:23:27)
+### Features
+* :arrow_up: Automatic update of dependencies by kebechet. (#668)
+* :arrow_up: Automatic update of dependencies by kebechet. (#667)
+### Improvements
+* Perform normalization of os name and os version (#658)
