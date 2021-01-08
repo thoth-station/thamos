@@ -62,12 +62,18 @@ _CONFIG_SCHEMA = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "cuda_version": {"type": "string"},
+                    "cuda_version": {"type": ["string", "null"]},
+                    "openblas_version": {"type": ["string", "null"]},
+                    "openmpi_version": {"type": ["string", "null"]},
+                    "cudnn_version": {"type": ["string", "null"]},
+                    "mkl_version": {"type": ["string", "null"]},
+                    "base_image": {"type": ["string", "null"]},
                     "hardware": {
                         "type": "object",
                         "properties": {
                             "cpu_family": {"type": "integer"},
                             "cpu_model": {"type": "integer"},
+                            "gpu_model": {"type": ["string", "null"]},
                         },
                         "required": [],
                         "additionalProperties": False,
@@ -76,13 +82,13 @@ _CONFIG_SCHEMA = {
                     "operating_system": {
                         "type": "object",
                         "properties": {
-                            "name": {"type": "string"},
-                            "version": {"type": "string"},
+                            "name": {"type": ["string", "null"]},
+                            "version": {"type": ["string", "null"]},
                         },
                         "required": ["name", "version"],
                         "additionalProperties": False,
                     },
-                    "platform": {"type": "string"},
+                    "platform": {"type": ["string", "null"]},
                     "python_version": {
                         "type": "string",
                         "pattern": r"^[0-9]+\.[0-9]+$",
