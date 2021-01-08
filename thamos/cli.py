@@ -40,6 +40,7 @@ from thoth.common import cwd
 from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
 from thamos.exceptions import NoProjectDirError
+from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import provenance_check as thoth_provenance_check
@@ -722,6 +723,69 @@ def status(analysis_id: str = None, output_format: str = None):
         output = json.dumps(status_dict, indent=2)
     elif output_format == "yaml":
         output = yaml.safe_dump(status_dict, default_flow_style=False)
+    else:
+        raise NotImplementedError(f"Unknown output format {output_format}")
+
+    click.echo(output)
+
+
+@cli.command("list")
+def list() -> None:
+    """List available runtime environments."""
+    with workdir(configuration.CONFIG_NAME):
+        environments = configuration.list_runtime_environments()
+
+    if not environments:
+        _LOGGER.error("No runtime environments found")
+        sys.exit(1)
+
+    for env in environments:
+        click.echo(env.get("name"))
+
+
+@cli.command("show")
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml"]),
+    default="yaml",
+    help="Specify output format for the status report.",
+    show_default=True,
+)
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to be shown.",
+)
+def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
+    """Show configuration of available runtime environments."""
+    with workdir(configuration.CONFIG_NAME):
+        environments = configuration.list_runtime_environments()
+
+    if not runtime_environment:
+        if not environments:
+            _LOGGER.error("No runtime environments found")
+            sys.exit(1)
+
+    to_show = environments
+    if runtime_environment:
+        for env in environments:
+            if env.get("name") == runtime_environment:
+                to_show = env
+                break
+        else:
+            raise NoRuntimeEnvironmentError(
+                f"Runtime environment {runtime_environment!r} not found"
+            )
+
+    if output_format == "json":
+        output = json.dumps(to_show, indent=2)
+    elif output_format == "yaml":
+        output = yaml.safe_dump(to_show, default_flow_style=False)
     else:
         raise NotImplementedError(f"Unknown output format {output_format}")
 
