@@ -2552,3 +2552,12 @@
 * :arrow_up: Automatic update of dependencies by kebechet. (#667)
 ### Improvements
 * Perform normalization of os name and os version (#658)
+
+## Release 1.5.5 (2021-01-11T10:06:15)
+### Features
+* :arrow_up: Automatic update of dependencies by kebechet. (#678)
+* Do not override list builtin (#676)
+* :arrow_up: Automatic update of dependencies by kebechet. (#673)
+* :arrow_up: Automatic update of dependencies by kebechet. (#671)
+### Improvements
+* Add commands for showing and listing runtime environments (#675)
