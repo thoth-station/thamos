@@ -220,7 +220,7 @@ def _print_report(report: dict, json_output: bool = False, title: Optional[str] 
     # Remove fields that can be an array - these are addition details that are supressed from the table output.
     header = header - to_remove
 
-    header_list = list(sorted(header))
+    header_list = sorted(header)
     for item in header_list:
         table.add_column(
             item.replace("_", " ").capitalize(), style="cyan", overflow="fold"
@@ -730,7 +730,7 @@ def status(analysis_id: str = None, output_format: str = None):
 
 
 @cli.command("list")
-def list() -> None:
+def list_() -> None:
     """List available runtime environments."""
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
