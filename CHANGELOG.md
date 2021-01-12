@@ -2561,3 +2561,13 @@
 * :arrow_up: Automatic update of dependencies by kebechet. (#671)
 ### Improvements
 * Add commands for showing and listing runtime environments (#675)
+
+## Release 1.6.0 (2021-01-12T19:19:51)
+### Features
+* :arrow_up: Automatic update of dependencies by kebechet. (#687)
+* Adjust build analysis library handling (#684)
+* Regenerate build analysis response models (#683)
+* :arrow_up: Automatic update of dependencies by kebechet. (#682)
+* Regenerate and update thamos client (#681)
+### Improvements
+* removed bissenbay, thanks for your contributions!
