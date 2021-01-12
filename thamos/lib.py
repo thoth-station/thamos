@@ -747,7 +747,7 @@ def build_analysis(
         environment_type=environment_type,
         origin=origin,
         debug=debug,
-        force=force
+        force=force,
     )
 
     # Swagger client handles None in a different way - we need to explicitly avoid passing
