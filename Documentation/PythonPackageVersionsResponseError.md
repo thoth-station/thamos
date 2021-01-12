@@ -1,4 +1,4 @@
-# PythonPackageMetadataResponseError
+# PythonPackageVersionsResponseError
 
 ## Properties
 Name | Type | Description | Notes
