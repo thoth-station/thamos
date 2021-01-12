@@ -715,9 +715,13 @@ def build_analysis(
     output_image: str,
     *,
     environment_type: str,
-    registry_user: str = None,
-    registry_password: str = None,
-    registry_verify_tls: bool = True,
+    base_registry_user: typing.Optional[str] = None,
+    base_registry_password: typing.Optional[str] = None,
+    base_registry_verify_tls: bool = True,
+    output_registry_user: typing.Optional[str] = None,
+    output_registry_password: typing.Optional[str] = None,
+    output_registry_verify_tls: bool = True,
+    origin: typing.Optional[str] = None,
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
@@ -732,28 +736,29 @@ def build_analysis(
     else:
         raise ValueError("No build info provided")
 
+    params = dict(
+        body=build_detail,
+        base_registry_user=base_registry_user,
+        base_registry_password=base_registry_password,
+        base_registry_verify_tls=base_registry_verify_tls,
+        output_registry_user=output_registry_user,
+        output_registry_password=output_registry_password,
+        output_registry_verify_tls=output_registry_verify_tls,
+        environment_type=environment_type,
+        origin=origin,
+        debug=debug,
+        force=force
+    )
+
+    # Swagger client handles None in a different way - we need to explicitly avoid passing
+    # values that are not present.
+    params = {k: v for k, v in params.items() if v is not None}
+
     api_instance = BuildAnalysisApi(api_client)
-    if registry_user or registry_password:
-        # Swagger client handles None in a different way - we need to explicitly avoid passing
-        # registry user and registry password if they are not set.
-        response = api_instance.post_build(
-            body=build_detail,
-            debug=debug,
-            registry_user=registry_user,
-            registry_password=registry_password,
-            registry_verify_tls=registry_verify_tls,
-            force=force,
-            environment_type=environment_type,
-        )
-    else:
-        response = api_instance.post_build(
-            body=build_detail,
-            debug=debug,
-            registry_verify_tls=registry_verify_tls,
-            force=force,
-        )
+    response = api_instance.post_build(*params)
 
     _LOGGER.info("Successfully submitted build analysis to %r", thoth_config.api_url)
+    _LOGGER.debug("Build analysis parameters: %r", params)
     if nowait:
         return response
 
