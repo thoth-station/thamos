@@ -38,7 +38,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. |
+ **analysis_id** | **str**| An id of requested analysis. | 
 
 ### Return type
 
@@ -84,7 +84,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested analysis. |
+ **analysis_id** | **str**| An id of requested analysis. | 
 
 ### Return type
 
@@ -130,7 +130,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **analysis_id** | **str**| An id of requested provenance check. |
+ **analysis_id** | **str**| An id of requested provenance check. | 
 
 ### Return type
 
@@ -179,8 +179,8 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. |
- **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
+ **body** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. | 
+ **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
  **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to false]
  **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] [default to false]
 
@@ -198,3 +198,4 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

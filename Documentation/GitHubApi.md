@@ -35,7 +35,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**QebHwtThamosAdviseInput**](QebHwtThamosAdviseInput.md)| Thamos advise inputs. |
+ **body** | [**QebHwtThamosAdviseInput**](QebHwtThamosAdviseInput.md)| Thamos advise inputs. | 
 
 ### Return type
 
@@ -51,3 +51,4 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
