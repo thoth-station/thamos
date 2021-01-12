@@ -30,26 +30,21 @@ class BuildAnalysisResponseBaseImageAnalysis(object):
     """
     swagger_types = {
         'analysis_id': 'str',
-        'parameters': 'object',
         'cached': 'bool'
     }
 
     attribute_map = {
         'analysis_id': 'analysis_id',
-        'parameters': 'parameters',
         'cached': 'cached'
     }
 
-    def __init__(self, analysis_id=None, parameters=None, cached=None):  # noqa: E501
+    def __init__(self, analysis_id=None, cached=None):  # noqa: E501
         """BuildAnalysisResponseBaseImageAnalysis - a model defined in Swagger"""  # noqa: E501
         self._analysis_id = None
-        self._parameters = None
         self._cached = None
         self.discriminator = None
         if analysis_id is not None:
             self.analysis_id = analysis_id
-        if parameters is not None:
-            self.parameters = parameters
         if cached is not None:
             self.cached = cached
 
@@ -75,29 +70,6 @@ class BuildAnalysisResponseBaseImageAnalysis(object):
         """
 
         self._analysis_id = analysis_id
-
-    @property
-    def parameters(self):
-        """Gets the parameters of this BuildAnalysisResponseBaseImageAnalysis.  # noqa: E501
-
-        Parameters echoed back to user (with default parameters if omitted).   # noqa: E501
-
-        :return: The parameters of this BuildAnalysisResponseBaseImageAnalysis.  # noqa: E501
-        :rtype: object
-        """
-        return self._parameters
-
-    @parameters.setter
-    def parameters(self, parameters):
-        """Sets the parameters of this BuildAnalysisResponseBaseImageAnalysis.
-
-        Parameters echoed back to user (with default parameters if omitted).   # noqa: E501
-
-        :param parameters: The parameters of this BuildAnalysisResponseBaseImageAnalysis.  # noqa: E501
-        :type: object
-        """
-
-        self._parameters = parameters
 
     @property
     def cached(self):

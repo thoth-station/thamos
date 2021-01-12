@@ -31,24 +31,29 @@ class BuildAnalysisResponse(object):
     swagger_types = {
         'base_image_analysis': 'BuildAnalysisResponseBaseImageAnalysis',
         'output_image_analysis': 'BuildAnalysisResponseBaseImageAnalysis',
-        'build_log_analysis': 'BuildAnalysisResponseBaseImageAnalysis'
+        'buildlog_analysis': 'BuildAnalysisResponseBaseImageAnalysis',
+        'buildlog_document_id': 'str'
     }
 
     attribute_map = {
         'base_image_analysis': 'base_image_analysis',
         'output_image_analysis': 'output_image_analysis',
-        'build_log_analysis': 'build_log_analysis'
+        'buildlog_analysis': 'buildlog_analysis',
+        'buildlog_document_id': 'buildlog_document_id'
     }
 
-    def __init__(self, base_image_analysis=None, output_image_analysis=None, build_log_analysis=None):  # noqa: E501
+    def __init__(self, base_image_analysis=None, output_image_analysis=None, buildlog_analysis=None, buildlog_document_id=None):  # noqa: E501
         """BuildAnalysisResponse - a model defined in Swagger"""  # noqa: E501
         self._base_image_analysis = None
         self._output_image_analysis = None
-        self._build_log_analysis = None
+        self._buildlog_analysis = None
+        self._buildlog_document_id = None
         self.discriminator = None
         self.base_image_analysis = base_image_analysis
         self.output_image_analysis = output_image_analysis
-        self.build_log_analysis = build_log_analysis
+        self.buildlog_analysis = buildlog_analysis
+        if buildlog_document_id is not None:
+            self.buildlog_document_id = buildlog_document_id
 
     @property
     def base_image_analysis(self):
@@ -97,27 +102,50 @@ class BuildAnalysisResponse(object):
         self._output_image_analysis = output_image_analysis
 
     @property
-    def build_log_analysis(self):
-        """Gets the build_log_analysis of this BuildAnalysisResponse.  # noqa: E501
+    def buildlog_analysis(self):
+        """Gets the buildlog_analysis of this BuildAnalysisResponse.  # noqa: E501
 
 
-        :return: The build_log_analysis of this BuildAnalysisResponse.  # noqa: E501
+        :return: The buildlog_analysis of this BuildAnalysisResponse.  # noqa: E501
         :rtype: BuildAnalysisResponseBaseImageAnalysis
         """
-        return self._build_log_analysis
+        return self._buildlog_analysis
 
-    @build_log_analysis.setter
-    def build_log_analysis(self, build_log_analysis):
-        """Sets the build_log_analysis of this BuildAnalysisResponse.
+    @buildlog_analysis.setter
+    def buildlog_analysis(self, buildlog_analysis):
+        """Sets the buildlog_analysis of this BuildAnalysisResponse.
 
 
-        :param build_log_analysis: The build_log_analysis of this BuildAnalysisResponse.  # noqa: E501
+        :param buildlog_analysis: The buildlog_analysis of this BuildAnalysisResponse.  # noqa: E501
         :type: BuildAnalysisResponseBaseImageAnalysis
         """
-        if build_log_analysis is None:
-            raise ValueError("Invalid value for `build_log_analysis`, must not be `None`")  # noqa: E501
+        if buildlog_analysis is None:
+            raise ValueError("Invalid value for `buildlog_analysis`, must not be `None`")  # noqa: E501
 
-        self._build_log_analysis = build_log_analysis
+        self._buildlog_analysis = buildlog_analysis
+
+    @property
+    def buildlog_document_id(self):
+        """Gets the buildlog_document_id of this BuildAnalysisResponse.  # noqa: E501
+
+        Document identifier for the stored build log.  # noqa: E501
+
+        :return: The buildlog_document_id of this BuildAnalysisResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._buildlog_document_id
+
+    @buildlog_document_id.setter
+    def buildlog_document_id(self, buildlog_document_id):
+        """Sets the buildlog_document_id of this BuildAnalysisResponse.
+
+        Document identifier for the stored build log.  # noqa: E501
+
+        :param buildlog_document_id: The buildlog_document_id of this BuildAnalysisResponse.  # noqa: E501
+        :type: str
+        """
+
+        self._buildlog_document_id = buildlog_document_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""
