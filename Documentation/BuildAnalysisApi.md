@@ -45,15 +45,15 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Build**](Build.md)| Fill up the Build details such as output imagestream, base imagestream, and build log. | 
- **base_registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
- **base_registry_password** | **str**| Registry password or token to be used for pulling images from source registry.  | [optional] 
+ **body** | [**Build**](Build.md)| Fill up the Build details such as output imagestream, base imagestream, and build log. |
+ **base_registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional]
+ **base_registry_password** | **str**| Registry password or token to be used for pulling images from source registry.  | [optional]
  **base_registry_verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled from during the build.  | [optional] [default to true]
- **output_registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional] 
- **output_registry_password** | **str**| Registry password or token to be used for pulling images from destination registry.  | [optional] 
+ **output_registry_user** | **str**| Registry user to be used for pulling images from registry.  | [optional]
+ **output_registry_password** | **str**| Registry password or token to be used for pulling images from destination registry.  | [optional]
  **output_registry_verify_tls** | **bool**| Verify TLS certificates of registry from where images are pulled to during the build.  | [optional] [default to true]
  **environment_type** | **str**| Type of environment (runtime or buildtime) which is being analyzed.  | [optional] [default to runtime]
- **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional] 
+ **origin** | **str**| A remote where the image is being used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
  **debug** | **bool**| Run the given analyzer in a verbose mode so developers can debug analyzer.  | [optional] [default to false]
  **force** | **bool**| Do not use cached results, always run analysis.  | [optional] [default to false]
 
@@ -71,4 +71,3 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
