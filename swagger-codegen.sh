@@ -52,3 +52,5 @@ sed -i '/.*if finished_at is None:/,+1 d' "thamos/swagger_client/models/analysis
 sed -i '/.*if reason is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
 sed -i '/.*if started_at is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
 sed -i '/.*if log is None:/,+1 d' "thamos/swagger_client/models/analysis_log_response.py"
+
+black thamos/swagger_client
