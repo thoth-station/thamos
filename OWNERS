@@ -4,7 +4,11 @@ approvers:
   - fridex
   - kpostoffice
   - sesheta
+
 reviewers:
   - pacospace
   - harshad16
   - saisankargochhayat
+
+labels:
+  - sig/user-experience
