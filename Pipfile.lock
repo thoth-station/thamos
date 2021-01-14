@@ -537,11 +537,11 @@
         },
         "rich": {
             "hashes": [
-                "sha256:812a911cd85d32f484325f501fb8f84270b8e0a7af739d4bf1d3df42643e93a6",
-                "sha256:c91c2587dba9aa8dd30c5f090e700f54433ccd73e209f4737e10385c4c1cbf19"
+                "sha256:0ec853f882613e75a5e46d545ddaa48cad235c616eaeb094792012fe22e8b2c6",
+                "sha256:7e594114b109dfcf4c242a5ae1b2767dbc49d0abc9c5f082eb7e558dd622bc90"
             ],
             "index": "pypi",
-            "version": "==9.8.0"
+            "version": "==9.8.1"
         },
         "rsa": {
             "hashes": [
@@ -635,10 +635,10 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:debe3118f0150c8f3813a9a3572bed274db4beb221a423954ce40afed18ba741"
+                "sha256:32b9a43def528ec82469c02640cf27ec8c1021a96c71342d140bab4f1ab36120"
             ],
             "index": "pypi",
-            "version": "==0.21.3"
+            "version": "==0.21.4"
         },
         "thoth-python": {
             "hashes": [
