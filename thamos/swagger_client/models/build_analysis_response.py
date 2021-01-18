@@ -56,9 +56,12 @@ class BuildAnalysisResponse(object):
         self._buildlog_analysis = None
         self._buildlog_document_id = None
         self.discriminator = None
-        self.base_image_analysis = base_image_analysis
-        self.output_image_analysis = output_image_analysis
-        self.buildlog_analysis = buildlog_analysis
+        if base_image_analysis is not None:
+            self.base_image_analysis = base_image_analysis
+        if output_image_analysis is not None:
+            self.output_image_analysis = output_image_analysis
+        if buildlog_analysis is not None:
+            self.buildlog_analysis = buildlog_analysis
         if buildlog_document_id is not None:
             self.buildlog_document_id = buildlog_document_id
 
@@ -80,10 +83,6 @@ class BuildAnalysisResponse(object):
         :param base_image_analysis: The base_image_analysis of this BuildAnalysisResponse.  # noqa: E501
         :type: BuildAnalysisResponseBaseImageAnalysis
         """
-        if base_image_analysis is None:
-            raise ValueError(
-                "Invalid value for `base_image_analysis`, must not be `None`"
-            )  # noqa: E501
 
         self._base_image_analysis = base_image_analysis
 
@@ -105,10 +104,6 @@ class BuildAnalysisResponse(object):
         :param output_image_analysis: The output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
         :type: BuildAnalysisResponseBaseImageAnalysis
         """
-        if output_image_analysis is None:
-            raise ValueError(
-                "Invalid value for `output_image_analysis`, must not be `None`"
-            )  # noqa: E501
 
         self._output_image_analysis = output_image_analysis
 
@@ -130,10 +125,6 @@ class BuildAnalysisResponse(object):
         :param buildlog_analysis: The buildlog_analysis of this BuildAnalysisResponse.  # noqa: E501
         :type: BuildAnalysisResponseBaseImageAnalysis
         """
-        if buildlog_analysis is None:
-            raise ValueError(
-                "Invalid value for `buildlog_analysis`, must not be `None`"
-            )  # noqa: E501
 
         self._buildlog_analysis = buildlog_analysis
 
