@@ -755,7 +755,7 @@ def build_analysis(
     params = {k: v for k, v in params.items() if v is not None}
 
     api_instance = BuildAnalysisApi(api_client)
-    response = api_instance.post_build(*params)
+    response = api_instance.post_build(**params)
 
     _LOGGER.info("Successfully submitted build analysis to %r", thoth_config.api_url)
     _LOGGER.debug("Build analysis parameters: %r", params)
