@@ -2571,3 +2571,12 @@
 * Regenerate and update thamos client (#681)
 ### Improvements
 * removed bissenbay, thanks for your contributions!
+
+## Release 1.6.1 (2021-01-19T15:12:32)
+### Features
+* Allow nullables in post build analysis response (#695)
+* Fix parameter propagation in post_build (#693)
+* :arrow_up: Automatic update of dependencies by kebechet. (#694)
+* :arrow_up: Automatic update of dependencies by kebechet. (#692)
+* Remove buildlog analyzer results endpoints (#691)
+* add the SIG label
