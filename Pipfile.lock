@@ -643,10 +643,11 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:32b9a43def528ec82469c02640cf27ec8c1021a96c71342d140bab4f1ab36120"
+                "sha256:16b46922a3d8741a4c4518f8a6ffeec63c45343d42dd7c2efa88239cec41198f",
+                "sha256:7b1768af4f83b254371d87f97411da64673e4a76d6017b05c6541e91f1a62579"
             ],
             "index": "pypi",
-            "version": "==0.21.4"
+            "version": "==0.22.0"
         },
         "thoth-python": {
             "hashes": [
