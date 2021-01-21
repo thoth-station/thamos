@@ -2580,3 +2580,11 @@
 * :arrow_up: Automatic update of dependencies by kebechet. (#692)
 * Remove buildlog analyzer results endpoints (#691)
 * add the SIG label
+
+## Release 1.7.0 (2021-01-21T11:42:29)
+### Features
+* Add Kebechet issue templates
+* :arrow_up: Automatic update of dependencies by kebechet. (#700)
+* Extend Thamos configuration file with additional options (#672)
+* :arrow_up: Automatic update of dependencies by kebechet. (#699)
+* :arrow_up: Automatic update of dependencies by kebechet. (#698)
