@@ -24,9 +24,10 @@ runtime_environments:
       # {cpu_model_name}
       cpu_family: {cpu_family}
       cpu_model: {cpu_model}
+      gpu_model: null
     # Software configuration of runtime environment:
     python_version: '{python_version}'
-    cuda_version: {cuda_version}
+    cuda_version: '{cuda_version}'
     # Recommendation type - one of:
     #  * testing
     #  * stable
@@ -37,6 +38,13 @@ runtime_environments:
     recommendation_type: stable
     # Platform used for running the application - corresponds to sysconfig.get_platform() call (e.g. 'linux-x86_64')
     platform: {platform}
+    # Additional options:
+    openblas_version: null
+    openmpi_version: null
+    cudnn_version: null
+    mkl_version: null
+    # Base container image used to run the application.
+    base_image: null
 
 #
 # Configuration of bots:

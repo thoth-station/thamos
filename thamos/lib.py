@@ -48,7 +48,6 @@ from .swagger_client import ApiClient
 from .swagger_client import BuildAnalysisApi
 from .swagger_client import Configuration
 from .swagger_client import PythonStack
-from .swagger_client import RuntimeEnvironment
 from .swagger_client import AdviseInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
@@ -425,8 +424,6 @@ def advise(
     if runtime_environment:
         # Override recommendation type specified explicitly in the runtime environment entry.
         runtime_environment.pop("recommendation_type", None)
-
-        runtime_environment = RuntimeEnvironment(**runtime_environment)  # type: ignore
 
     advise_input = AdviseInput(
         stack, runtime_environment=runtime_environment, library_usage=library_usage

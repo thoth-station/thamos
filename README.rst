@@ -90,6 +90,7 @@ An example of configuration file template can be:
       hardware:
         cpu_family: {cpu_family}
         cpu_model: {cpu_model}
+        gpu_model: {gpu_model}
       python_version: '{python_version}'
       cuda_version: {cuda_version}
       recommendation_type: stable
@@ -169,10 +170,18 @@ a large dataset). In such cases, you can specify two configuration entries in
       hardware:
         cpu_family: 6
         cpu_model: 94
+        gpu_model: 'GeForce GTX 680'
       python_version: '3.8'
+      # <<< HERE
       cuda_version: '10.1'  # <<<
+      # <<< HERE
       recommendation_type: stable
       platform: 'linux-x86_64'
+      openblas_version: '0.3.13'
+      openmpi_version: '4.1'
+      cudnn_version: '8'
+      mkl_version: '2021.1.1'
+      base_image: 'quay.io/thoth-station/s2i-thoth-ubi8-py36-mkl:v0.23.0'
 
     - name: 'no_cuda'  # <<<
       operating_system:
@@ -181,10 +190,19 @@ a large dataset). In such cases, you can specify two configuration entries in
       hardware:
         cpu_family: 6
         cpu_model: 94
+        gpu_model: null
       python_version: '3.8'
+      # <<< HERE
       cuda_version: null  # <<<
+      # <<< HERE
       recommendation_type: stable
       platform: 'linux-x86_64'
+      openblas_version: '0.3.13'
+      openmpi_version: '4.1'
+      cudnn_version: null
+      mkl_version: '2021.1.1'
+      base_image: 'quay.io/thoth-station/s2i-thoth-ubi8-py36:v0.23.0'
+
 
 The two runtime environments stated in the ``.thoth.yaml`` differ in
 ``cuda_version`` configuration and their names.
