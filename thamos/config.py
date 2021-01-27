@@ -36,6 +36,7 @@ from .discover import discover_cuda_version
 from .discover import discover_distribution
 from .discover import discover_python_version
 from .discover import discover_platform
+from .discover import discover_base_image
 from .exceptions import NoApiSupported
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import ConfigurationError
@@ -246,6 +247,8 @@ class _Configuration:
         os_version = normalize_os_version(os_name, os_version)
         python_version = discover_python_version()
         platform = discover_platform()
+        base_image = discover_base_image()
+        base_image = base_image if base_image is not None else "null"
 
         requirements_format = os.getenv(
             "THAMOS_REQUIREMENTS_FORMAT", self._DEFAULT_REQUIREMENTS_FORMAT
@@ -267,6 +270,7 @@ class _Configuration:
             python_version=python_version,
             platform=platform,
             requirements_format=requirements_format,
+            base_image=base_image,
             **cpu_info,
             **(dict(os.environ) if expand_env else {}),
         )
