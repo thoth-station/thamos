@@ -136,3 +136,26 @@ def discover_cpu() -> Dict[str, Union[str, int, None]]:
 def discover_platform() -> str:
     """Discover platform used."""
     return sysconfig.get_platform()
+
+
+def discover_base_image() -> typing.Optional[str]:
+    """Discover base image and its version."""
+    base_image_name = os.getenv("THOTH_S2I_NAME")
+    base_image_version = os.getenv("THOTH_S2I_VERSION")
+
+    if base_image_name and base_image_version:
+        base_image = f"{base_image_name}:v{base_image_version}"
+        _LOGGER.info("Detected Thoth s2i tooling %r", base_image)
+        return base_image
+    elif base_image_name:
+        _LOGGER.warning(
+            "Discovered running inside %r but no base image version provided",
+            base_image_name,
+        )
+    elif base_image_version:
+        _LOGGER.warning(
+            "Discovered running inside a base image in version %r but no base image name provided",
+            base_image_version,
+        )
+
+    return None

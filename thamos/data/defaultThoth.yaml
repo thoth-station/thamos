@@ -44,7 +44,7 @@ runtime_environments:
     cudnn_version: null
     mkl_version: null
     # Base container image used to run the application.
-    base_image: null
+    base_image: {base_image}
 
 #
 # Configuration of bots:
