@@ -24,6 +24,7 @@ from thamos.swagger_client.thoth.info_api import InfoApi
 from thamos.swagger_client.thoth.kebechet_api import KebechetApi
 from thamos.swagger_client.thoth.provenance_api import ProvenanceApi
 from thamos.swagger_client.thoth.python_packages_api import PythonPackagesApi
+from thamos.swagger_client.thoth.s2i_api import S2iApi
 
 # import ApiClient
 from thamos.swagger_client.api_client import ApiClient
@@ -127,3 +128,5 @@ from thamos.swagger_client.models.qeb_hwt_thamos_advise_input import (
     QebHwtThamosAdviseInput,
 )
 from thamos.swagger_client.models.runtime_environment import RuntimeEnvironment
+from thamos.swagger_client.models.s2_i_python_response import S2IPythonResponse
+from thamos.swagger_client.models.s2_i_python_response_s2i import S2IPythonResponseS2i

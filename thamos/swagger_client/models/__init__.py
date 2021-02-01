@@ -111,3 +111,5 @@ from thamos.swagger_client.models.qeb_hwt_thamos_advise_input import (
     QebHwtThamosAdviseInput,
 )
 from thamos.swagger_client.models.runtime_environment import RuntimeEnvironment
+from thamos.swagger_client.models.s2_i_python_response import S2IPythonResponse
+from thamos.swagger_client.models.s2_i_python_response_s2i import S2IPythonResponseS2i
