@@ -27,7 +27,7 @@ runtime_environments:
       gpu_model: null
     # Software configuration of runtime environment:
     python_version: '{python_version}'
-    cuda_version: '{cuda_version}'
+    cuda_version: {cuda_version}
     # Recommendation type - one of:
     #  * testing
     #  * stable
