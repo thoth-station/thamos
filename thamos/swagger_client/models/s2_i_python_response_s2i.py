@@ -21,6 +21,7 @@ class S2IPythonResponseS2i(object):
 
     Do not edit the class manually.
     """
+
     """
     Attributes:
       swagger_types (dict): The key is attribute name
@@ -29,20 +30,26 @@ class S2IPythonResponseS2i(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'thoth_s2i': 'str',
-        'thoth_s2i_image_name': 'str',
-        'thoth_s2i_image_version': 'str',
-        'analysis_id': 'str'
+        "thoth_s2i": "str",
+        "thoth_s2i_image_name": "str",
+        "thoth_s2i_image_version": "str",
+        "analysis_id": "str",
     }
 
     attribute_map = {
-        'thoth_s2i': 'thoth_s2i',
-        'thoth_s2i_image_name': 'thoth_s2i_image_name',
-        'thoth_s2i_image_version': 'thoth_s2i_image_version',
-        'analysis_id': 'analysis_id'
+        "thoth_s2i": "thoth_s2i",
+        "thoth_s2i_image_name": "thoth_s2i_image_name",
+        "thoth_s2i_image_version": "thoth_s2i_image_version",
+        "analysis_id": "analysis_id",
     }
 
-    def __init__(self, thoth_s2i=None, thoth_s2i_image_name=None, thoth_s2i_image_version=None, analysis_id=None):  # noqa: E501
+    def __init__(
+        self,
+        thoth_s2i=None,
+        thoth_s2i_image_name=None,
+        thoth_s2i_image_version=None,
+        analysis_id=None,
+    ):  # noqa: E501
         """S2IPythonResponseS2i - a model defined in Swagger"""  # noqa: E501
         self._thoth_s2i = None
         self._thoth_s2i_image_name = None
@@ -77,7 +84,9 @@ class S2IPythonResponseS2i(object):
         :type: str
         """
         if thoth_s2i is None:
-            raise ValueError("Invalid value for `thoth_s2i`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `thoth_s2i`, must not be `None`"
+            )  # noqa: E501
 
         self._thoth_s2i = thoth_s2i
 
@@ -148,7 +157,9 @@ class S2IPythonResponseS2i(object):
         :type: str
         """
         if analysis_id is None:
-            raise ValueError("Invalid value for `analysis_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `analysis_id`, must not be `None`"
+            )  # noqa: E501
 
         self._analysis_id = analysis_id
 
@@ -159,18 +170,20 @@ class S2IPythonResponseS2i(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(S2IPythonResponseS2i, dict):
