@@ -2588,3 +2588,10 @@
 * Extend Thamos configuration file with additional options (#672)
 * :arrow_up: Automatic update of dependencies by kebechet. (#699)
 * :arrow_up: Automatic update of dependencies by kebechet. (#698)
+
+## Release 1.8.0 (2021-02-01T20:33:46)
+### Features
+* Fix CUDA version handling (#710)
+* Regenerate client to support S2I endpoint (#709)
+* Discover Thoth's s2i tooling to use it in recommendations (#704)
+* :arrow_up: Automatic update of dependencies by kebechet. (#706)
