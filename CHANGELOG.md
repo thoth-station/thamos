@@ -2605,3 +2605,7 @@
 ### Improvements
 * Provide thamos hw and thamos s2i commands (#716)
 * Regenerate to support new User API structure
+
+## Release 1.10.0 (2021-02-02T20:02:20)
+### Features
+* Add support for passing options to pip during thamos install (#722)
