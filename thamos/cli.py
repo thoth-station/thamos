@@ -942,7 +942,7 @@ def s2i(output_format: str) -> None:
             for key in header_sorted:
                 if key == "info":
                     image_name = item.get("thoth_s2i_image_name")
-                    row.append(jl(image_name.split("/", maxsplit=1)[1]))
+                    row.append(jl(image_name.rsplit("/", maxsplit=1)[-1]))
                     continue
 
                 entry = item.get(key)
