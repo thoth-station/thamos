@@ -2595,3 +2595,13 @@
 * Regenerate client to support S2I endpoint (#709)
 * Discover Thoth's s2i tooling to use it in recommendations (#704)
 * :arrow_up: Automatic update of dependencies by kebechet. (#706)
+
+## Release 1.9.0 (2021-02-02T11:29:23)
+### Features
+* Add section about hw and s2i commands to the README file
+* Fix link to Thoth s2i description
+* Regenerate client with nullable hardware parameters
+* Update S2I endpoint response
+### Improvements
+* Provide thamos hw and thamos s2i commands (#716)
+* Regenerate to support new User API structure
