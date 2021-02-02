@@ -44,6 +44,8 @@ from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import provenance_check as thoth_provenance_check
+from thamos.lib import list_hardware_environments
+from thamos.lib import list_thoth_s2i
 from thamos.lib import get_log
 from thamos.lib import install as thamos_install
 from thamos.lib import get_status
@@ -731,7 +733,7 @@ def status(analysis_id: str = None, output_format: str = None):
 
 @cli.command("list")
 def list_() -> None:
-    """List available runtime environments."""
+    """List available runtime environments configured."""
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
 
@@ -762,7 +764,7 @@ def list_() -> None:
     help="Specify explicitly runtime environment to be shown.",
 )
 def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
-    """Show configuration of available runtime environments."""
+    """Show configuration of available runtime environments configured."""
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
 
@@ -899,6 +901,109 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
         console.print(table, justify="center")
 
     sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
+
+
+@cli.command("s2i")
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+def s2i(output_format: str) -> None:
+    """Check available Thoth Source-To-Images offered."""
+    result = list_thoth_s2i()
+
+    if output_format == "yaml":
+        yaml.safe_dump({"s2i": result}, sys.stdout)
+    elif output_format == "json":
+        json.dump({"s2i": result}, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    elif output_format == "table":
+        table = Table()
+
+        header = set()
+        for item in result:
+            for key in item.keys():
+                header.add(key)
+
+        header_sorted = sorted(header)
+        header_sorted.append("info")
+        for item in header_sorted:
+            table.add_column(
+                item.replace("_", " ").capitalize(),
+                style="cyan",
+                overflow="fold",
+            )
+
+        for item in result:
+            row = []
+            for key in header_sorted:
+                if key == "info":
+                    image_name = item.get("thoth_s2i_image_name")
+                    row.append(jl(image_name.split("/", maxsplit=1)[1]))
+                    continue
+
+                entry = item.get(key)
+                row.append(str(entry) if entry is not None else "-")
+
+            table.add_row(*row)
+
+        console = Console()
+        console.print(table, justify="center")
+
+    sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
+
+
+@cli.command("hw")
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+def hw(output_format: str) -> None:
+    """List available hardware information for which Thoth can assist with recommendations."""
+    result = list_hardware_environments()
+
+    if output_format == "yaml":
+        yaml.safe_dump({"hw": result}, sys.stdout)
+    elif output_format == "json":
+        json.dump({"hw": result}, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    elif output_format == "table":
+        table = Table()
+
+        header = set()
+        for item in result:
+            for key in item.keys():
+                header.add(key)
+
+        header_sorted = sorted(header)
+        for item in header_sorted:
+            table.add_column(
+                item.replace("_", " ")
+                .replace("cpu", "CPU")
+                .replace("gpu", "GPU")
+                .replace("ram", "RAM"),
+                style="cyan",
+                overflow="fold",
+            )
+
+        for item in result:
+            row = []
+            for key in header_sorted:
+                entry = item.get(key)
+                row.append(str(entry) if entry is not None else "-")
+
+            table.add_row(*row)
+
+        console = Console()
+        console.print(table, justify="center")
+
+    sys.exit(0)
 
 
 __name__ == "__main__" and cli()
