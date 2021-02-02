@@ -900,7 +900,9 @@ def install_using_config(
 
 
 def install(
-    runtime_environment_name: typing.Optional[str] = None, dev: bool = False
+    runtime_environment_name: typing.Optional[str] = None,
+    dev: bool = False,
+    pip_args: typing.Optional[typing.Tuple[str]] = None,
 ) -> None:
     """Perform installation of packages for the given runtime environment.
 
@@ -936,7 +938,7 @@ def install(
             method,
             os.getcwd(),
         )
-        micropipenv.install(method=method, deploy=True, dev=dev)
+        micropipenv.install(method=method, deploy=True, dev=dev, pip_args=pip_args)
 
 
 @with_api_client
