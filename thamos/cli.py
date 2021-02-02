@@ -379,13 +379,16 @@ def _print_version(ctx, json_output: bool = False):
     envvar="THAMOS_RUNTIME_ENVIRONMENT",
     help="Specify explicitly runtime environment for which the installation process should be done.",
 )
-def install(runtime_environment: str, dev: bool) -> None:
+@click.argument("pip_args", nargs=-1)
+def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
     """Install dependencies as stated in Pipfile.lock or requirements.txt.
 
     This command assumes requirements files are present and dependencies are already resolved.
     If that's not the case, issue `thamos advise` before calling this.
     """
-    thamos_install(runtime_environment_name=runtime_environment, dev=dev)
+    thamos_install(
+        runtime_environment_name=runtime_environment, dev=dev, pip_args=pip_args
+    )
 
 
 @cli.command("advise")
