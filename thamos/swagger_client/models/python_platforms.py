@@ -29,13 +29,40 @@ class PythonPlatforms(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {}
+    swagger_types = {"s2i": "list[str]"}
 
-    attribute_map = {}
+    attribute_map = {"s2i": "s2i"}
 
-    def __init__(self):  # noqa: E501
+    def __init__(self, s2i=None):  # noqa: E501
         """PythonPlatforms - a model defined in Swagger"""  # noqa: E501
+        self._s2i = None
         self.discriminator = None
+        self.s2i = s2i
+
+    @property
+    def s2i(self):
+        """Gets the s2i of this PythonPlatforms.  # noqa: E501
+
+
+        :return: The s2i of this PythonPlatforms.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._s2i
+
+    @s2i.setter
+    def s2i(self, s2i):
+        """Sets the s2i of this PythonPlatforms.
+
+
+        :param s2i: The s2i of this PythonPlatforms.  # noqa: E501
+        :type: list[str]
+        """
+        if s2i is None:
+            raise ValueError(
+                "Invalid value for `s2i`, must not be `None`"
+            )  # noqa: E501
+
+        self._s2i = s2i
 
     def to_dict(self):
         """Returns the model properties as a dict"""
