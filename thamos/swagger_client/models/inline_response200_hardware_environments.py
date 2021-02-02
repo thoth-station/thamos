@@ -84,17 +84,28 @@ class InlineResponse200HardwareEnvironments(object):
         self._gpu_vendor = None
         self._ram_size = None
         self.discriminator = None
-        self.cpu_cores = cpu_cores
-        self.cpu_family = cpu_family
-        self.cpu_model = cpu_model
-        self.cpu_model_name = cpu_model_name
-        self.cpu_physical_cpus = cpu_physical_cpus
-        self.cpu_vendor = cpu_vendor
-        self.gpu_cores = gpu_cores
-        self.gpu_memory_size = gpu_memory_size
-        self.gpu_model_name = gpu_model_name
-        self.gpu_vendor = gpu_vendor
-        self.ram_size = ram_size
+        if cpu_cores is not None:
+            self.cpu_cores = cpu_cores
+        if cpu_family is not None:
+            self.cpu_family = cpu_family
+        if cpu_model is not None:
+            self.cpu_model = cpu_model
+        if cpu_model_name is not None:
+            self.cpu_model_name = cpu_model_name
+        if cpu_physical_cpus is not None:
+            self.cpu_physical_cpus = cpu_physical_cpus
+        if cpu_vendor is not None:
+            self.cpu_vendor = cpu_vendor
+        if gpu_cores is not None:
+            self.gpu_cores = gpu_cores
+        if gpu_memory_size is not None:
+            self.gpu_memory_size = gpu_memory_size
+        if gpu_model_name is not None:
+            self.gpu_model_name = gpu_model_name
+        if gpu_vendor is not None:
+            self.gpu_vendor = gpu_vendor
+        if ram_size is not None:
+            self.ram_size = ram_size
 
     @property
     def cpu_cores(self):
@@ -116,10 +127,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_cores: The cpu_cores of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if cpu_cores is None:
-            raise ValueError(
-                "Invalid value for `cpu_cores`, must not be `None`"
-            )  # noqa: E501
 
         self._cpu_cores = cpu_cores
 
@@ -143,10 +150,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_family: The cpu_family of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if cpu_family is None:
-            raise ValueError(
-                "Invalid value for `cpu_family`, must not be `None`"
-            )  # noqa: E501
 
         self._cpu_family = cpu_family
 
@@ -170,10 +173,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_model: The cpu_model of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if cpu_model is None:
-            raise ValueError(
-                "Invalid value for `cpu_model`, must not be `None`"
-            )  # noqa: E501
 
         self._cpu_model = cpu_model
 
@@ -197,10 +196,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_model_name: The cpu_model_name of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: str
         """
-        if cpu_model_name is None:
-            raise ValueError(
-                "Invalid value for `cpu_model_name`, must not be `None`"
-            )  # noqa: E501
 
         self._cpu_model_name = cpu_model_name
 
@@ -224,10 +219,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_physical_cpus: The cpu_physical_cpus of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if cpu_physical_cpus is None:
-            raise ValueError(
-                "Invalid value for `cpu_physical_cpus`, must not be `None`"
-            )  # noqa: E501
 
         self._cpu_physical_cpus = cpu_physical_cpus
 
@@ -251,10 +242,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param cpu_vendor: The cpu_vendor of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if cpu_vendor is None:
-            raise ValueError(
-                "Invalid value for `cpu_vendor`, must not be `None`"
-            )  # noqa: E501
 
         self._cpu_vendor = cpu_vendor
 
@@ -278,10 +265,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_cores: The gpu_cores of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if gpu_cores is None:
-            raise ValueError(
-                "Invalid value for `gpu_cores`, must not be `None`"
-            )  # noqa: E501
 
         self._gpu_cores = gpu_cores
 
@@ -305,10 +288,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_memory_size: The gpu_memory_size of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if gpu_memory_size is None:
-            raise ValueError(
-                "Invalid value for `gpu_memory_size`, must not be `None`"
-            )  # noqa: E501
 
         self._gpu_memory_size = gpu_memory_size
 
@@ -332,10 +311,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_model_name: The gpu_model_name of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: str
         """
-        if gpu_model_name is None:
-            raise ValueError(
-                "Invalid value for `gpu_model_name`, must not be `None`"
-            )  # noqa: E501
 
         self._gpu_model_name = gpu_model_name
 
@@ -359,10 +334,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param gpu_vendor: The gpu_vendor of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: str
         """
-        if gpu_vendor is None:
-            raise ValueError(
-                "Invalid value for `gpu_vendor`, must not be `None`"
-            )  # noqa: E501
 
         self._gpu_vendor = gpu_vendor
 
@@ -386,10 +357,6 @@ class InlineResponse200HardwareEnvironments(object):
         :param ram_size: The ram_size of this InlineResponse200HardwareEnvironments.  # noqa: E501
         :type: int
         """
-        if ram_size is None:
-            raise ValueError(
-                "Invalid value for `ram_size`, must not be `None`"
-            )  # noqa: E501
 
         self._ram_size = ram_size
 
