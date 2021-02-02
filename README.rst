@@ -241,6 +241,29 @@ root directory. To maintain multiple lock files specific for runtime
 environments, it is possible to configure "overlays" directory in Thamos
 configuration file.
 
+Listing available software and hardware environments
+====================================================
+
+To list available hardware environments for which Thoth has knowledge of,
+issue:
+
+.. code-block:: console
+
+  thamos hw
+
+The reported table will show all the available hardware configuration for which
+Thoth can advise on.
+
+Similarly for software environments, you can issue:
+
+.. code-block:: console
+
+  thamos s2i
+
+The resulting table shows all the available software environments for which
+Thoth can advise and perform recommendations. These environments can become
+entries in ``base_image`` of the ``.thoth.yaml`` configuration file.
+
 Overlays directory
 ==================
 
