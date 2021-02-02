@@ -55,19 +55,11 @@ from thamos.swagger_client.models.build_analysis_response_error_base_image_analy
 from thamos.swagger_client.models.build_build_log import BuildBuildLog
 from thamos.swagger_client.models.image_metadata_response import ImageMetadataResponse
 from thamos.swagger_client.models.inline_response200 import InlineResponse200
-from thamos.swagger_client.models.inline_response2001 import InlineResponse2001
-from thamos.swagger_client.models.inline_response2001_hardware_environments import (
-    InlineResponse2001HardwareEnvironments,
+from thamos.swagger_client.models.inline_response200_hardware_environments import (
+    InlineResponse200HardwareEnvironments,
 )
-from thamos.swagger_client.models.inline_response2001_parameters import (
-    InlineResponse2001Parameters,
-)
-from thamos.swagger_client.models.inline_response2002 import InlineResponse2002
-from thamos.swagger_client.models.inline_response2002_software_environments import (
-    InlineResponse2002SoftwareEnvironments,
-)
-from thamos.swagger_client.models.inline_response200_runtime_environments import (
-    InlineResponse200RuntimeEnvironments,
+from thamos.swagger_client.models.inline_response200_parameters import (
+    InlineResponse200Parameters,
 )
 from thamos.swagger_client.models.kebechet_webhook_input import KebechetWebhookInput
 from thamos.swagger_client.models.log import Log
