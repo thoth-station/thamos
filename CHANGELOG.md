@@ -2613,3 +2613,7 @@
 ## Release 1.11.0 (2021-02-09T12:09:06)
 ### Features
 * :arrow_up: Automatic update of dependencies by Kebechet (#730)
+
+## Release 1.11.1 (2021-02-09T15:20:50)
+### Features
+* Fix URL creation when obtaining analysis status (#733)
