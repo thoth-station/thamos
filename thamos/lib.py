@@ -114,7 +114,7 @@ def is_analysis_ready(analysis_id: str) -> bool:
     if not host:
         thoth_config.load_config()
         host = thoth_config.content.get("host") or config.host
-    source = analysis_id.rsplit("-", 1)[0]
+    source = analysis_id.split("-", maxsplit=1)[0]
     source_url = _SOURCE.get(source)
     response = requests.get(f"https://{host}/api/v1/{source_url}/{analysis_id}")
     if response.status_code == 202:
@@ -124,7 +124,7 @@ def is_analysis_ready(analysis_id: str) -> bool:
         return True
 
     raise ApiError(
-        f"Thoth Backend didn't respond with correct status code. Returned code - {response.status_code}"
+        f"Thoth Backend didn't respond with correct status code. Returned code - {response.status_code}: {response.text}"
     )
 
 
