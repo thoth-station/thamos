@@ -1,4 +1,4 @@
-# PythonPackageDependenciesInner
+# PythonPackageDependenciesDependencies
 
 ## Properties
 Name | Type | Description | Notes

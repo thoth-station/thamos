@@ -83,21 +83,24 @@ from thamos.swagger_client.models.log import Log
 from thamos.swagger_client.models.python_package_dependencies import (
     PythonPackageDependencies,
 )
+from thamos.swagger_client.models.python_package_dependencies_dependencies import (
+    PythonPackageDependenciesDependencies,
+)
 from thamos.swagger_client.models.python_package_dependencies_error import (
     PythonPackageDependenciesError,
 )
-from thamos.swagger_client.models.python_package_dependencies_inner import (
-    PythonPackageDependenciesInner,
-)
 from thamos.swagger_client.models.python_package_indexes import PythonPackageIndexes
-from thamos.swagger_client.models.python_package_indexes_inner import (
-    PythonPackageIndexesInner,
+from thamos.swagger_client.models.python_package_indexes_indexes import (
+    PythonPackageIndexesIndexes,
 )
 from thamos.swagger_client.models.python_package_metadata_response import (
     PythonPackageMetadataResponse,
 )
 from thamos.swagger_client.models.python_package_metadata_response_error import (
     PythonPackageMetadataResponseError,
+)
+from thamos.swagger_client.models.python_package_metadata_response_metadata import (
+    PythonPackageMetadataResponseMetadata,
 )
 from thamos.swagger_client.models.python_package_versions_response import (
     PythonPackageVersionsResponse,
@@ -107,12 +110,6 @@ from thamos.swagger_client.models.python_package_versions_response_error import 
 )
 from thamos.swagger_client.models.python_package_versions_response_versions import (
     PythonPackageVersionsResponseVersions,
-)
-from thamos.swagger_client.models.python_packages_count_info_response import (
-    PythonPackagesCountInfoResponse,
-)
-from thamos.swagger_client.models.python_packages_count_info_response_error import (
-    PythonPackagesCountInfoResponseError,
 )
 from thamos.swagger_client.models.python_platforms import PythonPlatforms
 from thamos.swagger_client.models.python_stack import PythonStack
