@@ -6,7 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_package_metadata**](PythonPackagesApi.md#get_package_metadata) | **GET** /python/package/metadata | Retrieve metadata relative to a Python Package from the Knowledge Graph.
 [**get_python_package_dependencies**](PythonPackagesApi.md#get_python_package_dependencies) | **GET** /python/package/dependencies | Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.
-[**get_python_package_versions_count**](PythonPackagesApi.md#get_python_package_versions_count) | **GET** /python/packages/count | Retrieve information from the Knowledge Graph with regards to total number of Python packages.
 [**get_python_platform**](PythonPackagesApi.md#get_python_platform) | **GET** /python/platform | Get supported platforms for Python ecosystem.
 [**list_python_package_indexes**](PythonPackagesApi.md#list_python_package_indexes) | **GET** /python-package-index | List registered Python package indexes.
 [**list_python_package_versions**](PythonPackagesApi.md#list_python_package_versions) | **GET** /python/package/versions | List versions of the given Python package.
@@ -107,56 +106,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PythonPackageDependencies**](PythonPackageDependencies.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_python_package_versions_count**
-> PythonPackagesCountInfoResponse get_python_package_versions_count(name=name, version=version, index=index)
-
-Retrieve information from the Knowledge Graph with regards to total number of Python packages.
-
-### Example
-```python
-from __future__ import print_function
-import time
-import thamos.swagger_client
-from thamos.swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = thamos.swagger_client.PythonPackagesApi()
-name = 'null' # str | Name of the Python Package. (optional) (default to null)
-version = 'null' # str | Version of the Python Package. (optional) (default to null)
-index = 'null' # str | Index url of the Python Package. (optional) (default to null)
-
-try:
-    # Retrieve information from the Knowledge Graph with regards to total number of Python packages.
-    api_response = api_instance.get_python_package_versions_count(name=name, version=version, index=index)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling PythonPackagesApi->get_python_package_versions_count: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python Package. | [optional] [default to null]
- **version** | **str**| Version of the Python Package. | [optional] [default to null]
- **index** | **str**| Index url of the Python Package. | [optional] [default to null]
-
-### Return type
-
-[**PythonPackagesCountInfoResponse**](PythonPackagesCountInfoResponse.md)
 
 ### Authorization
 

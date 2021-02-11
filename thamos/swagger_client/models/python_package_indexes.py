@@ -29,13 +29,40 @@ class PythonPackageIndexes(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {}
+    swagger_types = {"indexes": "list[PythonPackageIndexesIndexes]"}
 
-    attribute_map = {}
+    attribute_map = {"indexes": "indexes"}
 
-    def __init__(self):  # noqa: E501
+    def __init__(self, indexes=None):  # noqa: E501
         """PythonPackageIndexes - a model defined in Swagger"""  # noqa: E501
+        self._indexes = None
         self.discriminator = None
+        self.indexes = indexes
+
+    @property
+    def indexes(self):
+        """Gets the indexes of this PythonPackageIndexes.  # noqa: E501
+
+
+        :return: The indexes of this PythonPackageIndexes.  # noqa: E501
+        :rtype: list[PythonPackageIndexesIndexes]
+        """
+        return self._indexes
+
+    @indexes.setter
+    def indexes(self, indexes):
+        """Sets the indexes of this PythonPackageIndexes.
+
+
+        :param indexes: The indexes of this PythonPackageIndexes.  # noqa: E501
+        :type: list[PythonPackageIndexesIndexes]
+        """
+        if indexes is None:
+            raise ValueError(
+                "Invalid value for `indexes`, must not be `None`"
+            )  # noqa: E501
+
+        self._indexes = indexes
 
     def to_dict(self):
         """Returns the model properties as a dict"""
