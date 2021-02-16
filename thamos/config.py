@@ -39,6 +39,7 @@ from .discover import discover_platform
 from .discover import discover_base_image
 from .exceptions import NoApiSupported
 from .exceptions import NoRuntimeEnvironmentError
+from .exceptions import RuntimeEnvironmentExistsError
 from .exceptions import ConfigurationError
 from .exceptions import NoProjectDirError
 from .exceptions import ServiceUnavailable
@@ -49,6 +50,54 @@ _API_CONNECTION_TIMEOUT = int(os.getenv("THAMOS_API_CONNECTION_TIMEOUT", 5))
 
 # The schema is enforcing all the options. This will make sure the right version of Thamos is
 # installed and no configuration options are silently ignored.
+_CONFIG_RUNTIME_ENVIRONMENT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "cuda_version": {"type": ["string", "null"]},
+        "openblas_version": {"type": ["string", "null"]},
+        "openmpi_version": {"type": ["string", "null"]},
+        "cudnn_version": {"type": ["string", "null"]},
+        "mkl_version": {"type": ["string", "null"]},
+        "base_image": {"type": ["string", "null"]},
+        "hardware": {
+            "type": "object",
+            "properties": {
+                "cpu_family": {"type": "integer"},
+                "cpu_model": {"type": "integer"},
+                "gpu_model": {"type": ["string", "null"]},
+            },
+            "required": [],
+            "additionalProperties": False,
+        },
+        "name": {"type": "string", "pattern": r"^[a-zA-Z0-9:_-]+$"},
+        "operating_system": {
+            "type": "object",
+            "properties": {
+                "name": {"type": ["string", "null"]},
+                "version": {"type": ["string", "null"]},
+            },
+            "required": ["name", "version"],
+            "additionalProperties": False,
+        },
+        "platform": {"type": ["string", "null"]},
+        "python_version": {
+            "type": "string",
+            "pattern": r"^[0-9]+\.[0-9]+$",
+        },
+        "recommendation_type": {
+            "type": "string",
+            "enum": [
+                "latest",
+                "stable",
+                "performance",
+                "security",
+                "testing",
+            ],
+        },
+    },
+    "additionalProperties": False,
+    "required": ["name"],
+}
 _CONFIG_SCHEMA = {
     "type": "object",
     "properties": {
@@ -60,54 +109,7 @@ _CONFIG_SCHEMA = {
         },
         "runtime_environments": {
             "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "cuda_version": {"type": ["string", "null"]},
-                    "openblas_version": {"type": ["string", "null"]},
-                    "openmpi_version": {"type": ["string", "null"]},
-                    "cudnn_version": {"type": ["string", "null"]},
-                    "mkl_version": {"type": ["string", "null"]},
-                    "base_image": {"type": ["string", "null"]},
-                    "hardware": {
-                        "type": "object",
-                        "properties": {
-                            "cpu_family": {"type": "integer"},
-                            "cpu_model": {"type": "integer"},
-                            "gpu_model": {"type": ["string", "null"]},
-                        },
-                        "required": [],
-                        "additionalProperties": False,
-                    },
-                    "name": {"type": "string", "pattern": r"^[a-zA-Z0-9:_-]+$"},
-                    "operating_system": {
-                        "type": "object",
-                        "properties": {
-                            "name": {"type": ["string", "null"]},
-                            "version": {"type": ["string", "null"]},
-                        },
-                        "required": ["name", "version"],
-                        "additionalProperties": False,
-                    },
-                    "platform": {"type": ["string", "null"]},
-                    "python_version": {
-                        "type": "string",
-                        "pattern": r"^[0-9]+\.[0-9]+$",
-                    },
-                    "recommendation_type": {
-                        "type": "string",
-                        "enum": [
-                            "latest",
-                            "stable",
-                            "performance",
-                            "security",
-                            "testing",
-                        ],
-                    },
-                },
-                "additionalProperties": False,
-                "required": ["name"],
-            },
+            "items": _CONFIG_RUNTIME_ENVIRONMENT_SCHEMA,
         },
         "managers": {
             "type": "array",
@@ -224,6 +226,20 @@ class _Configuration:
             with workdir(config.CONFIG_NAME):
                 self.load_config_from_file(config.CONFIG_NAME)
 
+    def save_config(self, path: typing.Optional[str] = None) -> None:
+        """Save the configuration to disc."""
+        if path:
+            with open(path, "w") as f:
+                yaml.dump(self.content, f)
+            _LOGGER.debug("Configuration changes written to %r", path)
+        else:
+            with workdir(config.CONFIG_NAME), open(config.CONFIG_NAME, "w") as f:
+                yaml.dump(self.content, f)
+                _LOGGER.debug(
+                    "Configuration changes written to %r",
+                    os.path.join(os.getcwd(), config.CONFIG_NAME),
+                )
+
     def create_default_config(
         self, template: str = None, nowrite: bool = False
     ) -> typing.Optional[dict]:
@@ -297,6 +313,31 @@ class _Configuration:
     def list_runtime_environments(self):
         """List available runtime environments."""
         return self.content.get("runtime_environments", [])
+
+    def set_runtime_environment(
+        self, runtime_environment: typing.Dict[str, typing.Any], force: bool = False
+    ) -> None:
+        """Add a runtime environment entry, overrides already existing one if force was set."""
+        try:
+            validate(runtime_environment, _CONFIG_RUNTIME_ENVIRONMENT_SCHEMA)
+        except Exception:
+            _LOGGER.error("Failed to validate runtime environment entry against schema")
+            raise
+
+        try:
+            existing = self.get_runtime_environment(runtime_environment["name"])
+        except NoRuntimeEnvironmentError:
+            self.content.setdefault("runtime_environments", []).append(
+                runtime_environment
+            )
+        else:
+            if force:
+                existing.clear()
+                existing.update(runtime_environment)
+            else:
+                raise RuntimeEnvironmentExistsError(
+                    f"Runtime environment {runtime_environment['name']!r} already exists"
+                )
 
     def get_runtime_environment(self, name: str = None) -> typing.Optional[dict]:
         """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
