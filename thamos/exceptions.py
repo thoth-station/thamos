@@ -46,6 +46,10 @@ class NoRuntimeEnvironmentError(ThamosException):
     """An exception raised if no runtime environment could be found in configuration file."""
 
 
+class RuntimeEnvironmentExistsError(ThamosException):
+    """An exception raised the given runtime environment already exists."""
+
+
 class NoRequirementsFormatError(ThamosException):
     """An exception raised if no requirements format could be found in configuration file."""
 
