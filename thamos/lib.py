@@ -125,7 +125,8 @@ def is_analysis_ready(analysis_id: str) -> bool:
         return True
 
     raise ApiError(
-        f"Thoth Backend didn't respond with correct status code. Returned code - {response.status_code}: {response.text}"
+        f"Thoth Backend didn't respond with correct status code. Returned code - "
+        f"{response.status_code}: {response.text}"
     )
 
 
