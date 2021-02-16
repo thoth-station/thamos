@@ -45,6 +45,7 @@ from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import list_hardware_environments
+from thamos.lib import list_python_package_indexes
 from thamos.lib import list_thoth_s2i
 from thamos.lib import get_log
 from thamos.lib import install as thamos_install
@@ -993,6 +994,55 @@ def hw(output_format: str) -> None:
                 .replace("ram", "RAM"),
                 style="cyan",
                 overflow="fold",
+            )
+
+        for item in result:
+            row = []
+            for key in header_sorted:
+                entry = item.get(key)
+                row.append(str(entry) if entry is not None else "-")
+
+            table.add_row(*row)
+
+        console = Console()
+        console.print(table, justify="center")
+
+    sys.exit(0)
+
+
+@cli.command("indexes")
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+def indexes(output_format: str) -> None:
+    """List available hardware information for which Thoth can assist with recommendations."""
+    result = list_python_package_indexes()
+
+    if output_format == "yaml":
+        yaml.safe_dump({"indexes": result}, sys.stdout)
+    elif output_format == "json":
+        json.dump({"indexes": result}, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    elif output_format == "table":
+        table = Table()
+
+        header = set()
+        for item in result:
+            for key in item.keys():
+                header.add(key)
+
+        header_sorted = sorted(header)
+        for item in header_sorted:
+            table.add_column(
+                item.capitalize()
+                .replace("_", " ")
+                .replace("Url", "URL")
+                .replace("ssl", "SSL")
+                .replace("api", "API")
             )
 
         for item in result:

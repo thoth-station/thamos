@@ -54,6 +54,7 @@ from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
 from .swagger_client import HardwareApi
 from .swagger_client import S2iApi
+from .swagger_client import PythonPackagesApi
 from .swagger_client.models import AnalysisResultResponse
 from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
@@ -955,3 +956,9 @@ def list_hardware_environments(api_client: ApiClient) -> typing.Dict[str, Any]:
 def list_thoth_s2i(api_client: ApiClient) -> typing.Dict[str, Any]:
     """Get information about hardware for which Thoth can give recommendations."""
     return S2iApi(api_client).list_s2i_python().to_dict()["s2i"]
+
+
+@with_api_client
+def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
+    """Get information about hardware for which Thoth can give recommendations."""
+    return PythonPackagesApi(api_client).list_python_package_indexes()["indexes"]
