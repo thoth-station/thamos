@@ -2617,3 +2617,12 @@
 ## Release 1.11.1 (2021-02-09T15:20:50)
 ### Features
 * Fix URL creation when obtaining analysis status (#733)
+
+## Release 1.12.0 (2021-02-16T14:39:50)
+### Features
+* Add method for adding new runtime environments (#744)
+* Introduce thamos index command for listing package indexes available (#743)
+* :arrow_up: Automatic update of dependencies by Kebechet (#746)
+* :arrow_up: Automatic update of dependencies by Kebechet (#741)
+* Update thoth yaml (#740)
+* Regenerate client respecting API changes (#738)
