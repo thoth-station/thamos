@@ -670,11 +670,11 @@
         },
         "thoth-python": {
             "hashes": [
-                "sha256:d0a3312c0e7ad30ade787a04dbd3d3783e1823d4165fddefece1b586a61405a6",
-                "sha256:e01755362a8fdd84199cf685330271bbfc776fac50a5efdb735988c8995e46e3"
+                "sha256:51608c7507a96c889bfac765e7b03fb8d57ffcafefb32760186116de410f90ad",
+                "sha256:e1e5aa9eea50a61bcabdf8af44709bea0ae045b702537d9fee2f7cb2cc9d5d06"
             ],
             "index": "pypi",
-            "version": "==0.13.0"
+            "version": "==0.14.0"
         },
         "toml": {
             "hashes": [
