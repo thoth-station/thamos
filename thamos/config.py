@@ -226,6 +226,20 @@ class _Configuration:
             with workdir(config.CONFIG_NAME):
                 self.load_config_from_file(config.CONFIG_NAME)
 
+    def save_config(self, path: typing.Optional[str] = None) -> None:
+        """Save the configuration to disc."""
+        if path:
+            with open(path, "w") as f:
+                yaml.dump(self.content, f)
+            _LOGGER.debug("Configuration changes written to %r", path)
+        else:
+            with workdir(config.CONFIG_NAME), open(config.CONFIG_NAME, "w") as f:
+                yaml.dump(self.content, f)
+                _LOGGER.debug(
+                    "Configuration changes written to %r",
+                    os.path.join(os.getcwd(), config.CONFIG_NAME),
+                )
+
     def create_default_config(
         self, template: str = None, nowrite: bool = False
     ) -> typing.Optional[dict]:
