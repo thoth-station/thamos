@@ -381,6 +381,7 @@ def advise(
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
+    kebechet_metadata: typing.Optional[Dict] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -470,6 +471,9 @@ def advise(
     if github_base_repo_url is not None:
         parameters["github_base_repo_url"] = github_base_repo_url
 
+    if kebechet_metadata is not None:
+        parameters["kebechet_metadata"] = kebechet_metadata
+
     response = api_instance.post_advise_python(advise_input, **parameters)
 
     _LOGGER.info(
@@ -518,6 +522,7 @@ def advise_here(
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
+    kebechet_metadata: typing.Optional[Dict] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
@@ -582,6 +587,7 @@ def advise_here(
         github_check_run_id=github_check_run_id,
         github_installation_id=github_installation_id,
         github_base_repo_url=github_base_repo_url,
+        kebechet_metadata=kebechet_metadata,
     )
 
 
