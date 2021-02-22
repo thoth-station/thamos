@@ -298,7 +298,12 @@ class AliasedGroup(click.Group):
     default=None,
     help="Use selected host instead of the one stated in the configuration file.",
 )
-def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = None):
+def cli(
+    ctx=None,
+    verbose: bool = False,
+    workdir: str = typing.Optional[None],
+    thoth_host: str = None,
+):
     """CLI tool for interacting with Thoth."""
     if ctx:
         ctx.auto_envvar_prefix = "THAMOS"
@@ -478,8 +483,8 @@ def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
 def advise(
     debug: bool = False,
     no_write: bool = False,
-    recommendation_type: str = None,
-    runtime_environment: str = None,
+    recommendation_type: typing.Optional[str] = None,
+    runtime_environment: typing.Optional[str] = None,
     no_wait: bool = False,
     no_static_analysis: bool = False,
     json_output: bool = False,
@@ -676,7 +681,7 @@ def provenance_check(
 
 @cli.command("log")
 @click.argument("analysis_id", type=str, required=False)
-def log(analysis_id: str = None):
+def log(analysis_id: typing.Optional[str] = None):
     """Get log of running or finished analysis.
 
     If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
@@ -699,7 +704,9 @@ def log(analysis_id: str = None):
     default="table",
     help="Specify output format for the status report.",
 )
-def status(analysis_id: str = None, output_format: str = None):
+def status(
+    analysis_id: typing.Optional[str] = None, output_format: typing.Optional[str] = None
+):
     """Get status of an analysis.
 
     If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
@@ -1057,6 +1064,49 @@ def indexes(output_format: str) -> None:
         console.print(table, justify="center")
 
     sys.exit(0)
+
+
+@cli.command("add")
+@click.argument("requirement", nargs=-1, metavar="PKG")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="RUNTIME_ENV",
+    help="Specify runtime environment to which the given package should be added.",
+)
+@click.option(
+    "--index-url",
+    "-i",
+    default="https://pypi.org/simple",
+    type=str,
+    metavar="INDEX_URL",
+    show_default=True,
+    help="Specify Python package index to be used as a source for the given requirement.",
+)
+@click.option(
+    "--dev",
+    is_flag=True,
+    show_default=True,
+    help="Add the given package to the development packages.",
+)
+def add(
+    requirement: typing.List[str],
+    runtime_environment: typing.Optional[str],
+    index_url: str,
+    dev: bool,
+) -> None:
+    """Add one or muliple requirements
+
+    Add one or multiple requirement to the direct dependency listing without actually installing them.
+    The supplied requirement is specified using PEP-508 standard.
+    """
+    project = configuration.get_project(runtime_environment)
+    for req in requirement:
+        project.pipfile.add_requirement(req, is_dev=dev, index_url=index_url, force=True)
+        from pprint import pprint
+        pprint(project.to_dict())
+    configuration.save_project(project)
 
 
 __name__ == "__main__" and cli()
