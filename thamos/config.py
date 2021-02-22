@@ -19,7 +19,10 @@
 
 import logging
 import os
-import typing
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing import List
 from urllib.parse import urljoin
 from jsonschema import validate
 
@@ -27,8 +30,10 @@ import click
 import requests
 import yaml
 
-from thoth.common import normalize_os_version
 from thoth.common import map_os_name
+from thoth.common import normalize_os_version
+from thoth.common import RuntimeEnvironment
+from thoth.python import Project
 
 from .utils import workdir
 from .discover import discover_cpu
@@ -226,7 +231,7 @@ class _Configuration:
             with workdir(config.CONFIG_NAME):
                 self.load_config_from_file(config.CONFIG_NAME)
 
-    def save_config(self, path: typing.Optional[str] = None) -> None:
+    def save_config(self, path: Optional[str] = None) -> None:
         """Save the configuration to disc."""
         if path:
             with open(path, "w") as f:
@@ -242,7 +247,7 @@ class _Configuration:
 
     def create_default_config(
         self, template: str = None, nowrite: bool = False
-    ) -> typing.Optional[dict]:
+    ) -> Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
@@ -315,7 +320,7 @@ class _Configuration:
         return self.content.get("runtime_environments", [])
 
     def set_runtime_environment(
-        self, runtime_environment: typing.Dict[str, typing.Any], force: bool = False
+        self, runtime_environment: Dict[str, Any], force: bool = False
     ) -> None:
         """Add a runtime environment entry, overrides already existing one if force was set."""
         try:
@@ -339,7 +344,7 @@ class _Configuration:
                     f"Runtime environment {runtime_environment['name']!r} already exists"
                 )
 
-    def get_runtime_environment(self, name: str = None) -> typing.Optional[dict]:
+    def get_runtime_environment(self, name: str = None) -> Optional[dict]:
         """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
         content = self.content
         if "runtime_environments" not in content:
@@ -440,7 +445,7 @@ class _Configuration:
 
     def check_runtime_environment(
         self, runtime_environment_name: str
-    ) -> typing.List[typing.Dict[str, typing.Any]]:
+    ) -> List[Dict[str, Any]]:
         """Check the given runtime environment entry."""
         runtime_environment = self.get_runtime_environment(runtime_environment_name)
 
@@ -549,8 +554,8 @@ class _Configuration:
         return result
 
     def check(
-        self, runtime_environment_name: typing.Optional[str] = None
-    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        self, runtime_environment_name: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
         """Check the configuration file and produce a report."""
         result = []
 
@@ -588,7 +593,7 @@ class _Configuration:
             raise
 
     def get_overlays_directory(
-        self, runtime_environment_name: typing.Optional[str] = None
+        self, runtime_environment_name: Optional[str] = None
     ) -> str:
         """Get path to an overlays directory."""
         runtime_environment_config = self.get_runtime_environment(
@@ -602,6 +607,38 @@ class _Configuration:
                 return os.getcwd()
 
             return os.path.join(overlays_dir, runtime_environment_config["name"])
+
+    def get_project(self, runtime_environment_name: Optional[str] = None) -> Project:
+        """Get the given overlay."""
+        path = self.get_overlays_directory(
+            runtime_environment_name=runtime_environment_name
+        )
+        runtime_environment = RuntimeEnvironment.from_dict(self.get_runtime_environment(runtime_environment_name))
+        if self.requirements_format == "pipenv":
+            pipfile_lock_path = os.path.join(path, "Pipfile.lock")
+            if not os.path.exists(pipfile_lock_path):
+                pipfile_lock_path = None
+
+            project = Project.from_files(
+                path,
+                pipfile_lock_path=pipfile_lock_path,
+                runtime_environment=runtime_environment,
+            )
+        else:
+            raise NotImplementedError
+
+        return project
+
+    def save_project(self, project: Project) -> None:
+        """Save the given project to disc, performs noop if project is not dirty."""
+        old_project = self.get_project(project.runtime_environment.name)
+        if old_project.runtime_environment != project.runtime_environment:
+            self.set_runtime_environment(runtime_environment=project.runtime_environment)
+            self.save_config()
+
+        if old_project.pipfile != project.pipfile:
+            pipfile_path = os.path.join(self.get_overlays_directory(project.runtime_environment.name))
+            project.pipfile.to_file(path=pipfile_path)
 
 
 config = _Configuration()
