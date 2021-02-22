@@ -18,8 +18,12 @@ installation instructions bellow to setup Thoth/Thamos for your repository:
   $ cd ~/git/repo/
   # Setup Thamos configuration:
   $ thamos config
+  # Add packages.
+  $ thamos add tensorflow
   # Ask Thoth for software stack recommendations:
   $ thamos advise
+  # Install packages:
+  $ thamos install  # can be merged using `thamos advise --install`
   # Retrieve logs of the last analysis:
   $ thamos log
 
