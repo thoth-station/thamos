@@ -662,19 +662,17 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:433d72fc435759816c0015457d4ac8d629982ffbc62612bea47645ff2f41ef01",
-                "sha256:5fd72f2b570c9638d12f8243e0e5b81e145bc3a6ec1113227a816fa27512dc34"
+                "sha256:74d4fd18fd7b421e9384b548c5f024e8166f84230dfe5ef86ee869241d23bd94"
             ],
             "index": "pypi",
-            "version": "==0.23.0"
+            "version": "==0.24.0"
         },
         "thoth-python": {
             "hashes": [
-                "sha256:51608c7507a96c889bfac765e7b03fb8d57ffcafefb32760186116de410f90ad",
-                "sha256:e1e5aa9eea50a61bcabdf8af44709bea0ae045b702537d9fee2f7cb2cc9d5d06"
+                "sha256:ed19a4d6ee43f0f7b2ec4cb7595bc3e617554f2a95c0e7c1b9b497b14e98581b"
             ],
             "index": "pypi",
-            "version": "==0.14.0"
+            "version": "==0.15.0"
         },
         "toml": {
             "hashes": [
