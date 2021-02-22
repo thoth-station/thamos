@@ -11,7 +11,7 @@ tls_verify: true
 # Format of requirements file, supported are "pip" and "pipenv":
 requirements_format: {requirements_format}
 # A path to overlays directory relative to this configuration file. If null provided, no overlays are used.
-overlays_dir: null
+overlays_dir: overlays
 
 runtime_environments:
   - name: '{os_name}:{os_version}'
