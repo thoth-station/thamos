@@ -628,7 +628,29 @@ class _Configuration:
                 without_pipfile_lock=pipfile_lock_path is None,
             )
         else:
-            raise NotImplementedError
+            requirements_in_file_path = os.path.join(path, "requirements.in")
+            if not os.path.isfile(requirements_in_file_path):
+                requirements_txt_file_path = os.path.join(path, "requirements.txt")
+                if os.path.isfile(requirements_txt_file_path):
+                    _LOGGER.warning("Using %r for direct dependencies", requirements_in_file_path)
+                    project = Project.from_pip_compile_files(
+                        requirements_path=requirements_txt_file_path,
+                        requirements_lock_path=None,
+                        allow_without_lock=True,
+                        runtime_environment=runtime_environment,
+                    )
+                else:
+                    raise NotImplementedError(
+                        "No requirements.txt/requirements.in files found, it is recommended to "
+                        "use Pipenv files for managing dependencies"
+                    )
+            else:
+                project = Project.from_pip_compile_files(
+                    requirements_path=requirements_in_file_path,
+                    requirements_lock_path=None,
+                    allow_without_lock=True,
+                    runtime_environment=runtime_environment,
+                )
 
         return project
 
@@ -642,10 +664,15 @@ class _Configuration:
             self.save_config()
 
         if old_project.pipfile != project.pipfile:
-            pipfile_path = os.path.join(
-                self.get_overlays_directory(project.runtime_environment.name)
-            )
-            project.pipfile.to_file(path=pipfile_path)
+            if config.requirements_format == "pipenv":
+                pipfile_path = os.path.join(
+                    self.get_overlays_directory(project.runtime_environment.name)
+                )
+                project.pipfile.to_file(path=pipfile_path)
+            else:
+                requirements_in_file = self.get_overlays_directory(project.runtime_environment.name)
+                with open(os.path.join(requirements_in_file, "requirements.in"), "w") as f:
+                    f.write(project.pipfile.to_requirements_file(develop=False))
 
 
 config = _Configuration()
