@@ -35,6 +35,7 @@ from rich.text import Text
 from rich.table import Table
 from rich import box
 import daiquiri
+from micropipenv import HashMismatch
 from thoth.python import Project
 from thoth.common import cwd
 from thoth.common import ThothAdviserIntegrationEnum
@@ -392,9 +393,16 @@ def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
     This command assumes requirements files are present and dependencies are already resolved.
     If that's not the case, issue `thamos advise` before calling this.
     """
-    thamos_install(
-        runtime_environment_name=runtime_environment, dev=dev, pip_args=pip_args
-    )
+    try:
+        thamos_install(
+            runtime_environment_name=runtime_environment, dev=dev, pip_args=pip_args
+        )
+    except HashMismatch as exc:
+        _LOGGER.error(
+            "Changes made to packages are not reflected in the lock file, please install "
+            "using `thamos advise --install` to apply changes made: %s",
+            str(exc),
+        )
 
 
 @cli.command("advise")
@@ -1096,7 +1104,7 @@ def add(
     index_url: str,
     dev: bool,
 ) -> None:
-    """Add one or muliple requirements
+    """Add one or multiple requirements.
 
     Add one or multiple requirement to the direct dependency listing without actually installing them.
     The supplied requirement is specified using PEP-508 standard.
@@ -1104,8 +1112,46 @@ def add(
     project = configuration.get_project(runtime_environment)
     for req in requirement:
         project.pipfile.add_requirement(req, is_dev=dev, index_url=index_url, force=True)
-        from pprint import pprint
-        pprint(project.to_dict())
+
+    _LOGGER.warning("Changes done might require triggering new advise to resolve dependencies")
+    configuration.save_project(project)
+
+
+@cli.command("remove")
+@click.argument("requirement", nargs=-1, metavar="PKG")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="RUNTIME_ENV",
+    help="Specify runtime environment from which the given package should be removed.",
+)
+def remove(
+    requirement: typing.List[str],
+    runtime_environment: typing.Optional[str],
+) -> None:
+    """Remove the given requirement."""
+    project = configuration.get_project(runtime_environment)
+
+    for req in requirement:
+        any_change = False
+        if req in project.pipfile.packages.packages:
+            project.pipfile.packages.packages.pop(req)
+            any_change = True
+
+        if req in project.pipfile.dev_packages.packages:
+            project.pipfile.dev_packages.packages.pop(req)
+            any_change = True
+
+        if not any_change:
+            _LOGGER.error(
+                "Requirement %r not found in project requirements for runtime environment %s, aborting any changes made",
+                req,
+                project.runtime_environment.name
+            )
+            sys.exit(1)
+
+    _LOGGER.warning("Changes done might require triggering new advise to resolve dependencies")
     configuration.save_project(project)
 
 
