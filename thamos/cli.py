@@ -1080,7 +1080,8 @@ def indexes(output_format: str) -> None:
     "--runtime-environment",
     "-r",
     default=None,
-    metavar="RUNTIME_ENV",
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
     help="Specify runtime environment to which the given package should be added.",
 )
 @click.option(
@@ -1111,9 +1112,19 @@ def add(
     """
     project = configuration.get_project(runtime_environment)
     for req in requirement:
-        project.pipfile.add_requirement(req, is_dev=dev, index_url=index_url, force=True)
+        _LOGGER.info(
+            "Adding %r to %s requirements of runtime environment %r",
+            req,
+            "development" if dev else "default",
+            project.runtime_environment.name,
+        )
+        project.pipfile.add_requirement(
+            req, is_dev=dev, index_url=index_url, force=True
+        )
 
-    _LOGGER.warning("Changes done might require triggering new advise to resolve dependencies")
+    _LOGGER.warning(
+        "Changes done might require triggering new advise to resolve dependencies"
+    )
     configuration.save_project(project)
 
 
@@ -1123,7 +1134,8 @@ def add(
     "--runtime-environment",
     "-r",
     default=None,
-    metavar="RUNTIME_ENV",
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
     help="Specify runtime environment from which the given package should be removed.",
 )
 def remove(
@@ -1137,21 +1149,34 @@ def remove(
         any_change = False
         if req in project.pipfile.packages.packages:
             project.pipfile.packages.packages.pop(req)
+            _LOGGER.info(
+                "Removed %r from default requirements for runtime environment %r",
+                req,
+                project.runtime_environment.name,
+            )
             any_change = True
 
         if req in project.pipfile.dev_packages.packages:
             project.pipfile.dev_packages.packages.pop(req)
+            _LOGGER.info(
+                "Removed %r from development requirements for runtime environment %r",
+                req,
+                project.runtime_environment.name,
+            )
             any_change = True
 
         if not any_change:
             _LOGGER.error(
-                "Requirement %r not found in project requirements for runtime environment %s, aborting any changes made",
+                "Requirement %r not found in project requirements for runtime environment %r, "
+                "aborting making any changes",
                 req,
-                project.runtime_environment.name
+                project.runtime_environment.name,
             )
             sys.exit(1)
 
-    _LOGGER.warning("Changes done might require triggering new advise to resolve dependencies")
+    _LOGGER.warning(
+        "Changes done might require triggering new advise to resolve dependencies"
+    )
     configuration.save_project(project)
 
 

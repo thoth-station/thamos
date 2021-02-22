@@ -613,7 +613,9 @@ class _Configuration:
         path = self.get_overlays_directory(
             runtime_environment_name=runtime_environment_name
         )
-        runtime_environment = RuntimeEnvironment.from_dict(self.get_runtime_environment(runtime_environment_name))
+        runtime_environment = RuntimeEnvironment.from_dict(
+            self.get_runtime_environment(runtime_environment_name)
+        )
         if self.requirements_format == "pipenv":
             pipfile_lock_path = os.path.join(path, "Pipfile.lock")
             if not os.path.exists(pipfile_lock_path):
@@ -623,6 +625,7 @@ class _Configuration:
                 path,
                 pipfile_lock_path=pipfile_lock_path,
                 runtime_environment=runtime_environment,
+                without_pipfile_lock=pipfile_lock_path is None,
             )
         else:
             raise NotImplementedError
@@ -633,11 +636,15 @@ class _Configuration:
         """Save the given project to disc, performs noop if project is not dirty."""
         old_project = self.get_project(project.runtime_environment.name)
         if old_project.runtime_environment != project.runtime_environment:
-            self.set_runtime_environment(runtime_environment=project.runtime_environment)
+            self.set_runtime_environment(
+                runtime_environment=project.runtime_environment
+            )
             self.save_config()
 
         if old_project.pipfile != project.pipfile:
-            pipfile_path = os.path.join(self.get_overlays_directory(project.runtime_environment.name))
+            pipfile_path = os.path.join(
+                self.get_overlays_directory(project.runtime_environment.name)
+            )
             project.pipfile.to_file(path=pipfile_path)
 
 

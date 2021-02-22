@@ -923,7 +923,8 @@ def install(
         if method == "pipenv":
             if not os.path.isfile("Pipfile.lock"):
                 raise NoRequirementsFile(
-                    f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies"
+                    f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies, "
+                    "issue `thamos advise` resolve dpeendencies"
                 )
             if not os.path.isfile("Pipfile"):  # Required for computing digests.
                 raise NoRequirementsFile(
