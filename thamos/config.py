@@ -701,7 +701,7 @@ class _Configuration:
                 pipfile_path = os.path.join(
                     self.get_overlays_directory(project.runtime_environment.name)
                 )
-                project.pipfile.to_file(path=pipfile_path)
+                project.pipfile.to_file(path=pipfile_path, keep_thoth_section=True)
             else:
                 requirements_in_file = self.get_overlays_directory(
                     project.runtime_environment.name
