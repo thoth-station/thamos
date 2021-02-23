@@ -2626,3 +2626,28 @@
 * :arrow_up: Automatic update of dependencies by Kebechet (#741)
 * Update thoth yaml (#740)
 * Regenerate client respecting API changes (#738)
+
+## Release 1.13.0 (2021-02-23T09:53:26)
+### Features
+* Adjust client to respect recent API response schema changes (#768)
+* Add warning message when repo setup might be misleading (#767)
+* Keep Thoth section when generating Pipfile (#766)
+* Fix obtaining status information for provenance-checker
+* Correctly pass debug option to provenance-check command
+* Any invalid thamos command notifies about creating overlays
+* Handle CLI exceptions
+* Generate default Pipfile if none is present in the project (#755)
+* :arrow_up: Automatic update of dependencies by Kebechet (#760)
+* Turn on overlays by default (#757)
+* :arrow_up: Automatic update of dependencies by Kebechet (#756)
+* Add some examples to the README file
+* Minor fixes, be more verbose about output
+* Provide `thamos add' functionality to add packages to Pipenv files
+* :arrow_up: Automatic update of dependencies by Kebechet (#751)
+* :arrow_up: Automatic update of dependencies by Kebechet (#750)
+### Bug Fixes
+* Support requirement files when `thamos add` or `thamos remove` is called (#758)
+### Improvements
+* Create directory structure for overlay if not present yet
+### Other
+* Implement thamos remove command
