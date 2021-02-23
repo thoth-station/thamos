@@ -594,7 +594,10 @@ class _Configuration:
             raise
 
     def get_overlays_directory(
-        self, runtime_environment_name: Optional[str] = None
+        self,
+        runtime_environment_name: Optional[str] = None,
+        *,
+        missing_dir_ok: bool = False,
     ) -> str:
         """Get path to an overlays directory."""
         runtime_environment_config = self.get_runtime_environment(
@@ -607,12 +610,31 @@ class _Configuration:
             if overlays_dir is None:
                 return os.getcwd()
 
-            return os.path.join(overlays_dir, runtime_environment_config["name"])
+            path = os.path.join(overlays_dir, runtime_environment_config["name"])
+            if not missing_dir_ok and not os.path.isdir(path):
+                suffix = (
+                    f" --runtime-environment {runtime_environment_config['name']!r}"
+                    if runtime_environment_name
+                    else ""
+                )
+                raise ConfigurationError(
+                    f"The directory structure for {runtime_environment_config['name']!r} is not initialized yet, "
+                    f"you can initialize it by adding packages using "
+                    f"`thamos add <pkg>{suffix}`",
+                )
 
-    def get_project(self, runtime_environment_name: Optional[str] = None) -> Project:
+            return path
+
+    def get_project(
+        self,
+        runtime_environment_name: Optional[str] = None,
+        *,
+        missing_dir_ok: bool = False,
+    ) -> Project:
         """Get the given overlay."""
         path = self.get_overlays_directory(
-            runtime_environment_name=runtime_environment_name
+            runtime_environment_name=runtime_environment_name,
+            missing_dir_ok=missing_dir_ok,
         )
         runtime_environment = RuntimeEnvironment.from_dict(
             self.get_runtime_environment(runtime_environment_name)
@@ -641,7 +663,9 @@ class _Configuration:
             if not os.path.isfile(requirements_in_file_path):
                 requirements_txt_file_path = os.path.join(path, "requirements.txt")
                 if os.path.isfile(requirements_txt_file_path):
-                    _LOGGER.warning("Using %r for direct dependencies", requirements_in_file_path)
+                    _LOGGER.warning(
+                        "Using %r for direct dependencies", requirements_in_file_path
+                    )
                     project = Project.from_pip_compile_files(
                         requirements_path=requirements_txt_file_path,
                         requirements_lock_path=None,
@@ -679,8 +703,12 @@ class _Configuration:
                 )
                 project.pipfile.to_file(path=pipfile_path)
             else:
-                requirements_in_file = self.get_overlays_directory(project.runtime_environment.name)
-                with open(os.path.join(requirements_in_file, "requirements.in"), "w") as f:
+                requirements_in_file = self.get_overlays_directory(
+                    project.runtime_environment.name
+                )
+                with open(
+                    os.path.join(requirements_in_file, "requirements.in"), "w"
+                ) as f:
                     f.write(project.pipfile.to_requirements_file(develop=False))
 
 
