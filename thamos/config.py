@@ -624,6 +624,9 @@ class _Configuration:
 
             pipfile_path = os.path.join(path, "Pipfile")
             if not os.path.isfile(pipfile_path):
+                if not os.path.isdir(path):
+                    _LOGGER.info("Creating directory structure in %r", path)
+                    os.makedirs(path, exist_ok=True)
                 pipfile = Pipfile.from_dict({})
                 pipfile.to_file(path=pipfile_path)
 
