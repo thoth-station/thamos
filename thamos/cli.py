@@ -643,7 +643,6 @@ def advise(
     envvar="THAMOS_FORCE",
     help="Force analysis run bypassing server-side cache.",
 )
-@click.pass_context
 @handle_cli_exception
 def provenance_check(
     debug: bool = False,
