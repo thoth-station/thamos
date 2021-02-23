@@ -963,4 +963,4 @@ def list_thoth_s2i(api_client: ApiClient) -> typing.Dict[str, Any]:
 @with_api_client
 def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
     """Get information about hardware for which Thoth can give recommendations."""
-    return PythonPackagesApi(api_client).list_python_package_indexes()["indexes"]
+    return PythonPackagesApi(api_client).list_python_package_indexes().to_dict()["indexes"]
