@@ -1135,7 +1135,7 @@ def add(
     Add one or multiple requirement to the direct dependency listing without actually installing them.
     The supplied requirement is specified using PEP-508 standard.
     """
-    project = configuration.get_project(runtime_environment)
+    project = configuration.get_project(runtime_environment, missing_dir_ok=True)
     for req in requirement:
         _LOGGER.info(
             "Adding %r to %s requirements of runtime environment %r",
