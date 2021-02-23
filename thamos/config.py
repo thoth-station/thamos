@@ -33,6 +33,7 @@ import yaml
 from thoth.common import map_os_name
 from thoth.common import normalize_os_version
 from thoth.common import RuntimeEnvironment
+from thoth.python import Pipfile
 from thoth.python import Project
 
 from .utils import workdir
@@ -621,8 +622,13 @@ class _Configuration:
             if not os.path.exists(pipfile_lock_path):
                 pipfile_lock_path = None
 
+            pipfile_path = os.path.join(path, "Pipfile")
+            if not os.path.isfile(pipfile_path):
+                pipfile = Pipfile.from_dict({})
+                pipfile.to_file(path=pipfile_path)
+
             project = Project.from_files(
-                path,
+                pipfile_path=pipfile_path,
                 pipfile_lock_path=pipfile_lock_path,
                 runtime_environment=runtime_environment,
                 without_pipfile_lock=pipfile_lock_path is None,
