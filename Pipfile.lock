@@ -572,11 +572,11 @@
         },
         "rsa": {
             "hashes": [
-                "sha256:74ba16e7ef58920b80b5c54c1c1066d391a2c1e812c466773f74c634eb12253b",
-                "sha256:9d74d1ff850745c9802cd6b53382bfeec7f6dbe4e26ee2759241ed1e7b0ecf5d"
+                "sha256:78f9a9bf4e7be0c5ded4583326e7461e3a3c5aae24073648b4bdfa797d78c9d2",
+                "sha256:9d689e6ca1b3038bc82bf8d23e944b6b6037bc02301a574935b2dd946e0353b9"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==4.7.1"
+            "version": "==4.7.2"
         },
         "ruamel.yaml": {
             "hashes": [
@@ -662,17 +662,17 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:74d4fd18fd7b421e9384b548c5f024e8166f84230dfe5ef86ee869241d23bd94"
+                "sha256:0d478fa87e66aa1f54769826f1cef753ca5e7f01198f1536fa6724247f51deea"
             ],
             "index": "pypi",
-            "version": "==0.24.0"
+            "version": "==0.24.1"
         },
         "thoth-python": {
             "hashes": [
-                "sha256:ed19a4d6ee43f0f7b2ec4cb7595bc3e617554f2a95c0e7c1b9b497b14e98581b"
+                "sha256:116ae7e5501e6df58be0f06ee62de6c830b980aeeb14724b0ea4d6712ce3279e"
             ],
             "index": "pypi",
-            "version": "==0.15.0"
+            "version": "==0.15.2"
         },
         "toml": {
             "hashes": [
