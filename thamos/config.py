@@ -226,6 +226,10 @@ class _Configuration:
 
             self._configuration = yaml.safe_load(self._configuration)
 
+    def reset_config(self) -> None:
+        """Discard loaded config in memory."""
+        self._configuration = None
+
     def load_config(self, force: bool = False) -> None:
         """Load configuration from a file."""
         if not self._configuration and not force:
@@ -576,12 +580,17 @@ class _Configuration:
 
         if self.content.get("overlays_dir"):
             with workdir():
-                for file_type in ("Pipfile", "Pipfile.lock", "requirements.txt", "requirements.in"):
+                for file_type in (
+                    "Pipfile",
+                    "Pipfile.lock",
+                    "requirements.txt",
+                    "requirements.in",
+                ):
                     if os.path.isfile(file_type):
                         result.append(
                             {
                                 "message": f"Overlays configured but {file_type!r} file found in the repo root, "
-                                           f"this might lead to misleading repository interpretation",
+                                f"this might lead to misleading repository interpretation",
                                 "type": "WARNING",
                             }
                         )
