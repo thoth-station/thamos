@@ -226,6 +226,10 @@ class _Configuration:
 
             self._configuration = yaml.safe_load(self._configuration)
 
+    def reset_config(self) -> None:
+        """Discard loaded config in memory."""
+        self._configuration = None
+
     def load_config(self, force: bool = False) -> None:
         """Load configuration from a file."""
         if not self._configuration and not force:
