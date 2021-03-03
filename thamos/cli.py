@@ -1070,6 +1070,8 @@ def indexes(output_format: str) -> None:
         header = set()
         for item in result:
             for key in item.keys():
+                if key == "warehouse_api_url":
+                    continue
                 header.add(key)
 
         header_sorted = sorted(header)
