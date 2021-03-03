@@ -55,6 +55,7 @@ class TestResponse(ThamosTestCase):
                         "verify_ssl": True,
                     }
                 ],
+                "thoth": {"allow_prereleases": {}, "disable_index_adjustment": False},
             }
 
             written_pipfile_lock = json.loads(Path("Pipfile.lock").read_text())

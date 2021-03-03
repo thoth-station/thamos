@@ -142,7 +142,7 @@ def _write_files(
     project = Project.from_dict(requirements, requirements_lock)
     if requirements_format == "pipenv":
         _LOGGER.debug("Writing to Pipfile/Pipfile.lock in %r", os.getcwd())
-        project.to_files()
+        project.to_files(keep_thoth_section=True)
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         _LOGGER.debug("Writing to requirements.in/requirements.txt in %r", os.getcwd())
         project.to_pip_compile_files()
