@@ -524,6 +524,7 @@ def advise(
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise_here(
             recommendation_type=recommendation_type,
+            src_path=configuration.config_path,
             runtime_environment_name=runtime_environment,
             debug=debug,
             nowait=no_wait,

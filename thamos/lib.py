@@ -255,13 +255,13 @@ def _retrieve_analysis_result(
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
-def _get_static_analysis() -> typing.Optional[dict]:
+def _get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
     try:
         library_usage = gather_library_usage(
-            ".", ignore_errors=True, without_standard_imports=True
+            src_path, ignore_errors=True, without_standard_imports=True
         )
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
@@ -310,7 +310,8 @@ def advise_using_config(
     pipfile_lock: str,
     config: str = None,
     *,
-    runtime_environment_name: str = None,
+    runtime_environment_name: typing.Optional[str] = None,
+    src_path: typing.Optional[str] = None,
     recommendation_type: str = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -337,6 +338,7 @@ def advise_using_config(
         pipfile=pipfile,
         pipfile_lock=pipfile_lock,
         recommendation_type=recommendation_type,
+        src_path=src_path if src_path is not None else thoth_config.config_path,
         runtime_environment=thoth_config.get_runtime_environment(
             runtime_environment_name
         ),
@@ -366,6 +368,7 @@ def advise(
     recommendation_type: str = None,
     *,
     runtime_environment: dict = None,
+    src_path: str = ".",
     runtime_environment_name: str = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -417,7 +420,7 @@ def advise(
 
     library_usage = None
     if not no_static_analysis:
-        library_usage = _get_static_analysis()
+        library_usage = _get_static_analysis(src_path)
         _LOGGER.debug(
             "Library usage:%s",
             "\n" + json.dumps(library_usage, indent=2) if library_usage else None,
@@ -503,6 +506,7 @@ def advise_here(
     recommendation_type: typing.Optional[str] = None,
     *,
     runtime_environment: dict = None,
+    src_path: str = ".",
     runtime_environment_name: typing.Optional[str] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -566,6 +570,7 @@ def advise_here(
         pipfile=pipfile,
         pipfile_lock=pipfile_lock_str,
         recommendation_type=recommendation_type,
+        src_path=src_path,
         runtime_environment=runtime_environment,
         runtime_environment_name=runtime_environment_name,
         dev=dev,
