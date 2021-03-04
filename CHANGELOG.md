@@ -2651,3 +2651,11 @@
 * Create directory structure for overlay if not present yet
 ### Other
 * Implement thamos remove command
+
+## Release 1.14.0 (2021-03-04T17:37:20)
+### Features
+* Fix aggregating library usage (#779)
+* Keep Thoth section in Pipfile if Pipenv files are generated using Thoth (#776)
+* Do not show Warehouse API url in the index listing (#775)
+* :arrow_up: Automatic update of dependencies by Kebechet (#774)
+* Reset loaded config in memory (#771)
