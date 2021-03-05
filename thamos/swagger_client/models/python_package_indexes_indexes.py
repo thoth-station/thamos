@@ -94,10 +94,6 @@ class PythonPackageIndexesIndexes(object):
         :param warehouse_api_url: The warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
         :type: str
         """
-        if warehouse_api_url is None:
-            raise ValueError(
-                "Invalid value for `warehouse_api_url`, must not be `None`"
-            )  # noqa: E501
 
         self._warehouse_api_url = warehouse_api_url
 

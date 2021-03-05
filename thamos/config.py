@@ -19,7 +19,10 @@
 
 import logging
 import os
-import typing
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing import List
 from urllib.parse import urljoin
 from jsonschema import validate
 
@@ -27,8 +30,11 @@ import click
 import requests
 import yaml
 
-from thoth.common import normalize_os_version
 from thoth.common import map_os_name
+from thoth.common import normalize_os_version
+from thoth.common import RuntimeEnvironment
+from thoth.python import Pipfile
+from thoth.python import Project
 
 from .utils import workdir
 from .discover import discover_cpu
@@ -146,6 +152,7 @@ class _Configuration:
         self.explicit_host = None
         self.tls_verify = None
         self._api_url = None
+        self.config_path = None
 
     @property
     def api_url(self):
@@ -220,13 +227,19 @@ class _Configuration:
 
             self._configuration = yaml.safe_load(self._configuration)
 
+    def reset_config(self) -> None:
+        """Discard loaded config in memory."""
+        self._configuration = None
+        self.config_path = None
+
     def load_config(self, force: bool = False) -> None:
         """Load configuration from a file."""
         if not self._configuration and not force:
             with workdir(config.CONFIG_NAME):
+                self.config_path = os.getcwd()
                 self.load_config_from_file(config.CONFIG_NAME)
 
-    def save_config(self, path: typing.Optional[str] = None) -> None:
+    def save_config(self, path: Optional[str] = None) -> None:
         """Save the configuration to disc."""
         if path:
             with open(path, "w") as f:
@@ -242,7 +255,7 @@ class _Configuration:
 
     def create_default_config(
         self, template: str = None, nowrite: bool = False
-    ) -> typing.Optional[dict]:
+    ) -> Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):
             _LOGGER.warning("Configuration file is not created in the root of git repo")
@@ -315,7 +328,7 @@ class _Configuration:
         return self.content.get("runtime_environments", [])
 
     def set_runtime_environment(
-        self, runtime_environment: typing.Dict[str, typing.Any], force: bool = False
+        self, runtime_environment: Dict[str, Any], force: bool = False
     ) -> None:
         """Add a runtime environment entry, overrides already existing one if force was set."""
         try:
@@ -339,7 +352,7 @@ class _Configuration:
                     f"Runtime environment {runtime_environment['name']!r} already exists"
                 )
 
-    def get_runtime_environment(self, name: str = None) -> typing.Optional[dict]:
+    def get_runtime_environment(self, name: str = None) -> Optional[dict]:
         """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
         content = self.content
         if "runtime_environments" not in content:
@@ -440,7 +453,7 @@ class _Configuration:
 
     def check_runtime_environment(
         self, runtime_environment_name: str
-    ) -> typing.List[typing.Dict[str, typing.Any]]:
+    ) -> List[Dict[str, Any]]:
         """Check the given runtime environment entry."""
         runtime_environment = self.get_runtime_environment(runtime_environment_name)
 
@@ -549,8 +562,8 @@ class _Configuration:
         return result
 
     def check(
-        self, runtime_environment_name: typing.Optional[str] = None
-    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        self, runtime_environment_name: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
         """Check the configuration file and produce a report."""
         result = []
 
@@ -567,6 +580,23 @@ class _Configuration:
                     "type": "WARNING",
                 }
             )
+
+        if self.content.get("overlays_dir"):
+            with workdir():
+                for file_type in (
+                    "Pipfile",
+                    "Pipfile.lock",
+                    "requirements.txt",
+                    "requirements.in",
+                ):
+                    if os.path.isfile(file_type):
+                        result.append(
+                            {
+                                "message": f"Overlays configured but {file_type!r} file found in the repo root, "
+                                f"this might lead to misleading repository interpretation",
+                                "type": "WARNING",
+                            }
+                        )
 
         if runtime_environment_name is not None:
             result.extend(self.check_runtime_environment(runtime_environment_name))
@@ -588,7 +618,10 @@ class _Configuration:
             raise
 
     def get_overlays_directory(
-        self, runtime_environment_name: typing.Optional[str] = None
+        self,
+        runtime_environment_name: Optional[str] = None,
+        *,
+        missing_dir_ok: bool = False,
     ) -> str:
         """Get path to an overlays directory."""
         runtime_environment_config = self.get_runtime_environment(
@@ -601,7 +634,106 @@ class _Configuration:
             if overlays_dir is None:
                 return os.getcwd()
 
-            return os.path.join(overlays_dir, runtime_environment_config["name"])
+            path = os.path.join(overlays_dir, runtime_environment_config["name"])
+            if not missing_dir_ok and not os.path.isdir(path):
+                suffix = (
+                    f" --runtime-environment {runtime_environment_config['name']!r}"
+                    if runtime_environment_name
+                    else ""
+                )
+                raise ConfigurationError(
+                    f"The directory structure for {runtime_environment_config['name']!r} is not initialized yet, "
+                    f"you can initialize it by adding packages using "
+                    f"`thamos add <pkg>{suffix}`",
+                )
+
+            return path
+
+    def get_project(
+        self,
+        runtime_environment_name: Optional[str] = None,
+        *,
+        missing_dir_ok: bool = False,
+    ) -> Project:
+        """Get the given overlay."""
+        path = self.get_overlays_directory(
+            runtime_environment_name=runtime_environment_name,
+            missing_dir_ok=missing_dir_ok,
+        )
+        runtime_environment = RuntimeEnvironment.from_dict(
+            self.get_runtime_environment(runtime_environment_name)
+        )
+        if self.requirements_format == "pipenv":
+            pipfile_lock_path = os.path.join(path, "Pipfile.lock")
+            if not os.path.exists(pipfile_lock_path):
+                pipfile_lock_path = None
+
+            pipfile_path = os.path.join(path, "Pipfile")
+            if not os.path.isfile(pipfile_path):
+                if not os.path.isdir(path):
+                    _LOGGER.info("Creating directory structure in %r", path)
+                    os.makedirs(path, exist_ok=True)
+                pipfile = Pipfile.from_dict({})
+                pipfile.to_file(path=pipfile_path)
+
+            project = Project.from_files(
+                pipfile_path=pipfile_path,
+                pipfile_lock_path=pipfile_lock_path,
+                runtime_environment=runtime_environment,
+                without_pipfile_lock=pipfile_lock_path is None,
+            )
+        else:
+            requirements_in_file_path = os.path.join(path, "requirements.in")
+            if not os.path.isfile(requirements_in_file_path):
+                requirements_txt_file_path = os.path.join(path, "requirements.txt")
+                if os.path.isfile(requirements_txt_file_path):
+                    _LOGGER.warning(
+                        "Using %r for direct dependencies", requirements_in_file_path
+                    )
+                    project = Project.from_pip_compile_files(
+                        requirements_path=requirements_txt_file_path,
+                        requirements_lock_path=None,
+                        allow_without_lock=True,
+                        runtime_environment=runtime_environment,
+                    )
+                else:
+                    raise NotImplementedError(
+                        "No requirements.txt/requirements.in files found, it is recommended to "
+                        "use Pipenv files for managing dependencies"
+                    )
+            else:
+                project = Project.from_pip_compile_files(
+                    requirements_path=requirements_in_file_path,
+                    requirements_lock_path=None,
+                    allow_without_lock=True,
+                    runtime_environment=runtime_environment,
+                )
+
+        return project
+
+    def save_project(self, project: Project) -> None:
+        """Save the given project to disc, performs noop if project is not dirty."""
+        old_project = self.get_project(project.runtime_environment.name)
+        if old_project.runtime_environment != project.runtime_environment:
+            self.set_runtime_environment(
+                runtime_environment=project.runtime_environment
+            )
+            self.save_config()
+
+        if old_project.pipfile != project.pipfile:
+            if config.requirements_format == "pipenv":
+                pipfile_path = os.path.join(
+                    self.get_overlays_directory(project.runtime_environment.name)
+                )
+                project.pipfile.to_file(path=pipfile_path, keep_thoth_section=True)
+            else:
+                requirements_in_file = self.get_overlays_directory(
+                    project.runtime_environment.name
+                )
+                with open(
+                    os.path.join(requirements_in_file, "requirements.in"), "w"
+                ) as f:
+                    f.write(project.pipfile.to_requirements_file(develop=False))
 
 
 config = _Configuration()

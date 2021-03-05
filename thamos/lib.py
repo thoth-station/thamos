@@ -115,7 +115,7 @@ def is_analysis_ready(analysis_id: str) -> bool:
     if not host:
         thoth_config.load_config()
         host = thoth_config.content.get("host") or config.host
-    source = analysis_id.split("-", maxsplit=1)[0]
+    source = analysis_id.rsplit("-", maxsplit=2)[0]
     source_url = _SOURCE.get(source)
     response = requests.get(f"https://{host}/api/v1/{source_url}/{analysis_id}")
     if response.status_code == 202:
@@ -255,13 +255,13 @@ def _retrieve_analysis_result(
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
-def _get_static_analysis() -> typing.Optional[dict]:
+def _get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
     try:
         library_usage = gather_library_usage(
-            ".", ignore_errors=True, without_standard_imports=True
+            src_path, ignore_errors=True, without_standard_imports=True
         )
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
@@ -310,7 +310,8 @@ def advise_using_config(
     pipfile_lock: str,
     config: str = None,
     *,
-    runtime_environment_name: str = None,
+    runtime_environment_name: typing.Optional[str] = None,
+    src_path: typing.Optional[str] = None,
     recommendation_type: str = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -337,6 +338,7 @@ def advise_using_config(
         pipfile=pipfile,
         pipfile_lock=pipfile_lock,
         recommendation_type=recommendation_type,
+        src_path=src_path if src_path is not None else thoth_config.config_path,
         runtime_environment=thoth_config.get_runtime_environment(
             runtime_environment_name
         ),
@@ -366,6 +368,7 @@ def advise(
     recommendation_type: str = None,
     *,
     runtime_environment: dict = None,
+    src_path: str = ".",
     runtime_environment_name: str = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -418,7 +421,7 @@ def advise(
 
     library_usage = None
     if not no_static_analysis:
-        library_usage = _get_static_analysis()
+        library_usage = _get_static_analysis(src_path)
         _LOGGER.debug(
             "Library usage:%s",
             "\n" + json.dumps(library_usage, indent=2) if library_usage else None,
@@ -507,6 +510,7 @@ def advise_here(
     recommendation_type: typing.Optional[str] = None,
     *,
     runtime_environment: dict = None,
+    src_path: str = ".",
     runtime_environment_name: typing.Optional[str] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -571,6 +575,7 @@ def advise_here(
         pipfile=pipfile,
         pipfile_lock=pipfile_lock_str,
         recommendation_type=recommendation_type,
+        src_path=src_path,
         runtime_environment=runtime_environment,
         runtime_environment_name=runtime_environment_name,
         dev=dev,
@@ -929,7 +934,8 @@ def install(
         if method == "pipenv":
             if not os.path.isfile("Pipfile.lock"):
                 raise NoRequirementsFile(
-                    f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies"
+                    f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies, "
+                    "issue `thamos advise` resolve dpeendencies"
                 )
             if not os.path.isfile("Pipfile"):  # Required for computing digests.
                 raise NoRequirementsFile(
@@ -968,4 +974,6 @@ def list_thoth_s2i(api_client: ApiClient) -> typing.Dict[str, Any]:
 @with_api_client
 def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
     """Get information about hardware for which Thoth can give recommendations."""
-    return PythonPackagesApi(api_client).list_python_package_indexes()["indexes"]
+    return (
+        PythonPackagesApi(api_client).list_python_package_indexes().to_dict()["indexes"]
+    )

@@ -35,6 +35,7 @@ from rich.text import Text
 from rich.table import Table
 from rich import box
 import daiquiri
+from micropipenv import HashMismatch
 from thoth.python import Project
 from thoth.common import cwd
 from thoth.common import ThothAdviserIntegrationEnum
@@ -141,7 +142,7 @@ def _write_files(
     project = Project.from_dict(requirements, requirements_lock)
     if requirements_format == "pipenv":
         _LOGGER.debug("Writing to Pipfile/Pipfile.lock in %r", os.getcwd())
-        project.to_files()
+        project.to_files(keep_thoth_section=True)
     elif requirements_format in ("pip", "pip-tools", "pip-compile"):
         _LOGGER.debug("Writing to requirements.in/requirements.txt in %r", os.getcwd())
         project.to_pip_compile_files()
@@ -298,7 +299,12 @@ class AliasedGroup(click.Group):
     default=None,
     help="Use selected host instead of the one stated in the configuration file.",
 )
-def cli(ctx=None, verbose: bool = False, workdir: str = None, thoth_host: str = None):
+def cli(
+    ctx=None,
+    verbose: bool = False,
+    workdir: str = typing.Optional[None],
+    thoth_host: str = None,
+):
     """CLI tool for interacting with Thoth."""
     if ctx:
         ctx.auto_envvar_prefix = "THAMOS"
@@ -363,6 +369,7 @@ def _print_version(ctx, json_output: bool = False):
 
 
 @cli.command("install")
+@click.pass_context
 @click.option(
     "--dev/--no-dev",
     is_flag=True,
@@ -381,18 +388,27 @@ def _print_version(ctx, json_output: bool = False):
     help="Specify explicitly runtime environment for which the installation process should be done.",
 )
 @click.argument("pip_args", nargs=-1)
+@handle_cli_exception
 def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
     """Install dependencies as stated in Pipfile.lock or requirements.txt.
 
     This command assumes requirements files are present and dependencies are already resolved.
     If that's not the case, issue `thamos advise` before calling this.
     """
-    thamos_install(
-        runtime_environment_name=runtime_environment, dev=dev, pip_args=pip_args
-    )
+    try:
+        thamos_install(
+            runtime_environment_name=runtime_environment, dev=dev, pip_args=pip_args
+        )
+    except HashMismatch as exc:
+        _LOGGER.error(
+            "Changes made to packages are not reflected in the lock file, please install "
+            "using `thamos advise --install` to apply changes made: %s",
+            str(exc),
+        )
 
 
 @cli.command("advise")
+@click.pass_context
 @click.option(
     "--debug",
     is_flag=True,
@@ -475,11 +491,12 @@ def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
     show_default=True,
     help="Write advised manifest changes to a file.",
 )
+@handle_cli_exception
 def advise(
     debug: bool = False,
     no_write: bool = False,
-    recommendation_type: str = None,
-    runtime_environment: str = None,
+    recommendation_type: typing.Optional[str] = None,
+    runtime_environment: typing.Optional[str] = None,
     no_wait: bool = False,
     no_static_analysis: bool = False,
     json_output: bool = False,
@@ -507,6 +524,7 @@ def advise(
         # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
         results = thoth_advise_here(
             recommendation_type=recommendation_type,
+            src_path=configuration.config_path,
             runtime_environment_name=runtime_environment,
             debug=debug,
             nowait=no_wait,
@@ -595,6 +613,7 @@ def advise(
 
 
 @cli.command("provenance-check")
+@click.pass_context
 @click.option(
     "--debug",
     is_flag=True,
@@ -625,7 +644,6 @@ def advise(
     envvar="THAMOS_FORCE",
     help="Force analysis run bypassing server-side cache.",
 )
-@click.pass_context
 @handle_cli_exception
 def provenance_check(
     debug: bool = False,
@@ -675,8 +693,10 @@ def provenance_check(
 
 
 @cli.command("log")
+@click.pass_context
 @click.argument("analysis_id", type=str, required=False)
-def log(analysis_id: str = None):
+@handle_cli_exception
+def log(analysis_id: typing.Optional[str] = None):
     """Get log of running or finished analysis.
 
     If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
@@ -691,6 +711,7 @@ def log(analysis_id: str = None):
 
 
 @cli.command("status")
+@click.pass_context
 @click.argument("analysis_id", type=str, required=False)
 @click.option(
     "--output-format",
@@ -699,7 +720,10 @@ def log(analysis_id: str = None):
     default="table",
     help="Specify output format for the status report.",
 )
-def status(analysis_id: str = None, output_format: str = None):
+@handle_cli_exception
+def status(
+    analysis_id: typing.Optional[str] = None, output_format: typing.Optional[str] = None
+):
     """Get status of an analysis.
 
     If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
@@ -736,6 +760,8 @@ def status(analysis_id: str = None, output_format: str = None):
 
 
 @cli.command("list")
+@click.pass_context
+@handle_cli_exception
 def list_() -> None:
     """List available runtime environments configured."""
     with workdir(configuration.CONFIG_NAME):
@@ -750,6 +776,7 @@ def list_() -> None:
 
 
 @cli.command("show")
+@click.pass_context
 @click.option(
     "--output-format",
     "-o",
@@ -767,6 +794,7 @@ def list_() -> None:
     envvar="THAMOS_RUNTIME_ENVIRONMENT",
     help="Specify explicitly runtime environment to be shown.",
 )
+@handle_cli_exception
 def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
     """Show configuration of available runtime environments configured."""
     with workdir(configuration.CONFIG_NAME):
@@ -799,6 +827,7 @@ def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
 
 
 @cli.command("config")
+@click.pass_context
 @click.option(
     "--no-interactive",
     "-I",
@@ -814,6 +843,7 @@ def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
     envvar="THAMOS_CONFIG_TEMPLATE",
     help="Template which should be used instead of the default one.",
 )
+@handle_cli_exception
 def config(no_interactive: bool = False, template: str = None):
     """Adjust Thamos and Thoth remote configuration.
 
@@ -847,6 +877,7 @@ def config(no_interactive: bool = False, template: str = None):
 
 
 @cli.command("check")
+@click.pass_context
 @click.option(
     "--runtime-environment",
     "-r",
@@ -863,6 +894,7 @@ def config(no_interactive: bool = False, template: str = None):
     default="table",
     help="Specify output format for the status report.",
 )
+@handle_cli_exception
 def check(runtime_environment: Optional[str], output_format: str) -> None:
     """Check configuration file and runtime environment."""
     result = configuration.check(runtime_environment_name=runtime_environment)
@@ -908,6 +940,7 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
 
 
 @cli.command("s2i")
+@click.pass_context
 @click.option(
     "--output-format",
     "-o",
@@ -915,6 +948,7 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
     default="table",
     help="Specify output format for the status report.",
 )
+@handle_cli_exception
 def s2i(output_format: str) -> None:
     """Check available Thoth Source-To-Images offered."""
     result = list_thoth_s2i()
@@ -961,6 +995,7 @@ def s2i(output_format: str) -> None:
 
 
 @cli.command("hw")
+@click.pass_context
 @click.option(
     "--output-format",
     "-o",
@@ -968,6 +1003,7 @@ def s2i(output_format: str) -> None:
     default="table",
     help="Specify output format for the status report.",
 )
+@handle_cli_exception
 def hw(output_format: str) -> None:
     """List available hardware information for which Thoth can assist with recommendations."""
     result = list_hardware_environments()
@@ -1011,6 +1047,7 @@ def hw(output_format: str) -> None:
 
 
 @cli.command("indexes")
+@click.pass_context
 @click.option(
     "--output-format",
     "-o",
@@ -1018,6 +1055,7 @@ def hw(output_format: str) -> None:
     default="table",
     help="Specify output format for the status report.",
 )
+@handle_cli_exception
 def indexes(output_format: str) -> None:
     """List available hardware information for which Thoth can assist with recommendations."""
     result = list_python_package_indexes()
@@ -1033,6 +1071,8 @@ def indexes(output_format: str) -> None:
         header = set()
         for item in result:
             for key in item.keys():
+                if key == "warehouse_api_url":
+                    continue
                 header.add(key)
 
         header_sorted = sorted(header)
@@ -1057,6 +1097,116 @@ def indexes(output_format: str) -> None:
         console.print(table, justify="center")
 
     sys.exit(0)
+
+
+@cli.command("add")
+@click.pass_context
+@click.argument("requirement", nargs=-1, metavar="PKG")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment to which the given package should be added.",
+)
+@click.option(
+    "--index-url",
+    "-i",
+    default="https://pypi.org/simple",
+    type=str,
+    metavar="INDEX_URL",
+    show_default=True,
+    help="Specify Python package index to be used as a source for the given requirement.",
+)
+@click.option(
+    "--dev",
+    is_flag=True,
+    show_default=True,
+    help="Add the given package to the development packages.",
+)
+@handle_cli_exception
+def add(
+    requirement: typing.List[str],
+    runtime_environment: typing.Optional[str],
+    index_url: str,
+    dev: bool,
+) -> None:
+    """Add one or multiple requirements.
+
+    Add one or multiple requirement to the direct dependency listing without actually installing them.
+    The supplied requirement is specified using PEP-508 standard.
+    """
+    project = configuration.get_project(runtime_environment, missing_dir_ok=True)
+    for req in requirement:
+        _LOGGER.info(
+            "Adding %r to %s requirements of runtime environment %r",
+            req,
+            "development" if dev else "default",
+            project.runtime_environment.name,
+        )
+        project.pipfile.add_requirement(
+            req, is_dev=dev, index_url=index_url, force=True
+        )
+
+    _LOGGER.warning(
+        "Changes done might require triggering new advise to resolve dependencies"
+    )
+    configuration.save_project(project)
+
+
+@cli.command("remove")
+@click.pass_context
+@click.argument("requirement", nargs=-1, metavar="PKG")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment from which the given package should be removed.",
+)
+@handle_cli_exception
+def remove(
+    requirement: typing.List[str],
+    runtime_environment: typing.Optional[str],
+) -> None:
+    """Remove the given requirement."""
+    project = configuration.get_project(runtime_environment)
+
+    for req in requirement:
+        any_change = False
+        if req in project.pipfile.packages.packages:
+            project.pipfile.packages.packages.pop(req)
+            _LOGGER.info(
+                "Removed %r from default requirements for runtime environment %r",
+                req,
+                project.runtime_environment.name,
+            )
+            any_change = True
+
+        if req in project.pipfile.dev_packages.packages:
+            project.pipfile.dev_packages.packages.pop(req)
+            _LOGGER.info(
+                "Removed %r from development requirements for runtime environment %r",
+                req,
+                project.runtime_environment.name,
+            )
+            any_change = True
+
+        if not any_change:
+            _LOGGER.error(
+                "Requirement %r not found in project requirements for runtime environment %r, "
+                "aborting making any changes",
+                req,
+                project.runtime_environment.name,
+            )
+            sys.exit(1)
+
+    _LOGGER.warning(
+        "Changes done might require triggering new advise to resolve dependencies"
+    )
+    configuration.save_project(project)
 
 
 __name__ == "__main__" and cli()
