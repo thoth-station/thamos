@@ -322,6 +322,20 @@ Similarly as for Pipenv files, requirement files respecting `pip-tools
 <https://pypi.org/project/pip-tools>`__ can be used (``requirements.in`` and
 ``requirements.txt``)
 
+Installing requirements
+=======================
+
+Once a lock file is resolved after calling ``thamos advise``, the application stack
+can be installed by using ``thamos install`` command. If you wish to pass additional
+options that should be used by ``pip``, you can do so by passing them after ``--``.
+
+An example could be installing packages in a corporate network where packages should
+be installed through a proxy tunnel:
+
+.. code-block:: console
+
+  thamos install -- --proxy socks5h://127.0.0.1:8029 --trusted-host pypi.org
+
 Using Thoth and thamos in OpenShift's s2i
 =========================================
 
