@@ -676,10 +676,10 @@
         },
         "thoth-python": {
             "hashes": [
-                "sha256:787ba38977ed6e28c7b236423dc0a0558e592da8771644394a3abc1dd1f7c4b2"
+                "sha256:2fa1eb9ff36c8804e6a580d186fd1c9ff8a7f1c7b37c04c70e093c1dade1658a"
             ],
             "index": "pypi",
-            "version": "==0.15.4"
+            "version": "==0.15.5"
         },
         "toml": {
             "hashes": [
