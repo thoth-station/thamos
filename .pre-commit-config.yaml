@@ -34,7 +34,8 @@ repos:
     rev: v0.790
     hooks:
       - id: mypy
-        exclude: (x)(^(docs|tasks|tests)|setup\.py|examples/|swagger_client/)
+        exclude: "docs/|tasks/|tests/|setup.py|thamos/swagger_client/|examples/"
+        # exclude: (x)(^(docs|tasks|tests)|setup\.py|examples/|swagger_client/)
         args: ["--scripts-are-modules", "--ignore-missing-imports"]
         additional_dependencies: [attrs~=19.3]
 
