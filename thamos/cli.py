@@ -390,10 +390,15 @@ def _print_version(ctx, json_output: bool = False):
 @click.argument("pip_args", nargs=-1)
 @handle_cli_exception
 def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
-    """Install dependencies as stated in Pipfile.lock or requirements.txt.
+    """Install dependencies as stated in the lock file.
 
     This command assumes requirements files are present and dependencies are already resolved.
-    If that's not the case, issue `thamos advise` before calling this.
+    If that's not the case, issue `thamos advise` before running this command.
+
+    Examples:
+      thamos install --runtime-environment "testing"
+
+      thamos install --dev
     """
     try:
         thamos_install(
@@ -506,7 +511,22 @@ def advise(
     install: bool = False,
     write_advised_manifest_changes: Optional[str] = None,
 ):
-    """Ask Thoth for recommendations on application stack."""
+    """Ask Thoth for recommendations on the application stack.
+
+    Ask the remote Thoth service for advise on the application stack used. The command
+    collects information stated in the .thoth.yaml file for the given runtime environment,
+    static source code analysis and requirements for the application and sends them to the
+    remote service. Optionally, install packages resolved by Thoth.
+
+    Examples:
+      thamos advise --runtime-environment "testing"
+
+      thamos advise --dev
+
+      thamos advise --install
+
+      thamos advise --no-static-analysis --no-user-stack
+    """
     if install and no_wait:
         _LOGGER.error("Cannot install dependencies as --no-wait was provided")
         sys.exit(1)
@@ -652,7 +672,14 @@ def provenance_check(
     force: bool = False,
     runtime_environment: typing.Optional[str] = None,
 ):
-    """Check provenance of installed packages."""
+    """Check provenance of installed packages.
+
+    Collect information about direct dependencies and dependencies stated in the lock file
+    and send them to the remote service to verify their provenance.
+
+    Examples:
+      thamos provenance-check --runtime-environment "production"
+    """
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         if configuration.requirements_format != "pipenv":
             raise ValueError(
@@ -694,12 +721,12 @@ def provenance_check(
 
 @cli.command("log")
 @click.pass_context
-@click.argument("analysis_id", type=str, required=False)
+@click.argument("analysis_id", type=str, required=False, metavar="ANALYSIS_ID")
 @handle_cli_exception
 def log(analysis_id: typing.Optional[str] = None):
     """Get log of running or finished analysis.
 
-    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    If ANALYSIS_ID is not provided, the last request is used by default.
     """
     if not analysis_id:
         with workdir():
@@ -712,7 +739,7 @@ def log(analysis_id: typing.Optional[str] = None):
 
 @cli.command("status")
 @click.pass_context
-@click.argument("analysis_id", type=str, required=False)
+@click.argument("analysis_id", type=str, required=False, metavar="ANALYSIS_ID")
 @click.option(
     "--output-format",
     "-o",
@@ -726,7 +753,12 @@ def status(
 ):
     """Get status of an analysis.
 
-    If ANALYSIS_ID is not provided, there will be used last analysis id, if noted by Thamos.
+    If ANALYSIS_ID is not provided, the last request is used by default.
+
+    Examples:
+      thamos status
+
+      thamos status "adviser-940101080006-110c392feb7cf6da"
     """
     if not analysis_id:
         with workdir():
@@ -763,7 +795,11 @@ def status(
 @click.pass_context
 @handle_cli_exception
 def list_() -> None:
-    """List available runtime environments configured."""
+    """List available runtime environments configured.
+
+    Examples:
+      thamos list
+    """
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
 
@@ -796,7 +832,11 @@ def list_() -> None:
 )
 @handle_cli_exception
 def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
-    """Show configuration of available runtime environments configured."""
+    """Show details for configured runtime environments.
+
+    Examples:
+      thamos show --runtime-environment "development"
+    """
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
 
@@ -845,10 +885,11 @@ def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
 )
 @handle_cli_exception
 def config(no_interactive: bool = False, template: str = None):
-    """Adjust Thamos and Thoth remote configuration.
+    """Adjust Thamos and Thoth configuration.
 
-    Perform autodiscovery of available hardware and software on the host and
-    create a default configuration for Thoth (placed into .thoth.yaml).
+    Open the .thoth.yaml configuration file. If does not exist yet, perform
+    auto-discovery of available hardware and software on the host and
+    create a default configuration for Thoth.
     """
     if template:
         _LOGGER.info(
@@ -896,7 +937,16 @@ def config(no_interactive: bool = False, template: str = None):
 )
 @handle_cli_exception
 def check(runtime_environment: Optional[str], output_format: str) -> None:
-    """Check configuration file and runtime environment."""
+    """Check the configuration file and runtime environment.
+
+    Check the correctness of the configuration file and runtime environment configuration
+    for the current host.
+
+    Examples:
+        thamos check --runtime-environment "production"
+
+        thamos check --output-format yaml
+    """
     result = configuration.check(runtime_environment_name=runtime_environment)
 
     if output_format == "yaml":
@@ -950,7 +1000,11 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
 )
 @handle_cli_exception
 def s2i(output_format: str) -> None:
-    """Check available Thoth Source-To-Images offered."""
+    """Check available Thoth Source-To-Image containers.
+
+    Examples:
+      thamos s2i --output-format json
+    """
     result = list_thoth_s2i()
 
     if output_format == "yaml":
@@ -1005,7 +1059,12 @@ def s2i(output_format: str) -> None:
 )
 @handle_cli_exception
 def hw(output_format: str) -> None:
-    """List available hardware information for which Thoth can assist with recommendations."""
+    """List available hardware information on backend.
+
+    List available hardware information on the backend for which resolver can give more detailed information.
+    This hardware configuration is not enforced and is find if it does not match the one available on the
+    client side.
+    """
     result = list_hardware_environments()
 
     if output_format == "yaml":
@@ -1057,7 +1116,7 @@ def hw(output_format: str) -> None:
 )
 @handle_cli_exception
 def indexes(output_format: str) -> None:
-    """List available hardware information for which Thoth can assist with recommendations."""
+    """List available Python package indexes."""
     result = list_python_package_indexes()
 
     if output_format == "yaml":
@@ -1132,10 +1191,19 @@ def add(
     index_url: str,
     dev: bool,
 ) -> None:
-    """Add one or multiple requirements.
+    """Add one or multiple requirements to the project.
 
-    Add one or multiple requirement to the direct dependency listing without actually installing them.
+    Add one or multiple requirements to the direct dependency listing without actually installing them.
     The supplied requirement is specified using PEP-508 standard.
+
+    Examples:
+      thamos add flask
+
+      thamos add tensorflow --runtime-environment "training"
+
+      thamos add --dev 'pytest~=6.2.0'
+
+      thamos add 'importlib-metadata; python_version < "3.8"'
     """
     project = configuration.get_project(runtime_environment, missing_dir_ok=True)
     for req in requirement:
@@ -1171,7 +1239,13 @@ def remove(
     requirement: typing.List[str],
     runtime_environment: typing.Optional[str],
 ) -> None:
-    """Remove the given requirement."""
+    """Remove the given requirement.
+
+    Examples:
+      thamos remove flask
+
+      thamos remove pytest --runtime-environment "training"
+    """
     project = configuration.get_project(runtime_environment)
 
     for req in requirement:
