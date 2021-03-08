@@ -955,6 +955,11 @@ def install(
                     f"No requirements.txt file found in {os.getcwd()!r} needed to install dependencies"
                 )
 
+        if runtime_environment_name is None:
+            config_entry = thoth_config.get_runtime_environment(runtime_environment_name)
+            runtime_environment_name = config_entry["name"]
+        _LOGGER.info("Installing requirements for runtime environment %r", runtime_environment_name)
+
         _LOGGER.info(
             "Using %r installation method to install dependencies stated in %r",
             method,
