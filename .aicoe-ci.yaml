@@ -1,5 +1,3 @@
-check:
-  - thoth-precommit
-  - thoth-pytest-py38
+check: []
 release:
   - upload-pypi-sesheta
