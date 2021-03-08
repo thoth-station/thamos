@@ -68,3 +68,7 @@ class ApiError(ThamosException):
 
 class NoRequirementsFile(ThamosException):
     """An exception raised when requirements file is not present."""
+
+
+class NoDevRequirements(ThamosException):
+    """An exception raised if no development requirements are found during the installation process."""

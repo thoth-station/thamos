@@ -60,6 +60,7 @@ from .config import config as thoth_config
 from .exceptions import UnknownAnalysisType
 from .exceptions import TimeoutError
 from .exceptions import ApiError
+from .exceptions import NoDevRequirements
 from .exceptions import NoRequirementsFile
 
 from typing import Callable, Any, Union, Dict
@@ -935,6 +936,19 @@ def install(
                 raise NoRequirementsFile(
                     f"No Pipfile found in {os.getcwd()!r} needed for the installation process"
                 )
+
+            if dev:
+                with open("Pipfile.lock") as pipfile_lock_file:
+                    content = json.load(pipfile_lock_file)
+
+                if not content.get("develop"):
+                    raise NoDevRequirements(
+                        "No development requirements found in the lock file, make sure development "
+                        "requirements are stated and the resolved stack preserves them by "
+                        "using `thamos advise --dev`"
+                    )
+
+                del content
         else:
             if not os.path.isfile("requirements.txt"):
                 raise NoRequirementsFile(
