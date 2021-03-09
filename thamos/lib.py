@@ -965,7 +965,26 @@ def install(
             method,
             os.getcwd(),
         )
-        micropipenv.install(method=method, deploy=True, dev=dev, pip_args=pip_args)
+
+        virtualenv_path = thoth_config.get_virtualenv_path(runtime_environment_name)
+        if virtualenv_path:
+            if not os.path.isdir(virtualenv_path):
+                thoth_config.create_virtualenv()
+
+            micropipenv.install(
+                pip_bin=os.path.join(virtualenv_path, "bin", "pip3"),
+                method=method,
+                deploy=True,
+                dev=dev,
+                pip_args=pip_args,
+            )
+        else:
+            micropipenv.install(
+                method=method,
+                deploy=True,
+                dev=dev,
+                pip_args=pip_args,
+            )
 
 
 @with_api_client

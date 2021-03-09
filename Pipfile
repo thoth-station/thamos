@@ -22,6 +22,7 @@ thoth-common = "*"
 rich = "*"
 micropipenv = "*"
 jsonschema = "*"
+virtualenv = "*"
 
 [dev-packages]
 toml = "*"

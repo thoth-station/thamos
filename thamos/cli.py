@@ -17,11 +17,13 @@
 
 """Command line interface Thamos for interaction with Thoth."""
 
-import logging
-import typing
-import os
-import sys
 import json
+import logging
+import os
+import shutil
+import subprocess
+import sys
+import typing
 from functools import wraps
 from typing import Tuple
 from typing import Optional
@@ -410,6 +412,86 @@ def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
             "using `thamos advise --install` to apply changes made: %s",
             str(exc),
         )
+
+
+def _error_virtual_environment(virtualenv_path: str) -> None:
+    """Print error and exit if virtual environment was not setup."""
+    if not os.path.isdir(virtualenv_path):
+        if configuration.content.get("virtualenv", False):
+            _LOGGER.error("No virtual environment created yet, create it using `thamos install`")
+        else:
+            _LOGGER.error("No virtual environment management configured, use `thamos config` to adjust configuration")
+
+        sys.exit(1)
+
+
+@cli.command("run")
+@click.argument("command", nargs=-1, metavar="CMD")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to get recommendations for; "
+    "defaults to the first entry in the configuration file.",
+)
+def run(command: typing.List[str], runtime_environment: Optional[str] = None) -> None:
+    """Run the command in virtual environment."""
+    virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
+    python_path = os.path.join(virtualenv_path, "bin", "python")
+    _error_virtual_environment(virtualenv_path)
+    # No magic here.
+    cmd = [python_path, *command]
+    subprocess.run(cmd, universal_newlines=True, check=True)
+
+
+@cli.command("venv")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to get recommendations for; "
+    "defaults to the first entry in the configuration file.",
+)
+def venv(runtime_environment: Optional[str] = None) -> None:
+    """Get path of the virtual environment."""
+    virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
+    _error_virtual_environment(virtualenv_path)
+    print(virtualenv_path)
+
+
+@cli.command("purge")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    type=str,
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify explicitly runtime environment to get recommendations for; "
+    "defaults to the first entry in the configuration file.",
+)
+@click.option(
+    "--all",
+    "-A",
+    is_flag=True,
+    help="Purge virtual environments for all the runtime environments configured."
+)
+def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
+    """Remove virtual environment created."""
+    if all:
+        for runtime_environment_config in configuration.list_runtime_environments():
+            _LOGGER.warning("Removing virtual environment for %r", runtime_environment_config["name"])
+            shutil.rmtree(configuration.get_virtualenv_path(runtime_environment), ignore_errors=True)
+    else:
+        runtime_environment_config = configuration.get_runtime_environment(runtime_environment)
+        _LOGGER.warning("Removing virtual environment for %r", runtime_environment_config["name"])
+        shutil.rmtree(configuration.get_virtualenv_path(runtime_environment), ignore_errors=True)
 
 
 @cli.command("advise")

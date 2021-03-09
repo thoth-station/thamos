@@ -35,6 +35,7 @@ from thoth.common import normalize_os_version
 from thoth.common import RuntimeEnvironment
 from thoth.python import Pipfile
 from thoth.python import Project
+from virtualenv import cli_run as virtualenv_cli_run
 
 from .utils import workdir
 from .discover import discover_cpu
@@ -75,7 +76,7 @@ _CONFIG_RUNTIME_ENVIRONMENT_SCHEMA = {
             "required": [],
             "additionalProperties": False,
         },
-        "name": {"type": "string", "pattern": r"^[a-zA-Z0-9:_-]+$"},
+        "name": {"type": "string", "pattern": r"^[a-zA-Z0-9_-]+$"},
         "operating_system": {
             "type": "object",
             "properties": {
@@ -108,6 +109,7 @@ _CONFIG_SCHEMA = {
     "type": "object",
     "properties": {
         "host": {"type": "string", "format": "hostname"},
+        "virtualenv": {"type": "boolean"},
         "tls_verify": {"type": "boolean"},
         "requirements_format": {
             "type": "string",
@@ -197,6 +199,28 @@ class _Configuration:
         )
         response.raise_for_status()
         return response.headers.get("X-Thoth-Version", "Not Available")
+
+    def get_virtualenv_path(self, runtime_environment: Optional[str] = None) -> Optional[str]:
+        """Get path to a virtual environment."""
+        if not self.content.get("virtualenv", False):
+            return None
+
+        return os.path.join(self.get_overlays_directory(runtime_environment), ".venv")
+
+    def create_virtualenv(self, runtime_environment: Optional[str] = None) -> None:
+        """Create a virtual environment for the given runtime environment."""
+        virtualenv_path = self.get_virtualenv_path(runtime_environment)
+        if virtualenv_path is None:
+            raise ConfigurationError("No virtual environment configured")
+
+        virtualenv_args = [virtualenv_path]
+        python_version = self.get_runtime_environment(runtime_environment).get("python_version")
+        if python_version:
+            virtualenv_args.extend(["--python", python_version])
+
+        _LOGGER.info("Creating virtual environment")
+        _LOGGER.debug("Virtual environment will be created in %r using %r", virtualenv_path, virtualenv_args)
+        virtualenv_cli_run(virtualenv_args)  # Raises on any error.
 
     def config_file_exists(self) -> bool:
         """Check if configuration file exists."""
@@ -352,7 +376,7 @@ class _Configuration:
                     f"Runtime environment {runtime_environment['name']!r} already exists"
                 )
 
-    def get_runtime_environment(self, name: str = None) -> Optional[dict]:
+    def get_runtime_environment(self, name: Optional[str] = None) -> Optional[dict]:
         """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
         content = self.content
         if "runtime_environments" not in content:
@@ -647,7 +671,7 @@ class _Configuration:
                     f"`thamos add <pkg>{suffix}`",
                 )
 
-            return path
+            return os.path.abspath(path)
 
     def get_project(
         self,
