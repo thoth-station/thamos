@@ -438,7 +438,13 @@ def _error_virtual_environment(virtualenv_path: str) -> None:
     "defaults to the first entry in the configuration file.",
 )
 def run(command: typing.List[str], runtime_environment: Optional[str] = None) -> None:
-    """Run the command in virtual environment."""
+    """Run the command in virtual environment.
+
+    Examples:
+      thamos run ./app.py
+
+      thamos run --runtime-environment "testing" -- flask --help
+    """
     virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
     python_path = os.path.join(virtualenv_path, "bin", "python")
     _error_virtual_environment(virtualenv_path)
@@ -483,7 +489,16 @@ def venv(runtime_environment: Optional[str] = None) -> None:
     help="Purge virtual environments for all the runtime environments configured."
 )
 def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
-    """Remove virtual environment created."""
+    """Remove virtual environment created.
+
+
+    Examples:
+      thamos purge
+
+      thamos purge --runtime-environment "testing"
+
+      thamos purge --all
+    """
     if all:
         for runtime_environment_config in configuration.list_runtime_environments():
             _LOGGER.warning("Removing virtual environment for %r", runtime_environment_config["name"])
