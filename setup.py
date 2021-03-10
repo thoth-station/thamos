@@ -70,7 +70,7 @@ setup(
     name="thamos",
     entry_points={"console_scripts": ["thamos=thamos.cli:cli"]},
     version=VERSION,
-    package_data={"thamos": [os.path.join("data", "*.yaml")]},
+    package_data={"thamos": [os.path.join("data", "*.yaml"), "py.typed"]},
     include_package_data=True,
     description="A CLI tool and library for interacting with Thoth",
     long_description=Path("README.rst").read_text(),
