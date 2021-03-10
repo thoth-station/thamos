@@ -401,6 +401,8 @@ def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
       thamos install --runtime-environment "testing"
 
       thamos install --dev
+
+      thamos install --no-dev -- --force-reinstall
     """
     try:
         thamos_install(
