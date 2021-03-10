@@ -491,7 +491,6 @@ def venv(runtime_environment: Optional[str] = None) -> None:
 def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
     """Remove virtual environment created.
 
-
     Examples:
       thamos purge
 
