@@ -29,7 +29,8 @@ installation instructions bellow to setup Thoth/Thamos for your repository:
 
 
 As Thamos notes analysis ids for better UX of ``thamos log``, it's recommended to
-add ``.thoth_last_analysis_id`` file to ``.gitignore``.
+add ``.thoth_last_analysis_id`` file to ``.gitignore``. Adding also ``.venv``
+might be useful if virtual environment management is turned on.
 
 
 Recommendation types
