@@ -960,13 +960,6 @@ def install(
                 thoth_config.create_virtualenv()
 
             micropipenv_kwargs["pip_bin"] = os.path.join(virtualenv_path, "bin", "pip3")
-        else:
-            micropipenv.install(
-                method=method,
-                deploy=True,
-                dev=dev,
-                pip_args=pip_args,
-            )
 
         # micropipenv writes and prints the lockfile which is not very user friendly when thamos is used by a user.
         # Suppress this behavior unless these environment variables options are supplied explicitly.
