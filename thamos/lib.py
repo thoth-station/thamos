@@ -947,18 +947,19 @@ def install(
             os.getcwd(),
         )
 
+        micropipenv_kwargs = {
+            "method": method,
+            "deploy": True,
+            "dev": dev,
+            "pip_args": pip_args,
+        }
+
         virtualenv_path = thoth_config.get_virtualenv_path(runtime_environment_name)
         if virtualenv_path:
             if not os.path.isdir(virtualenv_path):
                 thoth_config.create_virtualenv()
 
-            micropipenv.install(
-                pip_bin=os.path.join(virtualenv_path, "bin", "pip3"),
-                method=method,
-                deploy=True,
-                dev=dev,
-                pip_args=pip_args,
-            )
+            micropipenv_kwargs["pip_bin"] = os.path.join(virtualenv_path, "bin", "pip3")
         else:
             micropipenv.install(
                 method=method,
@@ -966,6 +967,25 @@ def install(
                 dev=dev,
                 pip_args=pip_args,
             )
+
+        # micropipenv writes and prints the lockfile which is not very user friendly when thamos is used by a user.
+        # Suppress this behavior unless these environment variables options are supplied explicitly.
+        old_write = os.getenv("MICROPIPENV_NO_LOCKFILE_WRITE")
+        if old_write is None:
+            os.environ["MICROPIPENV_NO_LOCKFILE_WRITE"] = "1"
+
+        old_print = os.getenv("MICROPIPENV_NO_LOCKFILE_PRINT")
+        if old_print is None:
+            os.environ["MICROPIPENV_NO_LOCKFILE_PRINT"] = "1"
+
+        try:
+            micropipenv.install(**micropipenv_kwargs)
+        finally:
+            if old_write is None:
+                os.environ.pop("MICROPIPENV_NO_LOCKFILE_WRITE", None)
+
+            if old_print is None:
+                os.environ.pop("MICROPIPENV_NO_LOCKFILE_PRINT", None)
 
 
 @with_api_client

@@ -19,6 +19,7 @@
 
 import logging
 import os
+import sys
 from typing import Any
 from typing import Dict
 from typing import Optional
@@ -203,6 +204,10 @@ class _Configuration:
     def get_virtualenv_path(self, runtime_environment: Optional[str] = None) -> Optional[str]:
         """Get path to a virtual environment."""
         if not self.content.get("virtualenv", False):
+            return None
+
+        if sys.base_prefix != sys.prefix:
+            _LOGGER.warning("Detected running in a virtual environment, no managed virtual environment will be used")
             return None
 
         return os.path.join(self.get_overlays_directory(runtime_environment), ".venv")
