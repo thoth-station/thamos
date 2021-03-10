@@ -201,13 +201,17 @@ class _Configuration:
         response.raise_for_status()
         return response.headers.get("X-Thoth-Version", "Not Available")
 
-    def get_virtualenv_path(self, runtime_environment: Optional[str] = None) -> Optional[str]:
+    def get_virtualenv_path(
+        self, runtime_environment: Optional[str] = None
+    ) -> Optional[str]:
         """Get path to a virtual environment."""
         if not self.content.get("virtualenv", False):
             return None
 
         if sys.base_prefix != sys.prefix:
-            _LOGGER.warning("Detected running in a virtual environment, no managed virtual environment will be used")
+            _LOGGER.warning(
+                "Detected running in a virtual environment, no managed virtual environment will be used"
+            )
             return None
 
         return os.path.join(self.get_overlays_directory(runtime_environment), ".venv")
@@ -219,12 +223,18 @@ class _Configuration:
             raise ConfigurationError("No virtual environment configured")
 
         virtualenv_args = [virtualenv_path]
-        python_version = self.get_runtime_environment(runtime_environment).get("python_version")
+        python_version = self.get_runtime_environment(runtime_environment).get(
+            "python_version"
+        )
         if python_version:
             virtualenv_args.extend(["--python", python_version])
 
         _LOGGER.info("Creating virtual environment")
-        _LOGGER.debug("Virtual environment will be created in %r using %r", virtualenv_path, virtualenv_args)
+        _LOGGER.debug(
+            "Virtual environment will be created in %r using %r",
+            virtualenv_path,
+            virtualenv_args,
+        )
         virtualenv_cli_run(virtualenv_args)  # Raises on any error.
 
     def config_file_exists(self) -> bool:

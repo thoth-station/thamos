@@ -418,9 +418,13 @@ def _error_virtual_environment(virtualenv_path: str) -> None:
     """Print error and exit if virtual environment was not setup."""
     if not os.path.isdir(virtualenv_path):
         if configuration.content.get("virtualenv", False):
-            _LOGGER.error("No virtual environment created yet, create it using `thamos install`")
+            _LOGGER.error(
+                "No virtual environment created yet, create it using `thamos install`"
+            )
         else:
-            _LOGGER.error("No virtual environment management configured, use `thamos config` to adjust configuration")
+            _LOGGER.error(
+                "No virtual environment management configured, use `thamos config` to adjust configuration"
+            )
 
         sys.exit(1)
 
@@ -486,7 +490,7 @@ def venv(runtime_environment: Optional[str] = None) -> None:
     "--all",
     "-A",
     is_flag=True,
-    help="Purge virtual environments for all the runtime environments configured."
+    help="Purge virtual environments for all the runtime environments configured.",
 )
 def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
     """Remove virtual environment created.
@@ -500,12 +504,24 @@ def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
     """
     if all:
         for runtime_environment_config in configuration.list_runtime_environments():
-            _LOGGER.warning("Removing virtual environment for %r", runtime_environment_config["name"])
-            shutil.rmtree(configuration.get_virtualenv_path(runtime_environment), ignore_errors=True)
+            _LOGGER.warning(
+                "Removing virtual environment for %r",
+                runtime_environment_config["name"],
+            )
+            shutil.rmtree(
+                configuration.get_virtualenv_path(runtime_environment),
+                ignore_errors=True,
+            )
     else:
-        runtime_environment_config = configuration.get_runtime_environment(runtime_environment)
-        _LOGGER.warning("Removing virtual environment for %r", runtime_environment_config["name"])
-        shutil.rmtree(configuration.get_virtualenv_path(runtime_environment), ignore_errors=True)
+        runtime_environment_config = configuration.get_runtime_environment(
+            runtime_environment
+        )
+        _LOGGER.warning(
+            "Removing virtual environment for %r", runtime_environment_config["name"]
+        )
+        shutil.rmtree(
+            configuration.get_virtualenv_path(runtime_environment), ignore_errors=True
+        )
 
 
 @cli.command("advise")
