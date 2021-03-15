@@ -149,7 +149,7 @@ def discover_base_image() -> typing.Optional[str]:
         base_image_version = f"v{base_image_version}" if base_image_version else None
 
     if base_image_name and base_image_version:
-        base_image = f"{base_image_name}:v{base_image_version}"
+        base_image = f"{base_image_name}:{base_image_version}"
         _LOGGER.info("Detected base image %r", base_image)
         return base_image
     elif base_image_name:
