@@ -131,7 +131,7 @@ def is_analysis_ready(analysis_id: str) -> bool:
     )
 
 
-def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> None:
+def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str, timeout: typing.Optional[int] = None) -> None:
     """Wait for ongoing analysis to finish."""
     # noqa
     @contextmanager
@@ -151,10 +151,11 @@ def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str) -> Non
 
     sleep_time = 0.5
     retries = 0
+    timeout = timeout if timeout is not None else _THAMOS_TIMEOUT
     with spinner():
         start_time = monotonic()
         while True:
-            if _THAMOS_TIMEOUT and monotonic() - start_time > _THAMOS_TIMEOUT:
+            if timeout and monotonic() - start_time > timeout:
                 raise TimeoutError(
                     f"Thoth backend did not respond in time, timeout set "
                     f"to {_THAMOS_TIMEOUT} - see {jl('thamos_timeout')}"
@@ -319,10 +320,11 @@ def advise_using_config(
     no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
-    limit: int = None,
+    limit: typing.Optional[int] = None,
     count: int = 1,
     debug: bool = False,
-    origin: str = None,
+    origin: typing.Optional[str] = None,
+    timeout: typing.Optional[int] = None,
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
@@ -353,6 +355,7 @@ def advise_using_config(
         count=count,
         debug=debug,
         origin=origin,
+        timout=timeout,
         github_event_type=github_event_type,
         github_check_run_id=github_check_run_id,
         github_installation_id=github_installation_id,
@@ -379,7 +382,8 @@ def advise(
     limit: int = None,
     count: int = 1,
     debug: bool = False,
-    origin: str = None,
+    origin: typing.Optional[str] = None,
+    timeout: typing.Optional[int] = None,
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
     github_installation_id: typing.Optional[int] = None,
@@ -490,7 +494,7 @@ def advise(
     if nowait:
         return response.analysis_id
     # We call custom status function for advise until swagger client supports mulitple response codes.
-    _wait_for_analysis(is_analysis_ready, response.analysis_id)
+    _wait_for_analysis(is_analysis_ready, response.analysis_id, timeout)
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_advise_python, response.analysis_id
@@ -517,6 +521,7 @@ def advise_here(
     limit: typing.Optional[int] = None,
     count: int = 1,
     debug: bool = False,
+    timeout: typing.Optional[int] = None,
     origin: typing.Optional[str] = None,
     github_event_type: typing.Optional[str] = None,
     github_check_run_id: typing.Optional[int] = None,
@@ -583,6 +588,7 @@ def advise_here(
         count=count,
         debug=debug,
         origin=origin,
+        timeout=timeout,
         source_type=source_type,
         github_event_type=github_event_type,
         github_check_run_id=github_check_run_id,
@@ -600,7 +606,8 @@ def provenance_check(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
-    origin: str = None,
+    origin: typing.Optional[str] = None,
+    timeout: typing.Optional[int] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
@@ -622,7 +629,7 @@ def provenance_check(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(is_analysis_ready, response.analysis_id)
+    _wait_for_analysis(is_analysis_ready, response.analysis_id, timeout)
     _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_provenance_python, response.analysis_id
@@ -639,7 +646,8 @@ def provenance_check_here(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
-    origin: str = None,
+    origin: typing.Optional[str] = None,
+    timeout: typing.Optional[int] = None,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
@@ -656,6 +664,7 @@ def provenance_check_here(
             force=force,
             debug=debug,
             origin=origin,
+            timeout=timeout,
         )
 
 
@@ -670,6 +679,7 @@ def image_analysis(
     verify_tls: bool = True,
     nowait: bool = False,
     force: bool = False,
+    timeout: typing.Optional[int] = None,
     debug: bool = False,
 ) -> Union[Dict, str, None]:
     """Submit an image for analysis to Thoth."""
@@ -702,7 +712,7 @@ def image_analysis(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(is_analysis_ready, response.analysis_id)
+    _wait_for_analysis(is_analysis_ready, response.analysis_id, timeout)
     _LOGGER.debug(
         "Retrieving image analysis result result for %r", response.analysis_id
     )
