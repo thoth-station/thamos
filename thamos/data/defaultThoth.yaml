@@ -12,9 +12,11 @@ tls_verify: true
 requirements_format: {requirements_format}
 # A path to overlays directory relative to this configuration file. If null provided, no overlays are used.
 overlays_dir: overlays
+# Allow or disable managing virtual environment for each overlay.
+virtualenv: false
 
 runtime_environments:
-  - name: '{os_name}:{os_version}'
+  - name: '{os_name}-{os_version}'
     # Operating system for which the recommendations should be created:
     operating_system:
       name: {os_name}
