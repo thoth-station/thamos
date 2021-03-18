@@ -385,6 +385,8 @@ def advise(
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
+    justification: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
+    stack_info: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -527,6 +529,8 @@ def advise_here(
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
+    justification: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
+    stack_info: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
@@ -606,6 +610,9 @@ def provenance_check(
     force: bool = False,
     debug: bool = False,
     origin: str = None,
+    kebechet_metadata: typing.Optional[Dict] = None,
+    justification: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
+    stack_info: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
@@ -645,6 +652,9 @@ def provenance_check_here(
     force: bool = False,
     debug: bool = False,
     origin: str = None,
+    kebechet_metadata: typing.Optional[Dict] = None,
+    justification: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
+    stack_info: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
