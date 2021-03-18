@@ -452,7 +452,11 @@ def run(command: typing.List[str], runtime_environment: Optional[str] = None) ->
       thamos run --runtime-environment "testing" -- flask --help
     """
     virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
-    python_path = os.path.join(virtualenv_path, "bin", "python")
+    if virtualenv_path is None:
+        _LOGGER.error("No virtual environment found for %r", runtime_environment)
+        sys.exit(1)
+
+    python_path = os.path.join(virtualenv_path, "bin", "python3")
     _error_virtual_environment(virtualenv_path)
     # No magic here.
     cmd = [python_path, *command]
@@ -460,6 +464,7 @@ def run(command: typing.List[str], runtime_environment: Optional[str] = None) ->
 
 
 @cli.command("venv")
+@click.pass_context
 @click.option(
     "--runtime-environment",
     "-r",
@@ -470,14 +475,18 @@ def run(command: typing.List[str], runtime_environment: Optional[str] = None) ->
     help="Specify explicitly runtime environment to get recommendations for; "
     "defaults to the first entry in the configuration file.",
 )
-def venv(runtime_environment: Optional[str] = None) -> None:
+def venv(ctx, runtime_environment: Optional[str] = None) -> None:
     """Get path of the virtual environment."""
     virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
+    if virtualenv_path is None:
+        _LOGGER.error("No virtual environment found")
+        ctx.exit(1)
     _error_virtual_environment(virtualenv_path)
     print(virtualenv_path)
 
 
 @cli.command("purge")
+@click.pass_context
 @click.option(
     "--runtime-environment",
     "-r",
@@ -494,7 +503,7 @@ def venv(runtime_environment: Optional[str] = None) -> None:
     is_flag=True,
     help="Purge virtual environments for all the runtime environments configured.",
 )
-def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
+def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> None:
     """Remove virtual environment created.
 
     Examples:
@@ -510,8 +519,12 @@ def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
                 "Removing virtual environment for %r",
                 runtime_environment_config["name"],
             )
+            path = configuration.get_virtualenv_path(runtime_environment),
+            if path is None:
+                _LOGGER.warning("No virtual environment for %r found", runtime_environment_config["name"])
+                continue
             shutil.rmtree(
-                configuration.get_virtualenv_path(runtime_environment),
+                path,
                 ignore_errors=True,
             )
     else:
@@ -521,9 +534,11 @@ def purge(runtime_environment: Optional[str] = None, all: bool = False) -> None:
         _LOGGER.warning(
             "Removing virtual environment for %r", runtime_environment_config["name"]
         )
-        shutil.rmtree(
-            configuration.get_virtualenv_path(runtime_environment), ignore_errors=True
-        )
+        path = configuration.get_virtualenv_path(runtime_environment),
+        if path is None:
+            _LOGGER.error("No virtual environment for %r found", runtime_environment_config["name"])
+            ctx.exit(1)
+        shutil.rmtree(path, ignore_errors=True)
 
 
 @cli.command("advise")
