@@ -71,12 +71,15 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
 def discover_distribution() -> tuple:
     """Get distribution identifier and distribution version."""
     distribution, version, *_ = distro.linux_distribution(full_distribution_name=False)
+    _LOGGER.info("Detected running %r in version %r", distribution, version)
     return distribution, version
 
 
 def discover_python_version() -> str:
     """Discover Python version in which we run in."""
-    return f"{sys.version_info.major}.{sys.version_info.minor}"
+    python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    _LOGGER.info("Detected running Python %r", python_version)
+    return python_version
 
 
 def discover_cpu() -> Dict[str, Union[str, int, None]]:
@@ -135,7 +138,9 @@ def discover_cpu() -> Dict[str, Union[str, int, None]]:
 
 def discover_platform() -> str:
     """Discover platform used."""
-    return sysconfig.get_platform()
+    platform = sysconfig.get_platform()
+    _LOGGER.info("Detected running platform %r", platform)
+    return platform
 
 
 def discover_base_image() -> typing.Optional[str]:
