@@ -620,11 +620,11 @@ def provenance_check(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
+    origin: typing.Optional[str] = None,
+    timeout: typing.Optional[int] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
     justification: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
     stack_info: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
-    origin: typing.Optional[str] = None,
-    timeout: typing.Optional[int] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
@@ -663,11 +663,11 @@ def provenance_check_here(
     nowait: bool = False,
     force: bool = False,
     debug: bool = False,
+    origin: typing.Optional[str] = None,
+    timeout: typing.Optional[int] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
     justification: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
     stack_info: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None,
-    origin: typing.Optional[str] = None,
-    timeout: typing.Optional[int] = None,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
