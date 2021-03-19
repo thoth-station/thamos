@@ -71,12 +71,15 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
 def discover_distribution() -> tuple:
     """Get distribution identifier and distribution version."""
     distribution, version, *_ = distro.linux_distribution(full_distribution_name=False)
+    _LOGGER.info("Detected running %r in version %r", distribution, version)
     return distribution, version
 
 
 def discover_python_version() -> str:
     """Discover Python version in which we run in."""
-    return f"{sys.version_info.major}.{sys.version_info.minor}"
+    python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    _LOGGER.info("Detected running Python %r", python_version)
+    return python_version
 
 
 def discover_cpu() -> Dict[str, Union[str, int, None]]:
@@ -135,17 +138,24 @@ def discover_cpu() -> Dict[str, Union[str, int, None]]:
 
 def discover_platform() -> str:
     """Discover platform used."""
-    return sysconfig.get_platform()
+    platform = sysconfig.get_platform()
+    _LOGGER.info("Detected running platform %r", platform)
+    return platform
 
 
 def discover_base_image() -> typing.Optional[str]:
     """Discover base image and its version."""
-    base_image_name = os.getenv("THOTH_S2I_NAME")
-    base_image_version = os.getenv("THOTH_S2I_VERSION")
+    # IMAGE_NAME and IMAGE_TAG injected by AICoE-CI take precedence over Thoth s2i.
+    base_image_name = os.getenv("IMAGE_NAME", os.getenv("THOTH_S2I_NAME"))
+    base_image_version = os.getenv("IMAGE_TAG")
+    if base_image_version is None:
+        base_image_version = os.getenv("THOTH_S2I_VERSION")
+        # Add `v' to the version information for Thoth specific environment variable.
+        base_image_version = f"v{base_image_version}" if base_image_version else None
 
     if base_image_name and base_image_version:
-        base_image = f"{base_image_name}:v{base_image_version}"
-        _LOGGER.info("Detected Thoth s2i tooling %r", base_image)
+        base_image = f"{base_image_name}:{base_image_version}"
+        _LOGGER.info("Detected base image %r", base_image)
         return base_image
     elif base_image_name:
         _LOGGER.warning(
