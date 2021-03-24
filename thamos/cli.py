@@ -28,7 +28,6 @@ from functools import wraps
 from typing import Tuple
 from typing import Optional
 from typing import Set
-from typing import Dict, Any
 
 import yaml
 import click
@@ -38,7 +37,6 @@ from rich.table import Table
 from rich import box
 import daiquiri
 from micropipenv import HashMismatch
-from thoth.python import Project
 from thoth.common import cwd
 from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
@@ -53,6 +51,7 @@ from thamos.lib import list_thoth_s2i
 from thamos.lib import get_log
 from thamos.lib import install as thamos_install
 from thamos.lib import get_status
+from thamos.lib import write_configuration, write_files, load_files
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
 
@@ -93,112 +92,6 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
             sys.exit(1)
 
     return wrapper
-
-
-def _load_files(requirements_format: str) -> Tuple[str, Optional[str]]:
-    """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
-    if requirements_format == "pipenv":
-        _LOGGER.info("Using Pipenv files located in %r directory", os.getcwd())
-        pipfile_lock_exists = os.path.exists("Pipfile.lock")
-
-        if pipfile_lock_exists:
-            _LOGGER.info(
-                "Submitting Pipfile.lock as a base for user's stack scoring - see %s",
-                jl("user_stack"),
-            )
-
-        project = Project.from_files(
-            without_pipfile_lock=not os.path.exists("Pipfile.lock")
-        )
-
-        if (
-            pipfile_lock_exists
-            and project.pipfile_lock.meta.hash["sha256"]
-            != project.pipfile.hash()["sha256"]
-        ):
-            _LOGGER.error(
-                "Pipfile hash stated in Pipfile.lock %r does not correspond to Pipfile hash %r - was Pipfile "
-                "adjusted? This error is not critical.",
-                project.pipfile_lock.meta.hash["sha256"][:6],
-                project.pipfile.hash()["sha256"][:6],
-            )
-    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
-        _LOGGER.info("Using requirements.txt file located in %r directory", os.getcwd())
-        project = Project.from_pip_compile_files(allow_without_lock=True)
-    else:
-        raise ValueError(
-            f"Unknown configuration option for requirements format: {requirements_format!r}"
-        )
-    return (
-        project.pipfile.to_string(),
-        project.pipfile_lock.to_string() if project.pipfile_lock else None,
-    )
-
-
-def _write_files(
-    requirements: Dict[str, Any],
-    requirements_lock: Dict[str, Any],
-    requirements_format: str,
-) -> None:
-    """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
-    project = Project.from_dict(requirements, requirements_lock)
-    if requirements_format == "pipenv":
-        _LOGGER.debug("Writing to Pipfile/Pipfile.lock in %r", os.getcwd())
-        project.to_files(keep_thoth_section=True)
-    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
-        _LOGGER.debug("Writing to requirements.in/requirements.txt in %r", os.getcwd())
-        project.to_pip_compile_files()
-        _LOGGER.debug("No changes to Pipfile to write")
-    else:
-        raise ValueError(
-            f"Unknown requirements format, supported are 'pipenv' and 'pip': {requirements_format!r}"
-        )
-
-
-def _write_configuration(
-    advised_configuration: dict,
-    recommendation_type: str = None,
-    dev: bool = False,
-) -> None:
-    """Create thoth configuration file."""
-    if not advised_configuration:
-        _LOGGER.debug("No advises on configuration, nothing to adjust")
-        return
-
-    if "name" not in advised_configuration:
-        _LOGGER.error(
-            "Cannot adjust Thoth's configuration based on advises: No name found in Thoth's configuration entry"
-        )
-        return
-
-    _LOGGER.debug("Reading Thoth's configuration file")
-    with open(".thoth.yaml", "r") as thoth_yaml_file:
-        content = yaml.safe_load(thoth_yaml_file.read())
-
-    for idx, runtime_environment_entry in enumerate(
-        content.get("runtime_environments", [])
-    ):
-        if runtime_environment_entry.get("name") == advised_configuration["name"]:
-            _LOGGER.debug(
-                "Adjusting configuration entry for %r based on recommendations",
-                advised_configuration["name"],
-            )
-            runtime_environment_entry = advised_configuration
-            if recommendation_type:
-                runtime_environment_entry["recommendation_type"] = recommendation_type
-            runtime_environment_entry["dev"] = dev
-            content["runtime_environments"][idx] = runtime_environment_entry
-            break
-    else:
-        _LOGGER.error(
-            "Cannot adjust Thoth's configuration based on advises: No runtime environment entry with name %r found",
-            advised_configuration["name"],
-        )
-        return
-
-    _LOGGER.debug("Writing adjusted Thoth's configuration file")
-    with open(".thoth.yaml", "w") as thoth_yaml_file:
-        yaml.safe_dump(content, thoth_yaml_file)
 
 
 def _print_report(report: dict, json_output: bool = False, title: Optional[str] = None):
@@ -519,9 +412,12 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
                 "Removing virtual environment for %r",
                 runtime_environment_config["name"],
             )
-            path = configuration.get_virtualenv_path(runtime_environment),
+            path = (configuration.get_virtualenv_path(runtime_environment),)
             if path is None:
-                _LOGGER.warning("No virtual environment for %r found", runtime_environment_config["name"])
+                _LOGGER.warning(
+                    "No virtual environment for %r found",
+                    runtime_environment_config["name"],
+                )
                 continue
             shutil.rmtree(
                 path,
@@ -534,9 +430,12 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
         _LOGGER.warning(
             "Removing virtual environment for %r", runtime_environment_config["name"]
         )
-        path = configuration.get_virtualenv_path(runtime_environment),
+        path = (configuration.get_virtualenv_path(runtime_environment),)
         if path is None:
-            _LOGGER.error("No virtual environment for %r found", runtime_environment_config["name"])
+            _LOGGER.error(
+                "No virtual environment for %r found",
+                runtime_environment_config["name"],
+            )
             ctx.exit(1)
         shutil.rmtree(path, ignore_errors=True)
 
@@ -734,12 +633,12 @@ def advise(
             pipfile_lock = result["report"]["products"][0]["project"][
                 "requirements_locked"
             ]
-            _write_configuration(
+            write_configuration(
                 result["report"]["products"][0]["advised_runtime_environment"],
                 recommendation_type,
                 dev,
             )
-            _write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
+            write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
 
             if write_advised_manifest_changes:
                 advised_manifest_changes = result["report"]["products"][0][
@@ -815,7 +714,7 @@ def provenance_check(
                 "Provenance checks are available only for requirements managed by Pipenv"
             )
 
-        pipfile, pipfile_lock = _load_files("pipenv")
+        pipfile, pipfile_lock = load_files("pipenv")
         if not pipfile_lock:
             _LOGGER.error("No Pipfile.lock found - provenance cannot be checked")
             sys.exit(3)

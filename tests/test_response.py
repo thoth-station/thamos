@@ -23,7 +23,7 @@ from pathlib import Path
 import toml
 
 from thamos.utils import cwd
-from thamos.cli import _write_files
+from thamos.lib import write_files
 
 
 class TestResponse(ThamosTestCase):
@@ -39,7 +39,7 @@ class TestResponse(ThamosTestCase):
             pipfile_lock = response["result"]["report"]["products"][0]["project"][
                 "requirements_locked"
             ]
-            _write_files(pipfile, pipfile_lock, requirements_format="pipenv")
+            write_files(pipfile, pipfile_lock, requirements_format="pipenv")
 
             written_pipfile = toml.loads(Path("Pipfile").read_text())
             assert written_pipfile == {

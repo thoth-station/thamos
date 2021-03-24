@@ -31,6 +31,7 @@ import json
 import urllib3
 import requests
 
+import yaml
 import micropipenv
 from termcolor import colored
 from yaspin import yaspin
@@ -131,7 +132,11 @@ def is_analysis_ready(analysis_id: str) -> bool:
     )
 
 
-def _wait_for_analysis(status_func: Callable[..., Any], analysis_id: str, timeout: typing.Optional[int] = None) -> None:
+def _wait_for_analysis(
+    status_func: Callable[..., Any],
+    analysis_id: str,
+    timeout: typing.Optional[int] = None,
+) -> None:
     """Wait for ongoing analysis to finish."""
     # noqa
     @contextmanager
@@ -966,9 +971,14 @@ def install(
                 )
 
         if runtime_environment_name is None:
-            config_entry = thoth_config.get_runtime_environment(runtime_environment_name)
+            config_entry = thoth_config.get_runtime_environment(
+                runtime_environment_name
+            )
             runtime_environment_name = config_entry["name"]
-        _LOGGER.info("Installing requirements for runtime environment %r", runtime_environment_name)
+        _LOGGER.info(
+            "Installing requirements for runtime environment %r",
+            runtime_environment_name,
+        )
 
         _LOGGER.info(
             "Using %r installation method to install dependencies stated in %r",
@@ -1032,3 +1042,109 @@ def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
     return (
         PythonPackagesApi(api_client).list_python_package_indexes().to_dict()["indexes"]
     )
+
+
+def write_files(
+    requirements: typing.Dict[str, Any],
+    requirements_lock: typing.Dict[str, Any],
+    requirements_format: str,
+) -> None:
+    """Write content of Pipfile/Pipfile.lock or requirements.in/txt to the current directory."""
+    project = Project.from_dict(requirements, requirements_lock)
+    if requirements_format == "pipenv":
+        _LOGGER.debug("Writing to Pipfile/Pipfile.lock in %r", os.getcwd())
+        project.to_files(keep_thoth_section=True)
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        _LOGGER.debug("Writing to requirements.in/requirements.txt in %r", os.getcwd())
+        project.to_pip_compile_files()
+        _LOGGER.debug("No changes to Pipfile to write")
+    else:
+        raise ValueError(
+            f"Unknown requirements format, supported are 'pipenv' and 'pip': {requirements_format!r}"
+        )
+
+
+def load_files(requirements_format: str) -> typing.Tuple[str, typing.Optional[str]]:
+    """Load Pipfile/Pipfile.lock or requirements.in/txt from the current directory."""
+    if requirements_format == "pipenv":
+        _LOGGER.info("Using Pipenv files located in %r directory", os.getcwd())
+        pipfile_lock_exists = os.path.exists("Pipfile.lock")
+
+        if pipfile_lock_exists:
+            _LOGGER.info(
+                "Submitting Pipfile.lock as a base for user's stack scoring - see %s",
+                jl("user_stack"),
+            )
+
+        project = Project.from_files(
+            without_pipfile_lock=not os.path.exists("Pipfile.lock")
+        )
+
+        if (
+            pipfile_lock_exists
+            and project.pipfile_lock.meta.hash["sha256"]
+            != project.pipfile.hash()["sha256"]
+        ):
+            _LOGGER.error(
+                "Pipfile hash stated in Pipfile.lock %r does not correspond to Pipfile hash %r - was Pipfile "
+                "adjusted? This error is not critical.",
+                project.pipfile_lock.meta.hash["sha256"][:6],
+                project.pipfile.hash()["sha256"][:6],
+            )
+    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+        _LOGGER.info("Using requirements.txt file located in %r directory", os.getcwd())
+        project = Project.from_pip_compile_files(allow_without_lock=True)
+    else:
+        raise ValueError(
+            f"Unknown configuration option for requirements format: {requirements_format!r}"
+        )
+    return (
+        project.pipfile.to_string(),
+        project.pipfile_lock.to_string() if project.pipfile_lock else None,
+    )
+
+
+def write_configuration(
+    advised_configuration: dict,
+    recommendation_type: str = None,
+    dev: bool = False,
+) -> None:
+    """Create thoth configuration file."""
+    if not advised_configuration:
+        _LOGGER.debug("No advises on configuration, nothing to adjust")
+        return
+
+    if "name" not in advised_configuration:
+        _LOGGER.error(
+            "Cannot adjust Thoth's configuration based on advises: No name found in Thoth's configuration entry"
+        )
+        return
+
+    _LOGGER.debug("Reading Thoth's configuration file")
+    with open(".thoth.yaml", "r") as thoth_yaml_file:
+        content = yaml.safe_load(thoth_yaml_file.read())
+
+    for idx, runtime_environment_entry in enumerate(
+        content.get("runtime_environments", [])
+    ):
+        if runtime_environment_entry.get("name") == advised_configuration["name"]:
+            _LOGGER.debug(
+                "Adjusting configuration entry for %r based on recommendations",
+                advised_configuration["name"],
+            )
+            runtime_environment_entry = advised_configuration
+            if recommendation_type:
+                runtime_environment_entry["recommendation_type"] = recommendation_type
+            runtime_environment_entry["dev"] = dev
+            content["runtime_environments"][idx] = runtime_environment_entry
+            break
+    else:
+        _LOGGER.error(
+            "Cannot adjust Thoth's configuration based on advises: No runtime environment entry with name %r found",
+            advised_configuration["name"],
+        )
+        return
+
+    _LOGGER.debug("Writing adjusted Thoth's configuration file")
+    with open(".thoth.yaml", "w") as thoth_yaml_file:
+        yaml.safe_dump(content, thoth_yaml_file)
