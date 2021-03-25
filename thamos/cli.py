@@ -412,7 +412,7 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
                 "Removing virtual environment for %r",
                 runtime_environment_config["name"],
             )
-            path = (configuration.get_virtualenv_path(runtime_environment),)
+            path = configuration.get_virtualenv_path(runtime_environment)
             if path is None:
                 _LOGGER.warning(
                     "No virtual environment for %r found",
@@ -430,7 +430,7 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
         _LOGGER.warning(
             "Removing virtual environment for %r", runtime_environment_config["name"]
         )
-        path = (configuration.get_virtualenv_path(runtime_environment),)
+        path = configuration.get_virtualenv_path(runtime_environment)
         if path is None:
             _LOGGER.error(
                 "No virtual environment for %r found",
