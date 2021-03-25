@@ -360,7 +360,7 @@ def advise_using_config(
         count=count,
         debug=debug,
         origin=origin,
-        timout=timeout,
+        timeout=timeout,
         github_event_type=github_event_type,
         github_check_run_id=github_check_run_id,
         github_installation_id=github_installation_id,
