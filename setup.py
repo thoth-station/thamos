@@ -70,6 +70,7 @@ setup(
     name="thamos",
     entry_points={"console_scripts": ["thamos=thamos.cli:cli"]},
     version=VERSION,
+    url="https://github.com/thoth-station/thamos",
     package_data={"thamos": [os.path.join("data", "*.yaml"), "py.typed"]},
     include_package_data=True,
     description="A CLI tool and library for interacting with Thoth",
