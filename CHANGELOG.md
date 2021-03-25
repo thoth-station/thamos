@@ -2698,3 +2698,8 @@
 * :arrow_up: Automatic update of dependencies by Kebechet
 ### Bug Fixes
 * Handle cases when virtual environment was not created yet
+
+## Release 1.16.1 (2021-03-25T14:38:18)
+### Improvements
+* Fix typo in the parameter
+* make functions part of thamos.lib
