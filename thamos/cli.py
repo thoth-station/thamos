@@ -197,7 +197,7 @@ class AliasedGroup(click.Group):
 def cli(
     ctx=None,
     verbose: bool = False,
-    workdir: str = typing.Optional[None],
+    workdir: typing.Optional[str] = None,
     thoth_host: str = None,
 ):
     """CLI tool for interacting with Thoth."""
@@ -374,8 +374,9 @@ def venv(ctx, runtime_environment: Optional[str] = None) -> None:
     if virtualenv_path is None:
         _LOGGER.error("No virtual environment found")
         ctx.exit(1)
-    _error_virtual_environment(virtualenv_path)
-    print(virtualenv_path)
+    else:
+        _error_virtual_environment(virtualenv_path)
+        print(virtualenv_path)
 
 
 @cli.command("purge")
@@ -437,7 +438,8 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
                 runtime_environment_config["name"],
             )
             ctx.exit(1)
-        shutil.rmtree(path, ignore_errors=True)
+        if path:
+            shutil.rmtree(path, ignore_errors=True)
 
 
 @cli.command("advise")
@@ -991,9 +993,9 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
                 header.add(key)
 
         header_sorted = sorted(header)
-        for item in header_sorted:
+        for item in header_sorted:  # type: ignore
             table.add_column(
-                item.replace("_", " ").capitalize(),
+                str(item).replace("_", " ").capitalize(),
                 style="cyan",
                 overflow="fold",
             )

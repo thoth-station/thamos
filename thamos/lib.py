@@ -315,7 +315,7 @@ def _get_origin() -> typing.Optional[str]:
 def advise_using_config(
     pipfile: str,
     pipfile_lock: str,
-    config: str = None,
+    config: typing.Optional[str] = None,
     *,
     runtime_environment_name: typing.Optional[str] = None,
     src_path: typing.Optional[str] = None,
@@ -337,10 +337,11 @@ def advise_using_config(
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
 ) -> typing.Optional[typing.Tuple[typing.Dict[str, typing.Any], bool]]:
     """Trigger advise, respecting the configuration file supplied directly as a string or as a file path."""
-    try:
-        thoth_config.load_config_from_file(config)
-    except (FileNotFoundError, IOError):
-        thoth_config.load_config_from_string(config)
+    if config:
+        try:
+            thoth_config.load_config_from_file(config)
+        except (FileNotFoundError, IOError):
+            thoth_config.load_config_from_string(config)
 
     return advise(
         pipfile=pipfile,
@@ -980,7 +981,8 @@ def install(
             config_entry = thoth_config.get_runtime_environment(
                 runtime_environment_name
             )
-            runtime_environment_name = config_entry["name"]
+            if config_entry:
+                runtime_environment_name = config_entry["name"]
         _LOGGER.info(
             "Installing requirements for runtime environment %r",
             runtime_environment_name,
