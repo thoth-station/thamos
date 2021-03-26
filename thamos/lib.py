@@ -163,7 +163,7 @@ def _wait_for_analysis(
             if timeout and monotonic() - start_time > timeout:
                 raise TimeoutError(
                     f"Thoth backend did not respond in time, timeout set "
-                    f"to {_THAMOS_TIMEOUT} - see {jl('thamos_timeout')}"
+                    f"to {timeout} - see {jl('thamos_timeout')}"
                 )
             try:
                 response = status_func(analysis_id)
