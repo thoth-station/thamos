@@ -8,7 +8,6 @@ approvers:
 reviewers:
   - pacospace
   - harshad16
-  - saisankargochhayat
 
 labels:
   - sig/user-experience
