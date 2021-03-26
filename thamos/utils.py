@@ -31,7 +31,7 @@ _WORKDIR_DEPTH_LEN = 33
 _LOGGER = logging.getLogger(__name__)
 
 
-@contextmanager
+@contextmanager  # type: ignore
 def workdir(file_lookup: Optional[str] = None, warn_on_dir_change: bool = True) -> None:
     """Find project directory and cd into it."""
     file_lookup = file_lookup or ".thoth.yaml"
