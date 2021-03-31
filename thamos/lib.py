@@ -50,6 +50,7 @@ from .swagger_client import BuildAnalysisApi
 from .swagger_client import Configuration
 from .swagger_client import PythonStack
 from .swagger_client import AdviseInput
+from .swagger_client import ProvenanceInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
@@ -394,6 +395,8 @@ def advise(
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
+    justification: typing.Optional[Dict] = None,
+    stack_info: typing.Optional[Dict] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
@@ -443,9 +446,20 @@ def advise(
         # Override recommendation type specified explicitly in the runtime environment entry.
         runtime_environment.pop("recommendation_type", None)
 
-    advise_input = AdviseInput(
-        stack, runtime_environment=runtime_environment, library_usage=library_usage
-    )
+    input_args = {
+        "application_stack": stack,
+        "runtime_environment": runtime_environment,
+        "library_usage": library_usage,
+    }
+
+    if kebechet_metadata:
+        input_args["kebechet_metadata"] = kebechet_metadata
+    if justification:
+        input_args["justification"] = justification
+    if stack_info:
+        input_args["stack_info"] = stack_info
+
+    advise_input = AdviseInput(**input_args)
     api_instance = AdviseApi(api_client)
 
     if recommendation_type:
@@ -483,9 +497,6 @@ def advise(
 
     if github_base_repo_url is not None:
         parameters["github_base_repo_url"] = github_base_repo_url
-
-    if kebechet_metadata is not None:
-        parameters["kebechet_metadata"] = kebechet_metadata
 
     response = api_instance.post_advise_python(advise_input, **parameters)
 
@@ -537,6 +548,8 @@ def advise_here(
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
+    justification: typing.Optional[Dict] = None,
+    stack_info: typing.Optional[Dict] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
@@ -604,6 +617,8 @@ def advise_here(
         github_check_run_id=github_check_run_id,
         github_installation_id=github_installation_id,
         github_base_repo_url=github_base_repo_url,
+        justification=justification,
+        stack_info=stack_info,
         kebechet_metadata=kebechet_metadata,
     )
 
@@ -619,15 +634,28 @@ def provenance_check(
     debug: bool = False,
     origin: typing.Optional[str] = None,
     timeout: typing.Optional[int] = None,
+    justification: typing.Optional[Dict[str, Any]] = None,
+    stack_info: typing.Optional[Dict[str, Any]] = None,
+    kebechet_metadata: typing.Optional[Dict[str, Any]] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
         raise ValueError("No Pipfile content provided for provenance checks")
 
-    stack = PythonStack(requirements=pipfile, requirements_lock=pipfile_lock)
+    input_args = {
+        "application_stack": PythonStack(requirements=pipfile, requirements_lock=pipfile_lock),
+    }
+    if justification:
+        input_args["justification"] = justification
+    if stack_info:
+        input_args["stack_info"] = stack_info
+    if kebechet_metadata:
+        input_args["kebechet_metadata"] = kebechet_metadata
+
+    provenance_input = ProvenanceInput(**input_args)
     api_instance = ProvenanceApi(api_client)
     response = api_instance.post_provenance_python(
-        stack, debug=debug, force=force, origin=origin
+        provenance_input, debug=debug, force=force, origin=origin
     )
     _LOGGER.info(
         "Successfully submitted provenance check analysis %r to %r",
@@ -659,6 +687,9 @@ def provenance_check_here(
     debug: bool = False,
     origin: typing.Optional[str] = None,
     timeout: typing.Optional[int] = None,
+    justification: typing.Optional[Dict[str, Any]] = None,
+    stack_info: typing.Optional[Dict[str, Any]] = None,
+    kebechet_metadata: typing.Optional[Dict[str, Any]] = None,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
@@ -676,6 +707,9 @@ def provenance_check_here(
             debug=debug,
             origin=origin,
             timeout=timeout,
+            justification=justification,
+            stack_info=stack_info,
+            kebechet_metadata=kebechet_metadata,
         )
 
 
