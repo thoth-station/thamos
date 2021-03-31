@@ -16,3 +16,4 @@ Name | Type | Description | Notes
 **ram_size** | **int** | The RAM size. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

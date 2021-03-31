@@ -8,3 +8,4 @@ Name | Type | Description | Notes
 **cached** | **bool** | If set to true the given analysis was picked from cache.  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
