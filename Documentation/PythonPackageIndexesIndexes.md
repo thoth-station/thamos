@@ -8,3 +8,4 @@ Name | Type | Description | Notes
 **verify_ssl** | **bool** | Use secured connection to warehouse. |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

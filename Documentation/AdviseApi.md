@@ -148,7 +148,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url)
+> AnalysisResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url, token=token)
 
 Get advise for Python ecosystem.
 
@@ -175,10 +175,11 @@ github_event_type = 'github_event_type_example' # str | GitHub's event type. (op
 github_check_run_id = 56 # int | GitHub's event id. (optional)
 github_installation_id = 56 # int | GitHub's installation id. (optional)
 github_base_repo_url = 'github_base_repo_url_example' # str | URL of the GitHub repository containing the Pull Request. (optional)
+token = 'token_example' # str | API token for sending authenticated requests. (optional)
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url)
+    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url, token=token)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -201,6 +202,7 @@ Name | Type | Description  | Notes
  **github_check_run_id** | **int**| GitHub&#x27;s event id. | [optional]
  **github_installation_id** | **int**| GitHub&#x27;s installation id. | [optional]
  **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional]
+ **token** | **str**| API token for sending authenticated requests. | [optional]
 
 ### Return type
 
@@ -216,3 +218,4 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
