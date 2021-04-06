@@ -31,41 +31,26 @@ class AdviseInput(object):
     swagger_types = {
         'application_stack': 'PythonStack',
         'runtime_environment': 'RuntimeEnvironment',
-        'library_usage': 'AdviseInputLibraryUsage',
-        'kebechet_metadata': 'KebechetMetadata',
-        'justification': 'Justification',
-        'stack_info': 'StackInfo'
+        'library_usage': 'AdviseInputLibraryUsage'
     }
 
     attribute_map = {
         'application_stack': 'application_stack',
         'runtime_environment': 'runtime_environment',
-        'library_usage': 'library_usage',
-        'kebechet_metadata': 'kebechet_metadata',
-        'justification': 'justification',
-        'stack_info': 'stack_info'
+        'library_usage': 'library_usage'
     }
 
-    def __init__(self, application_stack=None, runtime_environment=None, library_usage=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, runtime_environment=None, library_usage=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
         self._runtime_environment = None
         self._library_usage = None
-        self._kebechet_metadata = None
-        self._justification = None
-        self._stack_info = None
         self.discriminator = None
         self.application_stack = application_stack
         if runtime_environment is not None:
             self.runtime_environment = runtime_environment
         if library_usage is not None:
             self.library_usage = library_usage
-        if kebechet_metadata is not None:
-            self.kebechet_metadata = kebechet_metadata
-        if justification is not None:
-            self.justification = justification
-        if stack_info is not None:
-            self.stack_info = stack_info
 
     @property
     def application_stack(self):
@@ -131,69 +116,6 @@ class AdviseInput(object):
         """
 
         self._library_usage = library_usage
-
-    @property
-    def kebechet_metadata(self):
-        """Gets the kebechet_metadata of this AdviseInput.  # noqa: E501
-
-
-        :return: The kebechet_metadata of this AdviseInput.  # noqa: E501
-        :rtype: KebechetMetadata
-        """
-        return self._kebechet_metadata
-
-    @kebechet_metadata.setter
-    def kebechet_metadata(self, kebechet_metadata):
-        """Sets the kebechet_metadata of this AdviseInput.
-
-
-        :param kebechet_metadata: The kebechet_metadata of this AdviseInput.  # noqa: E501
-        :type: KebechetMetadata
-        """
-
-        self._kebechet_metadata = kebechet_metadata
-
-    @property
-    def justification(self):
-        """Gets the justification of this AdviseInput.  # noqa: E501
-
-
-        :return: The justification of this AdviseInput.  # noqa: E501
-        :rtype: Justification
-        """
-        return self._justification
-
-    @justification.setter
-    def justification(self, justification):
-        """Sets the justification of this AdviseInput.
-
-
-        :param justification: The justification of this AdviseInput.  # noqa: E501
-        :type: Justification
-        """
-
-        self._justification = justification
-
-    @property
-    def stack_info(self):
-        """Gets the stack_info of this AdviseInput.  # noqa: E501
-
-
-        :return: The stack_info of this AdviseInput.  # noqa: E501
-        :rtype: StackInfo
-        """
-        return self._stack_info
-
-    @stack_info.setter
-    def stack_info(self, stack_info):
-        """Sets the stack_info of this AdviseInput.
-
-
-        :param stack_info: The stack_info of this AdviseInput.  # noqa: E501
-        :type: StackInfo
-        """
-
-        self._stack_info = stack_info
 
     def to_dict(self):
         """Returns the model properties as a dict"""
