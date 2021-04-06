@@ -643,7 +643,9 @@ def provenance_check(
         raise ValueError("No Pipfile content provided for provenance checks")
 
     input_args = {
-        "application_stack": PythonStack(requirements=pipfile, requirements_lock=pipfile_lock),
+        "application_stack": PythonStack(
+            requirements=pipfile, requirements_lock=pipfile_lock
+        ),
     }
     if justification:
         input_args["justification"] = justification
