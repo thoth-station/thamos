@@ -3,7 +3,6 @@ Thamos
 
 A CLI tool and library for communicating with Thoth backend.
 
-
 Using Thamos as a CLI tool
 ==========================
 
@@ -32,6 +31,8 @@ As Thamos notes analysis ids for better UX of ``thamos log``, it's recommended t
 add ``.thoth_last_analysis_id`` file to ``.gitignore``. Adding also ``.venv``
 might be useful if virtual environment management is turned on.
 
+See `thoth-station/cli-examples <https://github.com/thoth-station/cli-examples>`__
+repository with examples.
 
 Recommendation types
 ====================
