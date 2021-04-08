@@ -29,11 +29,7 @@ toml = "*"
 pytest = "*"
 pytest-timeout = "*"
 pytest-cov = "*"
-hypothesis-auto = "*"
-hypothesis = "*"
 pytest-mypy = "*"
-mypy = "*"
-pre-commit = "==2.0.1"
 
 [requires]
 python_version = "3.8"

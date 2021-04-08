@@ -316,7 +316,7 @@ def _get_origin() -> typing.Optional[str]:
 def advise_using_config(
     pipfile: str,
     pipfile_lock: str,
-    config: typing.Optional[str] = None,
+    config: str,
     *,
     runtime_environment_name: typing.Optional[str] = None,
     src_path: typing.Optional[str] = None,
@@ -338,11 +338,10 @@ def advise_using_config(
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
 ) -> typing.Optional[typing.Tuple[typing.Dict[str, typing.Any], bool]]:
     """Trigger advise, respecting the configuration file supplied directly as a string or as a file path."""
-    if config:
-        try:
-            thoth_config.load_config_from_file(config)
-        except (FileNotFoundError, IOError):
-            thoth_config.load_config_from_string(config)
+    try:
+        thoth_config.load_config_from_file(config)
+    except (FileNotFoundError, IOError):
+        thoth_config.load_config_from_string(config)
 
     return advise(
         pipfile=pipfile,
@@ -376,17 +375,17 @@ def advise(
     api_client: ApiClient,
     pipfile: str,
     pipfile_lock: str,
-    recommendation_type: str = None,
+    recommendation_type: typing.Optional[str] = None,
     *,
-    runtime_environment: dict = None,
+    runtime_environment: typing.Optional[dict] = None,
     src_path: str = ".",
-    runtime_environment_name: str = None,
+    runtime_environment_name: typing.Optional[str] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
     no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
-    limit: int = None,
+    limit: typing.Optional[int] = None,
     count: int = 1,
     debug: bool = False,
     origin: typing.Optional[str] = None,
@@ -405,8 +404,8 @@ def advise(
         raise ValueError("No Pipfile content provided for advises")
 
     if runtime_environment is None:
-        runtime_environment = (
-            thoth_config.get_runtime_environment(runtime_environment_name) or dict()
+        runtime_environment = thoth_config.get_runtime_environment(
+            runtime_environment_name
         )
 
     if runtime_environment_name is None and runtime_environment:
@@ -531,7 +530,7 @@ def advise(
 def advise_here(
     recommendation_type: typing.Optional[str] = None,
     *,
-    runtime_environment: dict = None,
+    runtime_environment: typing.Optional[dict] = None,
     src_path: str = ".",
     runtime_environment_name: typing.Optional[str] = None,
     dev: bool = False,
@@ -643,7 +642,7 @@ def provenance_check(
     if not pipfile:
         raise ValueError("No Pipfile content provided for provenance checks")
 
-    input_args = {
+    input_args: Dict[str, Any] = {
         "application_stack": PythonStack(
             requirements=pipfile, requirements_lock=pipfile_lock
         ),
@@ -1017,8 +1016,7 @@ def install(
             config_entry = thoth_config.get_runtime_environment(
                 runtime_environment_name
             )
-            if config_entry:
-                runtime_environment_name = config_entry["name"]
+            runtime_environment_name = config_entry["name"]
         _LOGGER.info(
             "Installing requirements for runtime environment %r",
             runtime_environment_name,

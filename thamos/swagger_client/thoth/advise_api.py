@@ -333,10 +333,7 @@ class AdviseApi(object):
         :param int github_check_run_id: GitHub's event id.
         :param int github_installation_id: GitHub's installation id.
         :param str github_base_repo_url: URL of the GitHub repository containing the Pull Request.
-        :param KebechetMetadata kebechet_metadata: Dict containing kebechet specific metadata for justification.
-        :param str token: API token for sending priviledged requests.
-        :param Justification justification:
-        :param StackInfo stack_info:
+        :param str token: API token for sending authenticated requests.
         :return: AnalysisWithAuthenticationResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -370,16 +367,13 @@ class AdviseApi(object):
         :param int github_check_run_id: GitHub's event id.
         :param int github_installation_id: GitHub's installation id.
         :param str github_base_repo_url: URL of the GitHub repository containing the Pull Request.
-        :param KebechetMetadata kebechet_metadata: Dict containing kebechet specific metadata for justification.
-        :param str token: API token for sending priviledged requests.
-        :param Justification justification:
-        :param StackInfo stack_info:
+        :param str token: API token for sending authenticated requests.
         :return: AnalysisWithAuthenticationResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'source_type', 'dev', 'debug', 'force', 'github_event_type', 'github_check_run_id', 'github_installation_id', 'github_base_repo_url', 'kebechet_metadata', 'token', 'justification', 'stack_info']  # noqa: E501
+        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'source_type', 'dev', 'debug', 'force', 'github_event_type', 'github_check_run_id', 'github_installation_id', 'github_base_repo_url', 'token']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -432,14 +426,8 @@ class AdviseApi(object):
             query_params.append(('github_installation_id', params['github_installation_id']))  # noqa: E501
         if 'github_base_repo_url' in params:
             query_params.append(('github_base_repo_url', params['github_base_repo_url']))  # noqa: E501
-        if 'kebechet_metadata' in params:
-            query_params.append(('kebechet_metadata', params['kebechet_metadata']))  # noqa: E501
         if 'token' in params:
             query_params.append(('token', params['token']))  # noqa: E501
-        if 'justification' in params:
-            query_params.append(('justification', params['justification']))  # noqa: E501
-        if 'stack_info' in params:
-            query_params.append(('stack_info', params['stack_info']))  # noqa: E501
 
         header_params = {}
 

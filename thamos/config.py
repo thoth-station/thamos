@@ -224,8 +224,7 @@ class _Configuration:
 
         virtualenv_args = [virtualenv_path]
         re = self.get_runtime_environment(runtime_environment)
-        if re:
-            python_version = re.get("python_version")
+        python_version = re.get("python_version")
         if python_version:
             virtualenv_args.extend(["--python", python_version])
 
@@ -383,7 +382,7 @@ class _Configuration:
                 runtime_environment
             )
         else:
-            if force and existing:
+            if force:
                 existing.clear()
                 existing.update(runtime_environment)
             else:
@@ -391,7 +390,7 @@ class _Configuration:
                     f"Runtime environment {runtime_environment['name']!r} already exists"
                 )
 
-    def get_runtime_environment(self, name: Optional[str] = None) -> Optional[dict]:
+    def get_runtime_environment(self, name: Optional[str] = None) -> Dict[str, Any]:
         """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
         content = self.content
         if "runtime_environments" not in content:
@@ -439,7 +438,7 @@ class _Configuration:
                 # Return by name.
                 to_return = runtime_environment
 
-        if to_return is None and len(content["runtime_environments"]) > 0:
+        if to_return is None:
             if name is not None:
                 raise NoRuntimeEnvironmentError(
                     f"No runtime environment with name {name!r} was found in the configuration file; "
@@ -500,9 +499,7 @@ class _Configuration:
 
         # CUDA
         cuda_version = discover_cuda_version()
-        if runtime_environment:
-            conf_cuda_version = runtime_environment.get("cuda_version")
-
+        conf_cuda_version = runtime_environment.get("cuda_version")
         if conf_cuda_version != cuda_version:
             if (
                 cuda_version is None
@@ -523,9 +520,7 @@ class _Configuration:
             )
 
         # Operating system
-        if runtime_environment:
-            conf_operating_system = runtime_environment.get("operating_system")
-
+        conf_operating_system = runtime_environment.get("operating_system")
         if conf_operating_system:
             conf_os_name = map_os_name(conf_operating_system.get("name"))
             conf_os_version = normalize_os_version(
@@ -566,9 +561,7 @@ class _Configuration:
 
         # Python version
         python_version = discover_python_version()
-        if runtime_environment:
-            conf_python_version = runtime_environment.get("python_version")
-
+        conf_python_version = runtime_environment.get("python_version")
         if python_version != conf_python_version:
             result.append(
                 {
@@ -580,10 +573,8 @@ class _Configuration:
             )
 
         # Check hardware
-        if runtime_environment:
-            conf_cpu_family = runtime_environment.get("hardware", {}).get("cpu_family")
-            conf_cpu_model = runtime_environment.get("hardware", {}).get("cpu_model")
-
+        conf_cpu_family = runtime_environment.get("hardware", {}).get("cpu_family")
+        conf_cpu_model = runtime_environment.get("hardware", {}).get("cpu_model")
         cpu_info = discover_cpu()
         if cpu_info.get("cpu_family") != conf_cpu_family:
             result.append(
@@ -680,9 +671,7 @@ class _Configuration:
             if overlays_dir is None:
                 return os.getcwd()
 
-            if runtime_environment_config:
-                runtime_environment_config_name = runtime_environment_config["name"]
-
+            runtime_environment_config_name = runtime_environment_config["name"]
             path = os.path.join(overlays_dir, runtime_environment_config_name)
             if not missing_dir_ok and not os.path.isdir(path):
                 suffix = (
@@ -713,9 +702,9 @@ class _Configuration:
             self.get_runtime_environment(runtime_environment_name)
         )
         if self.requirements_format == "pipenv":
-            pipfile_lock_path = os.path.join(path, "Pipfile.lock")
-            if not os.path.exists(pipfile_lock_path):
-                pipfile_lock_path = None  # type: ignore
+            pipfile_lock_path: Optional[str] = os.path.join(path, "Pipfile.lock")
+            if pipfile_lock_path and not os.path.exists(pipfile_lock_path):
+                pipfile_lock_path = None
 
             pipfile_path = os.path.join(path, "Pipfile")
             if not os.path.isfile(pipfile_path):

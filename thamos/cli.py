@@ -432,13 +432,13 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
             "Removing virtual environment for %r", runtime_environment_config["name"]
         )
         path = configuration.get_virtualenv_path(runtime_environment)
-        if path is None:
+        if not path:
             _LOGGER.error(
                 "No virtual environment for %r found",
                 runtime_environment_config["name"],
             )
             ctx.exit(1)
-        if path:
+        else:
             shutil.rmtree(path, ignore_errors=True)
 
 
@@ -640,7 +640,7 @@ def advise(
                 recommendation_type,
                 dev,
             )
-            write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
+            write_files(pipfile, pipfile_lock, configuration.requirements_format)
 
             if write_advised_manifest_changes:
                 advised_manifest_changes = result["report"]["products"][0][
@@ -993,9 +993,9 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
                 header.add(key)
 
         header_sorted = sorted(header)
-        for item in header_sorted:  # type: ignore
+        for element in header_sorted:
             table.add_column(
-                str(item).replace("_", " ").capitalize(),
+                element.replace("_", " ").capitalize(),
                 style="cyan",
                 overflow="fold",
             )
