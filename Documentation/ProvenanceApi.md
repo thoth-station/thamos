@@ -148,7 +148,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_provenance_python**
-> AnalysisWithAuthenticationResponse post_provenance_python(body, origin=origin, debug=debug, force=force, token=token, kebechet_metadata=kebechet_metadata, justification=justification, stack_info=stack_info)
+> AnalysisWithAuthenticationResponse post_provenance_python(body, origin=origin, debug=debug, force=force, token=token)
 
 Check provenance of packages stated in an application stack.
 
@@ -162,18 +162,15 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ProvenanceApi()
-body = thamos.swagger_client.PythonStack() # PythonStack | Pipfile and Pipfile.lock as used by pipenv.
+body = thamos.swagger_client.ProvenanceInput() # ProvenanceInput | Input to be checked for provenance.
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
 debug = false # bool | Run the provenance checker in a verbose mode so developers can debug it.  (optional) (default to false)
 force = false # bool | Do not use cached results, always run provenance checks.  (optional) (default to false)
-token = 'token_example' # str | API token for sending priviledged requests. (optional)
-kebechet_metadata = thamos.swagger_client.KebechetMetadata() # KebechetMetadata | Dict containing kebechet specific metadata for justification. (optional)
-justification = thamos.swagger_client.Justification() # Justification |  (optional)
-stack_info = thamos.swagger_client.StackInfo() # StackInfo |  (optional)
+token = 'token_example' # str | API token for sending authenticated requests. (optional)
 
 try:
     # Check provenance of packages stated in an application stack.
-    api_response = api_instance.post_provenance_python(body, origin=origin, debug=debug, force=force, token=token, kebechet_metadata=kebechet_metadata, justification=justification, stack_info=stack_info)
+    api_response = api_instance.post_provenance_python(body, origin=origin, debug=debug, force=force, token=token)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProvenanceApi->post_provenance_python: %s\n" % e)
@@ -183,14 +180,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PythonStack**](PythonStack.md)| Pipfile and Pipfile.lock as used by pipenv. |
+ **body** | [**ProvenanceInput**](ProvenanceInput.md)| Input to be checked for provenance. |
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
  **debug** | **bool**| Run the provenance checker in a verbose mode so developers can debug it.  | [optional] [default to false]
  **force** | **bool**| Do not use cached results, always run provenance checks.  | [optional] [default to false]
- **token** | **str**| API token for sending priviledged requests. | [optional]
- **kebechet_metadata** | [**KebechetMetadata**](.md)| Dict containing kebechet specific metadata for justification. | [optional]
- **justification** | [**Justification**](.md)|  | [optional]
- **stack_info** | [**StackInfo**](.md)|  | [optional]
+ **token** | **str**| API token for sending authenticated requests. | [optional]
 
 ### Return type
 

@@ -45,6 +45,7 @@ from thamos.swagger_client.models.justification import Justification
 from thamos.swagger_client.models.kebechet_metadata import KebechetMetadata
 from thamos.swagger_client.models.kebechet_webhook_input import KebechetWebhookInput
 from thamos.swagger_client.models.log import Log
+from thamos.swagger_client.models.provenance_input import ProvenanceInput
 from thamos.swagger_client.models.python_package_dependencies import PythonPackageDependencies
 from thamos.swagger_client.models.python_package_dependencies_dependencies import PythonPackageDependenciesDependencies
 from thamos.swagger_client.models.python_package_dependencies_error import PythonPackageDependenciesError

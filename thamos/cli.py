@@ -197,7 +197,7 @@ class AliasedGroup(click.Group):
 def cli(
     ctx=None,
     verbose: bool = False,
-    workdir: str = typing.Optional[None],
+    workdir: typing.Optional[str] = None,
     thoth_host: str = None,
 ):
     """CLI tool for interacting with Thoth."""
@@ -374,8 +374,9 @@ def venv(ctx, runtime_environment: Optional[str] = None) -> None:
     if virtualenv_path is None:
         _LOGGER.error("No virtual environment found")
         ctx.exit(1)
-    _error_virtual_environment(virtualenv_path)
-    print(virtualenv_path)
+    else:
+        _error_virtual_environment(virtualenv_path)
+        print(virtualenv_path)
 
 
 @cli.command("purge")
@@ -431,13 +432,14 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
             "Removing virtual environment for %r", runtime_environment_config["name"]
         )
         path = configuration.get_virtualenv_path(runtime_environment)
-        if path is None:
+        if not path:
             _LOGGER.error(
                 "No virtual environment for %r found",
                 runtime_environment_config["name"],
             )
             ctx.exit(1)
-        shutil.rmtree(path, ignore_errors=True)
+        else:
+            shutil.rmtree(path, ignore_errors=True)
 
 
 @cli.command("advise")
@@ -638,7 +640,7 @@ def advise(
                 recommendation_type,
                 dev,
             )
-            write_files(pipfile, pipfile_lock, configuration.requirements_format)  # type: ignore
+            write_files(pipfile, pipfile_lock, configuration.requirements_format)
 
             if write_advised_manifest_changes:
                 advised_manifest_changes = result["report"]["products"][0][
@@ -991,9 +993,9 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
                 header.add(key)
 
         header_sorted = sorted(header)
-        for item in header_sorted:
+        for element in header_sorted:
             table.add_column(
-                item.replace("_", " ").capitalize(),
+                element.replace("_", " ").capitalize(),
                 style="cyan",
                 overflow="fold",
             )

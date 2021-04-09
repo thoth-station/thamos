@@ -223,9 +223,8 @@ class _Configuration:
             raise ConfigurationError("No virtual environment configured")
 
         virtualenv_args = [virtualenv_path]
-        python_version = self.get_runtime_environment(runtime_environment).get(
-            "python_version"
-        )
+        re = self.get_runtime_environment(runtime_environment)
+        python_version = re.get("python_version")
         if python_version:
             virtualenv_args.extend(["--python", python_version])
 
@@ -391,7 +390,7 @@ class _Configuration:
                     f"Runtime environment {runtime_environment['name']!r} already exists"
                 )
 
-    def get_runtime_environment(self, name: Optional[str] = None) -> Optional[dict]:
+    def get_runtime_environment(self, name: Optional[str] = None) -> Dict[str, Any]:
         """Get runtime environment, retrieve the first runtime environment (the default one) if no name is provided."""
         content = self.content
         if "runtime_environments" not in content:
@@ -439,7 +438,7 @@ class _Configuration:
                 # Return by name.
                 to_return = runtime_environment
 
-        if to_return is None and len(content["runtime_environments"]) > 0:
+        if to_return is None:
             if name is not None:
                 raise NoRuntimeEnvironmentError(
                     f"No runtime environment with name {name!r} was found in the configuration file; "
@@ -500,11 +499,12 @@ class _Configuration:
 
         # CUDA
         cuda_version = discover_cuda_version()
-        if runtime_environment.get("cuda_version") != cuda_version:
+        conf_cuda_version = runtime_environment.get("cuda_version")
+        if conf_cuda_version != cuda_version:
             if (
                 cuda_version is None
                 or isinstance(cuda_version, str)
-                and isinstance(runtime_environment.get("cuda_version"), str)
+                and isinstance(conf_cuda_version, str)
             ):
                 message_type = "ERROR"
             else:
@@ -515,17 +515,16 @@ class _Configuration:
                     "type": message_type,
                     "runtime_environment": runtime_environment_name,
                     "message": f"CUDA version declared in the configuration file "
-                    f"({runtime_environment['cuda_version']!r}) does not match the one detected ({cuda_version!r})",
+                    f"({conf_cuda_version!r}) does not match the one detected ({cuda_version!r})",
                 }
             )
 
         # Operating system
-        if runtime_environment.get("operating_system"):
-            conf_os_name = map_os_name(
-                runtime_environment["operating_system"].get("name")
-            )
+        conf_operating_system = runtime_environment.get("operating_system")
+        if conf_operating_system:
+            conf_os_name = map_os_name(conf_operating_system.get("name"))
             conf_os_version = normalize_os_version(
-                conf_os_name, runtime_environment["operating_system"].get("version")
+                conf_os_name, conf_operating_system.get("version")
             )
 
             if conf_os_name == "ubi":
@@ -576,7 +575,6 @@ class _Configuration:
         # Check hardware
         conf_cpu_family = runtime_environment.get("hardware", {}).get("cpu_family")
         conf_cpu_model = runtime_environment.get("hardware", {}).get("cpu_model")
-
         cpu_info = discover_cpu()
         if cpu_info.get("cpu_family") != conf_cpu_family:
             result.append(
@@ -673,15 +671,16 @@ class _Configuration:
             if overlays_dir is None:
                 return os.getcwd()
 
-            path = os.path.join(overlays_dir, runtime_environment_config["name"])
+            runtime_environment_config_name = runtime_environment_config["name"]
+            path = os.path.join(overlays_dir, runtime_environment_config_name)
             if not missing_dir_ok and not os.path.isdir(path):
                 suffix = (
-                    f" --runtime-environment {runtime_environment_config['name']!r}"
+                    f" --runtime-environment {runtime_environment_config_name!r}"
                     if runtime_environment_name
                     else ""
                 )
                 raise ConfigurationError(
-                    f"The directory structure for {runtime_environment_config['name']!r} is not initialized yet, "
+                    f"The directory structure for {runtime_environment_config_name!r} is not initialized yet, "
                     f"you can initialize it by adding packages using "
                     f"`thamos add <pkg>{suffix}`",
                 )
@@ -703,8 +702,8 @@ class _Configuration:
             self.get_runtime_environment(runtime_environment_name)
         )
         if self.requirements_format == "pipenv":
-            pipfile_lock_path = os.path.join(path, "Pipfile.lock")
-            if not os.path.exists(pipfile_lock_path):
+            pipfile_lock_path: Optional[str] = os.path.join(path, "Pipfile.lock")
+            if pipfile_lock_path and not os.path.exists(pipfile_lock_path):
                 pipfile_lock_path = None
 
             pipfile_path = os.path.join(path, "Pipfile")

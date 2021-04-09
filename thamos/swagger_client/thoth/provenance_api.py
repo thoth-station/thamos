@@ -320,14 +320,11 @@ class ProvenanceApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param PythonStack body: Pipfile and Pipfile.lock as used by pipenv. (required)
+        :param ProvenanceInput body: Input to be checked for provenance. (required)
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
         :param bool debug: Run the provenance checker in a verbose mode so developers can debug it. 
         :param bool force: Do not use cached results, always run provenance checks. 
-        :param str token: API token for sending priviledged requests.
-        :param KebechetMetadata kebechet_metadata: Dict containing kebechet specific metadata for justification.
-        :param Justification justification:
-        :param StackInfo stack_info:
+        :param str token: API token for sending authenticated requests.
         :return: AnalysisWithAuthenticationResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -348,20 +345,17 @@ class ProvenanceApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param PythonStack body: Pipfile and Pipfile.lock as used by pipenv. (required)
+        :param ProvenanceInput body: Input to be checked for provenance. (required)
         :param str origin: A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available. 
         :param bool debug: Run the provenance checker in a verbose mode so developers can debug it. 
         :param bool force: Do not use cached results, always run provenance checks. 
-        :param str token: API token for sending priviledged requests.
-        :param KebechetMetadata kebechet_metadata: Dict containing kebechet specific metadata for justification.
-        :param Justification justification:
-        :param StackInfo stack_info:
+        :param str token: API token for sending authenticated requests.
         :return: AnalysisWithAuthenticationResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'origin', 'debug', 'force', 'token', 'kebechet_metadata', 'justification', 'stack_info']  # noqa: E501
+        all_params = ['body', 'origin', 'debug', 'force', 'token']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -394,12 +388,6 @@ class ProvenanceApi(object):
             query_params.append(('force', params['force']))  # noqa: E501
         if 'token' in params:
             query_params.append(('token', params['token']))  # noqa: E501
-        if 'kebechet_metadata' in params:
-            query_params.append(('kebechet_metadata', params['kebechet_metadata']))  # noqa: E501
-        if 'justification' in params:
-            query_params.append(('justification', params['justification']))  # noqa: E501
-        if 'stack_info' in params:
-            query_params.append(('stack_info', params['stack_info']))  # noqa: E501
 
         header_params = {}
 

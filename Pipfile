@@ -26,9 +26,10 @@ virtualenv = "*"
 
 [dev-packages]
 toml = "*"
+pytest = "*"
 pytest-timeout = "*"
 pytest-cov = "*"
-pytest = "*"
+pytest-mypy = "*"
 
 [requires]
 python_version = "3.8"
