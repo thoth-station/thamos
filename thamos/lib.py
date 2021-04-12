@@ -75,6 +75,7 @@ _LOGGER = logging.getLogger(__name__)
 _RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
 _RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
 _THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
+_THAMOS_TOKEN = os.getenv("THAMOS_TOKEN")
 _SOURCE = {
     "adviser": "advise/python",
     "provenance-checker": "provenance/python",
@@ -498,6 +499,9 @@ def advise(
     if github_base_repo_url is not None:
         parameters["github_base_repo_url"] = github_base_repo_url
 
+    if _THAMOS_TOKEN:
+        parameters["token"] = _THAMOS_TOKEN
+
     response = api_instance.post_advise_python(advise_input, **parameters)
 
     _LOGGER.info(
@@ -655,10 +659,18 @@ def provenance_check(
         input_args["kebechet_metadata"] = kebechet_metadata
 
     provenance_input = ProvenanceInput(**input_args)
+
+    provenance_kwargs: Dict[str, Any] = {
+        "debug": debug,
+        "force": force,
+    }
+    if origin:
+        provenance_kwargs["origin"] = origin
+    if _THAMOS_TOKEN:
+        provenance_kwargs["token"] = _THAMOS_TOKEN
+
     api_instance = ProvenanceApi(api_client)
-    response = api_instance.post_provenance_python(
-        provenance_input, debug=debug, force=force, origin=origin
-    )
+    response = api_instance.post_provenance_python(provenance_input, **provenance_kwargs)
     _LOGGER.info(
         "Successfully submitted provenance check analysis %r to %r",
         response.analysis_id,

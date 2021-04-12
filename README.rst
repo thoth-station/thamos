@@ -365,6 +365,7 @@ Then, you need to provide following environment variables:
 * ``THAMOS_TIMEOUT`` - timeout period in seconds after which Thamos stops trying to fetch results
 * ``THAMOS_DISABLE_LAST_ANALYSIS_ID_FILE`` - set to `1`  if you do not want to create a file that states last analysis id (used not to memorize the last analysis id across commands)
 * ``THAMOS_REQUIREMENTS_FORMAT`` - style of requirements used for managing dependencies - one of ``pip``, ``pip-tools``, ``pipenv``, defaults to ``pipenv`` if not specified
+* ``THAMOS_TOKEN`` - token used for authenticated requests to the backend
 
 See `OpenShift s2i documentation
 <https://docs.openshift.com/container-platform/3.9/dev_guide/builds/advanced_build_operations.html#dev-guide-assigning-builds-to-nodes>`_
