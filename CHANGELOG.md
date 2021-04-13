@@ -2703,3 +2703,18 @@
 ### Improvements
 * Fix typo in the parameter
 * make functions part of thamos.lib
+
+## Release 1.17.0 (2021-04-13T09:24:16)
+### Features
+* Provide ability to pass token on the client side
+* Fix pre-commit issues (#833)
+* Link thoth-station/cli-examples repository
+* Adjust endpoint calls in the lib to supply objects
+* Regenerate client to conform to inputs
+* Add URL page
+* Adjust TimeoutError message
+### Bug Fixes
+* Fix overlay name - it must not contain colon (#835)
+### Other
+* Adjust code to include authentication info
+* remove reviewer
