@@ -670,7 +670,9 @@ def provenance_check(
         provenance_kwargs["token"] = _THAMOS_TOKEN
 
     api_instance = ProvenanceApi(api_client)
-    response = api_instance.post_provenance_python(provenance_input, **provenance_kwargs)
+    response = api_instance.post_provenance_python(
+        provenance_input, **provenance_kwargs
+    )
     _LOGGER.info(
         "Successfully submitted provenance check analysis %r to %r",
         response.analysis_id,
