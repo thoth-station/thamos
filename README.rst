@@ -89,7 +89,7 @@ An example of configuration file template can be:
   requirements_format: {requirements_format}
 
   runtime_environments:
-    - name: '{os_name}:{os_version}'
+    - name: '{os_name}-{os_version}'
       operating_system:
         name: {os_name}
         version: '{os_version}'
@@ -288,13 +288,13 @@ An example configuration file states ``overlays_dir``:
   overlays_dir: overlays
 
   runtime_environments:
-    - name: 'fedora:33'
+    - name: 'fedora-33'
       operating_system:
         name: fedora
         version: '33'
       python_version: '3.8'
 
-    - name: 'ubi:8'
+    - name: 'ubi-8'
       operating_system:
         name: rhel
         version: '8'
@@ -308,10 +308,10 @@ should be:
   .
   ├── app.py
   ├── overlays
-  │   ├── fedora:33
+  │   ├── fedora-33
   │   │   └── Pipfile
   │   │   └── Pipfile.lock
-  │   └── ubi:8
+  │   └── ubi-8
   │   │   └── Pipfile
   │   │   └── Pipfile.lock
   └── .thoth.yaml
