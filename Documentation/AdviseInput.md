@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **application_stack** | [**PythonStack**](PythonStack.md) |  |
+**constraints** | **str** | Constraints to apply during the resolution. | [optional]
 **runtime_environment** | [**RuntimeEnvironment**](RuntimeEnvironment.md) |  | [optional]
 **library_usage** | [**AdviseInputLibraryUsage**](AdviseInputLibraryUsage.md) |  | [optional]
 **kebechet_metadata** | [**KebechetMetadata**](KebechetMetadata.md) |  | [optional]
