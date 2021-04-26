@@ -309,11 +309,13 @@ should be:
   ├── app.py
   ├── overlays
   │   ├── fedora-33
-  │   │   └── Pipfile
-  │   │   └── Pipfile.lock
+  │   │   ├── Pipfile
+  │   │   ├── Pipfile.lock
+  │   │   └── constraints.txt
   │   └── ubi-8
-  │   │   └── Pipfile
-  │   │   └── Pipfile.lock
+  │   │   ├── Pipfile
+  │   │   ├── Pipfile.lock
+  │   │   └── constraints.txt
   └── .thoth.yaml
 
 Each directory in the ``overlays`` directory should respect the runtime
@@ -322,7 +324,11 @@ the given runtime environment.
 
 Similarly as for Pipenv files, requirement files respecting `pip-tools
 <https://pypi.org/project/pip-tools>`__ can be used (``requirements.in`` and
-``requirements.txt``)
+``requirements.txt``).
+
+`Constraints files
+<https://thoth-station.ninja/docs/developers/adviser/experimental_features.html#constaints-files>`__
+(``constraints.txt``) are optional.
 
 Installing requirements
 =======================
