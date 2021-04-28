@@ -39,6 +39,7 @@ from yaspin.spinners import Spinners
 from invectio import gather_library_usage
 from thoth.analyzer import run_command
 from thoth.python import Project
+from thoth.python import Constraints
 from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
 from thoth.common import cwd
@@ -320,6 +321,7 @@ def advise_using_config(
     config: str,
     *,
     runtime_environment_name: typing.Optional[str] = None,
+    constraints: typing.Optional[str] = None,
     src_path: typing.Optional[str] = None,
     recommendation_type: str = None,
     dev: bool = False,
@@ -347,6 +349,7 @@ def advise_using_config(
     return advise(
         pipfile=pipfile,
         pipfile_lock=pipfile_lock,
+        constraints=constraints,
         recommendation_type=recommendation_type,
         src_path=src_path if src_path is not None else thoth_config.config_path,
         runtime_environment=thoth_config.get_runtime_environment(
@@ -376,8 +379,9 @@ def advise(
     api_client: ApiClient,
     pipfile: str,
     pipfile_lock: str,
-    recommendation_type: typing.Optional[str] = None,
     *,
+    constraints: typing.Optional[str] = None,
+    recommendation_type: typing.Optional[str] = None,
     runtime_environment: typing.Optional[dict] = None,
     src_path: str = ".",
     runtime_environment_name: typing.Optional[str] = None,
@@ -447,7 +451,7 @@ def advise(
         # Override recommendation type specified explicitly in the runtime environment entry.
         runtime_environment.pop("recommendation_type", None)
 
-    input_args = {
+    input_args: Dict[str, Any] = {
         "application_stack": stack,
         "runtime_environment": runtime_environment,
         "library_usage": library_usage,
@@ -459,6 +463,8 @@ def advise(
         input_args["justification"] = justification
     if stack_info:
         input_args["stack_info"] = stack_info
+    if constraints:
+        input_args["constraints"] = constraints
 
     advise_input = AdviseInput(**input_args)
     api_instance = AdviseApi(api_client)
@@ -571,7 +577,9 @@ def advise_here(
             )
 
         project = Project.from_files(
-            without_pipfile_lock=not os.path.exists("Pipfile.lock")
+            pipfile_path="Pipfile",
+            pipfile_lock_path="Pipfile.lock",
+            without_pipfile_lock=not os.path.exists("Pipfile.lock"),
         )
 
         if (
@@ -596,12 +604,22 @@ def advise_here(
             f"Unknown configuration option for requirements format: {requirements_format!r}"
         )
 
+    constraints_str = None
+    if os.path.exists("constraints.txt"):
+        _LOGGER.info("Using constraints.txt file located in %r", os.getcwd())
+        with open("constraints.txt") as constraints_file:
+            constraints_str = constraints_file.read()
+
+        # Try to load constraints before the request to verify their correctness without sending request to the backend.
+        Constraints.from_string(constraints_str)
+
     pipfile = project.pipfile.to_string()
     pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
 
     return advise(
         pipfile=pipfile,
         pipfile_lock=pipfile_lock_str,
+        constraints=constraints_str,
         recommendation_type=recommendation_type,
         src_path=src_path,
         runtime_environment=runtime_environment,
