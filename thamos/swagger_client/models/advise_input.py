@@ -30,6 +30,7 @@ class AdviseInput(object):
     """
     swagger_types = {
         'application_stack': 'PythonStack',
+        'constraints': 'str',
         'runtime_environment': 'RuntimeEnvironment',
         'library_usage': 'AdviseInputLibraryUsage',
         'kebechet_metadata': 'KebechetMetadata',
@@ -39,6 +40,7 @@ class AdviseInput(object):
 
     attribute_map = {
         'application_stack': 'application_stack',
+        'constraints': 'constraints',
         'runtime_environment': 'runtime_environment',
         'library_usage': 'library_usage',
         'kebechet_metadata': 'kebechet_metadata',
@@ -46,9 +48,10 @@ class AdviseInput(object):
         'stack_info': 'stack_info'
     }
 
-    def __init__(self, application_stack=None, runtime_environment=None, library_usage=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, constraints=None, runtime_environment=None, library_usage=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
+        self._constraints = None
         self._runtime_environment = None
         self._library_usage = None
         self._kebechet_metadata = None
@@ -56,6 +59,8 @@ class AdviseInput(object):
         self._stack_info = None
         self.discriminator = None
         self.application_stack = application_stack
+        if constraints is not None:
+            self.constraints = constraints
         if runtime_environment is not None:
             self.runtime_environment = runtime_environment
         if library_usage is not None:
@@ -89,6 +94,29 @@ class AdviseInput(object):
             raise ValueError("Invalid value for `application_stack`, must not be `None`")  # noqa: E501
 
         self._application_stack = application_stack
+
+    @property
+    def constraints(self):
+        """Gets the constraints of this AdviseInput.  # noqa: E501
+
+        Constraints to apply during the resolution.  # noqa: E501
+
+        :return: The constraints of this AdviseInput.  # noqa: E501
+        :rtype: str
+        """
+        return self._constraints
+
+    @constraints.setter
+    def constraints(self, constraints):
+        """Sets the constraints of this AdviseInput.
+
+        Constraints to apply during the resolution.  # noqa: E501
+
+        :param constraints: The constraints of this AdviseInput.  # noqa: E501
+        :type: str
+        """
+
+        self._constraints = constraints
 
     @property
     def runtime_environment(self):
