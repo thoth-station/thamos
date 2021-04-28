@@ -2718,3 +2718,8 @@
 ### Other
 * Adjust code to include authentication info
 * remove reviewer
+
+## Release 1.18.0 (2021-04-28T08:31:29)
+### Features
+* Add support for constraints files (#841)
+* :arrow_up: Automatic update of dependencies by Kebechet (#843)
