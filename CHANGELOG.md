@@ -2723,3 +2723,8 @@
 ### Features
 * Add support for constraints files (#841)
 * :arrow_up: Automatic update of dependencies by Kebechet (#843)
+
+## Release 1.18.1 (2021-04-30T12:20:29)
+### Features
+* Virtualenv cli_run is available since 20.0.3 (#848)
+* :arrow_up: Automatic update of dependencies by Kebechet (#847)
