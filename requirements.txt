@@ -17,4 +17,4 @@ thoth-common
 rich
 micropipenv
 jsonschema
-virtualenv
+virtualenv>=20.0.3
