@@ -605,9 +605,12 @@ def advise(
                         json_output=json_output,
                         title="Application stack guidance",
                     )
-                print(
+
+                Console().print(
                     result.get("error_msg")
-                    or "No error message was provided by the service."
+                    or "No error message was provided by the service.",
+                    style="bold red",
+                    justify="center",
                 )
 
             sys.exit(4)
