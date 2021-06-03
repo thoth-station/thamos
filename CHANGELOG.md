@@ -2728,3 +2728,13 @@
 ### Features
 * Virtualenv cli_run is available since 20.0.3 (#848)
 * :arrow_up: Automatic update of dependencies by Kebechet (#847)
+
+## Release 1.18.2 (2021-06-03T19:39:49)
+### Features
+* Respect tls_verify configuration option from the config file
+* :arrow_up: Automatic update of dependencies by Kebechet (#859)
+* :arrow_up: Automatic update of dependencies by Kebechet (#858)
+* :hatched_chick: update the prow resource limits (#857)
+* :arrow_up: Automatic update of dependencies by Kebechet (#854)
+### Bug Fixes
+* Be more visible about errors reported (#855)
