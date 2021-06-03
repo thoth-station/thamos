@@ -264,6 +264,11 @@ class _Configuration:
                 self._configuration = self._configuration.format(**os.environ)
 
             self._configuration = yaml.safe_load(self._configuration)
+            self.tls_verify = (
+                self._configuration.get("tls_verify", True)
+                if self.tls_verify is None
+                else self.tls_verify
+            )
 
     def reset_config(self) -> None:
         """Discard loaded config in memory."""

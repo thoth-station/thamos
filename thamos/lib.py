@@ -113,7 +113,7 @@ def with_api_client(func: typing.Callable):
     return wrapper
 
 
-def is_analysis_ready(analysis_id: str) -> bool:
+def is_analysis_ready(analysis_id: str, *, verify_tls: bool = True) -> bool:
     """Handle the the multiple response types available while asking for result of a anaylsis result."""
     config = Configuration()
     host = thoth_config.explicit_host
@@ -122,7 +122,9 @@ def is_analysis_ready(analysis_id: str) -> bool:
         host = thoth_config.content.get("host") or config.host
     source = analysis_id.rsplit("-", maxsplit=2)[0]
     source_url = _SOURCE.get(source)
-    response = requests.get(f"https://{host}/api/v1/{source_url}/{analysis_id}")
+    response = requests.get(
+        f"https://{host}/api/v1/{source_url}/{analysis_id}", verify=verify_tls
+    )
     if response.status_code == 202:
         return False
     elif response.status_code in (200, 400):
@@ -138,7 +140,9 @@ def is_analysis_ready(analysis_id: str) -> bool:
 def _wait_for_analysis(
     status_func: Callable[..., Any],
     analysis_id: str,
+    *,
     timeout: typing.Optional[int] = None,
+    verify_tls: bool = True,
 ) -> None:
     """Wait for ongoing analysis to finish."""
     # noqa
@@ -168,8 +172,9 @@ def _wait_for_analysis(
                     f"Thoth backend did not respond in time, timeout set "
                     f"to {timeout} - see {jl('thamos_timeout')}"
                 )
+
             try:
-                response = status_func(analysis_id)
+                response = status_func(analysis_id, verify_tls=verify_tls)
             except Exception as exc:
                 if retries >= _RETRY_ON_ERROR_COUNT:
                     raise
@@ -371,6 +376,7 @@ def advise_using_config(
         github_installation_id=github_installation_id,
         github_base_repo_url=github_base_repo_url,
         source_type=source_type,
+        verify_tls=thoth_config.tls_verify,
     )
 
 
@@ -403,6 +409,7 @@ def advise(
     justification: typing.Optional[Dict] = None,
     stack_info: typing.Optional[Dict] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
+    verify_tls: bool = True,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -524,7 +531,9 @@ def advise(
     if nowait:
         return response.analysis_id
     # We call custom status function for advise until swagger client supports mulitple response codes.
-    _wait_for_analysis(is_analysis_ready, response.analysis_id, timeout)
+    _wait_for_analysis(
+        is_analysis_ready, response.analysis_id, timeout=timeout, verify_tls=verify_tls
+    )
     _LOGGER.debug("Retrieving adviser result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_advise_python, response.analysis_id
@@ -561,6 +570,7 @@ def advise_here(
     justification: typing.Optional[Dict] = None,
     stack_info: typing.Optional[Dict] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
+    verify_tls: bool = True,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
@@ -642,6 +652,7 @@ def advise_here(
         justification=justification,
         stack_info=stack_info,
         kebechet_metadata=kebechet_metadata,
+        verify_tls=verify_tls,
     )
 
 
@@ -659,6 +670,7 @@ def provenance_check(
     justification: typing.Optional[Dict[str, Any]] = None,
     stack_info: typing.Optional[Dict[str, Any]] = None,
     kebechet_metadata: typing.Optional[Dict[str, Any]] = None,
+    verify_tls: bool = False,
 ) -> typing.Optional[tuple]:
     """Submit a stack for provenance checks and wait for results."""
     if not pipfile:
@@ -702,7 +714,9 @@ def provenance_check(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(is_analysis_ready, response.analysis_id, timeout)
+    _wait_for_analysis(
+        is_analysis_ready, response.analysis_id, timeout=timeout, verify_tls=verify_tls
+    )
     _LOGGER.debug("Retrieving provenance check result for %r", response.analysis_id)
     response = _retrieve_analysis_result(
         api_instance.get_provenance_python, response.analysis_id
@@ -724,6 +738,7 @@ def provenance_check_here(
     justification: typing.Optional[Dict[str, Any]] = None,
     stack_info: typing.Optional[Dict[str, Any]] = None,
     kebechet_metadata: typing.Optional[Dict[str, Any]] = None,
+    verify_tls: bool = True,
 ) -> typing.Optional[tuple]:
     """Submit a provenance check in current directory."""
     if not os.path.isfile("Pipfile"):
@@ -744,6 +759,7 @@ def provenance_check_here(
             justification=justification,
             stack_info=stack_info,
             kebechet_metadata=kebechet_metadata,
+            verify_tls=verify_tls,
         )
 
 
@@ -791,7 +807,9 @@ def image_analysis(
     if nowait:
         return response.analysis_id
 
-    _wait_for_analysis(is_analysis_ready, response.analysis_id, timeout)
+    _wait_for_analysis(
+        is_analysis_ready, response.analysis_id, timeout=timeout, verify_tls=verify_tls
+    )
     _LOGGER.debug(
         "Retrieving image analysis result result for %r", response.analysis_id
     )

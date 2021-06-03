@@ -583,6 +583,7 @@ def advise(
             no_static_analysis=no_static_analysis,
             dev=dev,
             no_user_stack=no_user_stack,
+            verify_tls=configuration.tls_verify,
         )
 
         if not results:
