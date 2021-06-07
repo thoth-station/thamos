@@ -344,6 +344,7 @@ def advise_using_config(
     github_installation_id: typing.Optional[int] = None,
     github_base_repo_url: typing.Optional[str] = None,
     source_type: typing.Optional[ThothAdviserIntegrationEnum] = None,
+    labels: typing.Optional[Dict[str, str]] = None,
 ) -> typing.Optional[typing.Tuple[typing.Dict[str, typing.Any], bool]]:
     """Trigger advise, respecting the configuration file supplied directly as a string or as a file path."""
     try:
@@ -377,6 +378,7 @@ def advise_using_config(
         github_base_repo_url=github_base_repo_url,
         source_type=source_type,
         verify_tls=thoth_config.tls_verify,
+        labels=labels,
     )
 
 
@@ -410,6 +412,7 @@ def advise(
     stack_info: typing.Optional[Dict] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
     verify_tls: bool = True,
+    labels: typing.Optional[Dict[str, str]] = None,
 ) -> typing.Optional[tuple]:
     """Submit a stack for adviser checks and wait for results."""
     if not pipfile:
@@ -472,6 +475,8 @@ def advise(
         input_args["stack_info"] = stack_info
     if constraints:
         input_args["constraints"] = constraints
+    if labels:
+        input_args["labels"] = labels
 
     advise_input = AdviseInput(**input_args)
     api_instance = AdviseApi(api_client)
@@ -571,6 +576,7 @@ def advise_here(
     stack_info: typing.Optional[Dict] = None,
     kebechet_metadata: typing.Optional[Dict] = None,
     verify_tls: bool = True,
+    labels: typing.Optional[Dict[str, str]] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
     requirements_format = thoth_config.requirements_format
@@ -653,6 +659,7 @@ def advise_here(
         stack_info=stack_info,
         kebechet_metadata=kebechet_metadata,
         verify_tls=verify_tls,
+        labels=labels,
     )
 
 
