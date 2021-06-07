@@ -32,6 +32,7 @@ class AdviseInput(object):
         'application_stack': 'PythonStack',
         'constraints': 'str',
         'runtime_environment': 'RuntimeEnvironment',
+        'labels': 'object',
         'library_usage': 'AdviseInputLibraryUsage',
         'kebechet_metadata': 'KebechetMetadata',
         'justification': 'Justification',
@@ -42,17 +43,19 @@ class AdviseInput(object):
         'application_stack': 'application_stack',
         'constraints': 'constraints',
         'runtime_environment': 'runtime_environment',
+        'labels': 'labels',
         'library_usage': 'library_usage',
         'kebechet_metadata': 'kebechet_metadata',
         'justification': 'justification',
         'stack_info': 'stack_info'
     }
 
-    def __init__(self, application_stack=None, constraints=None, runtime_environment=None, library_usage=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, constraints=None, runtime_environment=None, labels=None, library_usage=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
         self._constraints = None
         self._runtime_environment = None
+        self._labels = None
         self._library_usage = None
         self._kebechet_metadata = None
         self._justification = None
@@ -63,6 +66,8 @@ class AdviseInput(object):
             self.constraints = constraints
         if runtime_environment is not None:
             self.runtime_environment = runtime_environment
+        if labels is not None:
+            self.labels = labels
         if library_usage is not None:
             self.library_usage = library_usage
         if kebechet_metadata is not None:
@@ -138,6 +143,29 @@ class AdviseInput(object):
         """
 
         self._runtime_environment = runtime_environment
+
+    @property
+    def labels(self):
+        """Gets the labels of this AdviseInput.  # noqa: E501
+
+        Labels used to label the request.  # noqa: E501
+
+        :return: The labels of this AdviseInput.  # noqa: E501
+        :rtype: object
+        """
+        return self._labels
+
+    @labels.setter
+    def labels(self, labels):
+        """Sets the labels of this AdviseInput.
+
+        Labels used to label the request.  # noqa: E501
+
+        :param labels: The labels of this AdviseInput.  # noqa: E501
+        :type: object
+        """
+
+        self._labels = labels
 
     @property
     def library_usage(self):
