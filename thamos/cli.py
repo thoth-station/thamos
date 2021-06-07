@@ -25,9 +25,10 @@ import subprocess
 import sys
 import typing
 from functools import wraps
-from typing import Tuple
+from typing import Dict
 from typing import Optional
 from typing import Set
+from typing import Tuple
 
 import yaml
 import click
@@ -146,6 +147,32 @@ def _print_report(report: dict, json_output: bool = False, title: Optional[str] 
         table.add_row(*row)
 
     console.print(table, justify="center")
+
+
+def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
+    """Parse labels from their string representation."""
+    if not label:
+        return None
+
+    labels: Dict[str, str] = {}
+    parts = label.split(",")
+    for part in parts:
+        lab = part.split("=")
+        if len(lab) != 2:
+            raise ValueError(f"Unknown label, expected key=val: {part}")
+
+        if lab[0] in labels:
+            raise ValueError(f"Duplicate label {lab[0]!r}")
+
+        if not lab[0]:
+            raise ValueError(f"Empty label key for label value {lab[1]!r}")
+
+        if not lab[1]:
+            raise ValueError(f"Empty label value for label key {lab[0]!r}")
+
+        labels[lab[0]] = lab[1]
+
+    return labels
 
 
 class AliasedGroup(click.Group):
@@ -526,6 +553,16 @@ def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> 
     show_default=True,
     help="Write advised manifest changes to a file.",
 )
+@click.option(
+    "--labels",
+    "-l",
+    envvar="THAMOS_LABELS",
+    type=str,
+    metavar="KEY1=VALUE1,KEY2=VALUE2",
+    default=None,
+    show_default=True,
+    help="Labels used used to label the request.",
+)
 @handle_cli_exception
 def advise(
     debug: bool = False,
@@ -539,6 +576,7 @@ def advise(
     dev: bool = False,
     no_user_stack: bool = False,
     install: bool = False,
+    labels: Optional[str] = None,
     write_advised_manifest_changes: Optional[str] = None,
 ):
     """Ask Thoth for recommendations on the application stack.
@@ -549,7 +587,7 @@ def advise(
     remote service. Optionally, install packages resolved by Thoth.
 
     Examples:
-      thamos advise --runtime-environment "testing"
+      thamos advise --runtime-environment "testing" --labels foo=bar,qux=baz
 
       thamos advise --dev
 
@@ -564,6 +602,7 @@ def advise(
         _LOGGER.error("Cannot install dependencies if lock files are not written")
         sys.exit(1)
 
+    labels_dict = _parse_labels(labels)
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         if not dev and configuration.requirements_format == "pipenv":
             _LOGGER.warning(
@@ -584,6 +623,7 @@ def advise(
             dev=dev,
             no_user_stack=no_user_stack,
             verify_tls=configuration.tls_verify,
+            labels=labels_dict,
         )
 
         if not results:
