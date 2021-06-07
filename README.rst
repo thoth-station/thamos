@@ -151,6 +151,22 @@ provided by `pip-tools <https://pypi.org/project/pip-tools/>`__ (actually same a
 * ``requirements_format: pipenv`` for `Pipenv <https://pipenv.kennethreitz.org/en/latest/>`__ compatible output
 * ``requirements_format: pip`` or ``requirements_format: pip-tools`` for `pip <https://pip.pypa.io/en/stable/user_guide/>`__ or `pip-tools <https://pypi.org/project/pip-tools/>`__ compatible output
 
+Labels
+======
+
+It is possible to label requests for user-specific needs. In such a case,
+resolver will include pipeline units that match labels with the ones provided
+on the request.
+
+An example can be a CI system that is asking for an advise and labels the
+request with ``requester=ci_foo,team=thoth``. In such a case, the resolution
+engine includes pipeline units that are specific to the CI system and the team
+specified (besides the ones that are added by default).
+
+.. code-block:: console
+
+  thamos advise --labels requester=ci_foo,team=thoth
+
 Support for multiple runtime environments
 =========================================
 
