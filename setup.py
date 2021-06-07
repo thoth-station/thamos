@@ -80,6 +80,13 @@ setup(
     license="GPLv3+",
     packages=find_packages(),
     long_description_content_type="text/x-rst",
+    project_urls={
+        "Documentation": "https://thoth-station.ninja/docs/developers/thamos/index.html",
+        "Source Code": "https://github.com/thoth-station/thamos/",
+        "Issues": "https://github.com/thoth-station/thamos/issues",
+        "CI": "https://prow.operate-first.cloud/?repo=thoth-station%2Fthamos",
+        "Changelog": "https://github.com/thoth-station/thamos/blob/master/CHANGELOG.md",
+    },
     cmdclass={"test": Test},
     install_requires=get_install_requires(),
     command_options={
