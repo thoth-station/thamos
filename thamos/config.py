@@ -119,6 +119,7 @@ _CONFIG_SCHEMA = {
         "runtime_environments": {
             "type": "array",
             "items": _CONFIG_RUNTIME_ENVIRONMENT_SCHEMA,
+            "minItems": 1,
         },
         "managers": {
             "type": "array",
