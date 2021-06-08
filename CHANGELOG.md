@@ -2738,3 +2738,11 @@
 * :arrow_up: Automatic update of dependencies by Kebechet (#854)
 ### Bug Fixes
 * Be more visible about errors reported (#855)
+
+## Release 1.18.3 (2021-06-08T09:42:33)
+### Features
+* add project_url so that we show more info on pypi :pencil:
+* Introduce labels concept
+* Regenerate client to support labels
+### Improvements
+* Document how to use labels
