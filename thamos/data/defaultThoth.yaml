@@ -37,7 +37,7 @@ runtime_environments:
     #  * performance
     #  * security
     # See https://thoth-station.ninja/recommendation-types/
-    recommendation_type: stable
+    recommendation_type: latest
     # Platform used for running the application - corresponds to sysconfig.get_platform() call (e.g. 'linux-x86_64')
     platform: {platform}
     # Additional options:
