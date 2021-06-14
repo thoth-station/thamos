@@ -71,6 +71,7 @@ from typing import Callable, Any, Union, Dict
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 LAST_ANALYSIS_ID_FILE = ".thoth_last_analysis_id"
+_RECOMMENDATION_TYPES_URL = "https://thoth-station.ninja/recommendation-types/"
 
 _LOGGER = logging.getLogger(__name__)
 _RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
@@ -440,6 +441,12 @@ def advise(
             "stable",
         )
         recommendation_type = next(filter(bool, priority))
+
+    _LOGGER.info(
+        "Using %r recommendation type - see %s",
+        recommendation_type,
+        _RECOMMENDATION_TYPES_URL,
+    )
 
     if no_user_stack and pipfile_lock:
         _LOGGER.warning(
@@ -1044,7 +1051,7 @@ def install(
             if not os.path.isfile("Pipfile.lock"):
                 raise NoRequirementsFile(
                     f"No Pipfile.lock found in {os.getcwd()!r} needed to install dependencies, "
-                    "issue `thamos advise` resolve dpeendencies"
+                    "issue `thamos advise` resolve dependencies"
                 )
             if not os.path.isfile("Pipfile"):  # Required for computing digests.
                 raise NoRequirementsFile(
