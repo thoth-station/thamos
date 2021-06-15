@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 # Thamos
-# Copyright(C) 2019 Christoph Görn
+# Copyright(C) 2019 - 2021 Christoph Görn
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
