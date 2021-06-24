@@ -603,60 +603,60 @@ def advise(
         sys.exit(1)
 
     labels_dict = _parse_labels(labels)
-    with cwd(configuration.get_overlays_directory(runtime_environment)):
-        if not dev and configuration.requirements_format == "pipenv":
-            _LOGGER.warning(
-                "Development dependencies will not be considered during the resolution process - see %s",
-                jl("no_dev"),
-            )
 
-        # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
-        results = thoth_advise_here(
-            recommendation_type=recommendation_type,
-            src_path=configuration.config_path,
-            runtime_environment_name=runtime_environment,
-            debug=debug,
-            nowait=no_wait,
-            force=force,
-            source_type=ThothAdviserIntegrationEnum.CLI,
-            no_static_analysis=no_static_analysis,
-            dev=dev,
-            no_user_stack=no_user_stack,
-            verify_tls=configuration.tls_verify,
-            labels=labels_dict,
+    if not dev and configuration.requirements_format == "pipenv":
+        _LOGGER.warning(
+            "Development dependencies will not be considered during the resolution process - see %s",
+            jl("no_dev"),
         )
 
-        if not results:
-            return sys.exit(2)
+    # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
+    results = thoth_advise_here(
+        recommendation_type=recommendation_type,
+        src_path=configuration.config_path,
+        runtime_environment_name=runtime_environment,
+        debug=debug,
+        nowait=no_wait,
+        force=force,
+        source_type=ThothAdviserIntegrationEnum.CLI,
+        no_static_analysis=no_static_analysis,
+        dev=dev,
+        no_user_stack=no_user_stack,
+        verify_tls=configuration.tls_verify,
+        labels=labels_dict,
+    )
 
-        if no_wait:
-            # Echo the analysis id to user when not waiting.
-            click.echo(results)
-            sys.exit(0)
+    if not results:
+        return sys.exit(2)
 
-        result, error = results
-        if error:
-            if json_output:
-                json.dump(result, sys.stdout, indent=2)
-            else:
-                stack_info = (result.get("report") or {}).get("stack_info")
-                if stack_info:
-                    _print_report(
-                        stack_info,
-                        json_output=json_output,
-                        title="Application stack guidance",
-                    )
+    if no_wait:
+        # Echo the analysis id to user when not waiting.
+        click.echo(results)
+        sys.exit(0)
 
-                Console().print(
-                    result.get("error_msg")
-                    or "No error message was provided by the service.",
-                    style="bold red",
-                    justify="center",
+    result, error = results
+    if error:
+        if json_output:
+            json.dump(result, sys.stdout, indent=2)
+        else:
+            stack_info = (result.get("report") or {}).get("stack_info")
+            if stack_info:
+                _print_report(
+                    stack_info,
+                    json_output=json_output,
+                    title="Application stack guidance",
                 )
 
-            sys.exit(4)
+            Console().print(
+                result.get("error_msg")
+                or "No error message was provided by the service.",
+                style="bold red",
+                justify="center",
+            )
 
-        if not no_write:
+        sys.exit(4)
+    if not no_write:
+        with cwd(configuration.get_overlays_directory(runtime_environment)):
             if result["report"] and result["report"]["stack_info"]:
                 _print_report(
                     result["report"]["stack_info"],
@@ -700,8 +700,8 @@ def advise(
 
             if install:
                 thamos_install(runtime_environment_name=runtime_environment, dev=dev)
-        else:
-            click.echo(json.dumps(result, indent=2))
+    else:
+        click.echo(json.dumps(result, indent=2))
 
     sys.exit(0)
 
