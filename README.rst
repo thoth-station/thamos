@@ -167,6 +167,9 @@ specified (besides the ones that are added by default).
 
   thamos advise --labels requester=ci_foo,team=thoth
 
+See the following `demo for more information
+<https://www.youtube.com/watch?v=eoJIfQip_6M>`__.
+
 Support for multiple runtime environments
 =========================================
 
