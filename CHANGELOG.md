@@ -2746,3 +2746,11 @@
 * Regenerate client to support labels
 ### Improvements
 * Document how to use labels
+
+## Release 1.18.4 (2021-06-25T05:11:17)
+### Features
+* Adjust copyright notice in headers
+* Log recommendation type used in the advise request
+* :arrow_up: Automatic update of dependencies by Kebechet
+* Use latest recommendations by default
+* Require at least one runtime environment set in the config file
