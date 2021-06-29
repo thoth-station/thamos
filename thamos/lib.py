@@ -586,88 +586,109 @@ def advise_here(
     labels: typing.Optional[Dict[str, str]] = None,
 ) -> typing.Optional[tuple]:
     """Run advise in current directory, requires no arguments."""
-    requirements_format = thoth_config.requirements_format
-    if requirements_format == "pipenv":
-        _LOGGER.info(
-            "Using Pipenv files to manage dependencies located in %r", os.getcwd()
-        )
-        pipfile_lock_exists = os.path.exists("Pipfile.lock")
-
-        if pipfile_lock_exists:
-            _LOGGER.info(
-                "Submitting Pipfile.lock as a base for user's stack scoring - see %s",
-                jl("user_stack"),
-            )
-
-        project = Project.from_files(
-            pipfile_path="Pipfile",
-            pipfile_lock_path="Pipfile.lock",
-            without_pipfile_lock=not os.path.exists("Pipfile.lock"),
-        )
-
-        if (
-            pipfile_lock_exists
-            and project.pipfile_lock.meta.hash["sha256"]
-            != project.pipfile.hash()["sha256"]
-        ):
-            _LOGGER.error(
-                "Pipfile hash stated in Pipfile.lock %r does not correspond to Pipfile hash %r - was Pipfile "
-                "adjusted? This error is not critical.",
-                project.pipfile_lock.meta.hash["sha256"][:6],
-                project.pipfile.hash()["sha256"][:6],
-            )
-    elif requirements_format in ("pip", "pip-tools", "pip-compile"):
-        _LOGGER.info(
-            "Using requirements.txt file to manage dependencies located in %r",
-            os.getcwd(),
-        )
-        project = Project.from_pip_compile_files(allow_without_lock=True)
-    else:
+    if runtime_environment_name is not None and runtime_environment is not None:
         raise ValueError(
-            f"Unknown configuration option for requirements format: {requirements_format!r}"
+            "Both runtime_environment and runtime_environment_name were set."
         )
 
-    constraints_str = None
-    if os.path.exists("constraints.txt"):
-        _LOGGER.info("Using constraints.txt file located in %r", os.getcwd())
-        with open("constraints.txt") as constraints_file:
-            constraints_str = constraints_file.read()
+    if runtime_environment is None and runtime_environment_name is None:
+        runtime_environment = thoth_config.get_runtime_environment()
 
-        # Try to load constraints before the request to verify their correctness without sending request to the backend.
-        Constraints.from_string(constraints_str)
+    if runtime_environment:
+        runtime_environment_name = runtime_environment["name"]
 
-    pipfile = project.pipfile.to_string()
-    pipfile_lock_str = project.pipfile_lock.to_string() if project.pipfile_lock else ""
-
-    return advise(
-        pipfile=pipfile,
-        pipfile_lock=pipfile_lock_str,
-        constraints=constraints_str,
-        recommendation_type=recommendation_type,
-        src_path=src_path,
-        runtime_environment=runtime_environment,
-        runtime_environment_name=runtime_environment_name,
-        dev=dev,
-        no_static_analysis=no_static_analysis,
-        no_user_stack=no_user_stack,
-        nowait=nowait,
-        force=force,
-        limit=limit,
-        count=count,
-        debug=debug,
-        origin=origin,
-        timeout=timeout,
-        source_type=source_type,
-        github_event_type=github_event_type,
-        github_check_run_id=github_check_run_id,
-        github_installation_id=github_installation_id,
-        github_base_repo_url=github_base_repo_url,
-        justification=justification,
-        stack_info=stack_info,
-        kebechet_metadata=kebechet_metadata,
-        verify_tls=verify_tls,
-        labels=labels,
+    # get_overlays_directory() returns the current working directory if overlays_dir is not configured so this change
+    # should not result in a behavioral change
+    overlay_dir = thoth_config.get_overlays_directory(
+        runtime_environment_name=runtime_environment_name
     )
+
+    with cwd(overlay_dir):
+        requirements_format = thoth_config.requirements_format
+        if requirements_format == "pipenv":
+            _LOGGER.info(
+                "Using Pipenv files to manage dependencies located in %r", os.getcwd()
+            )
+            pipfile_lock_exists = os.path.exists("Pipfile.lock")
+
+            if pipfile_lock_exists:
+                _LOGGER.info(
+                    "Submitting Pipfile.lock as a base for user's stack scoring - see %s",
+                    jl("user_stack"),
+                )
+
+            project = Project.from_files(
+                pipfile_path="Pipfile",
+                pipfile_lock_path="Pipfile.lock",
+                without_pipfile_lock=not os.path.exists("Pipfile.lock"),
+            )
+
+            if (
+                pipfile_lock_exists
+                and project.pipfile_lock.meta.hash["sha256"]
+                != project.pipfile.hash()["sha256"]
+            ):
+                _LOGGER.error(
+                    "Pipfile hash stated in Pipfile.lock %r does not correspond to Pipfile hash %r - was Pipfile "
+                    "adjusted? This error is not critical.",
+                    project.pipfile_lock.meta.hash["sha256"][:6],
+                    project.pipfile.hash()["sha256"][:6],
+                )
+        elif requirements_format in ("pip", "pip-tools", "pip-compile"):
+            _LOGGER.info(
+                "Using requirements.txt file to manage dependencies located in %r",
+                os.getcwd(),
+            )
+            project = Project.from_pip_compile_files(allow_without_lock=True)
+        else:
+            raise ValueError(
+                f"Unknown configuration option for requirements format: {requirements_format!r}"
+            )
+
+        constraints_str = None
+        if os.path.exists("constraints.txt"):
+            _LOGGER.info("Using constraints.txt file located in %r", os.getcwd())
+            with open("constraints.txt") as constraints_file:
+                constraints_str = constraints_file.read()
+
+            # Try to load constraints before the request to verify their correctness without sending request to the
+            # backend.
+            Constraints.from_string(constraints_str)
+
+        pipfile = project.pipfile.to_string()
+        pipfile_lock_str = (
+            project.pipfile_lock.to_string() if project.pipfile_lock else ""
+        )
+
+        return advise(
+            pipfile=pipfile,
+            pipfile_lock=pipfile_lock_str,
+            constraints=constraints_str,
+            recommendation_type=recommendation_type,
+            src_path=src_path,
+            runtime_environment=runtime_environment,
+            runtime_environment_name=runtime_environment_name,
+            dev=dev,
+            no_static_analysis=no_static_analysis,
+            no_user_stack=no_user_stack,
+            nowait=nowait,
+            force=force,
+            limit=limit,
+            count=count,
+            debug=debug,
+            origin=origin,
+            timeout=timeout,
+            source_type=source_type,
+            github_event_type=github_event_type,
+            github_check_run_id=github_check_run_id,
+            github_installation_id=github_installation_id,
+            github_base_repo_url=github_base_repo_url,
+            justification=justification,
+            stack_info=stack_info,
+            kebechet_metadata=kebechet_metadata,
+            verify_tls=verify_tls,
+            labels=labels,
+        )
 
 
 @with_api_client
