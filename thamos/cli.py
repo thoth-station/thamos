@@ -1290,6 +1290,12 @@ def add(
         project.pipfile.add_requirement(
             req, is_dev=dev, index_url=index_url, force=True
         )
+        runtime_environment_config = configuration.get_runtime_environment(
+            runtime_environment
+        )
+        python_version = runtime_environment_config.get("python_version")
+        if python_version:
+            project.set_python_version(python_version)
 
     _LOGGER.warning(
         "Changes done might require triggering new advise to resolve dependencies"
