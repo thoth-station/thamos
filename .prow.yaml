@@ -6,7 +6,7 @@ presubmits:
     context: aicoe-ci/prow/pre-commit
     spec:
       containers:
-        - image: quay.io/thoth-station/thoth-precommit-py38:v0.12.5
+        - image: quay.io/thoth-station/thoth-precommit-py38:v0.12.9
           command:
             - "pre-commit"
             - "run"
@@ -18,6 +18,30 @@ presubmits:
             limits:
               memory: "1Gi"
               cpu: "500m"
+
+
+  - name: thoth-mypy-py38
+    decorate: true
+    skip_report: false
+    always_run: true
+    context: aicoe-ci/prow/mypy
+    spec:
+      containers:
+        - image: quay.io/thoth-station/thoth-pytest-ubi8-py38:v0.12.10
+          command:
+            - /usr/local/bin/mypy
+            - .
+            - --ignore-missing-imports
+            - --exclude
+            - "docs/|tasks/|tests/|setup.py|thamos/swagger_client/|examples/"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+
 
   - name: thoth-pytest-py38
     decorate: true
