@@ -2754,3 +2754,10 @@
 * :arrow_up: Automatic update of dependencies by Kebechet
 * Use latest recommendations by default
 * Require at least one runtime environment set in the config file
+
+## Release 1.19.0 (2021-07-08T13:47:02)
+### Features
+* Set Python version based on .thoth.yaml file
+* Add a link to labels demo
+* :arrow_up: Automatic update of dependencies by Kebechet
+* advise_here uses overlay directories
