@@ -1204,7 +1204,8 @@ def load_files(requirements_format: str) -> typing.Tuple[str, typing.Optional[st
             )
 
         project = Project.from_files(
-            without_pipfile_lock=not os.path.exists("Pipfile.lock")
+            pipfile_path="Pipfile",
+            without_pipfile_lock=not os.path.exists("Pipfile.lock"),
         )
 
         if (

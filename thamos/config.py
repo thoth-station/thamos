@@ -760,7 +760,7 @@ class _Configuration:
         old_project = self.get_project(project.runtime_environment.name)
         if old_project.runtime_environment != project.runtime_environment:
             self.set_runtime_environment(
-                runtime_environment=project.runtime_environment
+                runtime_environment=project.runtime_environment.to_dict()
             )
             self.save_config()
 
