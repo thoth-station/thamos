@@ -17,10 +17,11 @@
 
 """Core parts of library for interacting with Thoth."""
 
-import os
 import logging
-import typing
+import os
 import platform
+import sys
+import typing
 from time import sleep
 from time import monotonic
 from contextlib import contextmanager
@@ -44,6 +45,7 @@ from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
 from thoth.common import cwd
 
+import thamos.discover
 from . import __version__ as thamos_version
 from .swagger_client.rest import ApiException
 from .swagger_client import ApiClient
@@ -1276,3 +1278,53 @@ def write_configuration(
     _LOGGER.debug("Writing adjusted Thoth's configuration file")
     with open(".thoth.yaml", "w") as thoth_yaml_file:
         yaml.safe_dump(content, thoth_yaml_file)
+
+
+def collect_support_information_dict() -> Dict[str, Any]:
+    """Collect environment information suitable to report bugs or issues in a dictionary form."""
+    discovery = {}
+
+    for name, obj in thamos.discover.__dict__.items():
+        if callable(obj) and name.startswith("discover_"):
+            discovery[name[len("discover_") :]] = obj()
+
+    thoth_config_content = None
+    try:
+        thoth_config_content = thoth_config.content
+    except Exception:
+        _LOGGER.exception("Failed to obtain content of Thoth's configuration file")
+
+    thoth_version = None
+    try:
+        thoth_version = thoth_config.get_thoth_version()
+    except Exception:
+        _LOGGER.exception("Failed to obtain Thoth version information")
+
+    pip_freeze = None
+    try:
+        pip_freeze = run_command("pip freeze").stdout.splitlines()
+    except Exception:
+        _LOGGER.exception("Failed to obtain packages present in the environment")
+
+    result = {
+        "environment": {
+            k: v for k, v in os.environ.items() if k.startswith(("THAMOS_", "THOTH_"))
+        },
+        "is_s2i": _is_s2i(),
+        "last_analysis_id": _get_last_analysis_id(),
+        "thoth_config": thoth_config_content,
+        "thoth_version": thoth_version,
+        "thamos_version": thamos_version,
+        "os_name": os.name,
+        "platform_machine": platform.machine(),
+        "platform_python_implementation": platform.python_implementation(),
+        "platform_release": platform.release(),
+        "platform_system": platform.system(),
+        "platform_version": platform.version(),
+        "python_full_version": platform.python_version(),
+        "python_version": platform.python_version()[:3],
+        "sys_platform": sys.platform,
+        "pip_freeze": pip_freeze,
+        "discovery": discovery,
+    }
+    return result

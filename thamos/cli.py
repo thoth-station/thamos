@@ -45,14 +45,17 @@ from thamos.exceptions import NoProjectDirError
 from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
-from thamos.lib import provenance_check as thoth_provenance_check
+from thamos.lib import collect_support_information_dict
+from thamos.lib import get_log
+from thamos.lib import get_status
+from thamos.lib import install as thamos_install
 from thamos.lib import list_hardware_environments
 from thamos.lib import list_python_package_indexes
 from thamos.lib import list_thoth_s2i
-from thamos.lib import get_log
-from thamos.lib import install as thamos_install
-from thamos.lib import get_status
-from thamos.lib import write_configuration, write_files, load_files
+from thamos.lib import load_files
+from thamos.lib import provenance_check as thoth_provenance_check
+from thamos.lib import write_configuration
+from thamos.lib import write_files
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
 
@@ -1361,6 +1364,26 @@ def remove(
         "Changes done might require triggering new advise to resolve dependencies"
     )
     configuration.save_project(project)
+
+
+@cli.command("support")
+@click.option(
+    "--output",
+    "-o",
+    metavar="FILE",
+    type=str,
+    help="Specify output file",
+    default="-",
+)
+def support(output: str) -> None:
+    """Collect information from the current environment to report an issue."""
+    info = collect_support_information_dict()
+
+    if output == "-":
+        json.dump(info, sys.stdout, sort_keys=True, indent=2)
+    else:
+        with open(output, "w") as output_file:
+            json.dump(info, output_file, sort_keys=True, indent=2)
 
 
 __name__ == "__main__" and cli()
