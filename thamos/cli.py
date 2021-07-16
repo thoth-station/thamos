@@ -314,13 +314,16 @@ def _print_version(ctx, json_output: bool = False):
 )
 @click.argument("pip_args", nargs=-1)
 @handle_cli_exception
-def install(runtime_environment: str, dev: bool, pip_args: Tuple[str]) -> None:
+def install(
+    runtime_environment: str, dev: bool, pip_args: Tuple[str]
+) -> None:  # noqa: D412
     """Install dependencies as stated in the lock file.
 
     This command assumes requirements files are present and dependencies are already resolved.
     If that's not the case, issue `thamos advise` before running this command.
 
     Examples:
+
       thamos install --runtime-environment "testing"
 
       thamos install --dev
@@ -366,10 +369,13 @@ def _error_virtual_environment(virtualenv_path: str) -> None:
     help="Specify explicitly runtime environment to get recommendations for; "
     "defaults to the first entry in the configuration file.",
 )
-def run(command: typing.List[str], runtime_environment: Optional[str] = None) -> None:
+def run(
+    command: typing.List[str], runtime_environment: Optional[str] = None
+) -> None:  # noqa: D412
     """Run the command in virtual environment.
 
     Examples:
+
       thamos run ./app.py
 
       thamos run --runtime-environment "testing" -- flask --help
@@ -427,10 +433,13 @@ def venv(ctx, runtime_environment: Optional[str] = None) -> None:
     is_flag=True,
     help="Purge virtual environments for all the runtime environments configured.",
 )
-def purge(ctx, runtime_environment: Optional[str] = None, all: bool = False) -> None:
+def purge(
+    ctx, runtime_environment: Optional[str] = None, all: bool = False
+) -> None:  # noqa: D412
     """Remove virtual environment created.
 
     Examples:
+
       thamos purge
 
       thamos purge --runtime-environment "testing"
@@ -581,7 +590,7 @@ def advise(
     install: bool = False,
     labels: Optional[str] = None,
     write_advised_manifest_changes: Optional[str] = None,
-):
+) -> None:  # noqa: D412
     """Ask Thoth for recommendations on the application stack.
 
     Ask the remote Thoth service for advise on the application stack used. The command
@@ -590,6 +599,7 @@ def advise(
     remote service. Optionally, install packages resolved by Thoth.
 
     Examples:
+
       thamos advise --runtime-environment "testing" --labels foo=bar,qux=baz
 
       thamos advise --dev
@@ -630,7 +640,7 @@ def advise(
     )
 
     if not results:
-        return sys.exit(2)
+        sys.exit(2)
 
     if no_wait:
         # Echo the analysis id to user when not waiting.
@@ -748,13 +758,14 @@ def provenance_check(
     json_output: bool = False,
     force: bool = False,
     runtime_environment: typing.Optional[str] = None,
-):
+) -> None:  # noqa: D412
     """Check provenance of installed packages.
 
     Collect information about direct dependencies and dependencies stated in the lock file
     and send them to the remote service to verify their provenance.
 
     Examples:
+
       thamos provenance-check --runtime-environment "production"
     """
     with cwd(configuration.get_overlays_directory(runtime_environment)):
@@ -793,8 +804,6 @@ def provenance_check(
         if any(item.get("type") == "ERROR" for item in report):
             sys.exit(4)
 
-        return 0
-
 
 @cli.command("log")
 @click.pass_context
@@ -827,12 +836,13 @@ def log(analysis_id: typing.Optional[str] = None):
 @handle_cli_exception
 def status(
     analysis_id: typing.Optional[str] = None, output_format: typing.Optional[str] = None
-):
+) -> None:  # noqa: D412
     """Get status of an analysis.
 
     If ANALYSIS_ID is not provided, the last request is used by default.
 
     Examples:
+
       thamos status
 
       thamos status "adviser-940101080006-110c392feb7cf6da"
@@ -871,10 +881,11 @@ def status(
 @cli.command("list")
 @click.pass_context
 @handle_cli_exception
-def list_() -> None:
+def list_() -> None:  # noqa: D412
     """List available runtime environments configured.
 
     Examples:
+
       thamos list
     """
     with workdir(configuration.CONFIG_NAME):
@@ -908,10 +919,13 @@ def list_() -> None:
     help="Specify explicitly runtime environment to be shown.",
 )
 @handle_cli_exception
-def show(output_format: str, runtime_environment: Optional[str] = None) -> None:
+def show(
+    output_format: str, runtime_environment: Optional[str] = None
+) -> None:  # noqa: D412
     """Show details for configured runtime environments.
 
     Examples:
+
       thamos show --runtime-environment "development"
     """
     with workdir(configuration.CONFIG_NAME):
@@ -1013,13 +1027,14 @@ def config(no_interactive: bool = False, template: str = None):
     help="Specify output format for the status report.",
 )
 @handle_cli_exception
-def check(runtime_environment: Optional[str], output_format: str) -> None:
+def check(runtime_environment: Optional[str], output_format: str) -> None:  # noqa: D412
     """Check the configuration file and runtime environment.
 
     Check the correctness of the configuration file and runtime environment configuration
     for the current host.
 
     Examples:
+
         thamos check --runtime-environment "production"
 
         thamos check --output-format yaml
@@ -1076,10 +1091,11 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:
     help="Specify output format for the status report.",
 )
 @handle_cli_exception
-def s2i(output_format: str) -> None:
+def s2i(output_format: str) -> None:  # noqa: D412
     """Check available Thoth Source-To-Image containers.
 
     Examples:
+
       thamos s2i --output-format json
     """
     result = list_thoth_s2i()
@@ -1267,13 +1283,14 @@ def add(
     runtime_environment: typing.Optional[str],
     index_url: str,
     dev: bool,
-) -> None:
+) -> None:  # noqa: D412
     """Add one or multiple requirements to the project.
 
     Add one or multiple requirements to the direct dependency listing without actually installing them.
     The supplied requirement is specified using PEP-508 standard.
 
     Examples:
+
       thamos add flask
 
       thamos add tensorflow --runtime-environment "training"
@@ -1321,10 +1338,11 @@ def add(
 def remove(
     requirement: typing.List[str],
     runtime_environment: typing.Optional[str],
-) -> None:
+) -> None:  # noqa: D412
     """Remove the given requirement.
 
     Examples:
+
       thamos remove flask
 
       thamos remove pytest --runtime-environment "training"
