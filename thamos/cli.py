@@ -55,6 +55,7 @@ from thamos.lib import list_thoth_s2i
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import write_configuration
+from thamos.lib import print_dependency_graph
 from thamos.lib import write_files
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
@@ -876,6 +877,37 @@ def status(
         raise NotImplementedError(f"Unknown output format {output_format}")
 
     click.echo(output)
+
+
+@cli.command("graph")
+@click.pass_context
+@click.argument("analysis_id", type=str, required=False, metavar="ANALYSIS_ID")
+@click.option(
+    "--fold/--unfold",
+    is_flag=True,
+    envvar="THAMOS_GRAPH_FOLD",
+    type=bool,
+    help="Collapse repeating sub-graphs in the output.",
+)
+@handle_cli_exception
+def graph(
+    analysis_id: typing.Optional[str] = None,
+    fold: bool = True,
+) -> None:  # noqa: D412
+    """Show dependency graph of resolved dependencies.
+
+    If ANALYSIS_ID is not provided, the last request is used by default.
+
+    Examples:
+
+      thamos graph
+
+      thamos graph "adviser-940101080006-110c392feb7cf6da"
+    """
+    with workdir():
+        printed = print_dependency_graph(analysis_id, fold=fold)
+        if not printed:
+            sys.exit(1)
 
 
 @cli.command("list")

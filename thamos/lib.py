@@ -22,6 +22,7 @@ import os
 import platform
 import sys
 import typing
+from itertools import chain
 from time import sleep
 from time import monotonic
 from contextlib import contextmanager
@@ -982,7 +983,7 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
 
 
 @with_api_client
-def get_status(api_client: ApiClient, analysis_id: str = None):
+def get_status(api_client: ApiClient, analysis_id: typing.Optional[str] = None):
     """Get status of an analysis - the analysis type and endpoint are automatically derived from analysis id.
 
     If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
@@ -1010,8 +1011,13 @@ def get_status(api_client: ApiClient, analysis_id: str = None):
 
 
 @with_api_client
-def get_analysis_results(api_client: ApiClient, analysis_id: str):
+def get_analysis_results(
+    api_client: ApiClient, analysis_id: typing.Optional[str] = None
+):
     """Get the analysis result from a given id."""
+    if not analysis_id:
+        analysis_id = _get_last_analysis_id()
+
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(
             api_client
@@ -1328,3 +1334,117 @@ def collect_support_information_dict() -> Dict[str, Any]:
         "discovery": discovery,
     }
     return result
+
+
+def _get_package_entry_str(
+    pipfile_lock: Dict[str, Dict[str, typing.Any]], package_name: str
+) -> str:
+    """Get information about the given package so that they are printed to users."""
+    package_entry = pipfile_lock["default"].get(
+        package_name, pipfile_lock["develop"].get(package_name)
+    )
+    if not package_entry:
+        # Any error spotted?
+        return "UNKNOWN==UNKNOWN from UNKNOWN"
+
+    index_url = "UNKNOWN"
+    for source in pipfile_lock["_meta"]["sources"]:
+        if package_entry.get("index") == source["name"]:
+            index_url = source["url"]
+            break
+
+    return f"{package_name}{package_entry.get('version')} from {index_url}"
+
+
+def _traverse_edges(
+    pipfile_lock: Dict[str, Dict[str, str]],
+    nodes: typing.List[str],
+    edges: typing.List[typing.List[int]],
+    seen_nodes: typing.Set[int],
+    *,
+    starting_node: int,
+    indent: int = 2,
+    fold: bool = True,
+) -> None:
+    """Traverse edges of the dependency graph and show its structure to terminal."""
+    for edge in edges:
+        if edge[0] == starting_node:
+            print(
+                " " * indent
+                + f"↳ {_get_package_entry_str(pipfile_lock, nodes[edge[1]])}"
+            )
+            if edge[1] not in seen_nodes:
+                if fold:
+                    seen_nodes.add(edge[1])
+
+                _traverse_edges(
+                    pipfile_lock,
+                    nodes,
+                    edges,
+                    seen_nodes=seen_nodes | {edge[1]},
+                    starting_node=edge[1],
+                    indent=indent + 2,
+                    fold=fold,
+                )
+            else:
+                # Note cyclic dependency.
+                print(" " * (indent + 2) + "↳ …")
+
+
+def print_dependency_graph_from_adviser_document(
+    adviser_document: typing.Dict[str, typing.Any], *, fold: bool = True
+) -> bool:
+    """Print dependency graph to stdout from the given document."""
+    if not adviser_document["report"]["products"]:
+        _LOGGER.error(
+            "No dependency graph to show, was the adviser request successful?"
+        )
+        return False
+
+    if not adviser_document["report"]["products"][0].get("dependency_graph"):
+        # XXX: we can remove this check over time.
+        _LOGGER.error(
+            "No dependency graph to show, was the result computed with recent adviser?"
+        )
+        return False
+
+    nodes = adviser_document["report"]["products"][0]["dependency_graph"]["nodes"]
+    edges = adviser_document["report"]["products"][0]["dependency_graph"]["edges"]
+
+    nodes_idx = {n: i for i, n in enumerate(nodes)}
+    # Keep a list of flags stating the given package is a root dependency.
+    pipfile = adviser_document["report"]["products"][0]["project"]["requirements"]
+    pipfile_lock = adviser_document["report"]["products"][0]["project"][
+        "requirements_locked"
+    ]
+    for direct_dependency in chain(
+        pipfile["packages"].keys(), pipfile["dev-packages"].keys()
+    ):
+        direct_dependency_idx = nodes_idx[direct_dependency]
+        print(f"→ {_get_package_entry_str(pipfile_lock, direct_dependency)}")
+        _traverse_edges(
+            pipfile_lock,
+            nodes,
+            edges,
+            seen_nodes={direct_dependency_idx},
+            starting_node=direct_dependency_idx,
+            fold=fold,
+        )
+
+    return True
+
+
+def print_dependency_graph(
+    analysis_id: typing.Optional[str] = None, *, fold: bool = True
+) -> bool:
+    """Print dependency graph to stdout produced by the given adviser."""
+    if not analysis_id:
+        adviser_document, error = get_analysis_results()
+    else:
+        adviser_document, error = get_analysis_results(analysis_id)
+
+    if error:
+        print("Cannot print dependency graph as advise was not successful")
+        return False
+
+    return print_dependency_graph_from_adviser_document(adviser_document, fold=fold)
