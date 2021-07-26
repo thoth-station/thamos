@@ -2761,3 +2761,9 @@
 * Add a link to labels demo
 * :arrow_up: Automatic update of dependencies by Kebechet
 * advise_here uses overlay directories
+
+## Release 1.20.0 (2021-07-26T20:16:39)
+### Features
+* Implement thamos graph command
+* :arrow_up: Automatic update of dependencies by Kebechet
+* Fix spacing in CLI examples
