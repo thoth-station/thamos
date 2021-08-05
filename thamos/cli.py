@@ -886,6 +886,7 @@ def status(
     "--fold/--unfold",
     is_flag=True,
     envvar="THAMOS_GRAPH_FOLD",
+    default=True,
     type=bool,
     help="Collapse repeating sub-graphs in the output.",
 )
