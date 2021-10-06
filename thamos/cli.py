@@ -1437,4 +1437,20 @@ def support(output: str) -> None:
             json.dump(info, output_file, sort_keys=True, indent=2)
 
 
+@cli.command("discover")
+@click.argument("import_name", type=str, required=True)
+def discover(import_name: str) -> str:
+    """Identify correct package names from PyPi for given import name.
+    Examples:
+      thamos discover "scikitplot"
+      thamos discover "dotenv"
+      thamos discover "sklearn"
+    """
+
+    # logic:
+    # 1. call command `invectio whatuses .`
+    # 2. run command to get correct names of packages
+    # 3. return list
+
+
 __name__ == "__main__" and cli()
