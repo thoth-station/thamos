@@ -148,7 +148,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisWithAuthenticationResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url, token=token)
+> AnalysisWithAuthenticationResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, token=token)
 
 Get advise for Python ecosystem.
 
@@ -167,19 +167,15 @@ recommendation_type = 'stable' # str | Recommendation type. (default to stable)
 count = 56 # int | Number of software stacks that should be returned. (optional)
 limit = 56 # int | Limit number of software stacks scored. (optional)
 origin = 'origin_example' # str | A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  (optional)
-source_type = 'source_type_example' # str | A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift's S2I (Source-to-Image) build.   - github_app: Qeb-Hwt GitHub App.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).  (optional)
+source_type = 'source_type_example' # str | A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift's S2I (Source-to-Image) build.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).  (optional)
 dev = false # bool | Consider or do not consider development dependencies when resolving stacks.  (optional) (default to false)
 debug = false # bool | Run the given adviser in a verbose mode so developers can debug it.  (optional) (default to false)
 force = false # bool | Do not use cached results, always run adviser.  (optional) (default to false)
-github_event_type = 'github_event_type_example' # str | GitHub's event type. (optional)
-github_check_run_id = 56 # int | GitHub's event id. (optional)
-github_installation_id = 56 # int | GitHub's installation id. (optional)
-github_base_repo_url = 'github_base_repo_url_example' # str | URL of the GitHub repository containing the Pull Request. (optional)
 token = 'token_example' # str | API token for sending authenticated requests. (optional)
 
 try:
     # Get advise for Python ecosystem.
-    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, github_event_type=github_event_type, github_check_run_id=github_check_run_id, github_installation_id=github_installation_id, github_base_repo_url=github_base_repo_url, token=token)
+    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, token=token)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -194,14 +190,10 @@ Name | Type | Description  | Notes
  **count** | **int**| Number of software stacks that should be returned. | [optional]
  **limit** | **int**| Limit number of software stacks scored. | [optional]
  **origin** | **str**| A repository where the application stack is used. This is used for tracking as well as for automated reporting when results are available.  | [optional]
- **source_type** | **str**| A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift&#x27;s S2I (Source-to-Image) build.   - github_app: Qeb-Hwt GitHub App.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).  | [optional]
+ **source_type** | **str**| A flag marking what Thoth integration is requesting adviser:   - cli: Thamos CLI.   - s2i: OpenShift&#x27;s S2I (Source-to-Image) build.   - kebechet: Kebechet Bot.   - jupyter_notebook: Jupyter Notebook (nb-requirements).  | [optional]
  **dev** | **bool**| Consider or do not consider development dependencies when resolving stacks.  | [optional] [default to false]
  **debug** | **bool**| Run the given adviser in a verbose mode so developers can debug it.  | [optional] [default to false]
  **force** | **bool**| Do not use cached results, always run adviser.  | [optional] [default to false]
- **github_event_type** | **str**| GitHub&#x27;s event type. | [optional]
- **github_check_run_id** | **int**| GitHub&#x27;s event id. | [optional]
- **github_installation_id** | **int**| GitHub&#x27;s installation id. | [optional]
- **github_base_repo_url** | **str**| URL of the GitHub repository containing the Pull Request. | [optional]
  **token** | **str**| API token for sending authenticated requests. | [optional]
 
 ### Return type
