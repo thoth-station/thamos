@@ -1379,6 +1379,14 @@ def support(output: str) -> None:
             json.dump(info, output_file, sort_keys=True, indent=2)
 
 
+@cli.command("whatprovides")
+@click.argument("import_name", type=str, required=True)
+def whatprovides(import_name: str) -> List[str]:
+    """For a given import_name returns list of (package_name, package_version, index_url) triplets"""
+    result = get_package_from_imported_packages(import_name)
+    # returns list of
+    # [{"package_name": i[0], "package_version": i[1], "index_url": i[2]} for i in query.all()]
+
 @cli.command("discover")
 @click.argument("import_name", type=str, required=True)
 def discover(import_name: str) -> str:
