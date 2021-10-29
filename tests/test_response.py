@@ -22,7 +22,7 @@ from base import ThamosTestCase
 from pathlib import Path
 import toml
 
-from thamos.utils import cwd
+from thoth.common import cwd
 from thamos.lib import write_files
 
 
