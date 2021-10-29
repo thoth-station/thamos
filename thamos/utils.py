@@ -23,6 +23,8 @@ import logging
 import os
 import sys
 
+from thoth.common import cwd
+
 from .exceptions import NoProjectDirError
 
 # Limit traversing to parent directories so we handle root - we do not loop over and over in root and we also
@@ -53,14 +55,3 @@ def workdir(file_lookup: Optional[str] = None, warn_on_dir_change: bool = True) 
             f"No {file_lookup} found in the current directory {os.getcwd()!r} or in any of its parent "
             f"directories, you can generate it using '{sys.argv[0]} config'"
         )
-
-
-@contextmanager
-def cwd(target):
-    """Manage cwd in a pushd/popd fashion."""
-    curdir = os.getcwd()
-    os.chdir(target)
-    try:
-        yield curdir
-    finally:
-        os.chdir(curdir)
