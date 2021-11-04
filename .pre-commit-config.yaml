@@ -1,12 +1,12 @@
 ---
 exclude: "thamos/swagger_client/|docs/|Documentation"
 repos:
-  - repo: git://github.com/Lucas-C/pre-commit-hooks
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.1.9
     hooks:
       - id: remove-tabs
 
-  - repo: git://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
       - id: check-added-large-files
@@ -24,7 +24,7 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
 
-  - repo: git://github.com/pycqa/pydocstyle.git
+  - repo: https://github.com/pycqa/pydocstyle.git
     rev: 5.1.1
     hooks:
       - id: pydocstyle
