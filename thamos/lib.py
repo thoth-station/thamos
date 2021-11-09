@@ -280,7 +280,8 @@ def _get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
     _LOGGER.info("Performing static analysis of sources to gather library usage")
     try:
         library_usage = gather_library_usage(
-            src_path, ignore_errors=True, without_standard_imports=True
+            src_path,
+            ignore_errors=True,
         )
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
