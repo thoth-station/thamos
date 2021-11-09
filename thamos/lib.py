@@ -1312,12 +1312,19 @@ def collect_support_information_dict() -> Dict[str, Any]:
     except Exception:
         _LOGGER.exception("Failed to obtain packages present in the environment")
 
+    last_analysis_id = None
+    try:
+        last_analysis_id = _get_last_analysis_id()
+    except FileNotFoundError:
+        _LOGGER.warning("Cannot retrieve last analysis identifier")
+        pass
+
     result = {
         "environment": {
             k: v for k, v in os.environ.items() if k.startswith(("THAMOS_", "THOTH_"))
         },
         "is_s2i": _is_s2i(),
-        "last_analysis_id": _get_last_analysis_id(),
+        "last_analysis_id": last_analysis_id,
         "thoth_config": thoth_config_content,
         "thoth_version": thoth_version,
         "thamos_version": thamos_version,
