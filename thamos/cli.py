@@ -50,7 +50,7 @@ from thamos.lib import get_log
 from thamos.lib import get_status
 from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
-from thamos.lib import list_thoth_s2i
+from thamos.lib import list_thoth_container_images
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import write_configuration
@@ -1113,7 +1113,7 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
 
 
-@cli.command("s2i")
+@cli.command("images")
 @click.pass_context
 @click.option(
     "--output-format",
@@ -1123,14 +1123,14 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     help="Specify output format for the status report.",
 )
 @handle_cli_exception
-def s2i(output_format: str) -> None:  # noqa: D412
-    """Check available Thoth Source-To-Image containers.
+def images(output_format: str) -> None:  # noqa: D412
+    """Check available Thoth container images.
 
     Examples:
 
-      thamos s2i --output-format json
+      thamos images --output-format json
     """
-    result = list_thoth_s2i()
+    result = list_thoth_container_images()
 
     if output_format == "yaml":
         yaml.safe_dump({"s2i": result}, sys.stdout)
@@ -1158,7 +1158,7 @@ def s2i(output_format: str) -> None:  # noqa: D412
             row = []
             for key in header_sorted:
                 if key == "info":
-                    image_name = item.get("thoth_s2i_image_name")
+                    image_name = item.get("thoth_image_name")
                     row.append(jl(image_name.rsplit("/", maxsplit=1)[-1]))
                     continue
 
