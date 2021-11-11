@@ -1383,9 +1383,16 @@ def support(output: str) -> None:
 @click.argument("import_name", type=str, required=True)
 def whatprovides(import_name: str) -> List[str]:
     """For a given import_name returns list of (package_name, package_version, index_url) triplets"""
+    _LOGGER.info(
+        "Returning information on package %r", import_name
+    )
     result = get_package_from_imported_packages(import_name)
-    # returns list of
-    # [{"package_name": i[0], "package_version": i[1], "index_url": i[2]} for i in query.all()]
+
+    console = Console()
+    console.print(result, justify="center")
+
+    sys.exit(0)
+
 
 @cli.command("discover")
 @click.argument("import_name", type=str, required=True)
@@ -1396,11 +1403,16 @@ def discover(import_name: str) -> str:
       thamos discover "dotenv"
       thamos discover "sklearn"
     """
+    _LOGGER.info(
+        "Identifying correct package names for %r",import_name
+    )
+    list = whatprovides(import_name)
 
-    # logic:
-    # 1. call command `invectio whatuses .`
-    # 2. run command to get correct names of packages
-    # 3. return list
-
+    with open('requirements.txt', 'w') as d:
+        for item in list:
+            _LOGGER.info(
+            "Adding package %r to requirements.txt", item["package_name"]
+            )
+            d.write(item["package_name"])
 
 __name__ == "__main__" and cli()
