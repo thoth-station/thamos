@@ -1180,7 +1180,7 @@ def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
 
 
 @with_api_client
-def get_package_from_imported_packages(api_client: ApiClient, import_name: str) -> List[str]:
+def get_package_from_imported_packages(api_client: ApiClient, import_name: str) -> typing.List[str]:
     """Get all (package_name, package_version, index_url) triplets for given import package name."""
     return (
         PythonPackagesApi(api_client).get_package_from_imported_packages(import_name)["package_names"]
