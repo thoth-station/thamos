@@ -1381,7 +1381,7 @@ def support(output: str) -> None:
 
 @cli.command("whatprovides")
 @click.argument("import_name", type=str, required=True)
-def whatprovides(import_name: str) -> List[str]:
+def whatprovides(import_name: str) -> typing.List[str]:
     """For a given import_name returns list of (package_name, package_version, index_url) triplets"""
     _LOGGER.info(
         "Returning information on package %r", import_name
