@@ -58,7 +58,6 @@ from .swagger_client import ProvenanceInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
-from .swagger_client import HardwareApi
 from .swagger_client import S2iApi
 from .swagger_client import PythonPackagesApi
 from .swagger_client.models import AnalysisResultResponse
@@ -1153,16 +1152,6 @@ def install(
 
             if old_print is None:
                 os.environ.pop("MICROPIPENV_NO_LOCKFILE_PRINT", None)
-
-
-@with_api_client
-def list_hardware_environments(api_client: ApiClient) -> typing.Dict[str, Any]:
-    """Get information about hardware for which Thoth can give recommendations."""
-    return (
-        HardwareApi(api_client)
-        .list_hardware_environments()
-        .to_dict()["hardware_environments"]
-    )
 
 
 @with_api_client
