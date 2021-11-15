@@ -47,6 +47,7 @@ from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import collect_support_information_dict
 from thamos.lib import get_log
+from thamos.lib import get_package_from_imported_packages
 from thamos.lib import get_status
 from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
@@ -1380,39 +1381,71 @@ def support(output: str) -> None:
 
 
 @cli.command("whatprovides")
+@click.pass_context
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
 @click.argument("import_name", type=str, required=True)
-def whatprovides(import_name: str) -> typing.List[str]:
-    """For a given import_name returns list of (package_name, package_version, index_url) triplets"""
-    _LOGGER.info(
-        "Returning information on package %r", import_name
-    )
+@handle_cli_exception
+def whatprovides(import_name: str, output_format: str) -> typing.List[str]:
+    """For a given import_name returns list of (package_name, package_version, index_url) triplets.
+
+    Examples:
+      thamos whatprovides sklearn
+
+    """
+    _LOGGER.info("Returning information on package %r", import_name)
     result = get_package_from_imported_packages(import_name)
 
-    console = Console()
-    console.print(result, justify="center")
+    if output_format == "yaml":
+        yaml.safe_dump({"package_names": result}, sys.stdout)
+    elif output_format == "json":
+        json.dump({"package_names": result}, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    elif output_format == "table":
+        table = Table()
+
+        header = set()
+        for item in result:
+            for key in item.keys():
+                header.add(key)
+
+        header_sorted = sorted(header)
+        for item in header_sorted:
+            table.add_column(item.capitalize())
+
+        for item in result:
+            row = []
+            for key in header_sorted:
+                entry = item.get(key)
+                row.append(str(entry) if entry is not None else "-")
+
+            table.add_row(*row)
+
+        console = Console()
+        console.print(table, justify="center")
 
     sys.exit(0)
 
 
 @cli.command("discover")
-@click.argument("import_name", type=str, required=True)
-def discover(import_name: str) -> str:
-    """Identify correct package names from PyPi for given import name.
-    Examples:
-      thamos discover "scikitplot"
-      thamos discover "dotenv"
-      thamos discover "sklearn"
-    """
-    _LOGGER.info(
-        "Identifying correct package names for %r",import_name
-    )
-    list = whatprovides(import_name)
+@click.pass_context
+@handle_cli_exception
+def discover() -> str:
+    """Discover packages used in the project.
 
-    with open('requirements.txt', 'w') as d:
-        for item in list:
-            _LOGGER.info(
-            "Adding package %r to requirements.txt", item["package_name"]
-            )
-            d.write(item["package_name"])
+    Examples:
+      thamos discover
+    """
+    # 1. Obtain list of imports using invectio
+
+    # 2. For each import verify package (name, version, index) (whatprovides logic)
+
+    # 3. Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)
+
 
 __name__ == "__main__" and cli()
