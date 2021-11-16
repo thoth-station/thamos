@@ -24,8 +24,9 @@ which find > /dev/null  || die "Please install find utility to continue"
 if [ ! -d 'swagger-codegen' ]; then
     git clone https://github.com/swagger-api/swagger-codegen
     pushd swagger-codegen
-    git checkout '3.0.21'
-    mvn clean package
+    git checkout 'v3.0.29'
+    mvn clean
+    mvn package -DskipTests
     popd
 fi
 
@@ -40,9 +41,9 @@ java -jar swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli
 rm -rf thamos/swagger_client
 cp -r swagger-codegen-output/thamos/swagger_client/ thamos/swagger_client
 # There is a bug in swagger-codegen - it does not respect sub-package for some files, this is a simple workaround.
-find swagger-codegen-output/thamos.swagger_client/ -iname '*.py' -exec sed -i 's/^from thoth/from thamos.swagger_client.thoth/' {} \+
+find swagger-codegen-output/thamos/swagger_client/ -iname '*.py' -exec sed -i 's/^from thoth/from thamos.swagger_client.thoth/' {} \+
 find swagger-codegen-output/docs -iname '*.md' -exec sed -i 's|All URIs are relative to .*|All URIs are relative to https://test.thoth-station.ninja/api/v1|' {} \+
-cp -r swagger-codegen-output/thamos.swagger_client/* thamos/swagger_client
+cp -r swagger-codegen-output/thamos/swagger_client/* thamos/swagger_client
 cp -r swagger-codegen-output/docs Documentation
 
 # Nullable values are not recognized by swagger-codegen.sh.
@@ -53,3 +54,5 @@ sed -i '/.*if reason is None:/,+1 d' "thamos/swagger_client/models/analysis_stat
 sed -i '/.*if started_at is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
 sed -i '/.*if log is None:/,+1 d' "thamos/swagger_client/models/analysis_log_response.py"
 sed -i '/.*if warehouse_api_url is None:/,+1 d' "thamos/swagger_client/models/python_package_indexes_indexes.py"
+find Documentation -name "*.md" -exec sed -i 's/[ \t]*$//' {} \;
+find thamos/swagger_client -name "*.py" -exec sed -i 's/[ \t]*$//' {} \;
