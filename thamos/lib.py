@@ -1279,9 +1279,12 @@ def collect_support_information_dict() -> Dict[str, Any]:
     """Collect environment information suitable to report bugs or issues in a dictionary form."""
     discovery = {}
 
-    for name, obj in thamos.discover.__dict__.items():
-        if callable(obj) and name.startswith("discover_"):
-            discovery[name[len("discover_") :]] = obj()
+    for name in dir(thamos.discover):
+        if not name.startswith("discover_"):
+            continue
+
+        func = getattr(thamos.discover, name)
+        discovery[name[len("discover_") :]] = func()
 
     thoth_config_content = None
     try:
