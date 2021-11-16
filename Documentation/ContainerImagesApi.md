@@ -4,12 +4,12 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**list_container_images**](ContainerImagesApi.md#list_container_images) | **GET** /container-images | Get analyzed container images.
+[**list_thoth_container_images**](ContainerImagesApi.md#list_thoth_container_images) | **GET** /container-images | List available Thoth container images.
 
-# **list_container_images**
-> ContainerImagesResponse list_container_images()
+# **list_thoth_container_images**
+> ContainerImagesResponse list_thoth_container_images()
 
-Get analyzed container images.
+List available Thoth container images.
 
 ### Example
 ```python
@@ -23,11 +23,11 @@ from pprint import pprint
 api_instance = thamos.swagger_client.ContainerImagesApi()
 
 try:
-    # Get analyzed container images.
-    api_response = api_instance.list_container_images()
+    # List available Thoth container images.
+    api_response = api_instance.list_thoth_container_images()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ContainerImagesApi->list_container_images: %s\n" % e)
+    print("Exception when calling ContainerImagesApi->list_thoth_container_images: %s\n" % e)
 ```
 
 ### Parameters

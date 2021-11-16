@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **image_sha** | **str** |  |
 **os_name** | **str** |  |
 **os_version** | **str** |  |
-**thoth_s2i_image_name** | **str** |  |
-**thoth_s2i_image_version** | **str** |  |
+**thoth_image_name** | **str** |  |
+**thoth_image_version** | **str** |  |
 **cuda_version** | **str** |  |
 **environment_type** | **str** |  |
 

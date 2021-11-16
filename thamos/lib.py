@@ -58,7 +58,7 @@ from .swagger_client import ProvenanceInput
 from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
-from .swagger_client import S2iApi
+from .swagger_client import ContainerImagesApi
 from .swagger_client import PythonPackagesApi
 from .swagger_client.models import AnalysisResultResponse
 from .config import config as thoth_config
@@ -1155,9 +1155,13 @@ def install(
 
 
 @with_api_client
-def list_thoth_s2i(api_client: ApiClient) -> typing.Dict[str, Any]:
-    """Get information about hardware for which Thoth can give recommendations."""
-    return S2iApi(api_client).list_s2i_python().to_dict()["s2i"]
+def list_thoth_container_images(api_client: ApiClient) -> typing.Dict[str, Any]:
+    """Get available Thoth container images."""
+    return (
+        ContainerImagesApi(api_client)
+        .list_thoth_container_images()
+        .to_dict()["container_images"]
+    )
 
 
 @with_api_client
