@@ -4,7 +4,7 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_package_from_imported_packages**](PythonPackagesApi.md#get_package_from_imported_packages) | **GET** /python/imports | List imported packages&#x27; names.
+[**get_package_from_imported_packages**](PythonPackagesApi.md#get_package_from_imported_packages) | **GET** /python/imports | List imported packages&#x27; (name, version, index).
 [**get_package_metadata**](PythonPackagesApi.md#get_package_metadata) | **GET** /python/package/metadata | Retrieve metadata relative to a Python Package from the Knowledge Graph.
 [**get_python_package_dependencies**](PythonPackagesApi.md#get_python_package_dependencies) | **GET** /python/package/dependencies | Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.
 [**get_python_platform**](PythonPackagesApi.md#get_python_platform) | **GET** /python/platform | Get supported platforms for Python ecosystem.
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 # **get_package_from_imported_packages**
 > PythonPackageNameResponse get_package_from_imported_packages(import_name)
 
-List imported packages' names.
+List imported packages' (name, version, index).
 
 ### Example
 ```python
@@ -26,10 +26,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-import_name = 'sklearn.cluster.MiniBatchKMeans' # str | Names of the Python Packages for the given import package name.  (default to sklearn.cluster.MiniBatchKMeans)
+import_name = 'sklearn.cluster.MiniBatchKMeans' # str | Names of the Python Packages (name, version, index) for the given import package name.  (default to sklearn.cluster.MiniBatchKMeans)
 
 try:
-    # List imported packages' names.
+    # List imported packages' (name, version, index).
     api_response = api_instance.get_package_from_imported_packages(import_name)
     pprint(api_response)
 except ApiException as e:
@@ -40,7 +40,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **import_name** | **str**| Names of the Python Packages for the given import package name.  | [default to sklearn.cluster.MiniBatchKMeans]
+ **import_name** | **str**| Names of the Python Packages (name, version, index) for the given import package name.  | [default to sklearn.cluster.MiniBatchKMeans]
 
 ### Return type
 

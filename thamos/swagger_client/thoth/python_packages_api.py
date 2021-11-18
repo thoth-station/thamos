@@ -33,7 +33,7 @@ class PythonPackagesApi(object):
         self.api_client = api_client
 
     def get_package_from_imported_packages(self, import_name, **kwargs):  # noqa: E501
-        """List imported packages' names.  # noqa: E501
+        """List imported packages' (name, version, index).  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -41,7 +41,7 @@ class PythonPackagesApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str import_name: Names of the Python Packages for the given import package name.  (required)
+        :param str import_name: Names of the Python Packages (name, version, index) for the given import package name.  (required)
         :return: PythonPackageNameResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -54,7 +54,7 @@ class PythonPackagesApi(object):
             return data
 
     def get_package_from_imported_packages_with_http_info(self, import_name, **kwargs):  # noqa: E501
-        """List imported packages' names.  # noqa: E501
+        """List imported packages' (name, version, index).  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -62,7 +62,7 @@ class PythonPackagesApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str import_name: Names of the Python Packages for the given import package name.  (required)
+        :param str import_name: Names of the Python Packages (name, version, index) for the given import package name.  (required)
         :return: PythonPackageNameResponse
                  If the method is called asynchronously,
                  returns the request thread.

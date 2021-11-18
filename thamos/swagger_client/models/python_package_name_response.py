@@ -28,7 +28,7 @@ class PythonPackageNameResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'package_names': 'list[str]',
+        'package_names': 'list[PythonPackageNameResponsePackageNames]',
         'parameters': 'object'
     }
 
@@ -51,7 +51,7 @@ class PythonPackageNameResponse(object):
 
 
         :return: The package_names of this PythonPackageNameResponse.  # noqa: E501
-        :rtype: list[str]
+        :rtype: list[PythonPackageNameResponsePackageNames]
         """
         return self._package_names
 
@@ -61,7 +61,7 @@ class PythonPackageNameResponse(object):
 
 
         :param package_names: The package_names of this PythonPackageNameResponse.  # noqa: E501
-        :type: list[str]
+        :type: list[PythonPackageNameResponsePackageNames]
         """
         if package_names is None:
             raise ValueError("Invalid value for `package_names`, must not be `None`")  # noqa: E501
