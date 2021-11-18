@@ -1186,24 +1186,35 @@ def get_package_from_imported_packages(
 
 
 def get_verified_packages_from_static_analysis(src_path: str = "."):
-    """"Get verified packages from invectio static analysis result."""
+    """Get verified packages from invectio static analysis result."""
     # 1. Obtain list of imports using invectio
 
     result = get_static_analysis(src_path)
-    packages = [p for p in result['report']]
+
+    packages = []
+
+    if result:
+        packages = [p for p in result["report"].keys()]
 
     # 2. For each import verify package (name, version, index) (whatprovides logic)
 
     verified_packages = []
 
     for import_name in packages:
-        try:
-            result = get_package_from_imported_packages(import_name)
-            unique_packages = set([p['package_name'] for p in result])
 
-            for unique_package in unique_packages:
-                verified_packages.append(unique_package)
-            _LOGGER.info(f"Package name {unique_package} identifed for import name {import_name}")
+        unique_packages = set()
+
+        try:
+            imported_packages = get_package_from_imported_packages(import_name)
+
+            if imported_packages:
+                unique_packages = set([p["package_name"] for p in imported_packages])
+
+                for unique_package in unique_packages:
+                    verified_packages.append(unique_package)
+                    _LOGGER.info(
+                        f"Package name {unique_package} identifed for import name {import_name}"
+                    )
 
         except Exception as e:
             _LOGGER.warning(e)
@@ -1490,3 +1501,35 @@ def print_dependency_graph(
         return False
 
     return print_dependency_graph_from_adviser_document(adviser_document, fold=fold)
+
+
+def add_requirements_to_project(
+    requirement: typing.List[str],
+    runtime_environment: typing.Optional[str],
+    index_url: str,
+    dev: bool,
+):
+    """Add requirements to project."""
+    project = thoth_config.get_project(runtime_environment, missing_dir_ok=True)
+
+    for req in requirement:
+        _LOGGER.info(
+            "Adding %r to %s requirements of runtime environment %r",
+            req,
+            "development" if dev else "default",
+            project.runtime_environment.name,
+        )
+        project.pipfile.add_requirement(
+            req, is_dev=dev, index_url=index_url, force=True
+        )
+        runtime_environment_config = thoth_config.get_runtime_environment(
+            runtime_environment
+        )
+        python_version = runtime_environment_config.get("python_version")
+        if python_version:
+            project.set_python_version(python_version)
+
+    _LOGGER.warning(
+        "Changes done might require triggering new advise to resolve dependencies"
+    )
+    thoth_config.save_project(project)
