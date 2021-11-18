@@ -273,7 +273,7 @@ def _retrieve_analysis_result(
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
-def _get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
+def get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
@@ -459,7 +459,7 @@ def advise(
 
     library_usage = None
     if not no_static_analysis:
-        library_usage = _get_static_analysis(src_path)
+        library_usage = get_static_analysis(src_path)
         _LOGGER.debug(
             "Library usage:%s",
             "\n" + json.dumps(library_usage, indent=2) if library_usage else None,
@@ -1183,6 +1183,32 @@ def get_package_from_imported_packages(
         .get_package_from_imported_packages(import_name)
         .to_dict()["package_names"]
     )
+
+
+def get_verified_packages_from_static_analysis(src_path: str = "."):
+    """"Get verified packages from invectio static analysis result."""
+    # 1. Obtain list of imports using invectio
+
+    result = get_static_analysis(src_path)
+    packages = [p for p in result['report']]
+
+    # 2. For each import verify package (name, version, index) (whatprovides logic)
+
+    verified_packages = []
+
+    for import_name in packages:
+        try:
+            result = get_package_from_imported_packages(import_name)
+            unique_packages = set([p['package_name'] for p in result])
+
+            for unique_package in unique_packages:
+                verified_packages.append(unique_package)
+            _LOGGER.info(f"Package name {unique_package} identifed for import name {import_name}")
+
+        except Exception as e:
+            _LOGGER.warning(e)
+
+    return verified_packages
 
 
 def write_files(

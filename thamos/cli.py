@@ -48,14 +48,16 @@ from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import collect_support_information_dict
 from thamos.lib import get_log
 from thamos.lib import get_package_from_imported_packages
+from thamos.lib import get_static_analysis
 from thamos.lib import get_status
 from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
 from thamos.lib import list_thoth_container_images
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
-from thamos.lib import write_configuration
 from thamos.lib import print_dependency_graph
+from thamos.lib import get_verified_packages_from_static_analysis
+from thamos.lib import write_configuration
 from thamos.lib import write_files
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
@@ -1391,7 +1393,7 @@ def support(output: str) -> None:
 )
 @click.argument("import_name", type=str, required=True)
 @handle_cli_exception
-def whatprovides(import_name: str, output_format: str) -> typing.List[str]:
+def whatprovides(import_name: str, output_format: str) -> None:
     """For a given import_name returns list of (package_name, package_version, index_url) triplets.
 
     Examples:
@@ -1434,18 +1436,25 @@ def whatprovides(import_name: str, output_format: str) -> typing.List[str]:
 
 @cli.command("discover")
 @click.pass_context
+@click.option(
+    "--src-path",
+    "-sp",
+    type=str,
+    default=".",
+    envvar="THAMOS_SOURCE_PATH",
+    help="Specify path to consider to discover packages.",
+)
 @handle_cli_exception
-def discover() -> str:
+def discover(src_path: str = ".") -> None:
     """Discover packages used in the project.
 
     Examples:
       thamos discover
     """
-    # 1. Obtain list of imports using invectio
+    # Obtain list of imports using invectio and verify package from PyPI
+    verified_packages = get_verified_packages_from_static_analysis(src_path=src_path)
 
-    # 2. For each import verify package (name, version, index) (whatprovides logic)
-
-    # 3. Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)
+    # Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)
 
 
 __name__ == "__main__" and cli()
