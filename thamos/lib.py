@@ -1188,32 +1188,51 @@ def get_package_from_imported_packages(
 def get_verified_packages_from_static_analysis(src_path: str = "."):
     """Get verified packages from invectio static analysis result."""
     # 1. Obtain list of imports using invectio
-
     result = get_static_analysis(src_path)
-
     packages = []
 
     if result:
         packages = [p for p in result["report"].keys()]
 
     # 2. For each import verify package (name, version, index) (whatprovides logic)
-
     verified_packages = []
 
     for import_name in packages:
-
-        unique_packages = set()
+        unique_packages: typing.List[typing.Dict] = []
 
         try:
             imported_packages = get_package_from_imported_packages(import_name)
 
             if imported_packages:
-                unique_packages = set([p["package_name"] for p in imported_packages])
+                for package in imported_packages:
+                    if package["package_name"] not in [
+                        p["package_name"] for p in unique_packages
+                    ]:
+                        unique_packages.append(
+                            {
+                                "package_name": package["package_name"],
+                                "index_url": package["index_url"],
+                            }
+                        )
+                    else:
+                        existing_indexes = [
+                            p["index_url"]
+                            for p in unique_packages
+                            if p["package_name"] == package["package_name"]
+                        ]
+
+                        if package["index_url"] not in existing_indexes:
+                            unique_packages.append(
+                                {
+                                    "package_name": package["package_name"],
+                                    "index_url": package["index_url"],
+                                }
+                            )
 
                 for unique_package in unique_packages:
                     verified_packages.append(unique_package)
                     _LOGGER.info(
-                        f"Package name {unique_package} identifed for import name {import_name}"
+                        f"Package name {unique_package['package_name']} identifed for import name {import_name}"
                     )
 
         except Exception as e:

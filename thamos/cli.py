@@ -1388,32 +1388,16 @@ def whatprovides(import_name: str, output_format: str) -> None:
     result = get_package_from_imported_packages(import_name)
 
     if output_format == "yaml":
-        yaml.safe_dump({"package_names": result}, sys.stdout)
+        yaml.safe_dump({"packages": result}, sys.stdout)
     elif output_format == "json":
-        json.dump({"package_names": result}, sys.stdout, indent=2)
+        json.dump({"packages": result}, sys.stdout, indent=2)
         sys.stdout.write("\n")
-    elif output_format == "table":
-        table = Table()
-
-        header = set()
-        for item in result:
-            for key in item.keys():
-                header.add(key)
-
-        header_sorted = sorted(header)
-        for item in header_sorted:
-            table.add_column(item.capitalize())
-
-        for item in result:
-            row = []
-            for key in header_sorted:
-                entry = item.get(key)
-                row.append(str(entry) if entry is not None else "-")
-
-            table.add_row(*row)
-
-        console = Console()
-        console.print(table, justify="center")
+    else:
+        _print_report(
+            result,
+            json_output=False,
+            title=f"Packages for {import_name}",
+        )
 
     sys.exit(0)
 
@@ -1438,7 +1422,7 @@ def whatprovides(import_name: str, output_format: str) -> None:
 )
 @handle_cli_exception
 def discover(runtime_environment: typing.Optional[str], src_path: str = ".") -> None:
-    """Discover packages used in the project.
+    """Discover packages used in the project or in the file.
 
     Examples:
       thamos discover
@@ -1447,12 +1431,13 @@ def discover(runtime_environment: typing.Optional[str], src_path: str = ".") -> 
     verified_packages = get_verified_packages_from_static_analysis(src_path=src_path)
 
     # Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)
-    add_requirements_to_project(
-        requirement=verified_packages,
-        runtime_environment=runtime_environment,
-        index_url="https://pypi.org/simple",
-        dev=False,
-    )
+    for package in verified_packages:
+        add_requirements_to_project(
+            requirement=[package["package_name"]],
+            runtime_environment=runtime_environment,
+            index_url=package["index_url"],
+            dev=False,
+        )
 
 
 __name__ == "__main__" and cli()
