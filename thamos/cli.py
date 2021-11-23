@@ -101,7 +101,7 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     return wrapper
 
 
-def _print_report(report: dict, json_output: bool = False, title: Optional[str] = None):
+def _print_report(report: list, json_output: bool = False, title: Optional[str] = None):
     """Print reasoning to user."""
     if json_output:
         click.echo(json.dumps(report, sort_keys=True, indent=2))
