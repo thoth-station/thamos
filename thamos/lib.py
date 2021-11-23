@@ -1178,11 +1178,18 @@ def get_package_from_imported_packages(
     api_client: ApiClient, import_name: str
 ) -> typing.List[Dict[str, Any]]:
     """Get all (package_name, package_version, index_url) triplets for given import package name."""
-    return (
-        PythonPackagesApi(api_client)
-        .get_package_from_imported_packages(import_name)
-        .to_dict()["package_names"]
-    )
+    result = []
+    try:
+        result = (
+            PythonPackagesApi(api_client)
+            .get_package_from_imported_packages(import_name)
+            .to_dict()["package_names"]
+        )
+    except Exception as error:
+        body_response = getattr(error, "body")
+        _LOGGER.error(json.loads(body_response)["error"])
+
+    return result
 
 
 def get_verified_packages_from_static_analysis(src_path: str = "."):
@@ -1235,8 +1242,10 @@ def get_verified_packages_from_static_analysis(src_path: str = "."):
                         f"Package name {unique_package['package_name']} identifed for import name {import_name}"
                     )
 
-        except Exception as e:
-            _LOGGER.warning(e)
+        except Exception as error:
+            _LOGGER.warning(
+                f"No packages identified for import name {import_name}: {error}"
+            )
 
     return verified_packages
 
