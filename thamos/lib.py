@@ -1178,18 +1178,11 @@ def get_package_from_imported_packages(
     api_client: ApiClient, import_name: str
 ) -> typing.List[Dict[str, Any]]:
     """Get all (package_name, package_version, index_url) triplets for given import package name."""
-    result = []
-    try:
-        result = (
-            PythonPackagesApi(api_client)
-            .get_package_from_imported_packages(import_name)
-            .to_dict()["package_names"]
-        )
-    except Exception as error:
-        body_response = getattr(error, "body")
-        _LOGGER.error(json.loads(body_response)["error"])
-
-    return result
+    return (
+        PythonPackagesApi(api_client)
+        .get_package_from_imported_packages(import_name)
+        .to_dict()["package_names"]
+    )
 
 
 def get_verified_packages_from_static_analysis(src_path: str = "."):
