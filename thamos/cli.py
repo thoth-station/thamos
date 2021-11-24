@@ -45,16 +45,19 @@ from thamos.exceptions import NoProjectDirError
 from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
+from thamos.lib import add_requirements_to_project
 from thamos.lib import collect_support_information_dict
 from thamos.lib import get_log
+from thamos.lib import get_package_from_imported_packages
 from thamos.lib import get_status
 from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
 from thamos.lib import list_thoth_container_images
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
-from thamos.lib import write_configuration
 from thamos.lib import print_dependency_graph
+from thamos.lib import get_verified_packages_from_static_analysis
+from thamos.lib import write_configuration
 from thamos.lib import write_files
 from thamos.utils import workdir
 from thamos import __version__ as thamos_version
@@ -98,7 +101,7 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     return wrapper
 
 
-def _print_report(report: dict, json_output: bool = False, title: Optional[str] = None):
+def _print_report(report: list, json_output: bool = False, title: Optional[str] = None):
     """Print reasoning to user."""
     if json_output:
         click.echo(json.dumps(report, sort_keys=True, indent=2))
@@ -1274,28 +1277,12 @@ def add(
 
       thamos add 'importlib-metadata; python_version < "3.8"'
     """
-    project = configuration.get_project(runtime_environment, missing_dir_ok=True)
-    for req in requirement:
-        _LOGGER.info(
-            "Adding %r to %s requirements of runtime environment %r",
-            req,
-            "development" if dev else "default",
-            project.runtime_environment.name,
-        )
-        project.pipfile.add_requirement(
-            req, is_dev=dev, index_url=index_url, force=True
-        )
-        runtime_environment_config = configuration.get_runtime_environment(
-            runtime_environment
-        )
-        python_version = runtime_environment_config.get("python_version")
-        if python_version:
-            project.set_python_version(python_version)
-
-    _LOGGER.warning(
-        "Changes done might require triggering new advise to resolve dependencies"
+    add_requirements_to_project(
+        requirement=requirement,
+        runtime_environment=runtime_environment,
+        index_url=index_url,
+        dev=dev,
     )
-    configuration.save_project(project)
 
 
 @cli.command("remove")
@@ -1377,6 +1364,80 @@ def support(output: str) -> None:
     else:
         with open(output, "w") as output_file:
             json.dump(info, output_file, sort_keys=True, indent=2)
+
+
+@cli.command("whatprovides")
+@click.pass_context
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+@click.argument("import_name", type=str, required=True)
+@handle_cli_exception
+def whatprovides(import_name: str, output_format: str) -> None:
+    """For a given import_name returns list of (package_name, package_version, index_url) triplets.
+
+    Examples:
+      thamos whatprovides sklearn
+
+    """
+    _LOGGER.info("Returning information on package %r", import_name)
+    result = get_package_from_imported_packages(import_name)
+
+    if output_format == "yaml":
+        yaml.safe_dump({"packages": result}, sys.stdout)
+    elif output_format == "json":
+        json.dump({"packages": result}, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    else:
+        _print_report(
+            result,
+            json_output=False,
+            title=f"Packages for {import_name}",
+        )
+
+    sys.exit(0)
+
+
+@cli.command("discover")
+@click.pass_context
+@click.option(
+    "--src-path",
+    "-sp",
+    type=str,
+    default=".",
+    envvar="THAMOS_SOURCE_PATH",
+    help="Specify path to consider to discover packages.",
+)
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment to which the given package should be added.",
+)
+@handle_cli_exception
+def discover(runtime_environment: typing.Optional[str], src_path: str = ".") -> None:
+    """Discover packages used in the project or in the file.
+
+    Examples:
+      thamos discover
+    """
+    # Obtain list of imports using invectio and verify package from PyPI
+    verified_packages = get_verified_packages_from_static_analysis(src_path=src_path)
+
+    # Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)
+    for package in verified_packages:
+        add_requirements_to_project(
+            requirement=[package["package_name"]],
+            runtime_environment=runtime_environment,
+            index_url=package["index_url"],
+            dev=False,
+        )
 
 
 __name__ == "__main__" and cli()

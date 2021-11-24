@@ -273,7 +273,7 @@ def _retrieve_analysis_result(
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
-def _get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
+def get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
@@ -459,7 +459,7 @@ def advise(
 
     library_usage = None
     if not no_static_analysis:
-        library_usage = _get_static_analysis(src_path)
+        library_usage = get_static_analysis(src_path)
         _LOGGER.debug(
             "Library usage:%s",
             "\n" + json.dumps(library_usage, indent=2) if library_usage else None,
@@ -1173,6 +1173,83 @@ def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
     )
 
 
+@with_api_client
+def get_package_from_imported_packages(
+    api_client: ApiClient, import_name: str
+) -> typing.List[Dict[str, Any]]:
+    """Get all (package_name, package_version, index_url) triplets for given import package name."""
+    result = []
+    try:
+        result = (
+            PythonPackagesApi(api_client)
+            .get_package_from_imported_packages(import_name)
+            .to_dict()["package_names"]
+        )
+    except Exception as error:
+        body_response = getattr(error, "body")
+        _LOGGER.error(json.loads(body_response)["error"])
+
+    return result
+
+
+def get_verified_packages_from_static_analysis(src_path: str = "."):
+    """Get verified packages from invectio static analysis result."""
+    # 1. Obtain list of imports using invectio
+    result = get_static_analysis(src_path)
+    packages = []
+
+    if result:
+        packages = [p for p in result["report"].keys()]
+
+    # 2. For each import verify package (name, version, index) (whatprovides logic)
+    verified_packages = []
+
+    for import_name in packages:
+        unique_packages: typing.List[typing.Dict] = []
+
+        try:
+            imported_packages = get_package_from_imported_packages(import_name)
+
+            if imported_packages:
+                for package in imported_packages:
+                    if package["package_name"] not in [
+                        p["package_name"] for p in unique_packages
+                    ]:
+                        unique_packages.append(
+                            {
+                                "package_name": package["package_name"],
+                                "index_url": package["index_url"],
+                            }
+                        )
+                    else:
+                        existing_indexes = [
+                            p["index_url"]
+                            for p in unique_packages
+                            if p["package_name"] == package["package_name"]
+                        ]
+
+                        if package["index_url"] not in existing_indexes:
+                            unique_packages.append(
+                                {
+                                    "package_name": package["package_name"],
+                                    "index_url": package["index_url"],
+                                }
+                            )
+
+                for unique_package in unique_packages:
+                    verified_packages.append(unique_package)
+                    _LOGGER.info(
+                        f"Package name {unique_package['package_name']} identifed for import name {import_name}"
+                    )
+
+        except Exception as error:
+            _LOGGER.warning(
+                f"No packages identified for import name {import_name}: {error}"
+            )
+
+    return verified_packages
+
+
 def write_files(
     requirements: typing.Dict[str, Any],
     requirements_lock: typing.Dict[str, Any],
@@ -1452,3 +1529,35 @@ def print_dependency_graph(
         return False
 
     return print_dependency_graph_from_adviser_document(adviser_document, fold=fold)
+
+
+def add_requirements_to_project(
+    requirement: typing.List[str],
+    runtime_environment: typing.Optional[str],
+    index_url: str,
+    dev: bool,
+):
+    """Add requirements to project."""
+    project = thoth_config.get_project(runtime_environment, missing_dir_ok=True)
+
+    for req in requirement:
+        _LOGGER.info(
+            "Adding %r to %s requirements of runtime environment %r",
+            req,
+            "development" if dev else "default",
+            project.runtime_environment.name,
+        )
+        project.pipfile.add_requirement(
+            req, is_dev=dev, index_url=index_url, force=True
+        )
+        runtime_environment_config = thoth_config.get_runtime_environment(
+            runtime_environment
+        )
+        python_version = runtime_environment_config.get("python_version")
+        if python_version:
+            project.set_python_version(python_version)
+
+    _LOGGER.warning(
+        "Changes done might require triggering new advise to resolve dependencies"
+    )
+    thoth_config.save_project(project)
