@@ -1,4 +1,45 @@
 
+## Release 1.21.0 (2021-11-24T14:36:49)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* fix type input parameter for print_report method
+* Improve error message
+* adjust output for what provides and remove fix index
+* add kebechet to crossroads in docs
+* create method for add requirement
+* Add logic to provide verified packages
+* Add whatprovides and discover commands
+* Corrected return type
+* Update command `thamos whatprovides` and `thamos discover`
+* create get_package_from_imported packages api call and thamos whatprovides command
+* Started creating  command
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Regenerate thamos client library
+* Update swagger client
+* Provide container images sub-command
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Drop hardware subcommand
+* Swagger fixed code generation path
+* Swagger codegen dropped branch and created a tag instead
+* Aggregate also standard imports from user's code
+* Fix support command if no last analysis id is found
+* Fix support command that calls discover methods
+* Remove examples/ directory, use thoth-station/cli-examples repo
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Use https in pre-commit repo links
+* Update the labels of bug/rfe issue templates
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Remove redundant cwd
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Regenerate client to respect API endpoints recently added
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Fold dependency graph shown by default
+* :arrow_up: Automatic update of dependencies by Kebechet
+* :arrow_up: Automatic update of dependencies by Kebechet
+
 ## Release 0.1.0 (2018-12-19T11:47:49)
 * Use contoml instead of toml, it has prettier output
 * Warn on using insecure network without TLS
