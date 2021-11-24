@@ -1377,12 +1377,14 @@ def support(output: str) -> None:
 )
 @click.argument("import_name", type=str, required=True)
 @handle_cli_exception
-def whatprovides(import_name: str, output_format: str) -> None:
-    """For a given import_name returns list of (package_name, package_version, index_url) triplets.
+def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
+    """For a given import returns list of packages with matching modules.
 
     Examples:
+
       thamos whatprovides sklearn
 
+      thamos whatprovides sklearn.linear_model.*
     """
     _LOGGER.info("Returning information on package %r", import_name)
     result = get_package_from_imported_packages(import_name)
@@ -1421,10 +1423,13 @@ def whatprovides(import_name: str, output_format: str) -> None:
     help="Specify runtime environment to which the given package should be added.",
 )
 @handle_cli_exception
-def discover(runtime_environment: typing.Optional[str], src_path: str = ".") -> None:
+def discover(
+    runtime_environment: typing.Optional[str], src_path: str = "."
+) -> None:  # noqa: D412
     """Discover packages used in the project or in the file.
 
     Examples:
+
       thamos discover
     """
     # Obtain list of imports using invectio and verify package from PyPI
