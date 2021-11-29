@@ -1,4 +1,7 @@
 
+## Release 1.21.1 (2021-11-29T13:25:21)
+* Show an example with imports with a star
+
 ## Release 1.21.0 (2021-11-24T14:36:49)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
