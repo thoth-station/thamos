@@ -59,6 +59,7 @@ from .swagger_client import AdviseApi
 from .swagger_client import ImageAnalysisApi
 from .swagger_client import ProvenanceApi
 from .swagger_client import ContainerImagesApi
+from .swagger_client import EnvironmentsApi
 from .swagger_client import PythonPackagesApi
 from .swagger_client.models import AnalysisResultResponse
 from .config import config as thoth_config
@@ -1162,6 +1163,14 @@ def list_thoth_container_images(api_client: ApiClient) -> typing.Dict[str, Any]:
         ContainerImagesApi(api_client)
         .list_thoth_container_images()
         .to_dict()["container_images"]
+    )
+
+
+@with_api_client
+def list_python_environments(api_client: ApiClient) -> typing.Dict[str, Any]:
+    """Get available Python environments."""
+    return (
+        EnvironmentsApi(api_client).list_python_environments().to_dict()["environment"]
     )
 
 
