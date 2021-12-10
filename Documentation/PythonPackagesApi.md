@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**list_python_package_versions**](PythonPackagesApi.md#list_python_package_versions) | **GET** /python/package/versions | List versions of the given Python package.
 
 # **get_package_from_imported_packages**
-> PythonPackageNameResponse get_package_from_imported_packages(import_name)
+> PythonPackageNameImportResponse get_package_from_imported_packages(import_name)
 
 List imported packages' (name, version, index).
 
@@ -44,7 +44,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PythonPackageNameResponse**](PythonPackageNameResponse.md)
+[**PythonPackageNameImportResponse**](PythonPackageNameImportResponse.md)
 
 ### Authorization
 
