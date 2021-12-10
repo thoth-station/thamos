@@ -52,6 +52,7 @@ from thamos.lib import get_package_from_imported_packages
 from thamos.lib import get_status
 from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
+from thamos.lib import list_python_environments
 from thamos.lib import list_thoth_container_images
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
@@ -1444,6 +1445,38 @@ def discover(
             runtime_environment=runtime_environment,
             index_url=package["index_url"],
             dev=False,
+        )
+
+
+@cli.command("environments")
+@click.option(
+    "--output-format",
+    "-o",
+    type=click.Choice(["json", "yaml", "table"]),
+    default="table",
+    help="Specify output format for the status report.",
+)
+@click.pass_context
+@handle_cli_exception
+def environments_(output_format: str) -> None:  # noqa: D412
+    """Show available Python environments.
+
+    Examples:
+
+      thamos environments
+    """
+    environments = list_python_environments()
+
+    if output_format == "yaml":
+        yaml.safe_dump({"environment": environments}, sys.stdout)
+    elif output_format == "json":
+        json.dump({"environment": environments}, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    else:
+        _print_report(
+            environments,
+            json_output=False,
+            title="Python environments",
         )
 
 
