@@ -216,6 +216,7 @@ class AliasedGroup(click.Group):
 @click.option(
     "--workdir",
     "-d",
+    metavar="DIR",
     type=str,
     default=None,
     help="Adjust working directory for sub-commands.",
@@ -223,6 +224,7 @@ class AliasedGroup(click.Group):
 @click.option(
     "--thoth-host",
     "-t",
+    metavar="HOST",
     type=str,
     default=None,
     help="Use selected host instead of the one stated in the configuration file.",
