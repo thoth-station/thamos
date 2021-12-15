@@ -67,6 +67,7 @@ _CONFIG_RUNTIME_ENVIRONMENT_SCHEMA = {
         "cudnn_version": {"type": ["string", "null"]},
         "mkl_version": {"type": ["string", "null"]},
         "base_image": {"type": ["string", "null"]},
+        "labels": {"type": ["object", "null"]},
         "hardware": {
             "type": "object",
             "properties": {
