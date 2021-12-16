@@ -93,6 +93,9 @@ An example of configuration file template can be:
       operating_system:
         name: {os_name}
         version: '{os_version}'
+      labels:
+        foo: bar
+        key: value
       hardware:
         cpu_family: {cpu_family}
         cpu_model: {cpu_model}
@@ -161,7 +164,9 @@ on the request.
 An example can be a CI system that is asking for an advise and labels the
 request with ``requester=ci_foo,team=thoth``. In such a case, the resolution
 engine includes pipeline units that are specific to the CI system and the team
-specified (besides the ones that are added by default).
+specified (besides the ones that are added by default). Labels can be specified
+in the ``.thoth.yaml`` configuration file or using CLI (labels passed via CLI
+take precedence):
 
 .. code-block:: console
 

@@ -488,6 +488,8 @@ def advise(
         input_args["constraints"] = constraints
     if labels:
         input_args["labels"] = labels
+    elif runtime_environment.get("labels"):
+        input_args["labels"] = runtime_environment["labels"]
 
     advise_input = AdviseInput(**input_args)
     api_instance = AdviseApi(api_client)
