@@ -1,4 +1,14 @@
 
+## Release 1.22.0 (2021-12-16T12:32:42)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Allow specifying labels in Thoth's configuration file
+* Provide environments subcommand
+* Update swagger client
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Provide metavar to options
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.21.1 (2021-11-29T13:25:21)
 * Show an example with imports with a star
 
