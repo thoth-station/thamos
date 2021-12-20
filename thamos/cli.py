@@ -1536,4 +1536,38 @@ def environments_(output_format: str) -> None:  # noqa: D412
         )
 
 
+@cli.command("verify")
+@click.pass_context
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment from which the given package should be removed.",
+)
+@handle_cli_exception
+def verify(runtime_environment: typing.Optional[str]) -> None:  # noqa: D412
+    """Verify the hash in Pipfile.lock is up-to-date.
+
+    Examples:
+
+        thamos verify
+
+        thamos verify --runtime-environment "training"
+    """
+    runtime_environment_name = runtime_environment or configuration.get_runtime_environment()["name"]
+    project = configuration.get_project(runtime_environment_name)
+
+    if not project.pipfile_lock:
+        _LOGGER.error("No lock file found for runtime environment %r", runtime_environment_name)
+        sys.exit(2)
+
+    if project.pipfile.hash() != project.pipfile_lock.meta.hash:
+        _LOGGER.error("Pipfile.lock is out-of-date. Run `thamos advise` to update.")
+        sys.exit(1)
+
+    _LOGGER.info("Pipfile.lock is up-to-date.")
+
+
 __name__ == "__main__" and cli()
