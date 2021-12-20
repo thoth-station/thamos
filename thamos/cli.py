@@ -1128,15 +1128,68 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     default="table",
     help="Specify output format for the status report.",
 )
+@click.option(
+    "--os-name",
+    "-n",
+    type=str,
+    default=None,
+    metavar="OS_NAME",
+    help="Operating system name filter.",
+)
+@click.option(
+    "--os-version",
+    "-v",
+    type=str,
+    default=None,
+    metavar="OS_VERSION",
+    help="Operating system version filter.",
+)
+@click.option(
+    "--python_version",
+    "-p",
+    type=str,
+    default=None,
+    metavar="PY_VERSION",
+    help="Python interpreter version filter.",
+)
+@click.option(
+    "--cuda-version",
+    type=str,
+    default=None,
+    metavar="CUDA_VERSION",
+    help="CUDA version filter.",
+)
+@click.option(
+    "--image-name",
+    type=str,
+    default=None,
+    metavar="IMAGE_NAME",
+    help="Filter based on image name.",
+)
 @handle_cli_exception
-def images(output_format: str) -> None:  # noqa: D412
+def images(
+    output_format: Optional[str],
+    os_name: Optional[str],
+    os_version: Optional[str],
+    python_version: Optional[str],
+    cuda_version: Optional[str],
+    image_name: Optional[str],
+) -> None:  # noqa: D412
     """Check available Thoth container images.
 
     Examples:
 
       thamos images --output-format json
+
+      thamos images --os-name fedora --os-version 35 --python-version 3.9
     """
-    result = list_thoth_container_images()
+    result = list_thoth_container_images(
+        os_name=os_name,
+        os_version=os_version,
+        python_version=python_version,
+        cuda_version=cuda_version,
+        image_name=image_name,
+    )
 
     if output_format == "yaml":
         yaml.safe_dump({"s2i": result}, sys.stdout)
@@ -1165,7 +1218,10 @@ def images(output_format: str) -> None:  # noqa: D412
             for key in header_sorted:
                 if key == "info":
                     image_name = item.get("thoth_image_name")
-                    row.append(jl(image_name.rsplit("/", maxsplit=1)[-1]))
+                    if image_name:
+                        row.append(jl(image_name.rsplit("/", maxsplit=1)[-1]))
+                    else:
+                        row.append(None)
                     continue
 
                 entry = item.get(key)
