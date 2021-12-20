@@ -41,6 +41,7 @@ from micropipenv import HashMismatch
 from thoth.common import cwd
 from thoth.common import ThothAdviserIntegrationEnum
 from thoth.common import get_justification_link as jl
+from thamos.exceptions import ConfigurationError
 from thamos.exceptions import NoProjectDirError
 from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.config import config as configuration
@@ -1548,7 +1549,7 @@ def environments_(output_format: str) -> None:  # noqa: D412
 )
 @handle_cli_exception
 def verify(runtime_environment: typing.Optional[str]) -> None:  # noqa: D412
-    """Verify the hash in Pipfile.lock is up-to-date.
+    """Verify the hash in Pipfile.lock is up-to-date in runtime environments configured.
 
     Examples:
 
@@ -1556,18 +1557,54 @@ def verify(runtime_environment: typing.Optional[str]) -> None:  # noqa: D412
 
         thamos verify --runtime-environment "training"
     """
-    runtime_environment_name = runtime_environment or configuration.get_runtime_environment()["name"]
-    project = configuration.get_project(runtime_environment_name)
-
-    if not project.pipfile_lock:
-        _LOGGER.error("No lock file found for runtime environment %r", runtime_environment_name)
+    if configuration.requirements_format != "pipenv":
+        _LOGGER.error(
+            "Cannot verify hash of the lock file as the project uses requirements format %r, please switch "
+            "to 'pipenv' to have the ability to check the lock file hash",
+            configuration.requirements_format,
+        )
         sys.exit(2)
 
-    if project.pipfile.hash() != project.pipfile_lock.meta.hash:
-        _LOGGER.error("Pipfile.lock is out-of-date. Run `thamos advise` to update.")
-        sys.exit(1)
+    if runtime_environment:
+        runtime_environments = [
+            configuration.get_runtime_environment(runtime_environment)
+        ]
+    else:
+        runtime_environments = configuration.list_runtime_environments()
 
-    _LOGGER.info("Pipfile.lock is up-to-date.")
+    any_error = False
+    for runtime_environment_config in runtime_environments:
+        runtime_environment_name = runtime_environment_config["name"]
+
+        try:
+            project = configuration.get_project(runtime_environment_name)
+        except ConfigurationError:
+            _LOGGER.error(
+                "Failed to obtain configuration for runtime environment %r",
+                runtime_environment_name,
+            )
+            any_error = True
+            continue
+
+        if not project.pipfile_lock:
+            _LOGGER.error(
+                "No lock file found for runtime environment %r",
+                runtime_environment_name,
+            )
+            any_error = True
+            continue
+
+        if project.pipfile.hash() != project.pipfile_lock.meta.hash:
+            _LOGGER.error("Pipfile.lock is out-of-date. Run `thamos advise` to update.")
+            any_error = True
+            continue
+
+        _LOGGER.info(
+            "Pipfile.lock is up-to-date for runtime environment %r",
+            runtime_environment_name,
+        )
+
+    sys.exit(any_error is True)
 
 
 __name__ == "__main__" and cli()
