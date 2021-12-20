@@ -1411,7 +1411,7 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
 @click.pass_context
 @click.option(
     "--src-path",
-    "-sp",
+    "-s",
     type=str,
     default=".",
     envvar="THAMOS_SOURCE_PATH",
