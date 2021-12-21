@@ -1220,14 +1220,20 @@ def get_package_from_imported_packages(
     )
 
 
-def get_verified_packages_from_static_analysis(src_path: str = "."):
+def get_verified_packages_from_static_analysis(
+    src_path: str = ".",
+) -> typing.List[typing.Dict[str, str]]:
     """Get verified packages from invectio static analysis result."""
     # 1. Obtain list of imports using invectio
     result = get_static_analysis(src_path)
-    packages = []
 
+    packages = []
     if result:
         packages = [p for p in result["report"].keys()]
+
+    if not packages:
+        _LOGGER.error("No package imports identified in %r", src_path)
+        return []
 
     # 2. For each import verify package (name, version, index) (whatprovides logic)
     verified_packages = []
@@ -1237,43 +1243,52 @@ def get_verified_packages_from_static_analysis(src_path: str = "."):
 
         try:
             imported_packages = get_package_from_imported_packages(import_name)
+        except ApiException as exc:
+            if exc.status == 404:
+                _LOGGER.error("No matching package found for import %r", import_name)
+                continue
 
-            if imported_packages:
-                for package in imported_packages:
-                    if package["package_name"] not in [
-                        p["package_name"] for p in unique_packages
-                    ]:
+            _LOGGER.error(
+                "Failed to obtain package for import %r (HTTP code %d): %s",
+                import_name,
+                exc.status,
+                exc.body,
+            )
+            continue
+
+        if imported_packages:
+            for package in imported_packages:
+                if package["package_name"] not in [
+                    p["package_name"] for p in unique_packages
+                ]:
+                    unique_packages.append(
+                        {
+                            "package_name": package["package_name"],
+                            "index_url": package["index_url"],
+                        }
+                    )
+                else:
+                    existing_indexes = [
+                        p["index_url"]
+                        for p in unique_packages
+                        if p["package_name"] == package["package_name"]
+                    ]
+
+                    if package["index_url"] not in existing_indexes:
                         unique_packages.append(
                             {
                                 "package_name": package["package_name"],
                                 "index_url": package["index_url"],
                             }
                         )
-                    else:
-                        existing_indexes = [
-                            p["index_url"]
-                            for p in unique_packages
-                            if p["package_name"] == package["package_name"]
-                        ]
 
-                        if package["index_url"] not in existing_indexes:
-                            unique_packages.append(
-                                {
-                                    "package_name": package["package_name"],
-                                    "index_url": package["index_url"],
-                                }
-                            )
-
-                for unique_package in unique_packages:
-                    verified_packages.append(unique_package)
-                    _LOGGER.info(
-                        f"Package name {unique_package['package_name']} identifed for import name {import_name}"
-                    )
-
-        except Exception as error:
-            _LOGGER.warning(
-                f"No packages identified for import name {import_name}: {error}"
-            )
+            for unique_package in unique_packages:
+                verified_packages.append(unique_package)
+                _LOGGER.info(
+                    "Package name %r identified for import %r",
+                    unique_package["package_name"],
+                    import_name,
+                )
 
     return verified_packages
 
