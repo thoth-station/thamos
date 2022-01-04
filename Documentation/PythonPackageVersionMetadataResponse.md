@@ -1,9 +1,10 @@
-# PythonEnvironments
+# PythonPackageVersionMetadataResponse
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**environment** | [**list[PythonPackageVersionEnvironmentsResponseEnvironments]**](PythonPackageVersionEnvironmentsResponseEnvironments.md) |  |
+**parameters** | **object** |  |
+**metadata** | **object** |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
