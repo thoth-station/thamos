@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **thoth_image_version** | **str** |  |
 **cuda_version** | **str** |  |
 **environment_type** | **str** |  |
+**package_extract_document_id** | **str** |  |
+**_datetime** | **str** |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

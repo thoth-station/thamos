@@ -41,6 +41,13 @@ class ContainerImagesApi(object):
         >>> result = thread.get()
 
         :param async_req bool
+        :param int page: Page offset in pagination.
+        :param int per_page: Number of items returned per page.
+        :param str os_name: Name of operating system to consider.
+        :param str os_version: Version of operating system to consider.
+        :param str python_version: Version of Python interpreter provided.
+        :param str cuda_version: Filter based on CUDA version available.
+        :param str image_name: Filter based on image name.
         :return: ContainerImagesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -61,12 +68,19 @@ class ContainerImagesApi(object):
         >>> result = thread.get()
 
         :param async_req bool
+        :param int page: Page offset in pagination.
+        :param int per_page: Number of items returned per page.
+        :param str os_name: Name of operating system to consider.
+        :param str os_version: Version of operating system to consider.
+        :param str python_version: Version of Python interpreter provided.
+        :param str cuda_version: Filter based on CUDA version available.
+        :param str image_name: Filter based on image name.
         :return: ContainerImagesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = []  # noqa: E501
+        all_params = ['page', 'per_page', 'os_name', 'os_version', 'python_version', 'cuda_version', 'image_name']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -87,6 +101,20 @@ class ContainerImagesApi(object):
         path_params = {}
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'per_page' in params:
+            query_params.append(('per_page', params['per_page']))  # noqa: E501
+        if 'os_name' in params:
+            query_params.append(('os_name', params['os_name']))  # noqa: E501
+        if 'os_version' in params:
+            query_params.append(('os_version', params['os_version']))  # noqa: E501
+        if 'python_version' in params:
+            query_params.append(('python_version', params['python_version']))  # noqa: E501
+        if 'cuda_version' in params:
+            query_params.append(('cuda_version', params['cuda_version']))  # noqa: E501
+        if 'image_name' in params:
+            query_params.append(('image_name', params['image_name']))  # noqa: E501
 
         header_params = {}
 
