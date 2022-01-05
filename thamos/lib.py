@@ -1159,7 +1159,9 @@ def install(
 
 
 @with_api_client
-def list_thoth_container_images(api_client: ApiClient) -> typing.List[typing.Dict[str, Any]]:
+def list_thoth_container_images(
+    api_client: ApiClient,
+) -> typing.List[typing.Dict[str, Any]]:
     """Get available Thoth container images."""
     return (
         ContainerImagesApi(api_client)
