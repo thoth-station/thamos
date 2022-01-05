@@ -839,11 +839,11 @@
         },
         "requests": {
             "hashes": [
-                "sha256:8e5643905bf20a308e25e4c1dd379117c09000bf8a82ebccc462cfb1b34a16b5",
-                "sha256:f71a09d7feba4a6b64ffd8e9d9bc60f9bf7d7e19fd0e04362acb1cfc2e3d98df"
+                "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61",
+                "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"
             ],
             "index": "pypi",
-            "version": "==2.27.0"
+            "version": "==2.27.1"
         },
         "requests-oauthlib": {
             "hashes": [
@@ -955,11 +955,11 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:d2d4219fe9d5943b923ed847715217e4d4f52b49274f09b1d68d3658c53cf023",
-                "sha256:fcae892884f2e191d35cecbee8a01a3fbe70b6468b6d3707414e29e537a113b7"
+                "sha256:09032ee49cc78e1a18276703f0f0a5f55bff889c33ca51863b3a89c9cb9120e6",
+                "sha256:c19bc2990393181d268a4ed6de350e903f99a779d3822120bda15e0c17e00006"
             ],
             "index": "pypi",
-            "version": "==0.33.0"
+            "version": "==0.33.1"
         },
         "thoth-python": {
             "hashes": [
