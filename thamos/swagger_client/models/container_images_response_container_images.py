@@ -107,8 +107,6 @@ class ContainerImagesResponseContainerImages(object):
         :param environment_name: The environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if environment_name is None:
-            raise ValueError("Invalid value for `environment_name`, must not be `None`")  # noqa: E501
 
         self._environment_name = environment_name
 
@@ -130,8 +128,6 @@ class ContainerImagesResponseContainerImages(object):
         :param python_version: The python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if python_version is None:
-            raise ValueError("Invalid value for `python_version`, must not be `None`")  # noqa: E501
 
         self._python_version = python_version
 
@@ -153,8 +149,6 @@ class ContainerImagesResponseContainerImages(object):
         :param env_image_name: The env_image_name of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if env_image_name is None:
-            raise ValueError("Invalid value for `env_image_name`, must not be `None`")  # noqa: E501
 
         self._env_image_name = env_image_name
 
@@ -176,8 +170,6 @@ class ContainerImagesResponseContainerImages(object):
         :param env_image_tag: The env_image_tag of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if env_image_tag is None:
-            raise ValueError("Invalid value for `env_image_tag`, must not be `None`")  # noqa: E501
 
         self._env_image_tag = env_image_tag
 
@@ -199,8 +191,6 @@ class ContainerImagesResponseContainerImages(object):
         :param image_sha: The image_sha of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if image_sha is None:
-            raise ValueError("Invalid value for `image_sha`, must not be `None`")  # noqa: E501
 
         self._image_sha = image_sha
 
@@ -222,8 +212,6 @@ class ContainerImagesResponseContainerImages(object):
         :param os_name: The os_name of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if os_name is None:
-            raise ValueError("Invalid value for `os_name`, must not be `None`")  # noqa: E501
 
         self._os_name = os_name
 
@@ -245,8 +233,6 @@ class ContainerImagesResponseContainerImages(object):
         :param os_version: The os_version of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if os_version is None:
-            raise ValueError("Invalid value for `os_version`, must not be `None`")  # noqa: E501
 
         self._os_version = os_version
 
@@ -268,8 +254,6 @@ class ContainerImagesResponseContainerImages(object):
         :param thoth_image_name: The thoth_image_name of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if thoth_image_name is None:
-            raise ValueError("Invalid value for `thoth_image_name`, must not be `None`")  # noqa: E501
 
         self._thoth_image_name = thoth_image_name
 
@@ -291,8 +275,6 @@ class ContainerImagesResponseContainerImages(object):
         :param thoth_image_version: The thoth_image_version of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if thoth_image_version is None:
-            raise ValueError("Invalid value for `thoth_image_version`, must not be `None`")  # noqa: E501
 
         self._thoth_image_version = thoth_image_version
 
@@ -314,8 +296,6 @@ class ContainerImagesResponseContainerImages(object):
         :param cuda_version: The cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if cuda_version is None:
-            raise ValueError("Invalid value for `cuda_version`, must not be `None`")  # noqa: E501
 
         self._cuda_version = cuda_version
 
