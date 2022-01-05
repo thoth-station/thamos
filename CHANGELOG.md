@@ -1,4 +1,10 @@
 
+## Release 1.23.0 (2022-01-05T08:32:58)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Update client library
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Use single char short configuration options
+
 ## Release 1.22.0 (2021-12-16T12:32:42)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * Allow specifying labels in Thoth's configuration file
