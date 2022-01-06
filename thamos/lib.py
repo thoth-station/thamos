@@ -1161,13 +1161,35 @@ def install(
 @with_api_client
 def list_thoth_container_images(
     api_client: ApiClient,
+    *,
+    os_name: typing.Optional[str] = None,
+    os_version: typing.Optional[str] = None,
+    python_version: typing.Optional[str] = None,
+    cuda_version: typing.Optional[str] = None,
+    image_name: typing.Optional[str] = None,
 ) -> typing.List[typing.Dict[str, Any]]:
     """Get available Thoth container images."""
-    return (
-        ContainerImagesApi(api_client)
-        .list_thoth_container_images()
-        .to_dict()["container_images"]
-    )
+    result = []
+
+    page = 0
+    while True:
+        images = (
+            ContainerImagesApi(api_client)
+            .list_thoth_container_images(
+                os_name=os_name,
+                os_version=os_version,
+                python_version=python_version,
+                cuda_version=cuda_version,
+                image_name=image_name,
+            )
+            .to_dict()["container_images"]
+        )
+        if not images:
+            break
+        result.extend(images)
+        page += 1
+
+    return result
 
 
 @with_api_client
