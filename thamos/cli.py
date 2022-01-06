@@ -1086,36 +1086,11 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
         json.dump(result, sys.stdout, indent=2)
         sys.stdout.write("\n")
     elif output_format == "table":
-        table = Table()
-
-        header = set()
-        for item in result:
-            for key in item.keys():
-                header.add(key)
-
-        header_sorted = sorted(header)
-        for element in header_sorted:
-            table.add_column(
-                element.replace("_", " ").capitalize(),
-                style="cyan",
-                overflow="fold",
-            )
-
-        for item in result:
-            row = []
-            for key in header_sorted:
-                entry = item.get(key)
-                if not bool(int(os.getenv("THAMOS_NO_EMOJI", 0))) and isinstance(
-                    entry, str
-                ):
-                    entry = _EMOJI.get(entry, entry)
-
-                row.append(entry if entry is not None else "-")
-
-            table.add_row(*row)
-
-        console = Console()
-        console.print(table, justify="center")
+        _print_report(
+            result,
+            json_output=False,
+            title="Runtime environment and cofniguration check results",
+        )
 
     sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
 
