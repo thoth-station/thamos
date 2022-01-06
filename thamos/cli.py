@@ -1143,7 +1143,7 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     help="Operating system version filter.",
 )
 @click.option(
-    "--python_version",
+    "--python-version",
     "-p",
     type=str,
     default=None,
