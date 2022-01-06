@@ -1089,7 +1089,7 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
         _print_report(
             result,
             json_output=False,
-            title="Runtime environment and cofniguration check results",
+            title="Runtime environment and configuration check results",
         )
 
     sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
