@@ -87,6 +87,29 @@ _TABLE_COLS_ALIGN = {
 }
 
 
+_REPORT_TRANSLATION_TABLE_INDEXES = {
+    "url": "Python package index URL",
+    "verify_ssl": "Verify SSL",
+}
+
+
+_REPORT_TRANSLATION_TABLE_IMAGES = {
+    "cuda_version": "CUDA version",
+    "datetime": "Analysis datetime",
+    "env_image_name": "Image name",
+    "env_image_tag": "Image tag",
+    "environment_name": "Environment name",
+    "environment_type": "Environment type",
+    "image_sha": "Container image SHA",
+    "os_name": "OS name",
+    "os_version": "OS version",
+    "package_extract_document_id": "Container image analysis",
+    "python_version": "Python version",
+    "thoth_image_name": "Thoth container image name",
+    "thoth_image_version": "Thoth container image version",
+}
+
+
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
     # noqa
@@ -104,7 +127,14 @@ def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     return wrapper
 
 
-def _print_report(report: list, json_output: bool = False, title: Optional[str] = None):
+def _print_report(
+    report: list,
+    *,
+    json_output: bool = False,
+    title: Optional[str] = None,
+    show_header: bool = True,
+    translation_table: Optional[Dict[str, str]] = None,
+):
     """Print reasoning to user."""
     if json_output:
         click.echo(json.dumps(report, sort_keys=True, indent=2))
@@ -112,7 +142,7 @@ def _print_report(report: list, json_output: bool = False, title: Optional[str] 
 
     console = Console()
     table = Table(
-        show_header=True,
+        show_header=show_header,
         header_style="bold green",
         title=title,
         box=box.MINIMAL_DOUBLE_HEAD,
@@ -129,11 +159,11 @@ def _print_report(report: list, json_output: bool = False, title: Optional[str] 
     # Remove fields that can be an array - these are addition details that are supressed from the table output.
     header = header - to_remove
 
+    translation_table = translation_table or {}
     header_list = sorted(header)
     for item in header_list:
-        table.add_column(
-            item.replace("_", " ").capitalize(), style="cyan", overflow="fold"
-        )
+        item = translation_table.get(item) or item.replace("_", " ").capitalize()
+        table.add_column(item, overflow="fold")
 
     for item in report:
         row = []
@@ -420,7 +450,6 @@ def venv(ctx, runtime_environment: Optional[str] = None) -> None:
         ctx.exit(1)
     else:
         _error_virtual_environment(virtualenv_path)
-        print(virtualenv_path)
 
 
 @cli.command("purge")
@@ -1166,40 +1195,21 @@ def images(
         json.dump({"s2i": result}, sys.stdout, indent=2)
         sys.stdout.write("\n")
     elif output_format == "table":
-        table = Table()
-
-        header = set()
         for item in result:
-            for key in item.keys():
-                header.add(key)
+            table_content = []
+            for key, value in item.items():
+                key = _REPORT_TRANSLATION_TABLE_IMAGES.get(
+                    key, key.replace("_", " ").capitalize()
+                )
+                key = Text.from_markup(key, style="green bold")
+                # Here, key value are ignored. This is a trick to have "table header" as the first column.
+                table_content.extend([{"key": key, "value": value}])
 
-        header_sorted = sorted(header)
-        header_sorted.append("info")
-        for item in header_sorted:
-            table.add_column(
-                item.replace("_", " ").capitalize(),
-                style="cyan",
-                overflow="fold",
+            _print_report(
+                table_content,
+                title=f"Container image {item.get('environment_name', 'UNKNOWN')}",
+                show_header=False,
             )
-
-        for item in result:
-            row = []
-            for key in header_sorted:
-                if key == "info":
-                    image_name = item.get("thoth_image_name")
-                    if image_name:
-                        row.append(jl(image_name.rsplit("/", maxsplit=1)[-1]))
-                    else:
-                        row.append(None)
-                    continue
-
-                entry = item.get(key)
-                row.append(str(entry) if entry is not None else "-")
-
-            table.add_row(*row)
-
-        console = Console()
-        console.print(table, justify="center")
 
     sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
 
@@ -1233,8 +1243,8 @@ def indexes(output_format: str) -> None:
 
         _print_report(
             result,
-            json_output=False,
             title="Python package indexes available for consuming packages",
+            translation_table=_REPORT_TRANSLATION_TABLE_INDEXES,
         )
 
     sys.exit(0)
