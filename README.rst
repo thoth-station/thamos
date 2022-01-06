@@ -134,7 +134,7 @@ or SW discovery):
 +------------------------+--------------------------------+---------------------------------------------------+
 | `requirements_format`  | Requirements format.           |  pipenv                                           |
 +------------------------+--------------------------------+---------------------------------------------------+
-| `base_image`           | Thoth s2i base image used.     |  quay.io/thoth-station/s2i-thoth-ubi8-py36:v1.0.0 |
+| `base_image`           | Thoth base image used.         |  quay.io/thoth-station/s2i-thoth-ubi8-py36:v1.0.0 |
 +------------------------+--------------------------------+---------------------------------------------------+
 
 Platform corresponds to ``sysconfig.get_platform()`` call.
@@ -271,28 +271,29 @@ root directory. To maintain multiple lock files specific for runtime
 environments, it is possible to configure "overlays" directory in Thamos
 configuration file.
 
-Listing available software and hardware environments
-====================================================
+Listing available environments and container images
+===================================================
 
-To list available hardware environments for which Thoth has knowledge of,
+To list available environments for which the resolver can resolve dependencies,
 issue:
 
 .. code-block:: console
 
-  thamos hw
+  thamos environments
 
-The reported table will show all the available hardware configuration for which
-Thoth can advise on.
+Each entry states configuration of operating system, its version and Python
+interpreter version that can be configured in each runtime environment section
+in ``.thoth.yaml``.
 
-Similarly for software environments, you can issue:
+If you wish to list available container images ready to be used:
 
 .. code-block:: console
 
-  thamos s2i
+  thamos images
 
-The resulting table shows all the available software environments for which
-Thoth can advise and perform recommendations. These environments can become
-entries in ``base_image`` of the ``.thoth.yaml`` configuration file.
+Each entry stated can be set as a ``base_image`` in ``.thoth.yaml`` in the
+respective runtime environment section and used as a base for running the
+Python applications.
 
 Overlays directory
 ==================
