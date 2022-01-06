@@ -1224,35 +1224,18 @@ def indexes(output_format: str) -> None:
         json.dump({"indexes": result}, sys.stdout, indent=2)
         sys.stdout.write("\n")
     elif output_format == "table":
-        table = Table()
-
-        header = set()
         for item in result:
-            for key in item.keys():
-                if key == "warehouse_api_url":
-                    continue
-                header.add(key)
+            item.pop("warehouse_api_url", None)
+            for key, value in item.items():
+                # Substitute booleans as rich does not interpret them.
+                if isinstance(value, bool):
+                    item[key] = str(value)
 
-        header_sorted = sorted(header)
-        for item in header_sorted:
-            table.add_column(
-                item.capitalize()
-                .replace("_", " ")
-                .replace("Url", "URL")
-                .replace("ssl", "SSL")
-                .replace("api", "API")
-            )
-
-        for item in result:
-            row = []
-            for key in header_sorted:
-                entry = item.get(key)
-                row.append(str(entry) if entry is not None else "-")
-
-            table.add_row(*row)
-
-        console = Console()
-        console.print(table, justify="center")
+        _print_report(
+            result,
+            json_output=False,
+            title="Python package indexes available for consuming packages",
+        )
 
     sys.exit(0)
 
