@@ -54,5 +54,15 @@ sed -i '/.*if reason is None:/,+1 d' "thamos/swagger_client/models/analysis_stat
 sed -i '/.*if started_at is None:/,+1 d' "thamos/swagger_client/models/analysis_status_response_status.py"
 sed -i '/.*if log is None:/,+1 d' "thamos/swagger_client/models/analysis_log_response.py"
 sed -i '/.*if warehouse_api_url is None:/,+1 d' "thamos/swagger_client/models/python_package_indexes_indexes.py"
+sed -i '/.*if env_image_name is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if env_image_tag is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if cuda_version is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if environment_name is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if python_version is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if image_sha is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if os_name is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if os_version is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if thoth_image_name is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if thoth_image_version is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
 find Documentation -name "*.md" -exec sed -i 's/[ \t]*$//' {} \;
 find thamos/swagger_client -name "*.py" -exec sed -i 's/[ \t]*$//' {} \;
