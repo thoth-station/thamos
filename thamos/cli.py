@@ -51,6 +51,7 @@ from thamos.lib import collect_support_information_dict
 from thamos.lib import get_log
 from thamos.lib import get_package_from_imported_packages
 from thamos.lib import get_status
+from thamos.lib import get_last_analysis_id
 from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
 from thamos.lib import list_python_environments
@@ -856,24 +857,16 @@ def status(
     """
     if not analysis_id:
         with workdir():
-            status_dict = get_status()
-    else:
-        status_dict = get_status(analysis_id)
+            analysis_id = get_last_analysis_id()
+
+    status_dict = get_status(analysis_id)
 
     if not output_format or output_format == "table":
-        table = Table()
-
-        for key in status_dict.keys():
-            table.add_column(
-                key.replace("_", " ").capitalize(),
-                style="cyan",
-                overflow="fold",
-            )
-
-        table.add_row(*status_dict.values())
-
-        console = Console()
-        console.print(table, justify="center")
+        _print_report(
+            [status_dict],
+            json_output=False,
+            title=f"The current status for {analysis_id!r}",
+        )
         return
     elif output_format == "json":
         output = json.dumps(status_dict, indent=2)

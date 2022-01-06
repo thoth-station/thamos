@@ -223,7 +223,7 @@ def _note_last_analysis_id(analysis_id: str) -> None:
         _LOGGER.warning("Failed to write analysis id to a temporary file: %s", str(exc))
 
 
-def _get_last_analysis_id() -> str:
+def get_last_analysis_id() -> str:
     """Retrieve last analysis id from a temporary file."""
     try:
         with open(LAST_ANALYSIS_ID_FILE, "r") as analysis_id_file:
@@ -927,7 +927,7 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
     If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
     """
     if not analysis_id:
-        analysis_id = _get_last_analysis_id()
+        analysis_id = get_last_analysis_id()
 
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(
@@ -992,7 +992,7 @@ def get_status(api_client: ApiClient, analysis_id: typing.Optional[str] = None):
     If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
     """
     if not analysis_id:
-        analysis_id = _get_last_analysis_id()
+        analysis_id = get_last_analysis_id()
 
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(
@@ -1019,7 +1019,7 @@ def get_analysis_results(
 ):
     """Get the analysis result from a given id."""
     if not analysis_id:
-        analysis_id = _get_last_analysis_id()
+        analysis_id = get_last_analysis_id()
 
     if analysis_id.startswith("package-extract-"):
         api_instance = ImageAnalysisApi(
@@ -1416,7 +1416,7 @@ def collect_support_information_dict() -> Dict[str, Any]:
 
     last_analysis_id = None
     try:
-        last_analysis_id = _get_last_analysis_id()
+        last_analysis_id = get_last_analysis_id()
     except FileNotFoundError:
         _LOGGER.warning("Cannot retrieve last analysis identifier")
         pass
