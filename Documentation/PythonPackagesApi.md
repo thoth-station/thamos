@@ -4,20 +4,20 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_package_from_imported_packages**](PythonPackagesApi.md#get_package_from_imported_packages) | **GET** /python/imports | List imported packages&#x27; (name, version, index).
-[**get_package_metadata**](PythonPackagesApi.md#get_package_metadata) | **GET** /python/package/metadata | Retrieve metadata relative to a Python Package from the Knowledge Graph.
-[**get_python_package_dependencies**](PythonPackagesApi.md#get_python_package_dependencies) | **GET** /python/package/dependencies | Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.
-[**get_python_package_version_metadata**](PythonPackagesApi.md#get_python_package_version_metadata) | **GET** /python/package/version/metadata | Get metadata for the given package.
-[**get_python_platform**](PythonPackagesApi.md#get_python_platform) | **GET** /python/platform | Get supported platforms for Python ecosystem.
-[**list_python_package_indexes**](PythonPackagesApi.md#list_python_package_indexes) | **GET** /python-package-index | List registered Python package indexes.
-[**list_python_package_version_environments**](PythonPackagesApi.md#list_python_package_version_environments) | **GET** /python/package/version/environments | List environments used to solve the given Python package.
-[**list_python_package_versions**](PythonPackagesApi.md#list_python_package_versions) | **GET** /python/package/versions | List versions of the given Python package.
-[**list_python_packages**](PythonPackagesApi.md#list_python_packages) | **GET** /python/package | List Python packages.
+[**get_package_from_imported_packages**](PythonPackagesApi.md#get_package_from_imported_packages) | **GET** /python/imports | List imported packages&#x27; (name, version, index)
+[**get_package_metadata**](PythonPackagesApi.md#get_package_metadata) | **GET** /python/package/metadata | Retrieve metadata relative to a Python Package from the Thoth&#x27;s database
+[**get_python_package_dependencies**](PythonPackagesApi.md#get_python_package_dependencies) | **GET** /python/package/dependencies | Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered
+[**get_python_package_version_metadata**](PythonPackagesApi.md#get_python_package_version_metadata) | **GET** /python/package/version/metadata | Get metadata for the given package
+[**get_python_platform**](PythonPackagesApi.md#get_python_platform) | **GET** /python/platform | Get supported platforms for the Python ecosystem
+[**list_python_package_indexes**](PythonPackagesApi.md#list_python_package_indexes) | **GET** /python-package-index | List registered Python package indexes
+[**list_python_package_version_environments**](PythonPackagesApi.md#list_python_package_version_environments) | **GET** /python/package/version/environments | List environments used to solve the given Python package
+[**list_python_package_versions**](PythonPackagesApi.md#list_python_package_versions) | **GET** /python/package/versions | List versions of the given Python package
+[**list_python_packages**](PythonPackagesApi.md#list_python_packages) | **GET** /python/package | List Python packages
 
 # **get_package_from_imported_packages**
 > PythonPackageNameImportResponse get_package_from_imported_packages(import_name)
 
-List imported packages' (name, version, index).
+List imported packages' (name, version, index)
 
 ### Example
 ```python
@@ -29,10 +29,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-import_name = 'sklearn.cluster.MiniBatchKMeans' # str | Names of the Python Packages (name, version, index) for the given import package name.  (default to sklearn.cluster.MiniBatchKMeans)
+import_name = 'import_name_example' # str | Names of the Python Packages (name, version, index) for the given import package name
 
 try:
-    # List imported packages' (name, version, index).
+    # List imported packages' (name, version, index)
     api_response = api_instance.get_package_from_imported_packages(import_name)
     pprint(api_response)
 except ApiException as e:
@@ -43,7 +43,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **import_name** | **str**| Names of the Python Packages (name, version, index) for the given import package name.  | [default to sklearn.cluster.MiniBatchKMeans]
+ **import_name** | **str**| Names of the Python Packages (name, version, index) for the given import package name  |
 
 ### Return type
 
@@ -63,7 +63,7 @@ No authorization required
 # **get_package_metadata**
 > PythonPackageMetadataResponse get_package_metadata(name, version, index)
 
-Retrieve metadata relative to a Python Package from the Knowledge Graph.
+Retrieve metadata relative to a Python Package from the Thoth's database
 
 ### Example
 ```python
@@ -75,12 +75,12 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-name = 'tensorflow' # str | Name of the Python Package. (default to tensorflow)
-version = '2.0.0' # str | Version of the Python Package. (default to 2.0.0)
-index = 'https://pypi.org/simple' # str | Index url of the Python Package. (default to https://pypi.org/simple)
+name = 'name_example' # str | Name of the Python Package
+version = 'version_example' # str | Version of the Python Package
+index = 'https://pypi.org/simple' # str | Index url of the Python Package (default to https://pypi.org/simple)
 
 try:
-    # Retrieve metadata relative to a Python Package from the Knowledge Graph.
+    # Retrieve metadata relative to a Python Package from the Thoth's database
     api_response = api_instance.get_package_metadata(name, version, index)
     pprint(api_response)
 except ApiException as e:
@@ -91,9 +91,9 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python Package. | [default to tensorflow]
- **version** | **str**| Version of the Python Package. | [default to 2.0.0]
- **index** | **str**| Index url of the Python Package. | [default to https://pypi.org/simple]
+ **name** | **str**| Name of the Python Package |
+ **version** | **str**| Version of the Python Package |
+ **index** | **str**| Index url of the Python Package | [default to https://pypi.org/simple]
 
 ### Return type
 
@@ -113,7 +113,7 @@ No authorization required
 # **get_python_package_dependencies**
 > PythonPackageDependencies get_python_package_dependencies(name, version, index, os_name=os_name, os_version=os_version, python_version=python_version, marker_evaluation_result=marker_evaluation_result)
 
-Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.
+Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered
 
 ### Example
 ```python
@@ -125,16 +125,16 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-name = 'tensorflow' # str | Name of the Python Package. (default to tensorflow)
-version = '2.0.0' # str | Version of the Python Package. (default to 2.0.0)
-index = 'https://pypi.org/simple' # str | Index url of the Python Package. (default to https://pypi.org/simple)
-os_name = 'os_name_example' # str | Name of operating system to consider as environment where package is installed in. (optional)
-os_version = 'os_version_example' # str | Version of operating system to consider as environment where package is installed in. (optional)
-python_version = 'python_version_example' # str | Version of Python interpreter used to install the given package. (optional)
-marker_evaluation_result = true # bool | Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account.  (optional)
+name = 'name_example' # str | Name of the Python Package
+version = 'version_example' # str | Version of the Python Package
+index = 'https://pypi.org/simple' # str | Index url of the Python Package (default to https://pypi.org/simple)
+os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
+os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
+python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
+marker_evaluation_result = true # bool | Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  (optional)
 
 try:
-    # Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered.
+    # Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered
     api_response = api_instance.get_python_package_dependencies(name, version, index, os_name=os_name, os_version=os_version, python_version=python_version, marker_evaluation_result=marker_evaluation_result)
     pprint(api_response)
 except ApiException as e:
@@ -145,13 +145,13 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python Package. | [default to tensorflow]
- **version** | **str**| Version of the Python Package. | [default to 2.0.0]
- **index** | **str**| Index url of the Python Package. | [default to https://pypi.org/simple]
- **os_name** | **str**| Name of operating system to consider as environment where package is installed in. | [optional]
- **os_version** | **str**| Version of operating system to consider as environment where package is installed in. | [optional]
- **python_version** | **str**| Version of Python interpreter used to install the given package. | [optional]
- **marker_evaluation_result** | **bool**| Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account.  | [optional]
+ **name** | **str**| Name of the Python Package |
+ **version** | **str**| Version of the Python Package |
+ **index** | **str**| Index url of the Python Package | [default to https://pypi.org/simple]
+ **os_name** | **str**| Name of the operating system to consider | [optional]
+ **os_version** | **str**| Version of the operating system to consider | [optional]
+ **python_version** | **str**| Version of Python interpreter provided | [optional]
+ **marker_evaluation_result** | **bool**| Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  | [optional]
 
 ### Return type
 
@@ -171,7 +171,7 @@ No authorization required
 # **get_python_package_version_metadata**
 > PythonPackageVersionMetadataResponse get_python_package_version_metadata(name, version, index, os_name, os_version, python_version)
 
-Get metadata for the given package.
+Get metadata for the given package
 
 ### Example
 ```python
@@ -183,15 +183,15 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-name = 'name_example' # str | Name of the Python Package.
-version = 'version_example' # str | Version of the Python package.
-index = 'index_example' # str | Index URL for the Python package.
-os_name = 'os_name_example' # str | Name of operating system to consider.
-os_version = 'os_version_example' # str | Version of operating system to consider.
-python_version = 'python_version_example' # str | Version of Python interpreter.
+name = 'name_example' # str | Name of the Python Package
+version = 'version_example' # str | Version of the Python Package
+index = 'https://pypi.org/simple' # str | Index url of the Python Package (default to https://pypi.org/simple)
+os_name = 'os_name_example' # str | Name of operating system to consider as environment where package is installed in
+os_version = 'os_version_example' # str | Version of operating system to consider as environment where package is installed in
+python_version = 'python_version_example' # str | Version of Python interpreter used to install the given package
 
 try:
-    # Get metadata for the given package.
+    # Get metadata for the given package
     api_response = api_instance.get_python_package_version_metadata(name, version, index, os_name, os_version, python_version)
     pprint(api_response)
 except ApiException as e:
@@ -202,12 +202,12 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python Package. |
- **version** | **str**| Version of the Python package. |
- **index** | **str**| Index URL for the Python package. |
- **os_name** | **str**| Name of operating system to consider. |
- **os_version** | **str**| Version of operating system to consider. |
- **python_version** | **str**| Version of Python interpreter. |
+ **name** | **str**| Name of the Python Package |
+ **version** | **str**| Version of the Python Package |
+ **index** | **str**| Index url of the Python Package | [default to https://pypi.org/simple]
+ **os_name** | **str**| Name of operating system to consider as environment where package is installed in |
+ **os_version** | **str**| Version of operating system to consider as environment where package is installed in |
+ **python_version** | **str**| Version of Python interpreter used to install the given package |
 
 ### Return type
 
@@ -227,7 +227,7 @@ No authorization required
 # **get_python_platform**
 > PythonPlatforms get_python_platform()
 
-Get supported platforms for Python ecosystem.
+Get supported platforms for the Python ecosystem
 
 ### Example
 ```python
@@ -241,7 +241,7 @@ from pprint import pprint
 api_instance = thamos.swagger_client.PythonPackagesApi()
 
 try:
-    # Get supported platforms for Python ecosystem.
+    # Get supported platforms for the Python ecosystem
     api_response = api_instance.get_python_platform()
     pprint(api_response)
 except ApiException as e:
@@ -269,7 +269,7 @@ No authorization required
 # **list_python_package_indexes**
 > PythonPackageIndexes list_python_package_indexes()
 
-List registered Python package indexes.
+List registered Python package indexes
 
 ### Example
 ```python
@@ -283,7 +283,7 @@ from pprint import pprint
 api_instance = thamos.swagger_client.PythonPackagesApi()
 
 try:
-    # List registered Python package indexes.
+    # List registered Python package indexes
     api_response = api_instance.list_python_package_indexes()
     pprint(api_response)
 except ApiException as e:
@@ -311,7 +311,7 @@ No authorization required
 # **list_python_package_version_environments**
 > PythonPackageVersionEnvironmentsResponse list_python_package_version_environments(name, version, index)
 
-List environments used to solve the given Python package.
+List environments used to solve the given Python package
 
 ### Example
 ```python
@@ -323,12 +323,12 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-name = 'flask' # str | Name of the Python package. (default to flask)
-version = '2.0.2' # str | Version of the Python package. (default to 2.0.2)
-index = 'https://pypi.org/simple' # str | Index url of the Python package. (default to https://pypi.org/simple)
+name = 'name_example' # str | Name of the Python Package
+version = 'version_example' # str | Version of the Python Package
+index = 'https://pypi.org/simple' # str | Index url of the Python Package (default to https://pypi.org/simple)
 
 try:
-    # List environments used to solve the given Python package.
+    # List environments used to solve the given Python package
     api_response = api_instance.list_python_package_version_environments(name, version, index)
     pprint(api_response)
 except ApiException as e:
@@ -339,9 +339,9 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python package. | [default to flask]
- **version** | **str**| Version of the Python package. | [default to 2.0.2]
- **index** | **str**| Index url of the Python package. | [default to https://pypi.org/simple]
+ **name** | **str**| Name of the Python Package |
+ **version** | **str**| Version of the Python Package |
+ **index** | **str**| Index url of the Python Package | [default to https://pypi.org/simple]
 
 ### Return type
 
@@ -361,7 +361,7 @@ No authorization required
 # **list_python_package_versions**
 > PythonPackageVersionsResponse list_python_package_versions(name, page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
 
-List versions of the given Python package.
+List versions of the given Python package
 
 ### Example
 ```python
@@ -373,15 +373,15 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-name = 'tensorflow' # str | Name of the Python Package. (default to tensorflow)
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
-per_page = 56 # int | Number of items returned per page. (optional)
-os_name = 'os_name_example' # str | Name of operating system to consider. (optional)
-os_version = 'os_version_example' # str | Version of operating system to consider. (optional)
-python_version = 'python_version_example' # str | Version of Python interpreter. (optional)
+name = 'name_example' # str | Name of the Python Package
+page = 0 # int | Page offset in pagination (optional) (default to 0)
+per_page = 25 # int | Number of items returned per page (optional) (default to 25)
+os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
+os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
+python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
 
 try:
-    # List versions of the given Python package.
+    # List versions of the given Python package
     api_response = api_instance.list_python_package_versions(name, page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
     pprint(api_response)
 except ApiException as e:
@@ -392,12 +392,12 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Name of the Python Package. | [default to tensorflow]
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
- **per_page** | **int**| Number of items returned per page. | [optional]
- **os_name** | **str**| Name of operating system to consider. | [optional]
- **os_version** | **str**| Version of operating system to consider. | [optional]
- **python_version** | **str**| Version of Python interpreter. | [optional]
+ **name** | **str**| Name of the Python Package |
+ **page** | **int**| Page offset in pagination | [optional] [default to 0]
+ **per_page** | **int**| Number of items returned per page | [optional] [default to 25]
+ **os_name** | **str**| Name of the operating system to consider | [optional]
+ **os_version** | **str**| Version of the operating system to consider | [optional]
+ **python_version** | **str**| Version of Python interpreter provided | [optional]
 
 ### Return type
 
@@ -417,7 +417,7 @@ No authorization required
 # **list_python_packages**
 > PythonPackagesResponse list_python_packages(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
 
-List Python packages.
+List Python packages
 
 ### Example
 ```python
@@ -429,14 +429,14 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
-per_page = 56 # int | Number of items returned per page. (optional)
-os_name = 'os_name_example' # str | Name of operating system to consider. (optional)
-os_version = 'os_version_example' # str | Version of operating system to consider. (optional)
-python_version = 'python_version_example' # str | Version of Python interpreter. (optional)
+page = 0 # int | Page offset in pagination (optional) (default to 0)
+per_page = 25 # int | Number of items returned per page (optional) (default to 25)
+os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
+os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
+python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
 
 try:
-    # List Python packages.
+    # List Python packages
     api_response = api_instance.list_python_packages(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
     pprint(api_response)
 except ApiException as e:
@@ -447,11 +447,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
- **per_page** | **int**| Number of items returned per page. | [optional]
- **os_name** | **str**| Name of operating system to consider. | [optional]
- **os_version** | **str**| Version of operating system to consider. | [optional]
- **python_version** | **str**| Version of Python interpreter. | [optional]
+ **page** | **int**| Page offset in pagination | [optional] [default to 0]
+ **per_page** | **int**| Number of items returned per page | [optional] [default to 25]
+ **os_name** | **str**| Name of the operating system to consider | [optional]
+ **os_version** | **str**| Version of the operating system to consider | [optional]
+ **python_version** | **str**| Version of Python interpreter provided | [optional]
 
 ### Return type
 

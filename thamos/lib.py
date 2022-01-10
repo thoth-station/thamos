@@ -596,8 +596,7 @@ def advise(
         return None
 
     _LOGGER.debug("Adviser check metadata: %r", response.metadata)
-
-    return response.result, response.result["error"]
+    return response.result.to_dict(), response.result.error
 
 
 def advise_here(
@@ -802,7 +801,8 @@ def provenance_check(
         return None
 
     _LOGGER.debug("Provenance check metadata: %r", response.metadata)
-    return response.result["report"], response.result["error"]
+    result = response.result.to_dict()
+    return result["report"], result["error"]
 
 
 def provenance_check_here(
@@ -1075,7 +1075,7 @@ def get_analysis_results(
         api_instance = AdviseApi(api_client)
         method = api_instance.get_advise_python  # type: ignore
         response = _retrieve_analysis_result(method, analysis_id)
-        return response.result, response.result["error"]
+        return response.result.to_dict(), response.result.error
     else:
         raise UnknownAnalysisType(
             "Cannot determine analysis type from identifier: %r", analysis_id
@@ -1205,19 +1205,16 @@ def list_thoth_container_images(
     image_name: typing.Optional[str] = None,
 ) -> typing.List[typing.Dict[str, Any]]:
     """Get available Thoth container images."""
-    result = []
+    filtering = locals()
+    filtering.pop("api_client", None)
+    filtering = {k: v for k, v in filtering.items() if v is not None}
 
+    result = []
     page = 0
     while True:
         images = (
             ContainerImagesApi(api_client)
-            .list_thoth_container_images(
-                os_name=os_name,
-                os_version=os_version,
-                python_version=python_version,
-                cuda_version=cuda_version,
-                image_name=image_name,
-            )
+            .list_thoth_container_images(page=page, **filtering)
             .to_dict()["container_images"]
         )
         if not images:

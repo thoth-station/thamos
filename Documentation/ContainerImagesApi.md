@@ -4,12 +4,12 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**list_thoth_container_images**](ContainerImagesApi.md#list_thoth_container_images) | **GET** /container-images | List available Thoth container images.
+[**list_thoth_container_images**](ContainerImagesApi.md#list_thoth_container_images) | **GET** /container-images | List available Thoth container images
 
 # **list_thoth_container_images**
 > ContainerImagesResponse list_thoth_container_images(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version, cuda_version=cuda_version, image_name=image_name)
 
-List available Thoth container images.
+List available Thoth container images
 
 ### Example
 ```python
@@ -21,16 +21,16 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = thamos.swagger_client.ContainerImagesApi()
-page = 0 # int | Page offset in pagination. (optional) (default to 0)
-per_page = 56 # int | Number of items returned per page. (optional)
-os_name = 'os_name_example' # str | Name of operating system to consider. (optional)
-os_version = 'os_version_example' # str | Version of operating system to consider. (optional)
-python_version = 'python_version_example' # str | Version of Python interpreter provided. (optional)
-cuda_version = 'cuda_version_example' # str | Filter based on CUDA version available. (optional)
-image_name = 'image_name_example' # str | Filter based on image name. (optional)
+page = 0 # int | Page offset in pagination (optional) (default to 0)
+per_page = 25 # int | Number of items returned per page (optional) (default to 25)
+os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
+os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
+python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
+cuda_version = 'cuda_version_example' # str | Filter based on CUDA version available (optional)
+image_name = 'image_name_example' # str | Filter based on the image name (optional)
 
 try:
-    # List available Thoth container images.
+    # List available Thoth container images
     api_response = api_instance.list_thoth_container_images(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version, cuda_version=cuda_version, image_name=image_name)
     pprint(api_response)
 except ApiException as e:
@@ -41,13 +41,13 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page offset in pagination. | [optional] [default to 0]
- **per_page** | **int**| Number of items returned per page. | [optional]
- **os_name** | **str**| Name of operating system to consider. | [optional]
- **os_version** | **str**| Version of operating system to consider. | [optional]
- **python_version** | **str**| Version of Python interpreter provided. | [optional]
- **cuda_version** | **str**| Filter based on CUDA version available. | [optional]
- **image_name** | **str**| Filter based on image name. | [optional]
+ **page** | **int**| Page offset in pagination | [optional] [default to 0]
+ **per_page** | **int**| Number of items returned per page | [optional] [default to 25]
+ **os_name** | **str**| Name of the operating system to consider | [optional]
+ **os_version** | **str**| Version of the operating system to consider | [optional]
+ **python_version** | **str**| Version of Python interpreter provided | [optional]
+ **cuda_version** | **str**| Filter based on CUDA version available | [optional]
+ **image_name** | **str**| Filter based on the image name | [optional]
 
 ### Return type
 
