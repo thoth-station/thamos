@@ -118,6 +118,13 @@ _REPORT_TRANSLATION_TABLE_WHATPROVIDES = {
 }
 
 
+_REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
+    "os_name": "Operating system name",
+    "os_version": "Operating system version",
+    "python_version": "Python version",
+}
+
+
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
     # noqa
@@ -1504,6 +1511,7 @@ def environments_(output_format: str) -> None:  # noqa: D412
             environments,
             json_output=False,
             title="Python environments",
+            translation_table=_REPORT_TRANSLATION_TABLE_ENVIRONMENTS,
         )
 
 
