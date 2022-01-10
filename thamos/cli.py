@@ -110,6 +110,14 @@ _REPORT_TRANSLATION_TABLE_IMAGES = {
 }
 
 
+_REPORT_TRANSLATION_TABLE_WHATPROVIDES = {
+    "package_import": "Package import",
+    "index_url": "Python package index URL",
+    "package_name": "Python package name",
+    "package_version": "Python package version",
+}
+
+
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
     # noqa
@@ -1420,6 +1428,7 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
             result,
             json_output=False,
             title=f"Packages for {import_name}",
+            translation_table=_REPORT_TRANSLATION_TABLE_WHATPROVIDES,
         )
 
     sys.exit(0)
