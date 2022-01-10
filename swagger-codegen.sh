@@ -64,5 +64,14 @@ sed -i '/.*if os_name is None:/,+1 d' "thamos/swagger_client/models/container_im
 sed -i '/.*if os_version is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
 sed -i '/.*if thoth_image_name is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
 sed -i '/.*if thoth_image_version is None:/,+1 d' "thamos/swagger_client/models/container_images_response_container_images.py"
+sed -i '/.*if only_if_packages_seen is None:/,+1 d' "thamos/swagger_client/models/python_package_indexes_indexes.py"
+sed -i '/.*if name is None:/,+1 d' "thamos/swagger_client/models/runtime_environment_operating_system.py"
+sed -i '/.*if version is None:/,+1 d' "thamos/swagger_client/models/runtime_environment_operating_system.py"
+sed -i '/.*if error_msg is None:/,+1 d' "thamos/swagger_client/models/provenance_result_response_result.py"
+sed -i '/.*if input is None:/,+1 d' "thamos/swagger_client/models/provenance_result_response_result.py"
+sed -i '/.*if metadata is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response.py"
+sed -i '/.*if advised_runtime_environment is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response_result_report_products.py"
+
+sed -i '/.*if error_msg is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response_result.py"
 find Documentation -name "*.md" -exec sed -i 's/[ \t]*$//' {} \;
 find thamos/swagger_client -name "*.py" -exec sed -i 's/[ \t]*$//' {} \;

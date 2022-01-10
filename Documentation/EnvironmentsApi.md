@@ -4,12 +4,12 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**list_python_environments**](EnvironmentsApi.md#list_python_environments) | **GET** /python/environment | Get environments available for Python resolutions.
+[**list_python_environments**](EnvironmentsApi.md#list_python_environments) | **GET** /python/environment | Get environments available for Python resolutions
 
 # **list_python_environments**
 > PythonEnvironments list_python_environments()
 
-Get environments available for Python resolutions.
+Get environments available for Python resolutions
 
 ### Example
 ```python
@@ -23,7 +23,7 @@ from pprint import pprint
 api_instance = thamos.swagger_client.EnvironmentsApi()
 
 try:
-    # Get environments available for Python resolutions.
+    # Get environments available for Python resolutions
     api_response = api_instance.list_python_environments()
     pprint(api_response)
 except ApiException as e:

@@ -4,12 +4,12 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**schedule_kebechet_webhook**](KebechetApi.md#schedule_kebechet_webhook) | **POST** /kebechet-webhook | Schedule kebechet instance from webhook
+[**schedule_kebechet_webhook**](KebechetApi.md#schedule_kebechet_webhook) | **POST** /kebechet-webhook | Schedule kebechet instance from webhook, this endpoint is not intended for users
 
 # **schedule_kebechet_webhook**
 > schedule_kebechet_webhook(body)
 
-Schedule kebechet instance from webhook
+Schedule kebechet instance from webhook, this endpoint is not intended for users
 
 ### Example
 ```python
@@ -24,7 +24,7 @@ api_instance = thamos.swagger_client.KebechetApi()
 body = thamos.swagger_client.KebechetWebhookInput() # KebechetWebhookInput | Body of a git service webhook
 
 try:
-    # Schedule kebechet instance from webhook
+    # Schedule kebechet instance from webhook, this endpoint is not intended for users
     api_instance.schedule_kebechet_webhook(body)
 except ApiException as e:
     print("Exception when calling KebechetApi->schedule_kebechet_webhook: %s\n" % e)
