@@ -118,7 +118,7 @@ def with_api_client(func: typing.Callable):
 
 
 def is_analysis_ready(analysis_id: str, *, verify_tls: bool = True) -> bool:
-    """Handle the the multiple response types available while asking for result of a anaylsis result."""
+    """Handle the multiple response types available while asking for result of an analysis."""
     config = Configuration()
     host = thoth_config.explicit_host
     if not host:
