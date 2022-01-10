@@ -17,9 +17,11 @@
 
 """Core parts of library for interacting with Thoth."""
 
+import datetime
 import logging
 import os
 import platform
+import random
 import sys
 import typing
 from itertools import chain
@@ -36,9 +38,9 @@ import requests
 import yaml
 import micropipenv
 from termcolor import colored
+from invectio import gather_library_usage
 from yaspin import yaspin
 from yaspin.spinners import Spinners
-from invectio import gather_library_usage
 from thoth.analyzer import run_command
 from thoth.python import Project
 from thoth.python import Constraints
@@ -141,6 +143,31 @@ def is_analysis_ready(analysis_id: str, *, verify_tls: bool = True) -> bool:
     )
 
 
+def _get_spinner() -> object:
+    """Choose the spinner, wisely."""
+    today = datetime.datetime.now()
+    if today.month == 12 and today.day in (24, 25, 26):  # Christmas.
+        return Spinners.christmas
+    if (today.month == 1 and today.day == 1) or (
+        today.month == 12 and today.day == 31
+    ):  # End or start of the year.
+        return Spinners.earth
+    if today.month == 2 and today.day == 14:  # Valentine's day.
+        return Spinners.hearts
+    if today.month == 4 and today.day == 1:  # Fool's day.
+        return Spinners.smiley
+    if today.month == 4 and today.day == 17:  # Easter.
+        return Spinners.orangeBluePulse
+    if today.month == 10 and today.day == 31:  # Halloween.
+        return Spinners.monkey
+    if today.hour == 7:  # A morning run.
+        return Spinners.runner
+    if today.hour >= 22:  # Isn't it too late?
+        return Spinners.moon
+
+    return Spinners.clock if random.random() > 0.1 else Spinners.mindblown
+
+
 def _wait_for_analysis(
     status_func: Callable[..., Any],
     analysis_id: str,
@@ -156,7 +183,7 @@ def _wait_for_analysis(
 
     spinner = partial(
         yaspin,
-        Spinners.clock,
+        _get_spinner(),
         text=f"Waiting for response from Thoth (analysis: {analysis_id})...",
     )  # type: Union[Callable[..., Any], partial[Any]]
     if _LOGGER.getEffectiveLevel() == logging.DEBUG or bool(
