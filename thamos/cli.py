@@ -1470,7 +1470,12 @@ def discover(
       thamos discover
     """
     # Obtain list of imports using invectio and verify package from PyPI
-    verified_packages = get_verified_packages_from_static_analysis(src_path=src_path)
+    verified_packages = get_verified_packages_from_static_analysis(
+        src_path=src_path,
+        without_standard_imports=True,
+        without_builtin_imports=True,
+        without_builtins=True,
+    )
 
     # Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)
     for package in verified_packages:

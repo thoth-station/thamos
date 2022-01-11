@@ -301,7 +301,13 @@ def _retrieve_analysis_result(
             sleep(_RETRY_ON_ERROR_SLEEP)
 
 
-def get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
+def get_static_analysis(
+    src_path: str = ".",
+    *,
+    without_standard_imports: bool = False,
+    without_builtin_imports: bool = False,
+    without_builtins: bool = False,
+) -> typing.Optional[dict]:
     """Get static analysis of files used in project."""
     # We are running in the root directory of project, use the root part for gathering static analysis.
     _LOGGER.info("Performing static analysis of sources to gather library usage")
@@ -309,6 +315,9 @@ def get_static_analysis(src_path: str = ".") -> typing.Optional[dict]:
         library_usage = gather_library_usage(
             src_path,
             ignore_errors=True,
+            without_standard_imports=without_standard_imports,
+            without_builtin_imports=without_builtin_imports,
+            without_builtins=without_builtins,
         )
     except FileNotFoundError:
         _LOGGER.warning("No library usage was aggregated - no Python sources found")
@@ -1249,10 +1258,19 @@ def get_package_from_imported_packages(
 
 def get_verified_packages_from_static_analysis(
     src_path: str = ".",
+    *,
+    without_standard_imports: bool = False,
+    without_builtin_imports: bool = False,
+    without_builtins: bool = False,
 ) -> typing.List[typing.Dict[str, str]]:
     """Get verified packages from invectio static analysis result."""
     # 1. Obtain list of imports using invectio
-    result = get_static_analysis(src_path)
+    result = get_static_analysis(
+        src_path,
+        without_standard_imports=without_standard_imports,
+        without_builtin_imports=without_builtin_imports,
+        without_builtins=without_builtins,
+    )
 
     packages = []
     if result:
