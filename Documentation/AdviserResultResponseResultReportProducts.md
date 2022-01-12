@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **advised_runtime_environment** | [**RuntimeEnvironment**](RuntimeEnvironment.md) |  |
 **dependency_graph** | [**AdviserResultResponseResultReportDependencyGraph**](AdviserResultResponseResultReportDependencyGraph.md) |  |
 **justification** | [**Justification**](Justification.md) |  |
-**project** | [**AdviserResultResponseResultReportProject**](AdviserResultResponseResultReportProject.md) |  |
+**project** | **object** |  |
 **score** | **float** | Score of the computed product |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

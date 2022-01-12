@@ -1423,6 +1423,7 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
       thamos whatprovides sklearn.linear_model.*
     """
     _LOGGER.info("Returning information on package %r", import_name)
+
     result = get_package_from_imported_packages(import_name)
 
     if output_format == "yaml":
@@ -1463,11 +1464,16 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
 def discover(
     runtime_environment: typing.Optional[str], src_path: str = "."
 ) -> None:  # noqa: D412
-    """Discover packages used in the project or in the file.
+    """Discover packages used in the project or in a file and add them to requirements.
+
+    If runtime environment is passed, requirements are added to requirements specific
+    to the given runtime environment. Otherwise, the default runtime environment is used.
 
     Examples:
 
       thamos discover
+
+      thamos discover --runtime-environment "production"
     """
     # Obtain list of imports using invectio and verify package from PyPI
     verified_packages = get_verified_packages_from_static_analysis(
