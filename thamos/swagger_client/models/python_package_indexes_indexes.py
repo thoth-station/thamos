@@ -31,27 +31,27 @@ class PythonPackageIndexesIndexes(object):
         'url': 'str',
         'warehouse_api_url': 'str',
         'verify_ssl': 'bool',
-        'only_if_packages_seen': 'bool'
+        'only_if_package_seen': 'bool'
     }
 
     attribute_map = {
         'url': 'url',
         'warehouse_api_url': 'warehouse_api_url',
         'verify_ssl': 'verify_ssl',
-        'only_if_packages_seen': 'only_if_packages_seen'
+        'only_if_package_seen': 'only_if_package_seen'
     }
 
-    def __init__(self, url=None, warehouse_api_url=None, verify_ssl=None, only_if_packages_seen=None):  # noqa: E501
+    def __init__(self, url=None, warehouse_api_url=None, verify_ssl=None, only_if_package_seen=None):  # noqa: E501
         """PythonPackageIndexesIndexes - a model defined in Swagger"""  # noqa: E501
         self._url = None
         self._warehouse_api_url = None
         self._verify_ssl = None
-        self._only_if_packages_seen = None
+        self._only_if_package_seen = None
         self.discriminator = None
         self.url = url
         self.warehouse_api_url = warehouse_api_url
         self.verify_ssl = verify_ssl
-        self.only_if_packages_seen = only_if_packages_seen
+        self.only_if_package_seen = only_if_package_seen
 
     @property
     def url(self):
@@ -127,27 +127,29 @@ class PythonPackageIndexesIndexes(object):
         self._verify_ssl = verify_ssl
 
     @property
-    def only_if_packages_seen(self):
-        """Gets the only_if_packages_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+    def only_if_package_seen(self):
+        """Gets the only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
 
         The backend is configured to monitor only releases of already seen packages   # noqa: E501
 
-        :return: The only_if_packages_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+        :return: The only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
         :rtype: bool
         """
-        return self._only_if_packages_seen
+        return self._only_if_package_seen
 
-    @only_if_packages_seen.setter
-    def only_if_packages_seen(self, only_if_packages_seen):
-        """Sets the only_if_packages_seen of this PythonPackageIndexesIndexes.
+    @only_if_package_seen.setter
+    def only_if_package_seen(self, only_if_package_seen):
+        """Sets the only_if_package_seen of this PythonPackageIndexesIndexes.
 
         The backend is configured to monitor only releases of already seen packages   # noqa: E501
 
-        :param only_if_packages_seen: The only_if_packages_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+        :param only_if_package_seen: The only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
         :type: bool
         """
+        if only_if_package_seen is None:
+            raise ValueError("Invalid value for `only_if_package_seen`, must not be `None`")  # noqa: E501
 
-        self._only_if_packages_seen = only_if_packages_seen
+        self._only_if_package_seen = only_if_package_seen
 
     def to_dict(self):
         """Returns the model properties as a dict"""

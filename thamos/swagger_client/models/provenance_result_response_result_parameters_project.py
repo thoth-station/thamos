@@ -80,6 +80,7 @@ class ProvenanceResultResponseResultParametersProject(object):
     def requirements(self):
         """Gets the requirements of this ProvenanceResultResponseResultParametersProject.  # noqa: E501
 
+        Requirements stating direct dependencies of the project, the format is compatible with Pipenv   # noqa: E501
 
         :return: The requirements of this ProvenanceResultResponseResultParametersProject.  # noqa: E501
         :rtype: object
@@ -90,6 +91,7 @@ class ProvenanceResultResponseResultParametersProject(object):
     def requirements(self, requirements):
         """Sets the requirements of this ProvenanceResultResponseResultParametersProject.
 
+        Requirements stating direct dependencies of the project, the format is compatible with Pipenv   # noqa: E501
 
         :param requirements: The requirements of this ProvenanceResultResponseResultParametersProject.  # noqa: E501
         :type: object
@@ -103,6 +105,7 @@ class ProvenanceResultResponseResultParametersProject(object):
     def requirements_locked(self):
         """Gets the requirements_locked of this ProvenanceResultResponseResultParametersProject.  # noqa: E501
 
+        A lock file stating all the dependencies pinned to a specific version togher with an explicit Python package index configuration   # noqa: E501
 
         :return: The requirements_locked of this ProvenanceResultResponseResultParametersProject.  # noqa: E501
         :rtype: object
@@ -113,6 +116,7 @@ class ProvenanceResultResponseResultParametersProject(object):
     def requirements_locked(self, requirements_locked):
         """Sets the requirements_locked of this ProvenanceResultResponseResultParametersProject.
 
+        A lock file stating all the dependencies pinned to a specific version togher with an explicit Python package index configuration   # noqa: E501
 
         :param requirements_locked: The requirements_locked of this ProvenanceResultResponseResultParametersProject.  # noqa: E501
         :type: object
