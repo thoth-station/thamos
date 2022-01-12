@@ -1607,10 +1607,13 @@ def print_dependency_graph(
     analysis_id: typing.Optional[str] = None, *, fold: bool = True
 ) -> bool:
     """Print dependency graph to stdout produced by the given adviser."""
-    if not analysis_id:
-        adviser_document, error = get_analysis_results()
-    else:
-        adviser_document, error = get_analysis_results(analysis_id)
+    analysis_id = analysis_id or get_last_analysis_id()
+    if not analysis_id.startswith("adviser-"):
+        raise UnknownAnalysisType(
+            f"An adviser identifier is required to print a dependency graph, got {analysis_id!r} instead"
+        )
+
+    adviser_document, error = get_analysis_results(analysis_id)
 
     if error:
         print("Cannot print dependency graph as advise was not successful")
