@@ -588,7 +588,7 @@ class _Configuration:
                 {
                     "type": "ERROR" if conf_cpu_family is not None else "WARNING",
                     "runtime_environment": runtime_environment_name,
-                    "message": f"CPU model stated in the configuration file ({conf_cpu_family}) does not match the "
+                    "message": f"CPU family stated in the configuration file ({conf_cpu_family}) does not match the "
                     f"one detected ({cpu_info.get('cpu_family')})",
                 }
             )
