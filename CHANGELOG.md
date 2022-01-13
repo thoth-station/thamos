@@ -1,4 +1,37 @@
 
+## Release 1.24.0 (2022-01-13T16:27:17)
+* Add missing files
+* Update swagger-client and documentation
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Check what type of document users ask when performing thamos graph
+* Fix message reported
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Do not include std imports and builtins in thamos discover
+* Choose spinners, wisely
+* Provide more user-friendly reporting of environments available
+* Make sure the import reports are unified
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Adjust reporting when `thamos discover' does not find any package
+* A minor fix in docstring
+* Use dash instead of underscore in options
+* Implement translation for table keys and thamos images report
+* Unify table reported when `thamos indexes' called
+* Fix typo
+* Unify table reported when `thamos status' called
+* Unify table reported when `thamos check' called
+* Introduce thamos verify command to check lockfile hash
+* Add a new command to verify that the lock file is up to date
+* Parametrize obtaining images
+* Add Maya to OWNERS
+* Update documentation stating environments and images
+* pre-commit
+* Make type hint more precise
+* Fix type hint for list_thoth_container_images
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Respect nullable values in container-images response
+* Update GitHub issue templates
+
 ## Release 1.23.0 (2022-01-05T08:32:58)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * Update client library
