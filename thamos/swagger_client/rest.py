@@ -417,7 +417,7 @@ class ApiException(Exception):
             body_table.field_names = ["Body field", "Value"]
             body_table.align = "l"
 
-            for body, value in dict(json.loads(self.body.decode("utf-8"))):
+            for body, value in dict(json.loads(self.body.decode("utf-8"))).items():
                 body_table.add_row([body, value])
 
             error_message += f"HTTP response body: \n {str(body_table)} \n"
