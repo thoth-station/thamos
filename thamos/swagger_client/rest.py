@@ -404,7 +404,7 @@ class ApiException(Exception):
         error_message = "({0})\n" "Reason: {1}\n".format(self.status, self.reason)
         if self.headers:
             headers_table = PrettyTable()
-            headers_table.field_names = ["HTTP Headers", "Values"]
+            headers_table.field_names = ["Header field", "Value"]
             headers_table.align = "l"
 
             for header, value in dict(self.headers).items():
@@ -414,7 +414,7 @@ class ApiException(Exception):
 
         if self.body:
             body_table = PrettyTable()
-            body_table.field_names = ["Body headers", "Values"]
+            body_table.field_names = ["Body field", "Value"]
             body_table.align = "l"
 
             for body, value in dict(json.loads(self.body.decode("utf-8"))):
