@@ -1424,7 +1424,10 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
     """
     _LOGGER.info("Returning information on package %r", import_name)
 
-    result = get_package_from_imported_packages(import_name)
+    result = get_package_from_imported_packages(import_name, raise_on_error=False)
+    if not result:
+        _LOGGER.error("No package providing %r found", import_name)
+        sys.exit(1)
 
     if output_format == "yaml":
         yaml.safe_dump({"packages": result}, sys.stdout)
@@ -1481,6 +1484,7 @@ def discover(
         without_standard_imports=True,
         without_builtin_imports=True,
         without_builtins=True,
+        raise_on_error=False,
     )
 
     # Update requirements files (Pipfile/Pipfile.lock) or requirements.txt (requirements logic)

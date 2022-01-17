@@ -1244,14 +1244,33 @@ def list_python_package_indexes(api_client: ApiClient) -> typing.Dict[str, Any]:
 
 @with_api_client
 def get_package_from_imported_packages(
-    api_client: ApiClient, import_name: str
+    api_client: ApiClient,
+    import_name: str,
+    raise_on_error: bool = True,
 ) -> typing.List[Dict[str, Any]]:
     """Get all (package_name, package_version, index_url) triplets for given import package name."""
-    return (
-        PythonPackagesApi(api_client)
-        .get_package_from_imported_packages(import_name)
-        .to_dict()["package_names"]
-    )
+    try:
+        return (
+            PythonPackagesApi(api_client)
+            .get_package_from_imported_packages(import_name)
+            .to_dict()["package_names"]
+        )
+    except ApiException as exc:
+        error_message = f"Failed to obtain package for import {import_name!r} (HTTP status {exc.status})"
+        if exc.body:
+            try:
+                error_message += (
+                    f": {str(json.loads(exc.body.decode('utf-8'))['error'])}"
+                )
+            except json.decoder.JSONDecodeError:
+                _LOGGER.error(
+                    "Failed to decode backend response (HTTP status %r)", exc.status
+                )
+
+        if raise_on_error:
+            raise NoMatchingPackage(error_message) from exc
+
+        return []
 
 
 def get_verified_packages_from_static_analysis(
@@ -1260,6 +1279,7 @@ def get_verified_packages_from_static_analysis(
     without_standard_imports: bool = False,
     without_builtin_imports: bool = False,
     without_builtins: bool = False,
+    raise_on_error: bool = True,
 ) -> typing.List[typing.Dict[str, str]]:
     """Get verified packages from invectio static analysis result."""
     # 1. Obtain list of imports using invectio
@@ -1284,62 +1304,45 @@ def get_verified_packages_from_static_analysis(
     for import_name in packages:
         unique_packages: typing.List[typing.Dict] = []
 
-        try:
-            imported_packages = get_package_from_imported_packages(import_name)
-        except ApiException as exc:
+        imported_packages = get_package_from_imported_packages(
+            import_name, raise_on_error=raise_on_error
+        )
+        if not imported_packages:
+            _LOGGER.error("No package for import %r found", import_name)
+            continue
 
-            error_message = f"Failed to obtain package for import {import_name!r} (HTTP status {exc.status})"
+        for package in imported_packages:
+            if package["package_name"] not in [
+                p["package_name"] for p in unique_packages
+            ]:
+                unique_packages.append(
+                    {
+                        "package_name": package["package_name"],
+                        "index_url": package["index_url"],
+                    }
+                )
+            else:
+                existing_indexes = [
+                    p["index_url"]
+                    for p in unique_packages
+                    if p["package_name"] == package["package_name"]
+                ]
 
-            if exc.body:
-                try:
-                    error_message += f": {str(json.loads(exc.body.decode('utf-8')['error']))}"
-                except Exception as ex:
-                    raise NoMatchingPackage(error_message) from ex
-
-            if exc.status == 404:
-                _LOGGER.error("No matching package found for import %r", import_name)
-                continue
-
-            _LOGGER.error(
-                "Failed to obtain package for import %r (HTTP code %d): %s",
-                import_name,
-                exc.status,
-                exc.body,
-            )
-
-        if imported_packages:
-            for package in imported_packages:
-                if package["package_name"] not in [
-                    p["package_name"] for p in unique_packages
-                ]:
+                if package["index_url"] not in existing_indexes:
                     unique_packages.append(
                         {
                             "package_name": package["package_name"],
                             "index_url": package["index_url"],
                         }
                     )
-                else:
-                    existing_indexes = [
-                        p["index_url"]
-                        for p in unique_packages
-                        if p["package_name"] == package["package_name"]
-                    ]
 
-                    if package["index_url"] not in existing_indexes:
-                        unique_packages.append(
-                            {
-                                "package_name": package["package_name"],
-                                "index_url": package["index_url"],
-                            }
-                        )
-
-            for unique_package in unique_packages:
-                verified_packages.append(unique_package)
-                _LOGGER.info(
-                    "Package name %r identified for import %r",
-                    unique_package["package_name"],
-                    import_name,
-                )
+        for unique_package in unique_packages:
+            verified_packages.append(unique_package)
+            _LOGGER.info(
+                "Package name %r identified for import %r",
+                unique_package["package_name"],
+                import_name,
+            )
 
     return verified_packages
 
