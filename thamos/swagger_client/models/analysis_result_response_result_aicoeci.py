@@ -28,8 +28,8 @@ class AnalysisResultResponseResultAicoeci(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'requirements': 'object',
-        'requirements_lock': 'object'
+        'requirements': 'str',
+        'requirements_lock': 'str'
     }
 
     attribute_map = {
@@ -49,9 +49,10 @@ class AnalysisResultResponseResultAicoeci(object):
     def requirements(self):
         """Gets the requirements of this AnalysisResultResponseResultAicoeci.  # noqa: E501
 
+        Direct dependencies for the application stack  # noqa: E501
 
         :return: The requirements of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :rtype: object
+        :rtype: str
         """
         return self._requirements
 
@@ -59,9 +60,10 @@ class AnalysisResultResponseResultAicoeci(object):
     def requirements(self, requirements):
         """Sets the requirements of this AnalysisResultResponseResultAicoeci.
 
+        Direct dependencies for the application stack  # noqa: E501
 
         :param requirements: The requirements of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :type: object
+        :type: str
         """
         if requirements is None:
             raise ValueError("Invalid value for `requirements`, must not be `None`")  # noqa: E501
@@ -72,9 +74,10 @@ class AnalysisResultResponseResultAicoeci(object):
     def requirements_lock(self):
         """Gets the requirements_lock of this AnalysisResultResponseResultAicoeci.  # noqa: E501
 
+        Fully pinned down dependency stack  # noqa: E501
 
         :return: The requirements_lock of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :rtype: object
+        :rtype: str
         """
         return self._requirements_lock
 
@@ -82,9 +85,10 @@ class AnalysisResultResponseResultAicoeci(object):
     def requirements_lock(self, requirements_lock):
         """Sets the requirements_lock of this AnalysisResultResponseResultAicoeci.
 
+        Fully pinned down dependency stack  # noqa: E501
 
         :param requirements_lock: The requirements_lock of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :type: object
+        :type: str
         """
         if requirements_lock is None:
             raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501

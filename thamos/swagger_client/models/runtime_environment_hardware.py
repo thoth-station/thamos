@@ -28,50 +28,29 @@ class RuntimeEnvironmentHardware(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'cpu_model': 'int',
         'cpu_family': 'int',
+        'cpu_model': 'int',
         'gpu_model': 'str'
     }
 
     attribute_map = {
-        'cpu_model': 'cpu_model',
         'cpu_family': 'cpu_family',
+        'cpu_model': 'cpu_model',
         'gpu_model': 'gpu_model'
     }
 
-    def __init__(self, cpu_model=None, cpu_family=None, gpu_model=None):  # noqa: E501
+    def __init__(self, cpu_family=None, cpu_model=None, gpu_model=None):  # noqa: E501
         """RuntimeEnvironmentHardware - a model defined in Swagger"""  # noqa: E501
-        self._cpu_model = None
         self._cpu_family = None
+        self._cpu_model = None
         self._gpu_model = None
         self.discriminator = None
-        if cpu_model is not None:
-            self.cpu_model = cpu_model
         if cpu_family is not None:
             self.cpu_family = cpu_family
+        if cpu_model is not None:
+            self.cpu_model = cpu_model
         if gpu_model is not None:
             self.gpu_model = gpu_model
-
-    @property
-    def cpu_model(self):
-        """Gets the cpu_model of this RuntimeEnvironmentHardware.  # noqa: E501
-
-
-        :return: The cpu_model of this RuntimeEnvironmentHardware.  # noqa: E501
-        :rtype: int
-        """
-        return self._cpu_model
-
-    @cpu_model.setter
-    def cpu_model(self, cpu_model):
-        """Sets the cpu_model of this RuntimeEnvironmentHardware.
-
-
-        :param cpu_model: The cpu_model of this RuntimeEnvironmentHardware.  # noqa: E501
-        :type: int
-        """
-
-        self._cpu_model = cpu_model
 
     @property
     def cpu_family(self):
@@ -93,6 +72,27 @@ class RuntimeEnvironmentHardware(object):
         """
 
         self._cpu_family = cpu_family
+
+    @property
+    def cpu_model(self):
+        """Gets the cpu_model of this RuntimeEnvironmentHardware.  # noqa: E501
+
+
+        :return: The cpu_model of this RuntimeEnvironmentHardware.  # noqa: E501
+        :rtype: int
+        """
+        return self._cpu_model
+
+    @cpu_model.setter
+    def cpu_model(self, cpu_model):
+        """Sets the cpu_model of this RuntimeEnvironmentHardware.
+
+
+        :param cpu_model: The cpu_model of this RuntimeEnvironmentHardware.  # noqa: E501
+        :type: int
+        """
+
+        self._cpu_model = cpu_model
 
     @property
     def gpu_model(self):

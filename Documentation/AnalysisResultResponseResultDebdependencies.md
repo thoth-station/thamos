@@ -3,12 +3,12 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Debian package name |
-**version** | **str** | Debian package version |
-**epoch** | **str** | Debian package epoch |
 **depends** | [**AnalysisResultResponseResultDepends**](AnalysisResultResponseResultDepends.md) |  |
-**pre_depends** | **object** |  |
-**replaces** | **object** |  |
+**epoch** | **str** | Debian package epoch |
+**name** | **str** | Debian package name |
+**pre_depends** | [**AnalysisResultResponseResultDepends**](AnalysisResultResponseResultDepends.md) |  |
+**replaces** | [**AnalysisResultResponseResultDepends**](AnalysisResultResponseResultDepends.md) |  |
+**version** | **str** | Debian package version |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

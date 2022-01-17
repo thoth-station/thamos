@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **python_packages** | [**list[AnalysisResultResponseResultPythonpackages]**](AnalysisResultResponseResultPythonpackages.md) | Detected Python packages inside the container image |
 **rpm** | **list[str]** | A listing of container images found inside the analyzed container image  |
 **rpm_dependencies** | **list[object]** | Information about RPM packages and their dependencies |
-**skopeo_inspect** | **object** |  |
+**skopeo_inspect** | [**AnalysisResultResponseResultSkopeoinspect**](AnalysisResultResponseResultSkopeoinspect.md) |  |
 **system_symbols** | **object** | Systems symbols detected - a path mapping to exported symbols available  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

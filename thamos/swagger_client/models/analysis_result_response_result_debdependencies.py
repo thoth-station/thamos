@@ -28,88 +28,61 @@ class AnalysisResultResponseResultDebdependencies(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'version': 'str',
-        'epoch': 'str',
         'depends': 'AnalysisResultResponseResultDepends',
-        'pre_depends': 'object',
-        'replaces': 'object'
+        'epoch': 'str',
+        'name': 'str',
+        'pre_depends': 'AnalysisResultResponseResultDepends',
+        'replaces': 'AnalysisResultResponseResultDepends',
+        'version': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'version': 'version',
-        'epoch': 'epoch',
         'depends': 'depends',
+        'epoch': 'epoch',
+        'name': 'name',
         'pre_depends': 'pre-depends',
-        'replaces': 'replaces'
+        'replaces': 'replaces',
+        'version': 'version'
     }
 
-    def __init__(self, name=None, version=None, epoch=None, depends=None, pre_depends=None, replaces=None):  # noqa: E501
+    def __init__(self, depends=None, epoch=None, name=None, pre_depends=None, replaces=None, version=None):  # noqa: E501
         """AnalysisResultResponseResultDebdependencies - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._version = None
-        self._epoch = None
         self._depends = None
+        self._epoch = None
+        self._name = None
         self._pre_depends = None
         self._replaces = None
+        self._version = None
         self.discriminator = None
-        self.name = name
-        self.version = version
-        self.epoch = epoch
         self.depends = depends
+        self.epoch = epoch
+        self.name = name
         self.pre_depends = pre_depends
         self.replaces = replaces
+        self.version = version
 
     @property
-    def name(self):
-        """Gets the name of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+    def depends(self):
+        """Gets the depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
 
-        Debian package name  # noqa: E501
 
-        :return: The name of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: str
+        :return: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: AnalysisResultResponseResultDepends
         """
-        return self._name
+        return self._depends
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this AnalysisResultResponseResultDebdependencies.
+    @depends.setter
+    def depends(self, depends):
+        """Sets the depends of this AnalysisResultResponseResultDebdependencies.
 
-        Debian package name  # noqa: E501
 
-        :param name: The name of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: str
+        :param depends: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: AnalysisResultResponseResultDepends
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+        if depends is None:
+            raise ValueError("Invalid value for `depends`, must not be `None`")  # noqa: E501
 
-        self._name = name
-
-    @property
-    def version(self):
-        """Gets the version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-
-        Debian package version  # noqa: E501
-
-        :return: The version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: str
-        """
-        return self._version
-
-    @version.setter
-    def version(self, version):
-        """Sets the version of this AnalysisResultResponseResultDebdependencies.
-
-        Debian package version  # noqa: E501
-
-        :param version: The version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: str
-        """
-        if version is None:
-            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
-
-        self._version = version
+        self._depends = depends
 
     @property
     def epoch(self):
@@ -137,27 +110,29 @@ class AnalysisResultResponseResultDebdependencies(object):
         self._epoch = epoch
 
     @property
-    def depends(self):
-        """Gets the depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+    def name(self):
+        """Gets the name of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
 
+        Debian package name  # noqa: E501
 
-        :return: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: AnalysisResultResponseResultDepends
+        :return: The name of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: str
         """
-        return self._depends
+        return self._name
 
-    @depends.setter
-    def depends(self, depends):
-        """Sets the depends of this AnalysisResultResponseResultDebdependencies.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this AnalysisResultResponseResultDebdependencies.
 
+        Debian package name  # noqa: E501
 
-        :param depends: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: AnalysisResultResponseResultDepends
+        :param name: The name of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: str
         """
-        if depends is None:
-            raise ValueError("Invalid value for `depends`, must not be `None`")  # noqa: E501
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._depends = depends
+        self._name = name
 
     @property
     def pre_depends(self):
@@ -165,7 +140,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :return: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: object
+        :rtype: AnalysisResultResponseResultDepends
         """
         return self._pre_depends
 
@@ -175,7 +150,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :param pre_depends: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: object
+        :type: AnalysisResultResponseResultDepends
         """
         if pre_depends is None:
             raise ValueError("Invalid value for `pre_depends`, must not be `None`")  # noqa: E501
@@ -188,7 +163,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :return: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: object
+        :rtype: AnalysisResultResponseResultDepends
         """
         return self._replaces
 
@@ -198,12 +173,37 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :param replaces: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: object
+        :type: AnalysisResultResponseResultDepends
         """
         if replaces is None:
             raise ValueError("Invalid value for `replaces`, must not be `None`")  # noqa: E501
 
         self._replaces = replaces
+
+    @property
+    def version(self):
+        """Gets the version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+
+        Debian package version  # noqa: E501
+
+        :return: The version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: str
+        """
+        return self._version
+
+    @version.setter
+    def version(self, version):
+        """Sets the version of this AnalysisResultResponseResultDebdependencies.
+
+        Debian package version  # noqa: E501
+
+        :param version: The version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: str
+        """
+        if version is None:
+            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
+
+        self._version = version
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -28,7 +28,7 @@ class PythonEnvironments(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'environment': 'list[PythonPackageVersionEnvironmentsResponseEnvironments]'
+        'environment': 'list[PythonEnvironmentsEnvironment]'
     }
 
     attribute_map = {
@@ -47,7 +47,7 @@ class PythonEnvironments(object):
 
 
         :return: The environment of this PythonEnvironments.  # noqa: E501
-        :rtype: list[PythonPackageVersionEnvironmentsResponseEnvironments]
+        :rtype: list[PythonEnvironmentsEnvironment]
         """
         return self._environment
 
@@ -57,7 +57,7 @@ class PythonEnvironments(object):
 
 
         :param environment: The environment of this PythonEnvironments.  # noqa: E501
-        :type: list[PythonPackageVersionEnvironmentsResponseEnvironments]
+        :type: list[PythonEnvironmentsEnvironment]
         """
         if environment is None:
             raise ValueError("Invalid value for `environment`, must not be `None`")  # noqa: E501

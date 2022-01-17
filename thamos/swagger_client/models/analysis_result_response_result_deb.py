@@ -28,26 +28,51 @@ class AnalysisResultResponseResultDeb(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'arch': 'str',
         'name': 'str',
-        'version': 'str',
-        'arch': 'str'
+        'version': 'str'
     }
 
     attribute_map = {
+        'arch': 'arch',
         'name': 'name',
-        'version': 'version',
-        'arch': 'arch'
+        'version': 'version'
     }
 
-    def __init__(self, name=None, version=None, arch=None):  # noqa: E501
+    def __init__(self, arch=None, name=None, version=None):  # noqa: E501
         """AnalysisResultResponseResultDeb - a model defined in Swagger"""  # noqa: E501
+        self._arch = None
         self._name = None
         self._version = None
-        self._arch = None
         self.discriminator = None
+        self.arch = arch
         self.name = name
         self.version = version
-        self.arch = arch
+
+    @property
+    def arch(self):
+        """Gets the arch of this AnalysisResultResponseResultDeb.  # noqa: E501
+
+        Package architecture  # noqa: E501
+
+        :return: The arch of this AnalysisResultResponseResultDeb.  # noqa: E501
+        :rtype: str
+        """
+        return self._arch
+
+    @arch.setter
+    def arch(self, arch):
+        """Sets the arch of this AnalysisResultResponseResultDeb.
+
+        Package architecture  # noqa: E501
+
+        :param arch: The arch of this AnalysisResultResponseResultDeb.  # noqa: E501
+        :type: str
+        """
+        if arch is None:
+            raise ValueError("Invalid value for `arch`, must not be `None`")  # noqa: E501
+
+        self._arch = arch
 
     @property
     def name(self):
@@ -98,31 +123,6 @@ class AnalysisResultResponseResultDeb(object):
             raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
 
         self._version = version
-
-    @property
-    def arch(self):
-        """Gets the arch of this AnalysisResultResponseResultDeb.  # noqa: E501
-
-        Package architecture  # noqa: E501
-
-        :return: The arch of this AnalysisResultResponseResultDeb.  # noqa: E501
-        :rtype: str
-        """
-        return self._arch
-
-    @arch.setter
-    def arch(self, arch):
-        """Sets the arch of this AnalysisResultResponseResultDeb.
-
-        Package architecture  # noqa: E501
-
-        :param arch: The arch of this AnalysisResultResponseResultDeb.  # noqa: E501
-        :type: str
-        """
-        if arch is None:
-            raise ValueError("Invalid value for `arch`, must not be `None`")  # noqa: E501
-
-        self._arch = arch
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -28,63 +28,86 @@ class PythonPackageVersionMetadataResponseMetadata(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'packages': 'list[str]',
+        'dependencies': 'object',
+        'importlib_metadata': 'PythonPackageVersionMetadataResponseMetadataImportlibMetadata',
         'index_url': 'str',
         'package_name': 'str',
         'package_version': 'str',
-        'dependencies': 'object',
-        'importlib_metadata': 'PythonPackageVersionMetadataResponseMetadataImportlibMetadata'
+        'packages': 'list[str]'
     }
 
     attribute_map = {
-        'packages': 'packages',
+        'dependencies': 'dependencies',
+        'importlib_metadata': 'importlib_metadata',
         'index_url': 'index_url',
         'package_name': 'package_name',
         'package_version': 'package_version',
-        'dependencies': 'dependencies',
-        'importlib_metadata': 'importlib_metadata'
+        'packages': 'packages'
     }
 
-    def __init__(self, packages=None, index_url=None, package_name=None, package_version=None, dependencies=None, importlib_metadata=None):  # noqa: E501
+    def __init__(self, dependencies=None, importlib_metadata=None, index_url=None, package_name=None, package_version=None, packages=None):  # noqa: E501
         """PythonPackageVersionMetadataResponseMetadata - a model defined in Swagger"""  # noqa: E501
-        self._packages = None
+        self._dependencies = None
+        self._importlib_metadata = None
         self._index_url = None
         self._package_name = None
         self._package_version = None
-        self._dependencies = None
-        self._importlib_metadata = None
+        self._packages = None
         self.discriminator = None
-        self.packages = packages
+        self.dependencies = dependencies
+        self.importlib_metadata = importlib_metadata
         self.index_url = index_url
         self.package_name = package_name
         self.package_version = package_version
-        self.dependencies = dependencies
-        self.importlib_metadata = importlib_metadata
+        self.packages = packages
 
     @property
-    def packages(self):
-        """Gets the packages of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+    def dependencies(self):
+        """Gets the dependencies of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
 
-        Python packages (modules) the given package provides  # noqa: E501
+        Dependency information  # noqa: E501
 
-        :return: The packages of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-        :rtype: list[str]
+        :return: The dependencies of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+        :rtype: object
         """
-        return self._packages
+        return self._dependencies
 
-    @packages.setter
-    def packages(self, packages):
-        """Sets the packages of this PythonPackageVersionMetadataResponseMetadata.
+    @dependencies.setter
+    def dependencies(self, dependencies):
+        """Sets the dependencies of this PythonPackageVersionMetadataResponseMetadata.
 
-        Python packages (modules) the given package provides  # noqa: E501
+        Dependency information  # noqa: E501
 
-        :param packages: The packages of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-        :type: list[str]
+        :param dependencies: The dependencies of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+        :type: object
         """
-        if packages is None:
-            raise ValueError("Invalid value for `packages`, must not be `None`")  # noqa: E501
+        if dependencies is None:
+            raise ValueError("Invalid value for `dependencies`, must not be `None`")  # noqa: E501
 
-        self._packages = packages
+        self._dependencies = dependencies
+
+    @property
+    def importlib_metadata(self):
+        """Gets the importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+
+
+        :return: The importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+        :rtype: PythonPackageVersionMetadataResponseMetadataImportlibMetadata
+        """
+        return self._importlib_metadata
+
+    @importlib_metadata.setter
+    def importlib_metadata(self, importlib_metadata):
+        """Sets the importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.
+
+
+        :param importlib_metadata: The importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+        :type: PythonPackageVersionMetadataResponseMetadataImportlibMetadata
+        """
+        if importlib_metadata is None:
+            raise ValueError("Invalid value for `importlib_metadata`, must not be `None`")  # noqa: E501
+
+        self._importlib_metadata = importlib_metadata
 
     @property
     def index_url(self):
@@ -162,52 +185,29 @@ class PythonPackageVersionMetadataResponseMetadata(object):
         self._package_version = package_version
 
     @property
-    def dependencies(self):
-        """Gets the dependencies of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+    def packages(self):
+        """Gets the packages of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
 
-        Dependency information  # noqa: E501
+        Python packages (modules) the given package provides  # noqa: E501
 
-        :return: The dependencies of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-        :rtype: object
+        :return: The packages of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+        :rtype: list[str]
         """
-        return self._dependencies
+        return self._packages
 
-    @dependencies.setter
-    def dependencies(self, dependencies):
-        """Sets the dependencies of this PythonPackageVersionMetadataResponseMetadata.
+    @packages.setter
+    def packages(self, packages):
+        """Sets the packages of this PythonPackageVersionMetadataResponseMetadata.
 
-        Dependency information  # noqa: E501
+        Python packages (modules) the given package provides  # noqa: E501
 
-        :param dependencies: The dependencies of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-        :type: object
+        :param packages: The packages of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
+        :type: list[str]
         """
-        if dependencies is None:
-            raise ValueError("Invalid value for `dependencies`, must not be `None`")  # noqa: E501
+        if packages is None:
+            raise ValueError("Invalid value for `packages`, must not be `None`")  # noqa: E501
 
-        self._dependencies = dependencies
-
-    @property
-    def importlib_metadata(self):
-        """Gets the importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-
-
-        :return: The importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-        :rtype: PythonPackageVersionMetadataResponseMetadataImportlibMetadata
-        """
-        return self._importlib_metadata
-
-    @importlib_metadata.setter
-    def importlib_metadata(self, importlib_metadata):
-        """Sets the importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.
-
-
-        :param importlib_metadata: The importlib_metadata of this PythonPackageVersionMetadataResponseMetadata.  # noqa: E501
-        :type: PythonPackageVersionMetadataResponseMetadataImportlibMetadata
-        """
-        if importlib_metadata is None:
-            raise ValueError("Invalid value for `importlib_metadata`, must not be `None`")  # noqa: E501
-
-        self._importlib_metadata = importlib_metadata
+        self._packages = packages
 
     def to_dict(self):
         """Returns the model properties as a dict"""

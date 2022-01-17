@@ -144,8 +144,6 @@ class AdviserResultResponseResult(object):
         :param report: The report of this AdviserResultResponseResult.  # noqa: E501
         :type: AdviserResultResponseResultReport
         """
-        if report is None:
-            raise ValueError("Invalid value for `report`, must not be `None`")  # noqa: E501
 
         self._report = report
 

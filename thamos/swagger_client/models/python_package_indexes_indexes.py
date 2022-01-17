@@ -28,30 +28,55 @@ class PythonPackageIndexesIndexes(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'only_if_package_seen': 'bool',
         'url': 'str',
-        'warehouse_api_url': 'str',
         'verify_ssl': 'bool',
-        'only_if_package_seen': 'bool'
+        'warehouse_api_url': 'str'
     }
 
     attribute_map = {
+        'only_if_package_seen': 'only_if_package_seen',
         'url': 'url',
-        'warehouse_api_url': 'warehouse_api_url',
         'verify_ssl': 'verify_ssl',
-        'only_if_package_seen': 'only_if_package_seen'
+        'warehouse_api_url': 'warehouse_api_url'
     }
 
-    def __init__(self, url=None, warehouse_api_url=None, verify_ssl=None, only_if_package_seen=None):  # noqa: E501
+    def __init__(self, only_if_package_seen=None, url=None, verify_ssl=None, warehouse_api_url=None):  # noqa: E501
         """PythonPackageIndexesIndexes - a model defined in Swagger"""  # noqa: E501
-        self._url = None
-        self._warehouse_api_url = None
-        self._verify_ssl = None
         self._only_if_package_seen = None
+        self._url = None
+        self._verify_ssl = None
+        self._warehouse_api_url = None
         self.discriminator = None
-        self.url = url
-        self.warehouse_api_url = warehouse_api_url
-        self.verify_ssl = verify_ssl
         self.only_if_package_seen = only_if_package_seen
+        self.url = url
+        self.verify_ssl = verify_ssl
+        self.warehouse_api_url = warehouse_api_url
+
+    @property
+    def only_if_package_seen(self):
+        """Gets the only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+
+        The backend is configured to monitor only releases of already seen packages   # noqa: E501
+
+        :return: The only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+        :rtype: bool
+        """
+        return self._only_if_package_seen
+
+    @only_if_package_seen.setter
+    def only_if_package_seen(self, only_if_package_seen):
+        """Sets the only_if_package_seen of this PythonPackageIndexesIndexes.
+
+        The backend is configured to monitor only releases of already seen packages   # noqa: E501
+
+        :param only_if_package_seen: The only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+        :type: bool
+        """
+        if only_if_package_seen is None:
+            raise ValueError("Invalid value for `only_if_package_seen`, must not be `None`")  # noqa: E501
+
+        self._only_if_package_seen = only_if_package_seen
 
     @property
     def url(self):
@@ -79,29 +104,6 @@ class PythonPackageIndexesIndexes(object):
         self._url = url
 
     @property
-    def warehouse_api_url(self):
-        """Gets the warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
-
-        URL to the warehouse API  # noqa: E501
-
-        :return: The warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
-        :rtype: str
-        """
-        return self._warehouse_api_url
-
-    @warehouse_api_url.setter
-    def warehouse_api_url(self, warehouse_api_url):
-        """Sets the warehouse_api_url of this PythonPackageIndexesIndexes.
-
-        URL to the warehouse API  # noqa: E501
-
-        :param warehouse_api_url: The warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
-        :type: str
-        """
-
-        self._warehouse_api_url = warehouse_api_url
-
-    @property
     def verify_ssl(self):
         """Gets the verify_ssl of this PythonPackageIndexesIndexes.  # noqa: E501
 
@@ -127,29 +129,27 @@ class PythonPackageIndexesIndexes(object):
         self._verify_ssl = verify_ssl
 
     @property
-    def only_if_package_seen(self):
-        """Gets the only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
+    def warehouse_api_url(self):
+        """Gets the warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
 
-        The backend is configured to monitor only releases of already seen packages   # noqa: E501
+        URL to the warehouse API  # noqa: E501
 
-        :return: The only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
-        :rtype: bool
+        :return: The warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
+        :rtype: str
         """
-        return self._only_if_package_seen
+        return self._warehouse_api_url
 
-    @only_if_package_seen.setter
-    def only_if_package_seen(self, only_if_package_seen):
-        """Sets the only_if_package_seen of this PythonPackageIndexesIndexes.
+    @warehouse_api_url.setter
+    def warehouse_api_url(self, warehouse_api_url):
+        """Sets the warehouse_api_url of this PythonPackageIndexesIndexes.
 
-        The backend is configured to monitor only releases of already seen packages   # noqa: E501
+        URL to the warehouse API  # noqa: E501
 
-        :param only_if_package_seen: The only_if_package_seen of this PythonPackageIndexesIndexes.  # noqa: E501
-        :type: bool
+        :param warehouse_api_url: The warehouse_api_url of this PythonPackageIndexesIndexes.  # noqa: E501
+        :type: str
         """
-        if only_if_package_seen is None:
-            raise ValueError("Invalid value for `only_if_package_seen`, must not be `None`")  # noqa: E501
 
-        self._only_if_package_seen = only_if_package_seen
+        self._warehouse_api_url = warehouse_api_url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

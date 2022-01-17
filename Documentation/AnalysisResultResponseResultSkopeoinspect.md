@@ -1,4 +1,4 @@
-# ImageMetadataResponse
+# AnalysisResultResponseResultSkopeoinspect
 
 ## Properties
 Name | Type | Description | Notes

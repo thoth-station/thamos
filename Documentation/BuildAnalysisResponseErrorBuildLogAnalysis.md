@@ -1,11 +1,10 @@
-# AnalysisResultResponseMetadataDistributionVersionParts
+# BuildAnalysisResponseErrorBuildLogAnalysis
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**build_number** | **str** |  |
-**major** | **str** |  |
-**minor** | **str** |  |
+**error** | **str** | Error information for user | [optional]
+**parameters** | **object** | Parameters echoed back to user for debugging | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
