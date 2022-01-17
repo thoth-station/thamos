@@ -1288,13 +1288,13 @@ def get_verified_packages_from_static_analysis(
             imported_packages = get_package_from_imported_packages(import_name)
         except ApiException as exc:
 
-            error_message = f"Failed to obtain package for import {import_name!r} (HTTP status {exc.status})\n"
+            error_message = f"Failed to obtain package for import {import_name!r} (HTTP status {exc.status})"
 
             if exc.body:
                 try:
-                    error_message += str(json.loads(exc.body.decode("utf-8"))["error"])
+                    error_message += f": {str(json.loads(exc.body.decode('utf-8')['error']))}"
                 except Exception as ex:
-                    raise ex
+                    raise NoMatchingPackage(error_message) from ex
 
             if exc.status == 404:
                 _LOGGER.error("No matching package found for import %r", import_name)
@@ -1306,7 +1306,6 @@ def get_verified_packages_from_static_analysis(
                 exc.status,
                 exc.body,
             )
-            raise NoMatchingPackage(error_message)
 
         if imported_packages:
             for package in imported_packages:
