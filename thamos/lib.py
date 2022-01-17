@@ -30,7 +30,6 @@ from time import monotonic
 from contextlib import contextmanager
 from functools import partial
 from functools import wraps
-from prettytable import PrettyTable
 import pprint
 import json
 import urllib3
@@ -1292,7 +1291,7 @@ def get_verified_packages_from_static_analysis(
                 f"Failed to obtain package for import {import_name!r} (HTTP status {exc.status})\n"
             )
             if exc.body:
-                print(f"{exc.body['error']}")
+                print(f"{json.loads(exc.body.decode('utf-8'))['error']}")
 
             if exc.status == 404:
                 _LOGGER.error("No matching package found for import %r", import_name)
