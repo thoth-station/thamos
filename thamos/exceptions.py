@@ -72,3 +72,6 @@ class NoRequirementsFile(ThamosException):
 
 class NoDevRequirements(ThamosException):
     """An exception raised if no development requirements are found during the installation process."""
+
+class NoMatchingPackage(ThamosException):
+    """An exception raised if no matching package can be found for a given import."""
