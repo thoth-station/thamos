@@ -69,6 +69,7 @@ from .exceptions import UnknownAnalysisType
 from .exceptions import TimeoutError
 from .exceptions import ApiError
 from .exceptions import NoDevRequirements
+from .exceptions import NoMatchingPackage
 from .exceptions import NoRequirementsFile
 
 from typing import Callable, Any, Union, Dict
@@ -1290,7 +1291,10 @@ def get_verified_packages_from_static_analysis(
             error_message = f"Failed to obtain package for import {import_name!r} (HTTP status {exc.status})\n"
 
             if exc.body:
-                error_message += str(json.loads(exc.body.decode("utf-8"))["error"])
+                try:
+                    error_message += str(json.loads(exc.body.decode("utf-8"))["error"])
+                except Exception as ex:
+                    raise ex
 
             if exc.status == 404:
                 _LOGGER.error("No matching package found for import %r", import_name)
@@ -1302,7 +1306,7 @@ def get_verified_packages_from_static_analysis(
                 exc.status,
                 exc.body,
             )
-            raise ApiError(error_message)
+            raise NoMatchingPackage(error_message)
 
         if imported_packages:
             for package in imported_packages:
