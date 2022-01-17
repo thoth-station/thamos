@@ -30,6 +30,7 @@ from time import monotonic
 from contextlib import contextmanager
 from functools import partial
 from functools import wraps
+from prettytable import PrettyTable
 import pprint
 import json
 import urllib3
@@ -1286,6 +1287,32 @@ def get_verified_packages_from_static_analysis(
         try:
             imported_packages = get_package_from_imported_packages(import_name)
         except ApiException as exc:
+            error_message = "({0})\n Reason: {1}\n".format(exc.status, exc.reason)
+
+            if exc.headers:
+                error_message += "HTTP response headers: {0}\n".format(exc.headers)
+                headers_table = PrettyTable()
+                headers_table.field_names = ["Header field", "Value"]
+                headers_table.align = "l"
+
+                for header, value in dict(exc.headers).items():
+                    headers_table.add_row([header, value])
+
+                error_message += f"HTTP response headers: \n {str(headers_table)} \n"
+
+            if exc.body:
+                error_message += "HTTP response body: {0}\n".format(exc.body)
+                body_table = PrettyTable()
+                body_table.field_names = ["Body field", "Value"]
+                body_table.align = "l"
+
+                for body, value in dict(json.loads(exc.body.decode("utf-8"))).items():
+                    body_table.add_row([body, value])
+
+                error_message += f"HTTP response body: \n {str(body_table)} \n"
+
+            print(error_message)
+
             if exc.status == 404:
                 _LOGGER.error("No matching package found for import %r", import_name)
                 continue
