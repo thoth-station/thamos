@@ -157,7 +157,6 @@ class _Configuration:
         self.explicit_host = None
         self.tls_verify = None
         self._api_url = None
-        self.config_path = None
 
     @property
     def api_url(self):
@@ -275,13 +274,11 @@ class _Configuration:
     def reset_config(self) -> None:
         """Discard loaded config in memory."""
         self._configuration = None
-        self.config_path = None
 
     def load_config(self, force: bool = False) -> None:
         """Load configuration from a file."""
         if not self._configuration and not force:
             with workdir(config.CONFIG_NAME):
-                self.config_path = os.getcwd()
                 self.load_config_from_file(config.CONFIG_NAME)
 
     def save_config(self, path: Optional[str] = None) -> None:

@@ -368,7 +368,7 @@ def advise_using_config(
     *,
     runtime_environment_name: typing.Optional[str] = None,
     constraints: typing.Optional[str] = None,
-    src_path: typing.Optional[str] = None,
+    src_path: str = ".",
     recommendation_type: str = None,
     dev: bool = False,
     no_static_analysis: bool = False,
@@ -398,7 +398,7 @@ def advise_using_config(
         pipfile_lock=pipfile_lock,
         constraints=constraints,
         recommendation_type=recommendation_type,
-        src_path=src_path if src_path is not None else thoth_config.config_path,
+        src_path=src_path,
         runtime_environment=thoth_config.get_runtime_environment(
             runtime_environment_name
         ),
