@@ -1452,6 +1452,7 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
     "-s",
     type=str,
     default=".",
+    metavar="SRC_PATH",
     envvar="THAMOS_SOURCE_PATH",
     help="Specify path to consider to discover packages.",
 )
