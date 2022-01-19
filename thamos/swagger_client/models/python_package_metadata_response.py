@@ -28,45 +28,22 @@ class PythonPackageMetadataResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'parameters': 'object',
-        'metadata': 'PythonPackageMetadataResponseMetadata'
+        'metadata': 'PythonPackageMetadataResponseMetadata',
+        'parameters': 'object'
     }
 
     attribute_map = {
-        'parameters': 'parameters',
-        'metadata': 'metadata'
+        'metadata': 'metadata',
+        'parameters': 'parameters'
     }
 
-    def __init__(self, parameters=None, metadata=None):  # noqa: E501
+    def __init__(self, metadata=None, parameters=None):  # noqa: E501
         """PythonPackageMetadataResponse - a model defined in Swagger"""  # noqa: E501
-        self._parameters = None
         self._metadata = None
+        self._parameters = None
         self.discriminator = None
-        self.parameters = parameters
         self.metadata = metadata
-
-    @property
-    def parameters(self):
-        """Gets the parameters of this PythonPackageMetadataResponse.  # noqa: E501
-
-
-        :return: The parameters of this PythonPackageMetadataResponse.  # noqa: E501
-        :rtype: object
-        """
-        return self._parameters
-
-    @parameters.setter
-    def parameters(self, parameters):
-        """Sets the parameters of this PythonPackageMetadataResponse.
-
-
-        :param parameters: The parameters of this PythonPackageMetadataResponse.  # noqa: E501
-        :type: object
-        """
-        if parameters is None:
-            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
-
-        self._parameters = parameters
+        self.parameters = parameters
 
     @property
     def metadata(self):
@@ -90,6 +67,29 @@ class PythonPackageMetadataResponse(object):
             raise ValueError("Invalid value for `metadata`, must not be `None`")  # noqa: E501
 
         self._metadata = metadata
+
+    @property
+    def parameters(self):
+        """Gets the parameters of this PythonPackageMetadataResponse.  # noqa: E501
+
+
+        :return: The parameters of this PythonPackageMetadataResponse.  # noqa: E501
+        :rtype: object
+        """
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters):
+        """Sets the parameters of this PythonPackageMetadataResponse.
+
+
+        :param parameters: The parameters of this PythonPackageMetadataResponse.  # noqa: E501
+        :type: object
+        """
+        if parameters is None:
+            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
+
+        self._parameters = parameters
 
     def to_dict(self):
         """Returns the model properties as a dict"""

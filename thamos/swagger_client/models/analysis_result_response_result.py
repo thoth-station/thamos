@@ -41,7 +41,7 @@ class AnalysisResultResponseResult(object):
         'python_packages': 'list[AnalysisResultResponseResultPythonpackages]',
         'rpm': 'list[str]',
         'rpm_dependencies': 'list[object]',
-        'skopeo_inspect': 'object',
+        'skopeo_inspect': 'AnalysisResultResponseResultSkopeoinspect',
         'system_symbols': 'object'
     }
 
@@ -426,7 +426,7 @@ class AnalysisResultResponseResult(object):
 
 
         :return: The skopeo_inspect of this AnalysisResultResponseResult.  # noqa: E501
-        :rtype: object
+        :rtype: AnalysisResultResponseResultSkopeoinspect
         """
         return self._skopeo_inspect
 
@@ -436,7 +436,7 @@ class AnalysisResultResponseResult(object):
 
 
         :param skopeo_inspect: The skopeo_inspect of this AnalysisResultResponseResult.  # noqa: E501
-        :type: object
+        :type: AnalysisResultResponseResultSkopeoinspect
         """
         if skopeo_inspect is None:
             raise ValueError("Invalid value for `skopeo_inspect`, must not be `None`")  # noqa: E501

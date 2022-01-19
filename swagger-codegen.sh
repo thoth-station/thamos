@@ -7,7 +7,7 @@
 
 set -ex
 
-THOTH_SWAGGER_YAML=${1:-'https://test.thoth-station.ninja/api/v1/openapi.json'}
+THOTH_SWAGGER_YAML=${1:-'https://khemenu.thoth-station.ninja/api/v1/openapi.json'}
 
 function die() {
     echo $@ 1>&2
@@ -71,7 +71,8 @@ sed -i '/.*if error_msg is None:/,+1 d' "thamos/swagger_client/models/provenance
 sed -i '/.*if input is None:/,+1 d' "thamos/swagger_client/models/provenance_result_response_result.py"
 sed -i '/.*if metadata is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response.py"
 sed -i '/.*if advised_runtime_environment is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response_result_report_products.py"
-
 sed -i '/.*if error_msg is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response_result.py"
+sed -i '/.*if report is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response_result.py"
+sed -i '/.*if stack_info is None:/,+1 d' "thamos/swagger_client/models/adviser_result_response_result_report.py"
 find Documentation -name "*.md" -exec sed -i 's/[ \t]*$//' {} \;
 find thamos/swagger_client -name "*.py" -exec sed -i 's/[ \t]*$//' {} \;

@@ -28,49 +28,26 @@ class AdviserResultResponseResultReportPipelineBoots(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
         'configuration': 'object',
+        'name': 'str',
         'unit_run': 'bool'
     }
 
     attribute_map = {
-        'name': 'name',
         'configuration': 'configuration',
+        'name': 'name',
         'unit_run': 'unit_run'
     }
 
-    def __init__(self, name=None, configuration=None, unit_run=None):  # noqa: E501
+    def __init__(self, configuration=None, name=None, unit_run=None):  # noqa: E501
         """AdviserResultResponseResultReportPipelineBoots - a model defined in Swagger"""  # noqa: E501
-        self._name = None
         self._configuration = None
+        self._name = None
         self._unit_run = None
         self.discriminator = None
-        self.name = name
         self.configuration = configuration
+        self.name = name
         self.unit_run = unit_run
-
-    @property
-    def name(self):
-        """Gets the name of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
-
-
-        :return: The name of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this AdviserResultResponseResultReportPipelineBoots.
-
-
-        :param name: The name of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
 
     @property
     def configuration(self):
@@ -94,6 +71,29 @@ class AdviserResultResponseResultReportPipelineBoots(object):
             raise ValueError("Invalid value for `configuration`, must not be `None`")  # noqa: E501
 
         self._configuration = configuration
+
+    @property
+    def name(self):
+        """Gets the name of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
+
+
+        :return: The name of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this AdviserResultResponseResultReportPipelineBoots.
+
+
+        :param name: The name of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
 
     @property
     def unit_run(self):

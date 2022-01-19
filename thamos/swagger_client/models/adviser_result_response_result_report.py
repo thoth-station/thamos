@@ -225,8 +225,6 @@ class AdviserResultResponseResultReport(object):
         :param stack_info: The stack_info of this AdviserResultResponseResultReport.  # noqa: E501
         :type: StackInfo
         """
-        if stack_info is None:
-            raise ValueError("Invalid value for `stack_info`, must not be `None`")  # noqa: E501
 
         self._stack_info = stack_info
 
