@@ -625,7 +625,7 @@ def purge(
     metavar="KEY1=VALUE1,KEY2=VALUE2",
     default=None,
     show_default=True,
-    help="Labels used used to label the request.",
+    help="Labels used to label the request.",
 )
 @handle_cli_exception
 def advise(
