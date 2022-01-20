@@ -1382,7 +1382,7 @@ def remove(
     configuration.save_project(project)
 
 
-@cli.command("support")
+@cli.command("support", short_help="Collect environment and configuration information.")
 @click.option(
     "--output",
     "-o",
@@ -1402,7 +1402,7 @@ def support(output: str) -> None:
             json.dump(info, output_file, sort_keys=True, indent=2)
 
 
-@cli.command("whatprovides")
+@cli.command("whatprovides", short_help="Check packages providing the given import.")
 @click.pass_context
 @click.option(
     "--output-format",
@@ -1445,7 +1445,7 @@ def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
     sys.exit(0)
 
 
-@cli.command("discover")
+@cli.command("discover", short_help="Discover packages used in the project.")
 @click.pass_context
 @click.option(
     "--src-path",
@@ -1531,7 +1531,7 @@ def environments_(output_format: str) -> None:  # noqa: D412
         )
 
 
-@cli.command("verify")
+@cli.command("verify", short_help="Check lockfile freshness.")
 @click.pass_context
 @click.option(
     "--runtime-environment",
