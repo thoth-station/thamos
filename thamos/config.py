@@ -342,7 +342,9 @@ class _Configuration:
             platform=platform,
             requirements_format=requirements_format,
             base_image=base_image,
-            **cpu_info,
+            cpu_family=cpu_info["cpu_family"] or "null",
+            cpu_model=cpu_info["cpu_model"] or "null",
+            cpu_model_name=cpu_info["cpu_model_name"] or "CPU detection failed",
             **(dict(os.environ) if expand_env else {}),
         )
 
