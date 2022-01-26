@@ -1,4 +1,22 @@
 
+## Release 1.25.0 (2022-01-26T10:25:22)
+* Handle cases when CPU detection fails
+* Provide short help to fit terminal width
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Fix typo in docstring of the parameter
+* Add metavar for source path
+* Enable TLS verification
+* Report import errors for whatprovides and discover too
+* Exception chaining and log message on one line
+* Reformatting
+* Register thamos exception for no matching package and handle json.loads errors
+* Raise a Thamos specific error
+* Decode response body
+* Make error message more concise
+* Fix whatprovides output for Not Found Error
+* Report can be null when adviser fails on OOM
+* Remove config_path property from configuration class
+
 ## Release 1.24.0 (2022-01-13T16:27:17)
 * Add missing files
 * Update swagger-client and documentation
