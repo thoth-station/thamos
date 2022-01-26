@@ -9,6 +9,11 @@
 
 <!-- If this introduces a breaking change, please describe the impact and migration path for existing applications below. -->
 
+## This should yield a new module release
+
+- [ ] Yes
+- [ ] No
+
 ## This Pull Request implements
 
 … Explain your changes.
