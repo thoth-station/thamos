@@ -1201,10 +1201,10 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     help="Filter based on Python package name.",
 )
 @click.option(
-    "--rpm-package",
+    "--rpm-package-name",
     type=str,
     default=None,
-    metavar="RPM_PACKAGE",
+    metavar="RPM_PACKAGE_NAME",
     help="Filter based on RPM package name.",
 )
 @handle_cli_exception
@@ -1218,7 +1218,7 @@ def images(
     library_name: Optional[str],
     symbol: Optional[str],
     package_name: Optional[str],
-    rpm_package: Optional[str],
+    rpm_package_name: Optional[str],
 ) -> None:  # noqa: D412
     """Check available Thoth container images.
 
@@ -1237,7 +1237,7 @@ def images(
         library_name=library_name,
         symbol=symbol,
         package_name=package_name,
-        rpm_package=rpm_package,
+        rpm_package=rpm_package_name,
     )
 
     if output_format == "yaml":
