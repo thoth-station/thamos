@@ -28,49 +28,26 @@ class AdviserResultResponseResultReportPipelineBoots(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'configuration': 'object',
         'name': 'str',
+        'configuration': 'object',
         'unit_run': 'bool'
     }
 
     attribute_map = {
-        'configuration': 'configuration',
         'name': 'name',
+        'configuration': 'configuration',
         'unit_run': 'unit_run'
     }
 
-    def __init__(self, configuration=None, name=None, unit_run=None):  # noqa: E501
+    def __init__(self, name=None, configuration=None, unit_run=None):  # noqa: E501
         """AdviserResultResponseResultReportPipelineBoots - a model defined in Swagger"""  # noqa: E501
-        self._configuration = None
         self._name = None
+        self._configuration = None
         self._unit_run = None
         self.discriminator = None
-        self.configuration = configuration
         self.name = name
+        self.configuration = configuration
         self.unit_run = unit_run
-
-    @property
-    def configuration(self):
-        """Gets the configuration of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
-
-
-        :return: The configuration of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
-        :rtype: object
-        """
-        return self._configuration
-
-    @configuration.setter
-    def configuration(self, configuration):
-        """Sets the configuration of this AdviserResultResponseResultReportPipelineBoots.
-
-
-        :param configuration: The configuration of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
-        :type: object
-        """
-        if configuration is None:
-            raise ValueError("Invalid value for `configuration`, must not be `None`")  # noqa: E501
-
-        self._configuration = configuration
 
     @property
     def name(self):
@@ -94,6 +71,29 @@ class AdviserResultResponseResultReportPipelineBoots(object):
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
+
+    @property
+    def configuration(self):
+        """Gets the configuration of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
+
+
+        :return: The configuration of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
+        :rtype: object
+        """
+        return self._configuration
+
+    @configuration.setter
+    def configuration(self, configuration):
+        """Sets the configuration of this AdviserResultResponseResultReportPipelineBoots.
+
+
+        :param configuration: The configuration of this AdviserResultResponseResultReportPipelineBoots.  # noqa: E501
+        :type: object
+        """
+        if configuration is None:
+            raise ValueError("Invalid value for `configuration`, must not be `None`")  # noqa: E501
+
+        self._configuration = configuration
 
     @property
     def unit_run(self):

@@ -28,46 +28,23 @@ class ProvenanceResultResponseResultParameters(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'project': 'AdviserResultResponseResultReportProject',
-        'whitelisted_sources': 'list[str]'
+        'whitelisted_sources': 'list[str]',
+        'project': 'ProvenanceResultResponseResultParametersProject'
     }
 
     attribute_map = {
-        'project': 'project',
-        'whitelisted_sources': 'whitelisted_sources'
+        'whitelisted_sources': 'whitelisted_sources',
+        'project': 'project'
     }
 
-    def __init__(self, project=None, whitelisted_sources=None):  # noqa: E501
+    def __init__(self, whitelisted_sources=None, project=None):  # noqa: E501
         """ProvenanceResultResponseResultParameters - a model defined in Swagger"""  # noqa: E501
-        self._project = None
         self._whitelisted_sources = None
+        self._project = None
         self.discriminator = None
-        self.project = project
         if whitelisted_sources is not None:
             self.whitelisted_sources = whitelisted_sources
-
-    @property
-    def project(self):
-        """Gets the project of this ProvenanceResultResponseResultParameters.  # noqa: E501
-
-
-        :return: The project of this ProvenanceResultResponseResultParameters.  # noqa: E501
-        :rtype: AdviserResultResponseResultReportProject
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this ProvenanceResultResponseResultParameters.
-
-
-        :param project: The project of this ProvenanceResultResponseResultParameters.  # noqa: E501
-        :type: AdviserResultResponseResultReportProject
-        """
-        if project is None:
-            raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501
-
-        self._project = project
+        self.project = project
 
     @property
     def whitelisted_sources(self):
@@ -91,6 +68,29 @@ class ProvenanceResultResponseResultParameters(object):
         """
 
         self._whitelisted_sources = whitelisted_sources
+
+    @property
+    def project(self):
+        """Gets the project of this ProvenanceResultResponseResultParameters.  # noqa: E501
+
+
+        :return: The project of this ProvenanceResultResponseResultParameters.  # noqa: E501
+        :rtype: ProvenanceResultResponseResultParametersProject
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this ProvenanceResultResponseResultParameters.
+
+
+        :param project: The project of this ProvenanceResultResponseResultParameters.  # noqa: E501
+        :type: ProvenanceResultResponseResultParametersProject
+        """
+        if project is None:
+            raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501
+
+        self._project = project
 
     def to_dict(self):
         """Returns the model properties as a dict"""

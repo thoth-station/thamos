@@ -29,29 +29,29 @@ class AnalysisWithAuthenticationResponse(object):
     """
     swagger_types = {
         'analysis_id': 'str',
-        'authenticated': 'bool',
+        'parameters': 'object',
         'cached': 'bool',
-        'parameters': 'object'
+        'authenticated': 'bool'
     }
 
     attribute_map = {
         'analysis_id': 'analysis_id',
-        'authenticated': 'authenticated',
+        'parameters': 'parameters',
         'cached': 'cached',
-        'parameters': 'parameters'
+        'authenticated': 'authenticated'
     }
 
-    def __init__(self, analysis_id=None, authenticated=None, cached=None, parameters=None):  # noqa: E501
+    def __init__(self, analysis_id=None, parameters=None, cached=None, authenticated=None):  # noqa: E501
         """AnalysisWithAuthenticationResponse - a model defined in Swagger"""  # noqa: E501
         self._analysis_id = None
-        self._authenticated = None
-        self._cached = None
         self._parameters = None
+        self._cached = None
+        self._authenticated = None
         self.discriminator = None
         self.analysis_id = analysis_id
-        self.authenticated = authenticated
-        self.cached = cached
         self.parameters = parameters
+        self.cached = cached
+        self.authenticated = authenticated
 
     @property
     def analysis_id(self):
@@ -79,29 +79,29 @@ class AnalysisWithAuthenticationResponse(object):
         self._analysis_id = analysis_id
 
     @property
-    def authenticated(self):
-        """Gets the authenticated of this AnalysisWithAuthenticationResponse.  # noqa: E501
+    def parameters(self):
+        """Gets the parameters of this AnalysisWithAuthenticationResponse.  # noqa: E501
 
-        If set to true the given analysis was authenticated   # noqa: E501
+        Parameters echoed back to user (with default parameters if omitted)   # noqa: E501
 
-        :return: The authenticated of this AnalysisWithAuthenticationResponse.  # noqa: E501
-        :rtype: bool
+        :return: The parameters of this AnalysisWithAuthenticationResponse.  # noqa: E501
+        :rtype: object
         """
-        return self._authenticated
+        return self._parameters
 
-    @authenticated.setter
-    def authenticated(self, authenticated):
-        """Sets the authenticated of this AnalysisWithAuthenticationResponse.
+    @parameters.setter
+    def parameters(self, parameters):
+        """Sets the parameters of this AnalysisWithAuthenticationResponse.
 
-        If set to true the given analysis was authenticated   # noqa: E501
+        Parameters echoed back to user (with default parameters if omitted)   # noqa: E501
 
-        :param authenticated: The authenticated of this AnalysisWithAuthenticationResponse.  # noqa: E501
-        :type: bool
+        :param parameters: The parameters of this AnalysisWithAuthenticationResponse.  # noqa: E501
+        :type: object
         """
-        if authenticated is None:
-            raise ValueError("Invalid value for `authenticated`, must not be `None`")  # noqa: E501
+        if parameters is None:
+            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
-        self._authenticated = authenticated
+        self._parameters = parameters
 
     @property
     def cached(self):
@@ -129,29 +129,29 @@ class AnalysisWithAuthenticationResponse(object):
         self._cached = cached
 
     @property
-    def parameters(self):
-        """Gets the parameters of this AnalysisWithAuthenticationResponse.  # noqa: E501
+    def authenticated(self):
+        """Gets the authenticated of this AnalysisWithAuthenticationResponse.  # noqa: E501
 
-        Parameters echoed back to user (with default parameters if omitted)   # noqa: E501
+        If set to true the given analysis was authenticated   # noqa: E501
 
-        :return: The parameters of this AnalysisWithAuthenticationResponse.  # noqa: E501
-        :rtype: object
+        :return: The authenticated of this AnalysisWithAuthenticationResponse.  # noqa: E501
+        :rtype: bool
         """
-        return self._parameters
+        return self._authenticated
 
-    @parameters.setter
-    def parameters(self, parameters):
-        """Sets the parameters of this AnalysisWithAuthenticationResponse.
+    @authenticated.setter
+    def authenticated(self, authenticated):
+        """Sets the authenticated of this AnalysisWithAuthenticationResponse.
 
-        Parameters echoed back to user (with default parameters if omitted)   # noqa: E501
+        If set to true the given analysis was authenticated   # noqa: E501
 
-        :param parameters: The parameters of this AnalysisWithAuthenticationResponse.  # noqa: E501
-        :type: object
+        :param authenticated: The authenticated of this AnalysisWithAuthenticationResponse.  # noqa: E501
+        :type: bool
         """
-        if parameters is None:
-            raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
+        if authenticated is None:
+            raise ValueError("Invalid value for `authenticated`, must not be `None`")  # noqa: E501
 
-        self._parameters = parameters
+        self._authenticated = authenticated
 
     def to_dict(self):
         """Returns the model properties as a dict"""

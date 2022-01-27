@@ -28,138 +28,69 @@ class RuntimeEnvironment(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'base_image': 'str',
-        'cuda_version': 'str',
-        'cudnn_version': 'str',
         'hardware': 'RuntimeEnvironmentHardware',
-        'mkl_version': 'str',
-        'name': 'str',
+        'operating_system': 'RuntimeEnvironmentOperatingSystem',
+        'python_version': 'str',
+        'cuda_version': 'str',
         'openblas_version': 'str',
         'openmpi_version': 'str',
-        'operating_system': 'RuntimeEnvironmentOperatingSystem',
+        'cudnn_version': 'str',
+        'mkl_version': 'str',
         'platform': 'list[str]',
-        'python_version': 'str'
+        'base_image': 'str',
+        'name': 'str'
     }
 
     attribute_map = {
-        'base_image': 'base_image',
-        'cuda_version': 'cuda_version',
-        'cudnn_version': 'cudnn_version',
         'hardware': 'hardware',
-        'mkl_version': 'mkl_version',
-        'name': 'name',
+        'operating_system': 'operating_system',
+        'python_version': 'python_version',
+        'cuda_version': 'cuda_version',
         'openblas_version': 'openblas_version',
         'openmpi_version': 'openmpi_version',
-        'operating_system': 'operating_system',
+        'cudnn_version': 'cudnn_version',
+        'mkl_version': 'mkl_version',
         'platform': 'platform',
-        'python_version': 'python_version'
+        'base_image': 'base_image',
+        'name': 'name'
     }
 
-    def __init__(self, base_image=None, cuda_version=None, cudnn_version=None, hardware=None, mkl_version=None, name=None, openblas_version=None, openmpi_version=None, operating_system=None, platform=None, python_version=None):  # noqa: E501
+    def __init__(self, hardware=None, operating_system=None, python_version=None, cuda_version=None, openblas_version=None, openmpi_version=None, cudnn_version=None, mkl_version=None, platform=None, base_image=None, name=None):  # noqa: E501
         """RuntimeEnvironment - a model defined in Swagger"""  # noqa: E501
-        self._base_image = None
-        self._cuda_version = None
-        self._cudnn_version = None
         self._hardware = None
-        self._mkl_version = None
-        self._name = None
+        self._operating_system = None
+        self._python_version = None
+        self._cuda_version = None
         self._openblas_version = None
         self._openmpi_version = None
-        self._operating_system = None
+        self._cudnn_version = None
+        self._mkl_version = None
         self._platform = None
-        self._python_version = None
+        self._base_image = None
+        self._name = None
         self.discriminator = None
-        if base_image is not None:
-            self.base_image = base_image
-        if cuda_version is not None:
-            self.cuda_version = cuda_version
-        if cudnn_version is not None:
-            self.cudnn_version = cudnn_version
         if hardware is not None:
             self.hardware = hardware
-        if mkl_version is not None:
-            self.mkl_version = mkl_version
-        if name is not None:
-            self.name = name
+        if operating_system is not None:
+            self.operating_system = operating_system
+        if python_version is not None:
+            self.python_version = python_version
+        if cuda_version is not None:
+            self.cuda_version = cuda_version
         if openblas_version is not None:
             self.openblas_version = openblas_version
         if openmpi_version is not None:
             self.openmpi_version = openmpi_version
-        if operating_system is not None:
-            self.operating_system = operating_system
+        if cudnn_version is not None:
+            self.cudnn_version = cudnn_version
+        if mkl_version is not None:
+            self.mkl_version = mkl_version
         if platform is not None:
             self.platform = platform
-        if python_version is not None:
-            self.python_version = python_version
-
-    @property
-    def base_image(self):
-        """Gets the base_image of this RuntimeEnvironment.  # noqa: E501
-
-        A base container image used to run the application  # noqa: E501
-
-        :return: The base_image of this RuntimeEnvironment.  # noqa: E501
-        :rtype: str
-        """
-        return self._base_image
-
-    @base_image.setter
-    def base_image(self, base_image):
-        """Sets the base_image of this RuntimeEnvironment.
-
-        A base container image used to run the application  # noqa: E501
-
-        :param base_image: The base_image of this RuntimeEnvironment.  # noqa: E501
-        :type: str
-        """
-
-        self._base_image = base_image
-
-    @property
-    def cuda_version(self):
-        """Gets the cuda_version of this RuntimeEnvironment.  # noqa: E501
-
-        Nvidia CUDA version which the application uses  # noqa: E501
-
-        :return: The cuda_version of this RuntimeEnvironment.  # noqa: E501
-        :rtype: str
-        """
-        return self._cuda_version
-
-    @cuda_version.setter
-    def cuda_version(self, cuda_version):
-        """Sets the cuda_version of this RuntimeEnvironment.
-
-        Nvidia CUDA version which the application uses  # noqa: E501
-
-        :param cuda_version: The cuda_version of this RuntimeEnvironment.  # noqa: E501
-        :type: str
-        """
-
-        self._cuda_version = cuda_version
-
-    @property
-    def cudnn_version(self):
-        """Gets the cudnn_version of this RuntimeEnvironment.  # noqa: E501
-
-        NVIDIA cuDNN version used, if any  # noqa: E501
-
-        :return: The cudnn_version of this RuntimeEnvironment.  # noqa: E501
-        :rtype: str
-        """
-        return self._cudnn_version
-
-    @cudnn_version.setter
-    def cudnn_version(self, cudnn_version):
-        """Sets the cudnn_version of this RuntimeEnvironment.
-
-        NVIDIA cuDNN version used, if any  # noqa: E501
-
-        :param cudnn_version: The cudnn_version of this RuntimeEnvironment.  # noqa: E501
-        :type: str
-        """
-
-        self._cudnn_version = cudnn_version
+        if base_image is not None:
+            self.base_image = base_image
+        if name is not None:
+            self.name = name
 
     @property
     def hardware(self):
@@ -183,50 +114,71 @@ class RuntimeEnvironment(object):
         self._hardware = hardware
 
     @property
-    def mkl_version(self):
-        """Gets the mkl_version of this RuntimeEnvironment.  # noqa: E501
+    def operating_system(self):
+        """Gets the operating_system of this RuntimeEnvironment.  # noqa: E501
 
-        Intel® Math Kernel Library version used, if any  # noqa: E501
 
-        :return: The mkl_version of this RuntimeEnvironment.  # noqa: E501
-        :rtype: str
+        :return: The operating_system of this RuntimeEnvironment.  # noqa: E501
+        :rtype: RuntimeEnvironmentOperatingSystem
         """
-        return self._mkl_version
+        return self._operating_system
 
-    @mkl_version.setter
-    def mkl_version(self, mkl_version):
-        """Sets the mkl_version of this RuntimeEnvironment.
+    @operating_system.setter
+    def operating_system(self, operating_system):
+        """Sets the operating_system of this RuntimeEnvironment.
 
-        Intel® Math Kernel Library version used, if any  # noqa: E501
 
-        :param mkl_version: The mkl_version of this RuntimeEnvironment.  # noqa: E501
-        :type: str
+        :param operating_system: The operating_system of this RuntimeEnvironment.  # noqa: E501
+        :type: RuntimeEnvironmentOperatingSystem
         """
 
-        self._mkl_version = mkl_version
+        self._operating_system = operating_system
 
     @property
-    def name(self):
-        """Gets the name of this RuntimeEnvironment.  # noqa: E501
+    def python_version(self):
+        """Gets the python_version of this RuntimeEnvironment.  # noqa: E501
 
-        User defined name of the runtime environment  # noqa: E501
+        Python version on which the application runs on  # noqa: E501
 
-        :return: The name of this RuntimeEnvironment.  # noqa: E501
+        :return: The python_version of this RuntimeEnvironment.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._python_version
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this RuntimeEnvironment.
+    @python_version.setter
+    def python_version(self, python_version):
+        """Sets the python_version of this RuntimeEnvironment.
 
-        User defined name of the runtime environment  # noqa: E501
+        Python version on which the application runs on  # noqa: E501
 
-        :param name: The name of this RuntimeEnvironment.  # noqa: E501
+        :param python_version: The python_version of this RuntimeEnvironment.  # noqa: E501
         :type: str
         """
 
-        self._name = name
+        self._python_version = python_version
+
+    @property
+    def cuda_version(self):
+        """Gets the cuda_version of this RuntimeEnvironment.  # noqa: E501
+
+        Nvidia CUDA version which the application uses  # noqa: E501
+
+        :return: The cuda_version of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
+        """
+        return self._cuda_version
+
+    @cuda_version.setter
+    def cuda_version(self, cuda_version):
+        """Sets the cuda_version of this RuntimeEnvironment.
+
+        Nvidia CUDA version which the application uses  # noqa: E501
+
+        :param cuda_version: The cuda_version of this RuntimeEnvironment.  # noqa: E501
+        :type: str
+        """
+
+        self._cuda_version = cuda_version
 
     @property
     def openblas_version(self):
@@ -275,25 +227,50 @@ class RuntimeEnvironment(object):
         self._openmpi_version = openmpi_version
 
     @property
-    def operating_system(self):
-        """Gets the operating_system of this RuntimeEnvironment.  # noqa: E501
+    def cudnn_version(self):
+        """Gets the cudnn_version of this RuntimeEnvironment.  # noqa: E501
 
+        NVIDIA cuDNN version used, if any  # noqa: E501
 
-        :return: The operating_system of this RuntimeEnvironment.  # noqa: E501
-        :rtype: RuntimeEnvironmentOperatingSystem
+        :return: The cudnn_version of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
         """
-        return self._operating_system
+        return self._cudnn_version
 
-    @operating_system.setter
-    def operating_system(self, operating_system):
-        """Sets the operating_system of this RuntimeEnvironment.
+    @cudnn_version.setter
+    def cudnn_version(self, cudnn_version):
+        """Sets the cudnn_version of this RuntimeEnvironment.
 
+        NVIDIA cuDNN version used, if any  # noqa: E501
 
-        :param operating_system: The operating_system of this RuntimeEnvironment.  # noqa: E501
-        :type: RuntimeEnvironmentOperatingSystem
+        :param cudnn_version: The cudnn_version of this RuntimeEnvironment.  # noqa: E501
+        :type: str
         """
 
-        self._operating_system = operating_system
+        self._cudnn_version = cudnn_version
+
+    @property
+    def mkl_version(self):
+        """Gets the mkl_version of this RuntimeEnvironment.  # noqa: E501
+
+        Intel® Math Kernel Library version used, if any  # noqa: E501
+
+        :return: The mkl_version of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
+        """
+        return self._mkl_version
+
+    @mkl_version.setter
+    def mkl_version(self, mkl_version):
+        """Sets the mkl_version of this RuntimeEnvironment.
+
+        Intel® Math Kernel Library version used, if any  # noqa: E501
+
+        :param mkl_version: The mkl_version of this RuntimeEnvironment.  # noqa: E501
+        :type: str
+        """
+
+        self._mkl_version = mkl_version
 
     @property
     def platform(self):
@@ -319,27 +296,50 @@ class RuntimeEnvironment(object):
         self._platform = platform
 
     @property
-    def python_version(self):
-        """Gets the python_version of this RuntimeEnvironment.  # noqa: E501
+    def base_image(self):
+        """Gets the base_image of this RuntimeEnvironment.  # noqa: E501
 
-        Python version on which the application runs on  # noqa: E501
+        A base container image used to run the application  # noqa: E501
 
-        :return: The python_version of this RuntimeEnvironment.  # noqa: E501
+        :return: The base_image of this RuntimeEnvironment.  # noqa: E501
         :rtype: str
         """
-        return self._python_version
+        return self._base_image
 
-    @python_version.setter
-    def python_version(self, python_version):
-        """Sets the python_version of this RuntimeEnvironment.
+    @base_image.setter
+    def base_image(self, base_image):
+        """Sets the base_image of this RuntimeEnvironment.
 
-        Python version on which the application runs on  # noqa: E501
+        A base container image used to run the application  # noqa: E501
 
-        :param python_version: The python_version of this RuntimeEnvironment.  # noqa: E501
+        :param base_image: The base_image of this RuntimeEnvironment.  # noqa: E501
         :type: str
         """
 
-        self._python_version = python_version
+        self._base_image = base_image
+
+    @property
+    def name(self):
+        """Gets the name of this RuntimeEnvironment.  # noqa: E501
+
+        User defined name of the runtime environment  # noqa: E501
+
+        :return: The name of this RuntimeEnvironment.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this RuntimeEnvironment.
+
+        User defined name of the runtime environment  # noqa: E501
+
+        :param name: The name of this RuntimeEnvironment.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

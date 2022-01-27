@@ -30,49 +30,49 @@ class AdviseInput(object):
     swagger_types = {
         'application_stack': 'PythonStack',
         'constraints': 'str',
-        'justification': 'Justification',
-        'kebechet_metadata': 'KebechetMetadata',
+        'runtime_environment': 'RuntimeEnvironment',
         'labels': 'object',
         'library_usage': 'AdviseInputLibraryUsage',
-        'runtime_environment': 'RuntimeEnvironment',
+        'kebechet_metadata': 'KebechetMetadata',
+        'justification': 'Justification',
         'stack_info': 'StackInfo'
     }
 
     attribute_map = {
         'application_stack': 'application_stack',
         'constraints': 'constraints',
-        'justification': 'justification',
-        'kebechet_metadata': 'kebechet_metadata',
+        'runtime_environment': 'runtime_environment',
         'labels': 'labels',
         'library_usage': 'library_usage',
-        'runtime_environment': 'runtime_environment',
+        'kebechet_metadata': 'kebechet_metadata',
+        'justification': 'justification',
         'stack_info': 'stack_info'
     }
 
-    def __init__(self, application_stack=None, constraints=None, justification=None, kebechet_metadata=None, labels=None, library_usage=None, runtime_environment=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, constraints=None, runtime_environment=None, labels=None, library_usage=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
         self._constraints = None
-        self._justification = None
-        self._kebechet_metadata = None
+        self._runtime_environment = None
         self._labels = None
         self._library_usage = None
-        self._runtime_environment = None
+        self._kebechet_metadata = None
+        self._justification = None
         self._stack_info = None
         self.discriminator = None
         self.application_stack = application_stack
         if constraints is not None:
             self.constraints = constraints
-        if justification is not None:
-            self.justification = justification
-        if kebechet_metadata is not None:
-            self.kebechet_metadata = kebechet_metadata
+        if runtime_environment is not None:
+            self.runtime_environment = runtime_environment
         if labels is not None:
             self.labels = labels
         if library_usage is not None:
             self.library_usage = library_usage
-        if runtime_environment is not None:
-            self.runtime_environment = runtime_environment
+        if kebechet_metadata is not None:
+            self.kebechet_metadata = kebechet_metadata
+        if justification is not None:
+            self.justification = justification
         if stack_info is not None:
             self.stack_info = stack_info
 
@@ -123,46 +123,25 @@ class AdviseInput(object):
         self._constraints = constraints
 
     @property
-    def justification(self):
-        """Gets the justification of this AdviseInput.  # noqa: E501
+    def runtime_environment(self):
+        """Gets the runtime_environment of this AdviseInput.  # noqa: E501
 
 
-        :return: The justification of this AdviseInput.  # noqa: E501
-        :rtype: Justification
+        :return: The runtime_environment of this AdviseInput.  # noqa: E501
+        :rtype: RuntimeEnvironment
         """
-        return self._justification
+        return self._runtime_environment
 
-    @justification.setter
-    def justification(self, justification):
-        """Sets the justification of this AdviseInput.
-
-
-        :param justification: The justification of this AdviseInput.  # noqa: E501
-        :type: Justification
-        """
-
-        self._justification = justification
-
-    @property
-    def kebechet_metadata(self):
-        """Gets the kebechet_metadata of this AdviseInput.  # noqa: E501
+    @runtime_environment.setter
+    def runtime_environment(self, runtime_environment):
+        """Sets the runtime_environment of this AdviseInput.
 
 
-        :return: The kebechet_metadata of this AdviseInput.  # noqa: E501
-        :rtype: KebechetMetadata
-        """
-        return self._kebechet_metadata
-
-    @kebechet_metadata.setter
-    def kebechet_metadata(self, kebechet_metadata):
-        """Sets the kebechet_metadata of this AdviseInput.
-
-
-        :param kebechet_metadata: The kebechet_metadata of this AdviseInput.  # noqa: E501
-        :type: KebechetMetadata
+        :param runtime_environment: The runtime_environment of this AdviseInput.  # noqa: E501
+        :type: RuntimeEnvironment
         """
 
-        self._kebechet_metadata = kebechet_metadata
+        self._runtime_environment = runtime_environment
 
     @property
     def labels(self):
@@ -209,25 +188,46 @@ class AdviseInput(object):
         self._library_usage = library_usage
 
     @property
-    def runtime_environment(self):
-        """Gets the runtime_environment of this AdviseInput.  # noqa: E501
+    def kebechet_metadata(self):
+        """Gets the kebechet_metadata of this AdviseInput.  # noqa: E501
 
 
-        :return: The runtime_environment of this AdviseInput.  # noqa: E501
-        :rtype: RuntimeEnvironment
+        :return: The kebechet_metadata of this AdviseInput.  # noqa: E501
+        :rtype: KebechetMetadata
         """
-        return self._runtime_environment
+        return self._kebechet_metadata
 
-    @runtime_environment.setter
-    def runtime_environment(self, runtime_environment):
-        """Sets the runtime_environment of this AdviseInput.
+    @kebechet_metadata.setter
+    def kebechet_metadata(self, kebechet_metadata):
+        """Sets the kebechet_metadata of this AdviseInput.
 
 
-        :param runtime_environment: The runtime_environment of this AdviseInput.  # noqa: E501
-        :type: RuntimeEnvironment
+        :param kebechet_metadata: The kebechet_metadata of this AdviseInput.  # noqa: E501
+        :type: KebechetMetadata
         """
 
-        self._runtime_environment = runtime_environment
+        self._kebechet_metadata = kebechet_metadata
+
+    @property
+    def justification(self):
+        """Gets the justification of this AdviseInput.  # noqa: E501
+
+
+        :return: The justification of this AdviseInput.  # noqa: E501
+        :rtype: Justification
+        """
+        return self._justification
+
+    @justification.setter
+    def justification(self, justification):
+        """Sets the justification of this AdviseInput.
+
+
+        :param justification: The justification of this AdviseInput.  # noqa: E501
+        :type: Justification
+        """
+
+        self._justification = justification
 
     @property
     def stack_info(self):

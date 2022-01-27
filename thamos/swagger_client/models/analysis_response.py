@@ -29,25 +29,25 @@ class AnalysisResponse(object):
     """
     swagger_types = {
         'analysis_id': 'str',
-        'cached': 'bool',
-        'parameters': 'object'
+        'parameters': 'object',
+        'cached': 'bool'
     }
 
     attribute_map = {
         'analysis_id': 'analysis_id',
-        'cached': 'cached',
-        'parameters': 'parameters'
+        'parameters': 'parameters',
+        'cached': 'cached'
     }
 
-    def __init__(self, analysis_id=None, cached=None, parameters=None):  # noqa: E501
+    def __init__(self, analysis_id=None, parameters=None, cached=None):  # noqa: E501
         """AnalysisResponse - a model defined in Swagger"""  # noqa: E501
         self._analysis_id = None
-        self._cached = None
         self._parameters = None
+        self._cached = None
         self.discriminator = None
         self.analysis_id = analysis_id
-        self.cached = cached
         self.parameters = parameters
+        self.cached = cached
 
     @property
     def analysis_id(self):
@@ -75,31 +75,6 @@ class AnalysisResponse(object):
         self._analysis_id = analysis_id
 
     @property
-    def cached(self):
-        """Gets the cached of this AnalysisResponse.  # noqa: E501
-
-        If set to true the given analysis was picked from cache   # noqa: E501
-
-        :return: The cached of this AnalysisResponse.  # noqa: E501
-        :rtype: bool
-        """
-        return self._cached
-
-    @cached.setter
-    def cached(self, cached):
-        """Sets the cached of this AnalysisResponse.
-
-        If set to true the given analysis was picked from cache   # noqa: E501
-
-        :param cached: The cached of this AnalysisResponse.  # noqa: E501
-        :type: bool
-        """
-        if cached is None:
-            raise ValueError("Invalid value for `cached`, must not be `None`")  # noqa: E501
-
-        self._cached = cached
-
-    @property
     def parameters(self):
         """Gets the parameters of this AnalysisResponse.  # noqa: E501
 
@@ -123,6 +98,31 @@ class AnalysisResponse(object):
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
         self._parameters = parameters
+
+    @property
+    def cached(self):
+        """Gets the cached of this AnalysisResponse.  # noqa: E501
+
+        If set to true the given analysis was picked from cache   # noqa: E501
+
+        :return: The cached of this AnalysisResponse.  # noqa: E501
+        :rtype: bool
+        """
+        return self._cached
+
+    @cached.setter
+    def cached(self, cached):
+        """Sets the cached of this AnalysisResponse.
+
+        If set to true the given analysis was picked from cache   # noqa: E501
+
+        :param cached: The cached of this AnalysisResponse.  # noqa: E501
+        :type: bool
+        """
+        if cached is None:
+            raise ValueError("Invalid value for `cached`, must not be `None`")  # noqa: E501
+
+        self._cached = cached
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -28,110 +28,108 @@ class ContainerImagesResponseContainerImages(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'cuda_version': 'str',
-        '_datetime': 'str',
+        'environment_name': 'str',
+        'python_version': 'str',
         'env_image_name': 'str',
         'env_image_tag': 'str',
-        'environment_name': 'str',
-        'environment_type': 'str',
         'image_sha': 'str',
         'os_name': 'str',
         'os_version': 'str',
-        'package_extract_document_id': 'str',
-        'python_version': 'str',
         'thoth_image_name': 'str',
-        'thoth_image_version': 'str'
+        'thoth_image_version': 'str',
+        'cuda_version': 'str',
+        'environment_type': 'str',
+        'package_extract_document_id': 'str',
+        '_datetime': 'str'
     }
 
     attribute_map = {
-        'cuda_version': 'cuda_version',
-        '_datetime': 'datetime',
+        'environment_name': 'environment_name',
+        'python_version': 'python_version',
         'env_image_name': 'env_image_name',
         'env_image_tag': 'env_image_tag',
-        'environment_name': 'environment_name',
-        'environment_type': 'environment_type',
         'image_sha': 'image_sha',
         'os_name': 'os_name',
         'os_version': 'os_version',
-        'package_extract_document_id': 'package_extract_document_id',
-        'python_version': 'python_version',
         'thoth_image_name': 'thoth_image_name',
-        'thoth_image_version': 'thoth_image_version'
+        'thoth_image_version': 'thoth_image_version',
+        'cuda_version': 'cuda_version',
+        'environment_type': 'environment_type',
+        'package_extract_document_id': 'package_extract_document_id',
+        '_datetime': 'datetime'
     }
 
-    def __init__(self, cuda_version=None, _datetime=None, env_image_name=None, env_image_tag=None, environment_name=None, environment_type=None, image_sha=None, os_name=None, os_version=None, package_extract_document_id=None, python_version=None, thoth_image_name=None, thoth_image_version=None):  # noqa: E501
+    def __init__(self, environment_name=None, python_version=None, env_image_name=None, env_image_tag=None, image_sha=None, os_name=None, os_version=None, thoth_image_name=None, thoth_image_version=None, cuda_version=None, environment_type=None, package_extract_document_id=None, _datetime=None):  # noqa: E501
         """ContainerImagesResponseContainerImages - a model defined in Swagger"""  # noqa: E501
-        self._cuda_version = None
-        self.__datetime = None
+        self._environment_name = None
+        self._python_version = None
         self._env_image_name = None
         self._env_image_tag = None
-        self._environment_name = None
-        self._environment_type = None
         self._image_sha = None
         self._os_name = None
         self._os_version = None
-        self._package_extract_document_id = None
-        self._python_version = None
         self._thoth_image_name = None
         self._thoth_image_version = None
+        self._cuda_version = None
+        self._environment_type = None
+        self._package_extract_document_id = None
+        self.__datetime = None
         self.discriminator = None
-        self.cuda_version = cuda_version
-        self._datetime = _datetime
+        self.environment_name = environment_name
+        self.python_version = python_version
         self.env_image_name = env_image_name
         self.env_image_tag = env_image_tag
-        self.environment_name = environment_name
-        self.environment_type = environment_type
         self.image_sha = image_sha
         self.os_name = os_name
         self.os_version = os_version
-        self.package_extract_document_id = package_extract_document_id
-        self.python_version = python_version
         self.thoth_image_name = thoth_image_name
         self.thoth_image_version = thoth_image_version
+        self.cuda_version = cuda_version
+        self.environment_type = environment_type
+        self.package_extract_document_id = package_extract_document_id
+        self._datetime = _datetime
 
     @property
-    def cuda_version(self):
-        """Gets the cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
+    def environment_name(self):
+        """Gets the environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
 
 
-        :return: The cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :return: The environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
         :rtype: str
         """
-        return self._cuda_version
+        return self._environment_name
 
-    @cuda_version.setter
-    def cuda_version(self, cuda_version):
-        """Sets the cuda_version of this ContainerImagesResponseContainerImages.
+    @environment_name.setter
+    def environment_name(self, environment_name):
+        """Sets the environment_name of this ContainerImagesResponseContainerImages.
 
 
-        :param cuda_version: The cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :param environment_name: The environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
 
-        self._cuda_version = cuda_version
+        self._environment_name = environment_name
 
     @property
-    def _datetime(self):
-        """Gets the _datetime of this ContainerImagesResponseContainerImages.  # noqa: E501
+    def python_version(self):
+        """Gets the python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
 
 
-        :return: The _datetime of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :return: The python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
         :rtype: str
         """
-        return self.__datetime
+        return self._python_version
 
-    @_datetime.setter
-    def _datetime(self, _datetime):
-        """Sets the _datetime of this ContainerImagesResponseContainerImages.
+    @python_version.setter
+    def python_version(self, python_version):
+        """Sets the python_version of this ContainerImagesResponseContainerImages.
 
 
-        :param _datetime: The _datetime of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :param python_version: The python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
         :type: str
         """
-        if _datetime is None:
-            raise ValueError("Invalid value for `_datetime`, must not be `None`")  # noqa: E501
 
-        self.__datetime = _datetime
+        self._python_version = python_version
 
     @property
     def env_image_name(self):
@@ -174,56 +172,6 @@ class ContainerImagesResponseContainerImages(object):
         """
 
         self._env_image_tag = env_image_tag
-
-    @property
-    def environment_name(self):
-        """Gets the environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
-
-
-        :return: The environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :rtype: str
-        """
-        return self._environment_name
-
-    @environment_name.setter
-    def environment_name(self, environment_name):
-        """Sets the environment_name of this ContainerImagesResponseContainerImages.
-
-
-        :param environment_name: The environment_name of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :type: str
-        """
-
-        self._environment_name = environment_name
-
-    @property
-    def environment_type(self):
-        """Gets the environment_type of this ContainerImagesResponseContainerImages.  # noqa: E501
-
-
-        :return: The environment_type of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :rtype: str
-        """
-        return self._environment_type
-
-    @environment_type.setter
-    def environment_type(self, environment_type):
-        """Sets the environment_type of this ContainerImagesResponseContainerImages.
-
-
-        :param environment_type: The environment_type of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :type: str
-        """
-        if environment_type is None:
-            raise ValueError("Invalid value for `environment_type`, must not be `None`")  # noqa: E501
-        allowed_values = ["BUILDTIME", "RUNTIME"]  # noqa: E501
-        if environment_type not in allowed_values:
-            raise ValueError(
-                "Invalid value for `environment_type` ({0}), must be one of {1}"  # noqa: E501
-                .format(environment_type, allowed_values)
-            )
-
-        self._environment_type = environment_type
 
     @property
     def image_sha(self):
@@ -289,50 +237,6 @@ class ContainerImagesResponseContainerImages(object):
         self._os_version = os_version
 
     @property
-    def package_extract_document_id(self):
-        """Gets the package_extract_document_id of this ContainerImagesResponseContainerImages.  # noqa: E501
-
-
-        :return: The package_extract_document_id of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_extract_document_id
-
-    @package_extract_document_id.setter
-    def package_extract_document_id(self, package_extract_document_id):
-        """Sets the package_extract_document_id of this ContainerImagesResponseContainerImages.
-
-
-        :param package_extract_document_id: The package_extract_document_id of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :type: str
-        """
-        if package_extract_document_id is None:
-            raise ValueError("Invalid value for `package_extract_document_id`, must not be `None`")  # noqa: E501
-
-        self._package_extract_document_id = package_extract_document_id
-
-    @property
-    def python_version(self):
-        """Gets the python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
-
-
-        :return: The python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :rtype: str
-        """
-        return self._python_version
-
-    @python_version.setter
-    def python_version(self, python_version):
-        """Sets the python_version of this ContainerImagesResponseContainerImages.
-
-
-        :param python_version: The python_version of this ContainerImagesResponseContainerImages.  # noqa: E501
-        :type: str
-        """
-
-        self._python_version = python_version
-
-    @property
     def thoth_image_name(self):
         """Gets the thoth_image_name of this ContainerImagesResponseContainerImages.  # noqa: E501
 
@@ -373,6 +277,102 @@ class ContainerImagesResponseContainerImages(object):
         """
 
         self._thoth_image_version = thoth_image_version
+
+    @property
+    def cuda_version(self):
+        """Gets the cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
+
+
+        :return: The cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :rtype: str
+        """
+        return self._cuda_version
+
+    @cuda_version.setter
+    def cuda_version(self, cuda_version):
+        """Sets the cuda_version of this ContainerImagesResponseContainerImages.
+
+
+        :param cuda_version: The cuda_version of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :type: str
+        """
+
+        self._cuda_version = cuda_version
+
+    @property
+    def environment_type(self):
+        """Gets the environment_type of this ContainerImagesResponseContainerImages.  # noqa: E501
+
+
+        :return: The environment_type of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :rtype: str
+        """
+        return self._environment_type
+
+    @environment_type.setter
+    def environment_type(self, environment_type):
+        """Sets the environment_type of this ContainerImagesResponseContainerImages.
+
+
+        :param environment_type: The environment_type of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :type: str
+        """
+        if environment_type is None:
+            raise ValueError("Invalid value for `environment_type`, must not be `None`")  # noqa: E501
+        allowed_values = ["BUILDTIME", "RUNTIME"]  # noqa: E501
+        if environment_type not in allowed_values:
+            raise ValueError(
+                "Invalid value for `environment_type` ({0}), must be one of {1}"  # noqa: E501
+                .format(environment_type, allowed_values)
+            )
+
+        self._environment_type = environment_type
+
+    @property
+    def package_extract_document_id(self):
+        """Gets the package_extract_document_id of this ContainerImagesResponseContainerImages.  # noqa: E501
+
+
+        :return: The package_extract_document_id of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_extract_document_id
+
+    @package_extract_document_id.setter
+    def package_extract_document_id(self, package_extract_document_id):
+        """Sets the package_extract_document_id of this ContainerImagesResponseContainerImages.
+
+
+        :param package_extract_document_id: The package_extract_document_id of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :type: str
+        """
+        if package_extract_document_id is None:
+            raise ValueError("Invalid value for `package_extract_document_id`, must not be `None`")  # noqa: E501
+
+        self._package_extract_document_id = package_extract_document_id
+
+    @property
+    def _datetime(self):
+        """Gets the _datetime of this ContainerImagesResponseContainerImages.  # noqa: E501
+
+
+        :return: The _datetime of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :rtype: str
+        """
+        return self.__datetime
+
+    @_datetime.setter
+    def _datetime(self, _datetime):
+        """Sets the _datetime of this ContainerImagesResponseContainerImages.
+
+
+        :param _datetime: The _datetime of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :type: str
+        """
+        if _datetime is None:
+            raise ValueError("Invalid value for `_datetime`, must not be `None`")  # noqa: E501
+
+        self.__datetime = _datetime
 
     def to_dict(self):
         """Returns the model properties as a dict"""

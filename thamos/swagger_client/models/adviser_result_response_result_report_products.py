@@ -32,7 +32,7 @@ class AdviserResultResponseResultReportProducts(object):
         'advised_runtime_environment': 'RuntimeEnvironment',
         'dependency_graph': 'AdviserResultResponseResultReportDependencyGraph',
         'justification': 'Justification',
-        'project': 'AdviserResultResponseResultReportProject',
+        'project': 'object',
         'score': 'float'
     }
 
@@ -159,7 +159,7 @@ class AdviserResultResponseResultReportProducts(object):
 
 
         :return: The project of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :rtype: AdviserResultResponseResultReportProject
+        :rtype: object
         """
         return self._project
 
@@ -169,7 +169,7 @@ class AdviserResultResponseResultReportProducts(object):
 
 
         :param project: The project of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :type: AdviserResultResponseResultReportProject
+        :type: object
         """
         if project is None:
             raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501

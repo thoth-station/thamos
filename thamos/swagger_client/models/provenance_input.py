@@ -29,30 +29,30 @@ class ProvenanceInput(object):
     """
     swagger_types = {
         'application_stack': 'PythonStack',
-        'justification': 'Justification',
         'kebechet_metadata': 'KebechetMetadata',
+        'justification': 'Justification',
         'stack_info': 'StackInfo'
     }
 
     attribute_map = {
         'application_stack': 'application_stack',
-        'justification': 'justification',
         'kebechet_metadata': 'kebechet_metadata',
+        'justification': 'justification',
         'stack_info': 'stack_info'
     }
 
-    def __init__(self, application_stack=None, justification=None, kebechet_metadata=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
         """ProvenanceInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
-        self._justification = None
         self._kebechet_metadata = None
+        self._justification = None
         self._stack_info = None
         self.discriminator = None
         self.application_stack = application_stack
-        if justification is not None:
-            self.justification = justification
         if kebechet_metadata is not None:
             self.kebechet_metadata = kebechet_metadata
+        if justification is not None:
+            self.justification = justification
         if stack_info is not None:
             self.stack_info = stack_info
 
@@ -80,27 +80,6 @@ class ProvenanceInput(object):
         self._application_stack = application_stack
 
     @property
-    def justification(self):
-        """Gets the justification of this ProvenanceInput.  # noqa: E501
-
-
-        :return: The justification of this ProvenanceInput.  # noqa: E501
-        :rtype: Justification
-        """
-        return self._justification
-
-    @justification.setter
-    def justification(self, justification):
-        """Sets the justification of this ProvenanceInput.
-
-
-        :param justification: The justification of this ProvenanceInput.  # noqa: E501
-        :type: Justification
-        """
-
-        self._justification = justification
-
-    @property
     def kebechet_metadata(self):
         """Gets the kebechet_metadata of this ProvenanceInput.  # noqa: E501
 
@@ -120,6 +99,27 @@ class ProvenanceInput(object):
         """
 
         self._kebechet_metadata = kebechet_metadata
+
+    @property
+    def justification(self):
+        """Gets the justification of this ProvenanceInput.  # noqa: E501
+
+
+        :return: The justification of this ProvenanceInput.  # noqa: E501
+        :rtype: Justification
+        """
+        return self._justification
+
+    @justification.setter
+    def justification(self, justification):
+        """Sets the justification of this ProvenanceInput.
+
+
+        :param justification: The justification of this ProvenanceInput.  # noqa: E501
+        :type: Justification
+        """
+
+        self._justification = justification
 
     @property
     def stack_info(self):

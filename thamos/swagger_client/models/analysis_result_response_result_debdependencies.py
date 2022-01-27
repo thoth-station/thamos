@@ -28,86 +28,38 @@ class AnalysisResultResponseResultDebdependencies(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'depends': 'AnalysisResultResponseResultDepends',
-        'epoch': 'str',
         'name': 'str',
-        'pre_depends': 'AnalysisResultResponseResultDepends',
-        'replaces': 'AnalysisResultResponseResultDepends',
-        'version': 'str'
+        'version': 'str',
+        'epoch': 'str',
+        'depends': 'AnalysisResultResponseResultDepends',
+        'pre_depends': 'object',
+        'replaces': 'object'
     }
 
     attribute_map = {
-        'depends': 'depends',
-        'epoch': 'epoch',
         'name': 'name',
+        'version': 'version',
+        'epoch': 'epoch',
+        'depends': 'depends',
         'pre_depends': 'pre-depends',
-        'replaces': 'replaces',
-        'version': 'version'
+        'replaces': 'replaces'
     }
 
-    def __init__(self, depends=None, epoch=None, name=None, pre_depends=None, replaces=None, version=None):  # noqa: E501
+    def __init__(self, name=None, version=None, epoch=None, depends=None, pre_depends=None, replaces=None):  # noqa: E501
         """AnalysisResultResponseResultDebdependencies - a model defined in Swagger"""  # noqa: E501
-        self._depends = None
-        self._epoch = None
         self._name = None
+        self._version = None
+        self._epoch = None
+        self._depends = None
         self._pre_depends = None
         self._replaces = None
-        self._version = None
         self.discriminator = None
-        self.depends = depends
-        self.epoch = epoch
         self.name = name
+        self.version = version
+        self.epoch = epoch
+        self.depends = depends
         self.pre_depends = pre_depends
         self.replaces = replaces
-        self.version = version
-
-    @property
-    def depends(self):
-        """Gets the depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-
-
-        :return: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: AnalysisResultResponseResultDepends
-        """
-        return self._depends
-
-    @depends.setter
-    def depends(self, depends):
-        """Sets the depends of this AnalysisResultResponseResultDebdependencies.
-
-
-        :param depends: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: AnalysisResultResponseResultDepends
-        """
-        if depends is None:
-            raise ValueError("Invalid value for `depends`, must not be `None`")  # noqa: E501
-
-        self._depends = depends
-
-    @property
-    def epoch(self):
-        """Gets the epoch of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-
-        Debian package epoch  # noqa: E501
-
-        :return: The epoch of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: str
-        """
-        return self._epoch
-
-    @epoch.setter
-    def epoch(self, epoch):
-        """Sets the epoch of this AnalysisResultResponseResultDebdependencies.
-
-        Debian package epoch  # noqa: E501
-
-        :param epoch: The epoch of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: str
-        """
-        if epoch is None:
-            raise ValueError("Invalid value for `epoch`, must not be `None`")  # noqa: E501
-
-        self._epoch = epoch
 
     @property
     def name(self):
@@ -135,52 +87,6 @@ class AnalysisResultResponseResultDebdependencies(object):
         self._name = name
 
     @property
-    def pre_depends(self):
-        """Gets the pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-
-
-        :return: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: AnalysisResultResponseResultDepends
-        """
-        return self._pre_depends
-
-    @pre_depends.setter
-    def pre_depends(self, pre_depends):
-        """Sets the pre_depends of this AnalysisResultResponseResultDebdependencies.
-
-
-        :param pre_depends: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: AnalysisResultResponseResultDepends
-        """
-        if pre_depends is None:
-            raise ValueError("Invalid value for `pre_depends`, must not be `None`")  # noqa: E501
-
-        self._pre_depends = pre_depends
-
-    @property
-    def replaces(self):
-        """Gets the replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-
-
-        :return: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: AnalysisResultResponseResultDepends
-        """
-        return self._replaces
-
-    @replaces.setter
-    def replaces(self, replaces):
-        """Sets the replaces of this AnalysisResultResponseResultDebdependencies.
-
-
-        :param replaces: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: AnalysisResultResponseResultDepends
-        """
-        if replaces is None:
-            raise ValueError("Invalid value for `replaces`, must not be `None`")  # noqa: E501
-
-        self._replaces = replaces
-
-    @property
     def version(self):
         """Gets the version of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
 
@@ -204,6 +110,100 @@ class AnalysisResultResponseResultDebdependencies(object):
             raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
 
         self._version = version
+
+    @property
+    def epoch(self):
+        """Gets the epoch of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+
+        Debian package epoch  # noqa: E501
+
+        :return: The epoch of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: str
+        """
+        return self._epoch
+
+    @epoch.setter
+    def epoch(self, epoch):
+        """Sets the epoch of this AnalysisResultResponseResultDebdependencies.
+
+        Debian package epoch  # noqa: E501
+
+        :param epoch: The epoch of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: str
+        """
+        if epoch is None:
+            raise ValueError("Invalid value for `epoch`, must not be `None`")  # noqa: E501
+
+        self._epoch = epoch
+
+    @property
+    def depends(self):
+        """Gets the depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+
+
+        :return: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: AnalysisResultResponseResultDepends
+        """
+        return self._depends
+
+    @depends.setter
+    def depends(self, depends):
+        """Sets the depends of this AnalysisResultResponseResultDebdependencies.
+
+
+        :param depends: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: AnalysisResultResponseResultDepends
+        """
+        if depends is None:
+            raise ValueError("Invalid value for `depends`, must not be `None`")  # noqa: E501
+
+        self._depends = depends
+
+    @property
+    def pre_depends(self):
+        """Gets the pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+
+
+        :return: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: object
+        """
+        return self._pre_depends
+
+    @pre_depends.setter
+    def pre_depends(self, pre_depends):
+        """Sets the pre_depends of this AnalysisResultResponseResultDebdependencies.
+
+
+        :param pre_depends: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: object
+        """
+        if pre_depends is None:
+            raise ValueError("Invalid value for `pre_depends`, must not be `None`")  # noqa: E501
+
+        self._pre_depends = pre_depends
+
+    @property
+    def replaces(self):
+        """Gets the replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+
+
+        :return: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :rtype: object
+        """
+        return self._replaces
+
+    @replaces.setter
+    def replaces(self, replaces):
+        """Sets the replaces of this AnalysisResultResponseResultDebdependencies.
+
+
+        :param replaces: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
+        :type: object
+        """
+        if replaces is None:
+            raise ValueError("Invalid value for `replaces`, must not be `None`")  # noqa: E501
+
+        self._replaces = replaces
 
     def to_dict(self):
         """Returns the model properties as a dict"""
