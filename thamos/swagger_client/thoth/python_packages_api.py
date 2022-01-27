@@ -125,6 +125,115 @@ class PythonPackagesApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
+    def get_package_metadata(self, name, version, index, **kwargs):  # noqa: E501
+        """Retrieve metadata relative to a Python Package from the Thoth's database   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_package_metadata(name, version, index, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str name: Name of the Python Package (required)
+        :param str version: Version of the Python Package (required)
+        :param str index: Index url of the Python Package (required)
+        :return: PythonPackageMetadataResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_package_metadata_with_http_info(name, version, index, **kwargs)  # noqa: E501
+        else:
+            (data) = self.get_package_metadata_with_http_info(name, version, index, **kwargs)  # noqa: E501
+            return data
+
+    def get_package_metadata_with_http_info(self, name, version, index, **kwargs):  # noqa: E501
+        """Retrieve metadata relative to a Python Package from the Thoth's database   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_package_metadata_with_http_info(name, version, index, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str name: Name of the Python Package (required)
+        :param str version: Version of the Python Package (required)
+        :param str index: Index url of the Python Package (required)
+        :return: PythonPackageMetadataResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['name', 'version', 'index']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_package_metadata" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        # verify the required parameter 'name' is set
+        if ('name' not in params or
+                params['name'] is None):
+            raise ValueError("Missing the required parameter `name` when calling `get_package_metadata`")  # noqa: E501
+        # verify the required parameter 'version' is set
+        if ('version' not in params or
+                params['version'] is None):
+            raise ValueError("Missing the required parameter `version` when calling `get_package_metadata`")  # noqa: E501
+        # verify the required parameter 'index' is set
+        if ('index' not in params or
+                params['index'] is None):
+            raise ValueError("Missing the required parameter `index` when calling `get_package_metadata`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+
+        query_params = []
+        if 'name' in params:
+            query_params.append(('name', params['name']))  # noqa: E501
+        if 'version' in params:
+            query_params.append(('version', params['version']))  # noqa: E501
+        if 'index' in params:
+            query_params.append(('index', params['index']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/python/package/metadata', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='PythonPackageMetadataResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
     def get_python_package_dependencies(self, name, version, index, **kwargs):  # noqa: E501
         """Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered   # noqa: E501
 
