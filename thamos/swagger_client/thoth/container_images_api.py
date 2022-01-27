@@ -48,6 +48,10 @@ class ContainerImagesApi(object):
         :param str python_version: Version of Python interpreter provided
         :param str cuda_version: Filter based on CUDA version available
         :param str image_name: Filter based on the image name
+        :param str library_name: Filter based on library name
+        :param str symbol: Filter based on symbol
+        :param str package_name: Filter based on Python package name
+        :param str rpm_package_name: Filter based on RPM package name
         :return: ContainerImagesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -75,12 +79,16 @@ class ContainerImagesApi(object):
         :param str python_version: Version of Python interpreter provided
         :param str cuda_version: Filter based on CUDA version available
         :param str image_name: Filter based on the image name
+        :param str library_name: Filter based on library name
+        :param str symbol: Filter based on symbol
+        :param str package_name: Filter based on Python package name
+        :param str rpm_package_name: Filter based on RPM package name
         :return: ContainerImagesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['page', 'per_page', 'os_name', 'os_version', 'python_version', 'cuda_version', 'image_name']  # noqa: E501
+        all_params = ['page', 'per_page', 'os_name', 'os_version', 'python_version', 'cuda_version', 'image_name', 'library_name', 'symbol', 'package_name', 'rpm_package_name']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -115,6 +123,14 @@ class ContainerImagesApi(object):
             query_params.append(('cuda_version', params['cuda_version']))  # noqa: E501
         if 'image_name' in params:
             query_params.append(('image_name', params['image_name']))  # noqa: E501
+        if 'library_name' in params:
+            query_params.append(('library_name', params['library_name']))  # noqa: E501
+        if 'symbol' in params:
+            query_params.append(('symbol', params['symbol']))  # noqa: E501
+        if 'package_name' in params:
+            query_params.append(('package_name', params['package_name']))  # noqa: E501
+        if 'rpm_package_name' in params:
+            query_params.append(('rpm_package_name', params['rpm_package_name']))  # noqa: E501
 
         header_params = {}
 
