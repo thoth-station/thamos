@@ -1227,6 +1227,8 @@ def images(
       thamos images --output-format json
 
       thamos images --os-name fedora --os-version 35 --python-version 3.9
+
+      thamos images --symbol GLIBC_FOO
     """
     result = list_thoth_container_images(
         os_name=os_name,
