@@ -1207,7 +1207,7 @@ def list_thoth_container_images(
     library_name: typing.Optional[str] = None,
     symbol: typing.Optional[str] = None,
     package_name: typing.Optional[str] = None,
-    rpm_package: typing.Optional[str] = None,
+    rpm_package_name: typing.Optional[str] = None,
 ) -> typing.List[typing.Dict[str, Any]]:
     """Get available Thoth container images."""
     filtering = locals()
