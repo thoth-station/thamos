@@ -28,45 +28,22 @@ class PythonPackageVersionMetadataResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'metadata': 'PythonPackageVersionMetadataResponseMetadata',
-        'parameters': 'object'
+        'parameters': 'object',
+        'metadata': 'PythonPackageVersionMetadataResponseMetadata'
     }
 
     attribute_map = {
-        'metadata': 'metadata',
-        'parameters': 'parameters'
+        'parameters': 'parameters',
+        'metadata': 'metadata'
     }
 
-    def __init__(self, metadata=None, parameters=None):  # noqa: E501
+    def __init__(self, parameters=None, metadata=None):  # noqa: E501
         """PythonPackageVersionMetadataResponse - a model defined in Swagger"""  # noqa: E501
-        self._metadata = None
         self._parameters = None
+        self._metadata = None
         self.discriminator = None
-        self.metadata = metadata
         self.parameters = parameters
-
-    @property
-    def metadata(self):
-        """Gets the metadata of this PythonPackageVersionMetadataResponse.  # noqa: E501
-
-
-        :return: The metadata of this PythonPackageVersionMetadataResponse.  # noqa: E501
-        :rtype: PythonPackageVersionMetadataResponseMetadata
-        """
-        return self._metadata
-
-    @metadata.setter
-    def metadata(self, metadata):
-        """Sets the metadata of this PythonPackageVersionMetadataResponse.
-
-
-        :param metadata: The metadata of this PythonPackageVersionMetadataResponse.  # noqa: E501
-        :type: PythonPackageVersionMetadataResponseMetadata
-        """
-        if metadata is None:
-            raise ValueError("Invalid value for `metadata`, must not be `None`")  # noqa: E501
-
-        self._metadata = metadata
+        self.metadata = metadata
 
     @property
     def parameters(self):
@@ -92,6 +69,29 @@ class PythonPackageVersionMetadataResponse(object):
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
         self._parameters = parameters
+
+    @property
+    def metadata(self):
+        """Gets the metadata of this PythonPackageVersionMetadataResponse.  # noqa: E501
+
+
+        :return: The metadata of this PythonPackageVersionMetadataResponse.  # noqa: E501
+        :rtype: PythonPackageVersionMetadataResponseMetadata
+        """
+        return self._metadata
+
+    @metadata.setter
+    def metadata(self, metadata):
+        """Sets the metadata of this PythonPackageVersionMetadataResponse.
+
+
+        :param metadata: The metadata of this PythonPackageVersionMetadataResponse.  # noqa: E501
+        :type: PythonPackageVersionMetadataResponseMetadata
+        """
+        if metadata is None:
+            raise ValueError("Invalid value for `metadata`, must not be `None`")  # noqa: E501
+
+        self._metadata = metadata
 
     def to_dict(self):
         """Returns the model properties as a dict"""

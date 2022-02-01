@@ -28,45 +28,22 @@ class PythonPackageDependencies(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'dependencies': 'list[PythonPackageDependenciesDependencies]',
-        'parameters': 'object'
+        'parameters': 'object',
+        'dependencies': 'list[PythonPackageDependenciesDependencies]'
     }
 
     attribute_map = {
-        'dependencies': 'dependencies',
-        'parameters': 'parameters'
+        'parameters': 'parameters',
+        'dependencies': 'dependencies'
     }
 
-    def __init__(self, dependencies=None, parameters=None):  # noqa: E501
+    def __init__(self, parameters=None, dependencies=None):  # noqa: E501
         """PythonPackageDependencies - a model defined in Swagger"""  # noqa: E501
-        self._dependencies = None
         self._parameters = None
+        self._dependencies = None
         self.discriminator = None
-        self.dependencies = dependencies
         self.parameters = parameters
-
-    @property
-    def dependencies(self):
-        """Gets the dependencies of this PythonPackageDependencies.  # noqa: E501
-
-
-        :return: The dependencies of this PythonPackageDependencies.  # noqa: E501
-        :rtype: list[PythonPackageDependenciesDependencies]
-        """
-        return self._dependencies
-
-    @dependencies.setter
-    def dependencies(self, dependencies):
-        """Sets the dependencies of this PythonPackageDependencies.
-
-
-        :param dependencies: The dependencies of this PythonPackageDependencies.  # noqa: E501
-        :type: list[PythonPackageDependenciesDependencies]
-        """
-        if dependencies is None:
-            raise ValueError("Invalid value for `dependencies`, must not be `None`")  # noqa: E501
-
-        self._dependencies = dependencies
+        self.dependencies = dependencies
 
     @property
     def parameters(self):
@@ -90,6 +67,29 @@ class PythonPackageDependencies(object):
             raise ValueError("Invalid value for `parameters`, must not be `None`")  # noqa: E501
 
         self._parameters = parameters
+
+    @property
+    def dependencies(self):
+        """Gets the dependencies of this PythonPackageDependencies.  # noqa: E501
+
+
+        :return: The dependencies of this PythonPackageDependencies.  # noqa: E501
+        :rtype: list[PythonPackageDependenciesDependencies]
+        """
+        return self._dependencies
+
+    @dependencies.setter
+    def dependencies(self, dependencies):
+        """Sets the dependencies of this PythonPackageDependencies.
+
+
+        :param dependencies: The dependencies of this PythonPackageDependencies.  # noqa: E501
+        :type: list[PythonPackageDependenciesDependencies]
+        """
+        if dependencies is None:
+            raise ValueError("Invalid value for `dependencies`, must not be `None`")  # noqa: E501
+
+        self._dependencies = dependencies
 
     def to_dict(self):
         """Returns the model properties as a dict"""

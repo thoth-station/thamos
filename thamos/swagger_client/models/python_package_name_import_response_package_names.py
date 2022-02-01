@@ -28,80 +28,30 @@ class PythonPackageNameImportResponsePackageNames(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'index_url': 'str',
-        'package_import': 'str',
         'package_name': 'str',
-        'package_version': 'str'
+        'package_version': 'str',
+        'index_url': 'str',
+        'package_import': 'str'
     }
 
     attribute_map = {
-        'index_url': 'index_url',
-        'package_import': 'package_import',
         'package_name': 'package_name',
-        'package_version': 'package_version'
+        'package_version': 'package_version',
+        'index_url': 'index_url',
+        'package_import': 'package_import'
     }
 
-    def __init__(self, index_url=None, package_import=None, package_name=None, package_version=None):  # noqa: E501
+    def __init__(self, package_name=None, package_version=None, index_url=None, package_import=None):  # noqa: E501
         """PythonPackageNameImportResponsePackageNames - a model defined in Swagger"""  # noqa: E501
-        self._index_url = None
-        self._package_import = None
         self._package_name = None
         self._package_version = None
+        self._index_url = None
+        self._package_import = None
         self.discriminator = None
-        self.index_url = index_url
-        self.package_import = package_import
         self.package_name = package_name
         self.package_version = package_version
-
-    @property
-    def index_url(self):
-        """Gets the index_url of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-
-        Source index URL of the package  # noqa: E501
-
-        :return: The index_url of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :rtype: str
-        """
-        return self._index_url
-
-    @index_url.setter
-    def index_url(self, index_url):
-        """Sets the index_url of this PythonPackageNameImportResponsePackageNames.
-
-        Source index URL of the package  # noqa: E501
-
-        :param index_url: The index_url of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :type: str
-        """
-        if index_url is None:
-            raise ValueError("Invalid value for `index_url`, must not be `None`")  # noqa: E501
-
-        self._index_url = index_url
-
-    @property
-    def package_import(self):
-        """Gets the package_import of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-
-        A module import matching the given criteria  # noqa: E501
-
-        :return: The package_import of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_import
-
-    @package_import.setter
-    def package_import(self, package_import):
-        """Sets the package_import of this PythonPackageNameImportResponsePackageNames.
-
-        A module import matching the given criteria  # noqa: E501
-
-        :param package_import: The package_import of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :type: str
-        """
-        if package_import is None:
-            raise ValueError("Invalid value for `package_import`, must not be `None`")  # noqa: E501
-
-        self._package_import = package_import
+        self.index_url = index_url
+        self.package_import = package_import
 
     @property
     def package_name(self):
@@ -152,6 +102,56 @@ class PythonPackageNameImportResponsePackageNames(object):
             raise ValueError("Invalid value for `package_version`, must not be `None`")  # noqa: E501
 
         self._package_version = package_version
+
+    @property
+    def index_url(self):
+        """Gets the index_url of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+
+        Source index URL of the package  # noqa: E501
+
+        :return: The index_url of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :rtype: str
+        """
+        return self._index_url
+
+    @index_url.setter
+    def index_url(self, index_url):
+        """Sets the index_url of this PythonPackageNameImportResponsePackageNames.
+
+        Source index URL of the package  # noqa: E501
+
+        :param index_url: The index_url of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :type: str
+        """
+        if index_url is None:
+            raise ValueError("Invalid value for `index_url`, must not be `None`")  # noqa: E501
+
+        self._index_url = index_url
+
+    @property
+    def package_import(self):
+        """Gets the package_import of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+
+        A module import matching the given criteria  # noqa: E501
+
+        :return: The package_import of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_import
+
+    @package_import.setter
+    def package_import(self, package_import):
+        """Sets the package_import of this PythonPackageNameImportResponsePackageNames.
+
+        A module import matching the given criteria  # noqa: E501
+
+        :param package_import: The package_import of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :type: str
+        """
+        if package_import is None:
+            raise ValueError("Invalid value for `package_import`, must not be `None`")  # noqa: E501
+
+        self._package_import = package_import
 
     def to_dict(self):
         """Returns the model properties as a dict"""

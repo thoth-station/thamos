@@ -37,7 +37,7 @@ class ProvenanceResultResponseMetadata(object):
         'duration': 'int',
         'hostname': 'str',
         'os_release': 'object',
-        'python': 'AdviserResultResponseMetadataPython',
+        'python': 'AnalysisResultResponseMetadataPython',
         'thoth_deployment_name': 'str',
         'timestamp': 'int'
     }
@@ -312,7 +312,7 @@ class ProvenanceResultResponseMetadata(object):
 
 
         :return: The python of this ProvenanceResultResponseMetadata.  # noqa: E501
-        :rtype: AdviserResultResponseMetadataPython
+        :rtype: AnalysisResultResponseMetadataPython
         """
         return self._python
 
@@ -322,7 +322,7 @@ class ProvenanceResultResponseMetadata(object):
 
 
         :param python: The python of this ProvenanceResultResponseMetadata.  # noqa: E501
-        :type: AdviserResultResponseMetadataPython
+        :type: AnalysisResultResponseMetadataPython
         """
         if python is None:
             raise ValueError("Invalid value for `python`, must not be `None`")  # noqa: E501
