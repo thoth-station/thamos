@@ -1239,7 +1239,7 @@ def images(
         library_name=library_name,
         symbol=symbol,
         package_name=package_name,
-        rpm_package=rpm_package_name,
+        rpm_package_name=rpm_package_name,
     )
 
     if output_format == "yaml":
