@@ -1,4 +1,14 @@
 
+## Release 1.25.1 (2022-02-02T09:15:10)
+* Add myself to maintainers
+* Fix list_thoth_container_images parameter
+* Update thamos/lib.py
+* Add missing parameters when querying container images
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Add example to thamos images for retrieving images with a symbol
+* Add new query parameters to thamos images
+* Update PR template for new module release
+
 ## Release 1.25.0 (2022-01-26T10:25:22)
 * Handle cases when CPU detection fails
 * Provide short help to fit terminal width
