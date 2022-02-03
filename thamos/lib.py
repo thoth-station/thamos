@@ -65,12 +65,14 @@ from .swagger_client import EnvironmentsApi
 from .swagger_client import PythonPackagesApi
 from .swagger_client.models import AnalysisResultResponse
 from .config import config as thoth_config
-from .exceptions import UnknownAnalysisType
-from .exceptions import TimeoutError
+from .discover import discover_all
 from .exceptions import ApiError
 from .exceptions import NoDevRequirements
 from .exceptions import NoMatchingPackage
 from .exceptions import NoRequirementsFile
+from .exceptions import PedanticRunVerificationError
+from .exceptions import TimeoutError
+from .exceptions import UnknownAnalysisType
 
 from typing import Callable, Any, Union, Dict
 
@@ -1665,3 +1667,105 @@ def add_requirements_to_project(
         "Changes done might require triggering new advise to resolve dependencies"
     )
     thoth_config.save_project(project)
+
+
+def check_runtime_environment_run(runtime_environment: Dict[str, Any]) -> None:
+    """Check the runtime environment matches runtime environment declared in the config file."""
+    discovered = discover_all()
+
+    if runtime_environment.get("base_image") != discovered.get("base_image"):
+        raise PedanticRunVerificationError(
+            f"Base image configured {runtime_environment.get('base_image')!r} does not match "
+            f"base image discovered {discovered.get('base_image')!r}"
+        )
+
+    if runtime_environment.get("cuda_version") != discovered.get("cuda_version"):
+        raise PedanticRunVerificationError(
+            f"CUDA version configured {runtime_environment.get('cuda_version')!r} does not match "
+            f"CUDA version discovered {discovered.get('cuda_version')!r}"
+        )
+
+    if runtime_environment.get("platform", "linux-x86_64") != discovered.get(
+        "platform"
+    ):
+        raise PedanticRunVerificationError(
+            f"Platform configured {runtime_environment.get('platform')!r} does not match "
+            f"platform discovered {discovered.get('platform')!r}"
+        )
+
+    if runtime_environment.get("python_version") != discovered.get("python_version"):
+        raise PedanticRunVerificationError(
+            f"Python version configured {runtime_environment.get('python_version')!r} does not match "
+            f"Python version discovered {discovered.get('python_version')!r}"
+        )
+
+    hw_discovered = discovered.get("hardware") or {}
+    hw_configured = runtime_environment.get("hardware") or {}
+    if hw_configured.get("cpu_family") is not None and hw_configured.get(
+        "cpu_family"
+    ) != hw_discovered.get("cpu_family"):
+        raise PedanticRunVerificationError(
+            f"CPU family configured {hw_configured.get('cpu_family')!r} does not match "
+            f"CPU family discovered {hw_discovered.get('cpu_family')!r}"
+        )
+
+    if hw_configured.get("cpu_model") is not None and hw_configured.get(
+        "cpu_model"
+    ) != hw_discovered.get("cpu_model"):
+        raise PedanticRunVerificationError(
+            f"CPU model configured {hw_configured.get('cpu_model')!r} does not match "
+            f"CPU model discovered {hw_discovered.get('cpu_model')!r}"
+        )
+
+    if hw_configured.get("gpu_model") is not None and hw_configured.get(
+        "gpu_model"
+    ) != hw_discovered.get("gpu_model"):
+        raise PedanticRunVerificationError(
+            f"GPU model configured {hw_configured.get('gpu_model')!r} does not match "
+            f"GPU model discovered {hw_discovered.get('gpu_model')!r}"
+        )
+
+    os_discovered = discovered.get("operating_system") or {}
+    os_configured = runtime_environment.get("operating_system") or {}
+    if os_configured.get("name") != os_discovered.get("name"):
+        raise PedanticRunVerificationError(
+            f"Operating system name configured {os_configured.get('name')!r} does not match "
+            f"operating system name discovered {os_discovered.get('name')!r}"
+        )
+
+    if os_configured.get("version") != os_discovered.get("version"):
+        raise PedanticRunVerificationError(
+            f"Operating system version configured {os_configured.get('version')!r} does not match "
+            f"operating system version discovered {os_discovered.get('version')!r}"
+        )
+
+    _LOGGER.info("Runtime environment configured matches runtime environment used")
+
+
+def load_dot_env(dot_env_path: str) -> Dict[str, str]:
+    """Load .env file and parse its content."""
+    if not os.path.isfile(dot_env_path):
+        _LOGGER.debug("No .env file at %r found", dot_env_path)
+        return {}
+
+    _LOGGER.info("Loading environment variables from %r", dot_env_path)
+
+    env = {}
+    with open(dot_env_path) as f:
+        for line_no, line in enumerate(f.readlines()):
+            line = line.strip()
+            if not line or line.startswith("#"):  # Skip comments.
+                continue
+
+            parts = line.split("=", maxsplit=1)
+            if len(parts) != 2:
+                _LOGGER.error(
+                    "Failed to parse %r content at line %d, ignoring...",
+                    dot_env_path,
+                    line_no,
+                )
+                continue
+
+            env[parts[0]] = parts[1]
+
+    return env
