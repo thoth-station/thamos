@@ -25,6 +25,9 @@ import sysconfig
 
 from typing import Dict, Union
 
+from thoth.common import map_os_name
+from thoth.common import normalize_os_version
+
 import distro
 import click
 from thoth.analyzer import run_command
@@ -72,7 +75,8 @@ def discover_distribution() -> tuple:
     """Get distribution identifier and distribution version."""
     distribution, version, *_ = distro.linux_distribution(full_distribution_name=False)
     _LOGGER.info("Detected running %r in version %r", distribution, version)
-    return distribution, version
+    os_name = map_os_name(distribution)
+    return os_name, normalize_os_version(os_name, version)
 
 
 def discover_python_version() -> str:
@@ -169,3 +173,23 @@ def discover_base_image() -> typing.Optional[str]:
         )
 
     return None
+
+
+def discover_all() -> typing.Dict[str, typing.Any]:
+    """Discover all the entries used in Thoth's configuration file."""
+    # XXX: missing autodiscovery for OpenBLAS, OpenMPI, cuDNN, MKL, hardware.gpu_model
+    result = {
+        "cuda_version": discover_cuda_version(),
+        "python_version": discover_python_version(),
+        "platform": discover_platform(),
+        "base_image": discover_base_image(),
+        "hardware": discover_cpu(),
+    }
+
+    os_name, os_version = discover_distribution()
+    result["operating_system"] = {
+        "name": os_name,
+        "version": os_version,
+    }
+
+    return result

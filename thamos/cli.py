@@ -44,10 +44,12 @@ from thoth.common import get_justification_link as jl
 from thamos.exceptions import ConfigurationError
 from thamos.exceptions import NoProjectDirError
 from thamos.exceptions import NoRuntimeEnvironmentError
+from thamos.exceptions import RequirementsFileError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
 from thamos.lib import add_requirements_to_project
 from thamos.lib import collect_support_information_dict
+from thamos.lib import check_runtime_environment_run
 from thamos.lib import get_log
 from thamos.lib import get_package_from_imported_packages
 from thamos.lib import get_status
@@ -56,6 +58,7 @@ from thamos.lib import install as thamos_install
 from thamos.lib import list_python_package_indexes
 from thamos.lib import list_python_environments
 from thamos.lib import list_thoth_container_images
+from thamos.lib import load_dot_env
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import print_dependency_graph
@@ -422,8 +425,18 @@ def _error_virtual_environment(virtualenv_path: str) -> None:
     help="Specify explicitly runtime environment to get recommendations for; "
     "defaults to the first entry in the configuration file.",
 )
+@click.option(
+    "--no-pedantic/--pedantic",
+    "-P",
+    is_flag=True,
+    show_default=True,
+    envvar="THAMOS_RUN_NO_PEDANTIC",
+    help="Do not abort running the application if the runtime environment used does not match configuration.",
+)
 def run(
-    command: typing.List[str], runtime_environment: Optional[str] = None
+    command: typing.List[str],
+    runtime_environment: Optional[str] = None,
+    no_pedantic: bool = False,
 ) -> None:  # noqa: D412
     """Run the command in virtual environment.
 
@@ -431,18 +444,57 @@ def run(
 
       thamos run ./app.py
 
-      thamos run --runtime-environment "testing" -- flask --help
+      thamos run --runtime-environment "stage" -- flask --help
+
+      thamos run --runtime-environment "testing" --no-pedantic -- train.py
     """
     virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
     if virtualenv_path is None:
         _LOGGER.error("No virtual environment found for %r", runtime_environment)
         sys.exit(1)
 
+    overlays_dir = configuration.get_overlays_directory(runtime_environment)
+
+    if not no_pedantic:
+        check_runtime_environment_run(
+            configuration.get_runtime_environment(runtime_environment)
+        )
+
+        if configuration.requirements_format == "pipenv":
+            project = configuration.get_project(runtime_environment)
+
+            if not project.pipfile_lock:
+                raise RequirementsFileError(
+                    f"No Pipfile.lock found, lock your dependencies using `{sys.argv[0]} advise`"
+                )
+
+            if project.pipfile.hash() != project.pipfile_lock.meta.hash:
+                raise RequirementsFileError(
+                    f"Pipfile hash does not correspond to the lock file hash, use `{sys.argv[0]} advise` "
+                    f"to lock your dependencies"
+                )
+
+            _LOGGER.info("Pipfile hash corresponds to the hash stated in the lock file")
+        else:
+            _LOGGER.warning(
+                "Cannot verify requirements hash as Pipenv files are not used"
+            )
+
+    process_env = dict(os.environ)
+    if (
+        overlays_dir
+    ):  # Load any .env in the overlays directory or top root project directory.
+        process_env = {
+            **process_env,
+            **load_dot_env(os.path.join(overlays_dir, ".env")),
+        }
+
     python_path = os.path.join(virtualenv_path, "bin", "python3")
     _error_virtual_environment(virtualenv_path)
     # No magic here.
     cmd = [python_path, *command]
-    subprocess.run(cmd, universal_newlines=True, check=True)
+    _LOGGER.debug("Running application using %r", cmd)
+    subprocess.run(cmd, universal_newlines=True, check=True, env=process_env)
 
 
 @cli.command("venv")
@@ -1569,7 +1621,7 @@ def environments_(output_format: str) -> None:  # noqa: D412
         )
 
 
-@cli.command("verify", short_help="Check lockfile freshness.")
+@cli.command("verify", short_help="Check lock file freshness.")
 @click.pass_context
 @click.option(
     "--runtime-environment",

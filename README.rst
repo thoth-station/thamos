@@ -336,10 +336,12 @@ should be:
   │   ├── fedora-33
   │   │   ├── Pipfile
   │   │   ├── Pipfile.lock
+  │   │   ├── .env
   │   │   └── constraints.txt
   │   └── ubi-8
   │   │   ├── Pipfile
   │   │   ├── Pipfile.lock
+  │   │   ├── .env
   │   │   └── constraints.txt
   └── .thoth.yaml
 
@@ -354,6 +356,22 @@ Similarly as for Pipenv files, requirement files respecting `pip-tools
 `Constraints files
 <https://thoth-station.ninja/docs/developers/adviser/experimental_features.html#constaints-files>`__
 (``constraints.txt``) are optional.
+
+Optionally, users can provide ``.env`` file that can state environment
+variables that should be passed to the process when ``thamos run`` is executed.
+The ``.env`` file states each environment variable on a single line in a form
+of ``ENV_NAME=VALUE``. Optionally, lines can be commented out with hash
+(``#``).  An example of the file content:
+
+.. code-block::
+
+  # This is an example .env file.
+  FOO=bar
+  ANOTHER_FOO=another_bar
+
+Each ``.env`` file can be specified per overlay. If no overlay directories are
+used, ``.env`` file can be placed in the top level project directory (the
+directory where ``.thoth.yaml`` is present).
 
 Installing requirements
 =======================

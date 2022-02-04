@@ -76,3 +76,11 @@ class NoDevRequirements(ThamosException):
 
 class NoMatchingPackage(ThamosException):
     """An exception raised if no matching package can be found for a given import."""
+
+
+class PedanticRunVerificationError(ThamosException):
+    """An exception raised if the runtime environment used does not match configuration."""
+
+
+class RequirementsFileError(ThamosException):
+    """An exception raised if there is an issue with requirements file or lock file."""
