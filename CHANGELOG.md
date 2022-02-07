@@ -1,4 +1,8 @@
 
+## Release 1.26.0 (2022-02-07T11:37:36)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Introduce pedantic runs
+
 ## Release 1.25.1 (2022-02-02T09:15:10)
 * Add myself to maintainers
 * Fix list_thoth_container_images parameter
