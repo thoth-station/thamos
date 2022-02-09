@@ -47,7 +47,7 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
 
     result = run_command("nvcc --version", raise_on_error=False)
     if result.return_code != 0:
-        _LOGGER.info("No CUDA version detected")
+        _LOGGER.debug("No CUDA version detected")
         _LOGGER.debug(
             "Unable to detect CUDA version - nvcc returned non-zero version: %s",
             result.to_dict(),
@@ -67,14 +67,14 @@ def discover_cuda_version(interactive: bool = False) -> typing.Optional[str]:
     if interactive:
         cuda_version = click.prompt("Please select CUDA version", default=cuda_version)
 
-    _LOGGER.info("Detected CUDA version: %r", cuda_version)
+    _LOGGER.debug("Detected CUDA version: %r", cuda_version)
     return cuda_version
 
 
 def discover_distribution() -> tuple:
     """Get distribution identifier and distribution version."""
     distribution, version, *_ = distro.linux_distribution(full_distribution_name=False)
-    _LOGGER.info("Detected running %r in version %r", distribution, version)
+    _LOGGER.debug("Detected running %r in version %r", distribution, version)
     os_name = map_os_name(distribution)
     return os_name, normalize_os_version(os_name, version)
 
@@ -82,7 +82,7 @@ def discover_distribution() -> tuple:
 def discover_python_version() -> str:
     """Discover Python version in which we run in."""
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
-    _LOGGER.info("Detected running Python %r", python_version)
+    _LOGGER.debug("Detected running Python %r", python_version)
     return python_version
 
 
@@ -134,7 +134,7 @@ def discover_cpu() -> Dict[str, Union[str, int, None]]:
         # Assign a text representation - unknown for config file.
         result["cpu_model_name"] = "Unknown"
 
-    _LOGGER.info(
+    _LOGGER.debug(
         "Detected CPU: %s", ", ".join((f"{k}: {v}" for k, v in result.items()))
     )
     return result
@@ -143,7 +143,7 @@ def discover_cpu() -> Dict[str, Union[str, int, None]]:
 def discover_platform() -> str:
     """Discover platform used."""
     platform = sysconfig.get_platform()
-    _LOGGER.info("Detected running platform %r", platform)
+    _LOGGER.debug("Detected running platform %r", platform)
     return platform
 
 
@@ -159,7 +159,7 @@ def discover_base_image() -> typing.Optional[str]:
 
     if base_image_name and base_image_version:
         base_image = f"{base_image_name}:{base_image_version}"
-        _LOGGER.info("Detected base image %r", base_image)
+        _LOGGER.debug("Detected base image %r", base_image)
         return base_image
     elif base_image_name:
         _LOGGER.warning(
