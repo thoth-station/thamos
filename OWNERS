@@ -9,6 +9,7 @@ approvers:
 reviewers:
   - pacospace
   - harshad16
+  - mayaCostantini
 
 labels:
   - sig/user-experience
