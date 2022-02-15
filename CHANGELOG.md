@@ -1,4 +1,11 @@
 
+## Release 1.26.1 (2022-02-15T22:52:17)
+* Report if configuration check passes
+* Respect runtime environments in commands
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Add myself to reviewers
+* Relax verbosity in messages logged in the discover module
+
 ## Release 1.26.0 (2022-02-07T11:37:36)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * Introduce pedantic runs
