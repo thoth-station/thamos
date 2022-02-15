@@ -1211,7 +1211,11 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
             title="Runtime environment and configuration check results",
         )
 
-    sys.exit(1 if any(item.get("type") == "ERROR" for item in result) else 0)
+    return_code = 1 if any(item.get("type") == "ERROR" for item in result) else 0
+    if return_code == 0:
+        _LOGGER.info("Configuration check passed!")
+
+    sys.exit(return_code)
 
 
 @cli.command("images")
