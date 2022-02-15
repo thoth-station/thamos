@@ -912,14 +912,25 @@ def provenance_check(
 @cli.command("log")
 @click.pass_context
 @click.argument("analysis_id", type=str, required=False, metavar="ANALYSIS_ID")
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment to which the given package should be added.",
+)
 @handle_cli_exception
-def log(analysis_id: typing.Optional[str] = None):
+def log(
+    analysis_id: typing.Optional[str] = None,
+    runtime_environment: typing.Optional[str] = None,
+):
     """Get log of running or finished analysis.
 
     If ANALYSIS_ID is not provided, the last request is used by default.
     """
     if not analysis_id:
-        with workdir():
+        with cwd(configuration.get_overlays_directory(runtime_environment)):
             log_str = get_log()
     else:
         log_str = get_log(analysis_id)
@@ -931,6 +942,14 @@ def log(analysis_id: typing.Optional[str] = None):
 @click.pass_context
 @click.argument("analysis_id", type=str, required=False, metavar="ANALYSIS_ID")
 @click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment to which the given package should be added.",
+)
+@click.option(
     "--output-format",
     "-o",
     type=click.Choice(["json", "yaml", "table"]),
@@ -939,7 +958,9 @@ def log(analysis_id: typing.Optional[str] = None):
 )
 @handle_cli_exception
 def status(
-    analysis_id: typing.Optional[str] = None, output_format: typing.Optional[str] = None
+    analysis_id: typing.Optional[str] = None,
+    output_format: typing.Optional[str] = None,
+    runtime_environment: typing.Optional[str] = None,
 ) -> None:  # noqa: D412
     """Get status of an analysis.
 
@@ -952,7 +973,7 @@ def status(
       thamos status "adviser-940101080006-110c392feb7cf6da"
     """
     if not analysis_id:
-        with workdir():
+        with cwd(configuration.get_overlays_directory(runtime_environment)):
             analysis_id = get_last_analysis_id()
 
     status_dict = get_status(analysis_id)
@@ -985,9 +1006,18 @@ def status(
     type=bool,
     help="Collapse repeating sub-graphs in the output.",
 )
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment to which the given package should be added.",
+)
 @handle_cli_exception
 def graph(
     analysis_id: typing.Optional[str] = None,
+    runtime_environment: typing.Optional[str] = None,
     fold: bool = True,
 ) -> None:  # noqa: D412
     """Show dependency graph of resolved dependencies.
@@ -1000,7 +1030,7 @@ def graph(
 
       thamos graph "adviser-940101080006-110c392feb7cf6da"
     """
-    with workdir():
+    with cwd(configuration.get_overlays_directory(runtime_environment)):
         printed = print_dependency_graph(analysis_id, fold=fold)
         if not printed:
             sys.exit(1)
