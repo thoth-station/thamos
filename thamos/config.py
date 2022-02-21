@@ -19,6 +19,7 @@
 
 import logging
 import os
+import re
 import sys
 from typing import Any
 from typing import Dict
@@ -224,8 +225,8 @@ class _Configuration:
             raise ConfigurationError("No virtual environment configured")
 
         virtualenv_args = [virtualenv_path]
-        re = self.get_runtime_environment(runtime_environment)
-        python_version = re.get("python_version")
+        runtime_environment = self.get_runtime_environment(runtime_environment)
+        python_version = runtime_environment.get("python_version")
         if python_version:
             virtualenv_args.extend(["--python", python_version])
 
@@ -321,6 +322,10 @@ class _Configuration:
         base_image = discover_base_image()
         base_image = base_image if base_image is not None else "null"
 
+        runtime_environment_name = re.sub(
+            r"[^0-9a-zA-Z-]", "-", f"{os_name}-{os_version}"
+        )
+
         requirements_format = os.getenv(
             "THAMOS_REQUIREMENTS_FORMAT", self._DEFAULT_REQUIREMENTS_FORMAT
         )
@@ -335,6 +340,7 @@ class _Configuration:
 
         expand_env = bool(int(os.getenv("THAMOS_CONFIG_EXPAND_ENV", 0)))
         default_config = default_config.format(
+            runtime_environment_name=runtime_environment_name,
             cuda_version=cuda_version,
             os_name=os_name,
             os_version=os_version,
