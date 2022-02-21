@@ -23,6 +23,7 @@ rich = "*"
 micropipenv = "*"
 jsonschema = "*"
 virtualenv = ">=20.0.3"
+rich-click = "*"
 
 [dev-packages]
 toml = "*"
