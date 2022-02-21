@@ -16,7 +16,7 @@ overlays_dir: overlays
 virtualenv: false
 
 runtime_environments:
-  - name: '{os_name}-{os_version}'
+  - name: '{runtime_environment_name}'
     # Operating system for which the recommendations should be created:
     operating_system:
       name: {os_name}
