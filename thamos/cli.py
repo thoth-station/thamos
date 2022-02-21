@@ -31,7 +31,7 @@ from typing import Set
 from typing import Tuple
 
 import yaml
-import click
+import rich_click as click
 from rich.console import Console
 from rich.text import Text
 from rich.table import Table
@@ -66,12 +66,14 @@ from thamos.lib import get_verified_packages_from_static_analysis
 from thamos.lib import write_configuration
 from thamos.lib import write_files
 from thamos.utils import workdir
+from thamos.cli_config import init_rich_click
 from thamos import __version__ as thamos_version
 
 # Suppress anoying errors when name not known (disable_warnings() does not work here).
 logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 daiquiri.setup(level=logging.INFO)
 _LOGGER = logging.getLogger("thamos")
+init_rich_click()
 
 _EMOJI = {
     "WARNING": Text("\u26a0\ufe0f WARNING", style="yellow"),
@@ -232,7 +234,7 @@ def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
     return labels
 
 
-class AliasedGroup(click.Group):
+class AliasedGroup(click.RichGroup):
     """Provide clever command aliases."""
 
     def get_command(self, ctx, cmd_name):
@@ -378,13 +380,15 @@ def install(
     This command assumes requirements files are present and dependencies are already resolved.
     If that's not the case, issue `thamos advise` before running this command.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
-      thamos install --runtime-environment "testing"
+      thamos install --runtime-environment testing
 
       thamos install --dev
 
       thamos install --no-dev -- --force-reinstall
+    [/purple]
     """
     try:
         thamos_install(
@@ -440,13 +444,15 @@ def run(
 ) -> None:  # noqa: D412
     """Run the command in virtual environment.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos run ./app.py
 
-      thamos run --runtime-environment "stage" -- flask --help
+      thamos run --runtime-environment stage -- flask --help
 
-      thamos run --runtime-environment "testing" --no-pedantic -- train.py
+      thamos run --runtime-environment testing --no-pedantic -- ./train.py
+    [/purple]
     """
     virtualenv_path = configuration.get_virtualenv_path(runtime_environment)
     if virtualenv_path is None:
@@ -542,13 +548,15 @@ def purge(
 ) -> None:  # noqa: D412
     """Remove virtual environment created.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos purge
 
-      thamos purge --runtime-environment "testing"
+      thamos purge --runtime-environment testing
 
       thamos purge --all
+    [/purple]
     """
     if all:
         for runtime_environment_config in configuration.list_runtime_environments():
@@ -702,15 +710,17 @@ def advise(
     static source code analysis and requirements for the application and sends them to the
     remote service. Optionally, install packages resolved by Thoth.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
-      thamos advise --runtime-environment "testing" --labels foo=bar,qux=baz
+      thamos advise --runtime-environment testing --labels 'foo=bar,qux=baz'
 
       thamos advise --dev
 
       thamos advise --install
 
       thamos advise --no-static-analysis --no-user-stack
+    [/purple]
     """
     if install and no_wait:
         _LOGGER.error("Cannot install dependencies as --no-wait was provided")
@@ -868,9 +878,11 @@ def provenance_check(
     Collect information about direct dependencies and dependencies stated in the lock file
     and send them to the remote service to verify their provenance.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
-      thamos provenance-check --runtime-environment "production"
+      thamos provenance-check --runtime-environment production
+    [/purple]
     """
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         if configuration.requirements_format != "pipenv":
@@ -966,11 +978,13 @@ def status(
 
     If ANALYSIS_ID is not provided, the last request is used by default.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos status
 
-      thamos status "adviser-940101080006-110c392feb7cf6da"
+      thamos status adviser-940101080006-110c392feb7cf6da
+    [/purple]
     """
     if not analysis_id:
         with cwd(configuration.get_overlays_directory(runtime_environment)):
@@ -1024,11 +1038,13 @@ def graph(
 
     If ANALYSIS_ID is not provided, the last request is used by default.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos graph
 
-      thamos graph "adviser-940101080006-110c392feb7cf6da"
+      thamos graph adviser-940101080006-110c392feb7cf6da
+    [/purple]
     """
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         printed = print_dependency_graph(analysis_id, fold=fold)
@@ -1042,9 +1058,11 @@ def graph(
 def list_() -> None:  # noqa: D412
     """List available runtime environments configured.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos list
+    [/purple]
     """
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
@@ -1082,9 +1100,11 @@ def show(
 ) -> None:  # noqa: D412
     """Show details for configured runtime environments.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
-      thamos show --runtime-environment "development"
+      thamos show --runtime-environment development
+    [/purple]
     """
     with workdir(configuration.CONFIG_NAME):
         environments = configuration.list_runtime_environments()
@@ -1191,11 +1211,13 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     Check the correctness of the configuration file and runtime environment configuration
     for the current host.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
-        thamos check --runtime-environment "production"
+        thamos check --runtime-environment production
 
         thamos check --output-format yaml
+    [/purple]
     """
     result = configuration.check(runtime_environment_name=runtime_environment)
 
@@ -1308,13 +1330,15 @@ def images(
 ) -> None:  # noqa: D412
     """Check available Thoth container images.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos images --output-format json
 
       thamos images --os-name fedora --os-version 35 --python-version 3.9
 
       thamos images --symbol GLIBC_FOO
+    [/purple]
     """
     result = list_thoth_container_images(
         os_name=os_name,
@@ -1427,15 +1451,17 @@ def add(
     Add one or multiple requirements to the direct dependency listing without actually installing them.
     The supplied requirement is specified using PEP-508 standard.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos add flask
 
-      thamos add tensorflow --runtime-environment "training"
+      thamos add tensorflow --runtime-environment training
 
       thamos add --dev 'pytest~=6.2.0'
 
       thamos add 'importlib-metadata; python_version < "3.8"'
+    [/purple]
     """
     add_requirements_to_project(
         requirement=requirement,
@@ -1463,11 +1489,13 @@ def remove(
 ) -> None:  # noqa: D412
     """Remove the given requirement.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos remove flask
 
-      thamos remove pytest --runtime-environment "training"
+      thamos remove pytest --runtime-environment training
+    [/purple]
     """
     project = configuration.get_project(runtime_environment)
 
@@ -1540,11 +1568,13 @@ def support(output: str) -> None:
 def whatprovides(import_name: str, output_format: str) -> None:  # noqa: D412
     """For a given import returns list of packages with matching modules.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos whatprovides sklearn
 
-      thamos whatprovides sklearn.linear_model.*
+      thamos whatprovides 'sklearn.linear_model.*'
+    [/purple]
     """
     _LOGGER.info("Returning information on package %r", import_name)
 
@@ -1597,11 +1627,13 @@ def discover(
     If runtime environment is passed, requirements are added to requirements specific
     to the given runtime environment. Otherwise, the default runtime environment is used.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos discover
 
-      thamos discover --runtime-environment "production"
+      thamos discover --runtime-environment production
+    [/purple]
     """
     # Obtain list of imports using invectio and verify package from PyPI
     verified_packages = get_verified_packages_from_static_analysis(
@@ -1635,9 +1667,11 @@ def discover(
 def environments_(output_format: str) -> None:  # noqa: D412
     """Show available Python environments.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
       thamos environments
+    [/purple]
     """
     environments = list_python_environments()
 
@@ -1669,11 +1703,13 @@ def environments_(output_format: str) -> None:  # noqa: D412
 def verify(runtime_environment: typing.Optional[str]) -> None:  # noqa: D412
     """Verify the hash in Pipfile.lock is up-to-date in runtime environments configured.
 
-    Examples:
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
 
         thamos verify
 
-        thamos verify --runtime-environment "training"
+        thamos verify --runtime-environment training
+    [/purple]
     """
     if configuration.requirements_format != "pipenv":
         _LOGGER.error(
