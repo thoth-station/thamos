@@ -1,4 +1,9 @@
 
+## Release 1.27.0 (2022-02-21T23:31:30)
+* Add rich-click to requirements
+* Use rich-click to create stylized help
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.26.1 (2022-02-15T22:52:17)
 * Report if configuration check passes
 * Respect runtime environments in commands
