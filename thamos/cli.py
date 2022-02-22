@@ -1221,17 +1221,18 @@ def check(runtime_environment: Optional[str], output_format: str) -> None:  # no
     """
     result = configuration.check(runtime_environment_name=runtime_environment)
 
-    if output_format == "yaml":
-        yaml.safe_dump(result, sys.stdout)
-    elif output_format == "json":
-        json.dump(result, sys.stdout, indent=2)
-        sys.stdout.write("\n")
-    elif output_format == "table":
-        _print_report(
-            result,
-            json_output=False,
-            title="Runtime environment and configuration check results",
-        )
+    if result:
+        if output_format == "yaml":
+            yaml.safe_dump(result, sys.stdout)
+        elif output_format == "json":
+            json.dump(result, sys.stdout, indent=2)
+            sys.stdout.write("\n")
+        elif output_format == "table":
+            _print_report(
+                result,
+                json_output=False,
+                title="Runtime environment and configuration check results",
+            )
 
     return_code = 1 if any(item.get("type") == "ERROR" for item in result) else 0
     if return_code == 0:
