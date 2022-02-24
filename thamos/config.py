@@ -225,8 +225,8 @@ class _Configuration:
             raise ConfigurationError("No virtual environment configured")
 
         virtualenv_args = [virtualenv_path]
-        runtime_environment = self.get_runtime_environment(runtime_environment)
-        python_version = runtime_environment.get("python_version")
+        runtime_environment_dict = self.get_runtime_environment(runtime_environment)
+        python_version = runtime_environment_dict.get("python_version")
         if python_version:
             virtualenv_args.extend(["--python", python_version])
 
