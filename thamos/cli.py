@@ -524,6 +524,8 @@ def venv(ctx, runtime_environment: Optional[str] = None) -> None:
     else:
         _error_virtual_environment(virtualenv_path)
 
+    click.echo(virtualenv_path)
+
 
 @cli.command("purge")
 @click.pass_context
