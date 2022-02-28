@@ -1,4 +1,13 @@
 
+## Release 1.27.1 (2022-02-28T11:58:57)
+* Fix thamos venv not printing virtualenv path
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Make mypy happy by not overriding config dict
+* Add missing rich-click config file
+* Use runtime_environment_name option in the config file
+* Remove rm-build-container-image.sh
+* Print thamos check results only if any result reported
+
 ## Release 1.27.0 (2022-02-21T23:31:30)
 * Add rich-click to requirements
 * Use rich-click to create stylized help
