@@ -1,4 +1,8 @@
 
+## Release 1.27.2 (2022-03-01T16:32:36)
+* Increase thamos timeout to 45 minutes
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.27.1 (2022-02-28T11:58:57)
 * Fix thamos venv not printing virtualenv path
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
