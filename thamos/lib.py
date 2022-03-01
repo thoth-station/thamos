@@ -84,7 +84,7 @@ _RECOMMENDATION_TYPES_URL = "https://thoth-station.ninja/recommendation-types/"
 _LOGGER = logging.getLogger(__name__)
 _RETRY_ON_ERROR_COUNT = int(os.getenv("THAMOS_RETRY_ON_ERROR_COUNT", 3))
 _RETRY_ON_ERROR_SLEEP = float(os.getenv("THAMOS_RETRY_ON_ERROR_SLEEP", 3.0))
-_THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2000))
+_THAMOS_TIMEOUT = int(os.getenv("THAMOS_TIMEOUT", 2700))
 _THAMOS_TOKEN = os.getenv("THAMOS_TOKEN")
 _SOURCE = {
     "adviser": "advise/python",
