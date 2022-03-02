@@ -80,7 +80,7 @@ index = 'https://pypi.org/simple' # str | Index url of the Python Package (defau
 os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
 os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
 python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
-marker_evaluation_result = true # bool | Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  (optional)
+marker_evaluation_result = false # bool | Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  (optional) (default to false)
 
 try:
     # Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered
@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
  **os_name** | **str**| Name of the operating system to consider | [optional]
  **os_version** | **str**| Version of the operating system to consider | [optional]
  **python_version** | **str**| Version of Python interpreter provided | [optional]
- **marker_evaluation_result** | **bool**| Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  | [optional]
+ **marker_evaluation_result** | **bool**| Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  | [optional] [default to false]
 
 ### Return type
 

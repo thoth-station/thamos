@@ -28,12 +28,12 @@ class AdviserResultResponseResultReportPipeline(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'boots': 'list[AdviserResultResponseResultReportPipelineBoots]',
-        'pseudonyms': 'list[object]',
-        'sieves': 'list[object]',
-        'steps': 'list[object]',
-        'strides': 'list[object]',
-        'wraps': 'list[object]'
+        'boots': 'list[UnitDef]',
+        'pseudonyms': 'list[UnitDef]',
+        'sieves': 'list[UnitDef]',
+        'steps': 'list[UnitDef]',
+        'strides': 'list[UnitDef]',
+        'wraps': 'list[UnitDef]'
     }
 
     attribute_map = {
@@ -68,7 +68,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Boot pipeline unit types registered to the resolution process   # noqa: E501
 
         :return: The boots of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :rtype: list[AdviserResultResponseResultReportPipelineBoots]
+        :rtype: list[UnitDef]
         """
         return self._boots
 
@@ -79,7 +79,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Boot pipeline unit types registered to the resolution process   # noqa: E501
 
         :param boots: The boots of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :type: list[AdviserResultResponseResultReportPipelineBoots]
+        :type: list[UnitDef]
         """
         if boots is None:
             raise ValueError("Invalid value for `boots`, must not be `None`")  # noqa: E501
@@ -93,7 +93,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Pseudonym pipeline unit types registered to the resolution process   # noqa: E501
 
         :return: The pseudonyms of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[UnitDef]
         """
         return self._pseudonyms
 
@@ -104,7 +104,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Pseudonym pipeline unit types registered to the resolution process   # noqa: E501
 
         :param pseudonyms: The pseudonyms of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :type: list[object]
+        :type: list[UnitDef]
         """
         if pseudonyms is None:
             raise ValueError("Invalid value for `pseudonyms`, must not be `None`")  # noqa: E501
@@ -118,7 +118,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Sieve pipeline unit types registered to the resolution process   # noqa: E501
 
         :return: The sieves of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[UnitDef]
         """
         return self._sieves
 
@@ -129,7 +129,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Sieve pipeline unit types registered to the resolution process   # noqa: E501
 
         :param sieves: The sieves of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :type: list[object]
+        :type: list[UnitDef]
         """
         if sieves is None:
             raise ValueError("Invalid value for `sieves`, must not be `None`")  # noqa: E501
@@ -143,7 +143,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Step pipeline unit types registered to the resolution process   # noqa: E501
 
         :return: The steps of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[UnitDef]
         """
         return self._steps
 
@@ -154,7 +154,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Step pipeline unit types registered to the resolution process   # noqa: E501
 
         :param steps: The steps of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :type: list[object]
+        :type: list[UnitDef]
         """
         if steps is None:
             raise ValueError("Invalid value for `steps`, must not be `None`")  # noqa: E501
@@ -168,7 +168,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Stride pipeline unit types registered to the resolution process   # noqa: E501
 
         :return: The strides of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[UnitDef]
         """
         return self._strides
 
@@ -179,7 +179,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Stride pipeline unit types registered to the resolution process   # noqa: E501
 
         :param strides: The strides of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :type: list[object]
+        :type: list[UnitDef]
         """
         if strides is None:
             raise ValueError("Invalid value for `strides`, must not be `None`")  # noqa: E501
@@ -193,7 +193,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Wrap pipeline unit types registered to the resolution process   # noqa: E501
 
         :return: The wraps of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[UnitDef]
         """
         return self._wraps
 
@@ -204,7 +204,7 @@ class AdviserResultResponseResultReportPipeline(object):
         Wrap pipeline unit types registered to the resolution process   # noqa: E501
 
         :param wraps: The wraps of this AdviserResultResponseResultReportPipeline.  # noqa: E501
-        :type: list[object]
+        :type: list[UnitDef]
         """
         if wraps is None:
             raise ValueError("Invalid value for `wraps`, must not be `None`")  # noqa: E501

@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **environment_type** | **str** |  |
 **package_extract_document_id** | **str** |  |
 **_datetime** | **str** |  |
+**quay_repo_url** | **str** |  |
+**image_analysis_url** | **str** |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

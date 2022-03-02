@@ -28,8 +28,8 @@ class AnalysisResultResponseResultAicoeci(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'requirements': 'object',
-        'requirements_lock': 'object'
+        'requirements': 'RequirementsDef',
+        'requirements_lock': 'RequirementsLockDef'
     }
 
     attribute_map = {
@@ -51,7 +51,7 @@ class AnalysisResultResponseResultAicoeci(object):
 
 
         :return: The requirements of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :rtype: object
+        :rtype: RequirementsDef
         """
         return self._requirements
 
@@ -61,7 +61,7 @@ class AnalysisResultResponseResultAicoeci(object):
 
 
         :param requirements: The requirements of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :type: object
+        :type: RequirementsDef
         """
         if requirements is None:
             raise ValueError("Invalid value for `requirements`, must not be `None`")  # noqa: E501
@@ -74,7 +74,7 @@ class AnalysisResultResponseResultAicoeci(object):
 
 
         :return: The requirements_lock of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :rtype: object
+        :rtype: RequirementsLockDef
         """
         return self._requirements_lock
 
@@ -84,7 +84,7 @@ class AnalysisResultResponseResultAicoeci(object):
 
 
         :param requirements_lock: The requirements_lock of this AnalysisResultResponseResultAicoeci.  # noqa: E501
-        :type: object
+        :type: RequirementsLockDef
         """
         if requirements_lock is None:
             raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501

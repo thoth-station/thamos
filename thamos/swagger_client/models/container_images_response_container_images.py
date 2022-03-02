@@ -40,7 +40,9 @@ class ContainerImagesResponseContainerImages(object):
         'cuda_version': 'str',
         'environment_type': 'str',
         'package_extract_document_id': 'str',
-        '_datetime': 'str'
+        '_datetime': 'str',
+        'quay_repo_url': 'str',
+        'image_analysis_url': 'str'
     }
 
     attribute_map = {
@@ -56,10 +58,12 @@ class ContainerImagesResponseContainerImages(object):
         'cuda_version': 'cuda_version',
         'environment_type': 'environment_type',
         'package_extract_document_id': 'package_extract_document_id',
-        '_datetime': 'datetime'
+        '_datetime': 'datetime',
+        'quay_repo_url': 'quay_repo_url',
+        'image_analysis_url': 'image_analysis_url'
     }
 
-    def __init__(self, environment_name=None, python_version=None, env_image_name=None, env_image_tag=None, image_sha=None, os_name=None, os_version=None, thoth_image_name=None, thoth_image_version=None, cuda_version=None, environment_type=None, package_extract_document_id=None, _datetime=None):  # noqa: E501
+    def __init__(self, environment_name=None, python_version=None, env_image_name=None, env_image_tag=None, image_sha=None, os_name=None, os_version=None, thoth_image_name=None, thoth_image_version=None, cuda_version=None, environment_type=None, package_extract_document_id=None, _datetime=None, quay_repo_url=None, image_analysis_url=None):  # noqa: E501
         """ContainerImagesResponseContainerImages - a model defined in Swagger"""  # noqa: E501
         self._environment_name = None
         self._python_version = None
@@ -74,6 +78,8 @@ class ContainerImagesResponseContainerImages(object):
         self._environment_type = None
         self._package_extract_document_id = None
         self.__datetime = None
+        self._quay_repo_url = None
+        self._image_analysis_url = None
         self.discriminator = None
         self.environment_name = environment_name
         self.python_version = python_version
@@ -88,6 +94,8 @@ class ContainerImagesResponseContainerImages(object):
         self.environment_type = environment_type
         self.package_extract_document_id = package_extract_document_id
         self._datetime = _datetime
+        self.quay_repo_url = quay_repo_url
+        self.image_analysis_url = image_analysis_url
 
     @property
     def environment_name(self):
@@ -373,6 +381,52 @@ class ContainerImagesResponseContainerImages(object):
             raise ValueError("Invalid value for `_datetime`, must not be `None`")  # noqa: E501
 
         self.__datetime = _datetime
+
+    @property
+    def quay_repo_url(self):
+        """Gets the quay_repo_url of this ContainerImagesResponseContainerImages.  # noqa: E501
+
+
+        :return: The quay_repo_url of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :rtype: str
+        """
+        return self._quay_repo_url
+
+    @quay_repo_url.setter
+    def quay_repo_url(self, quay_repo_url):
+        """Sets the quay_repo_url of this ContainerImagesResponseContainerImages.
+
+
+        :param quay_repo_url: The quay_repo_url of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :type: str
+        """
+        if quay_repo_url is None:
+            raise ValueError("Invalid value for `quay_repo_url`, must not be `None`")  # noqa: E501
+
+        self._quay_repo_url = quay_repo_url
+
+    @property
+    def image_analysis_url(self):
+        """Gets the image_analysis_url of this ContainerImagesResponseContainerImages.  # noqa: E501
+
+
+        :return: The image_analysis_url of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :rtype: str
+        """
+        return self._image_analysis_url
+
+    @image_analysis_url.setter
+    def image_analysis_url(self, image_analysis_url):
+        """Sets the image_analysis_url of this ContainerImagesResponseContainerImages.
+
+
+        :param image_analysis_url: The image_analysis_url of this ContainerImagesResponseContainerImages.  # noqa: E501
+        :type: str
+        """
+        if image_analysis_url is None:
+            raise ValueError("Invalid value for `image_analysis_url`, must not be `None`")  # noqa: E501
+
+        self._image_analysis_url = image_analysis_url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -31,9 +31,9 @@ class AnalysisResultResponseResultDebdependencies(object):
         'name': 'str',
         'version': 'str',
         'epoch': 'str',
-        'depends': 'AnalysisResultResponseResultDepends',
-        'pre_depends': 'object',
-        'replaces': 'object'
+        'depends': 'DebDependencyItem',
+        'pre_depends': 'DebDependencyItem',
+        'replaces': 'DebDependencyItem'
     }
 
     attribute_map = {
@@ -142,7 +142,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :return: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: AnalysisResultResponseResultDepends
+        :rtype: DebDependencyItem
         """
         return self._depends
 
@@ -152,7 +152,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :param depends: The depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: AnalysisResultResponseResultDepends
+        :type: DebDependencyItem
         """
         if depends is None:
             raise ValueError("Invalid value for `depends`, must not be `None`")  # noqa: E501
@@ -165,7 +165,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :return: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: object
+        :rtype: DebDependencyItem
         """
         return self._pre_depends
 
@@ -175,7 +175,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :param pre_depends: The pre_depends of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: object
+        :type: DebDependencyItem
         """
         if pre_depends is None:
             raise ValueError("Invalid value for `pre_depends`, must not be `None`")  # noqa: E501
@@ -188,7 +188,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :return: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :rtype: object
+        :rtype: DebDependencyItem
         """
         return self._replaces
 
@@ -198,7 +198,7 @@ class AnalysisResultResponseResultDebdependencies(object):
 
 
         :param replaces: The replaces of this AnalysisResultResponseResultDebdependencies.  # noqa: E501
-        :type: object
+        :type: DebDependencyItem
         """
         if replaces is None:
             raise ValueError("Invalid value for `replaces`, must not be `None`")  # noqa: E501
