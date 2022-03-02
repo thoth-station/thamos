@@ -816,11 +816,11 @@
         },
         "rich-click": {
             "hashes": [
-                "sha256:5fb946785d325c6a1174193f92264efa9a854d4e886e37e89c9b6d0487d600cb",
-                "sha256:bacfedf0d0cc941b22b8de44021b8175cb08f4b37385a3b059624db9a46b5ea3"
+                "sha256:43edaf6f89d9597e992040a56ac7f9236952d3e8c2df47db88115bc304005dff",
+                "sha256:bd93b1d418241b71272dac70c45bc1ddf7a3d12c550d918407e1ba3f8906f123"
             ],
             "index": "pypi",
-            "version": "==1.2.0"
+            "version": "==1.2.1"
         },
         "rsa": {
             "hashes": [
