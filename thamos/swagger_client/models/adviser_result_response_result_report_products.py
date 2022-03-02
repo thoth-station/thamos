@@ -28,11 +28,11 @@ class AdviserResultResponseResultReportProducts(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'advised_manifest_changes': 'list[object]',
+        'advised_manifest_changes': 'list[list]',
         'advised_runtime_environment': 'RuntimeEnvironment',
         'dependency_graph': 'AdviserResultResponseResultReportDependencyGraph',
         'justification': 'Justification',
-        'project': 'object',
+        'project': 'ProjectDef',
         'score': 'float'
     }
 
@@ -68,7 +68,7 @@ class AdviserResultResponseResultReportProducts(object):
         Advised changes to manifest files  # noqa: E501
 
         :return: The advised_manifest_changes of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[list]
         """
         return self._advised_manifest_changes
 
@@ -79,7 +79,7 @@ class AdviserResultResponseResultReportProducts(object):
         Advised changes to manifest files  # noqa: E501
 
         :param advised_manifest_changes: The advised_manifest_changes of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :type: list[object]
+        :type: list[list]
         """
         if advised_manifest_changes is None:
             raise ValueError("Invalid value for `advised_manifest_changes`, must not be `None`")  # noqa: E501
@@ -159,7 +159,7 @@ class AdviserResultResponseResultReportProducts(object):
 
 
         :return: The project of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :rtype: object
+        :rtype: ProjectDef
         """
         return self._project
 
@@ -169,7 +169,7 @@ class AdviserResultResponseResultReportProducts(object):
 
 
         :param project: The project of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :type: object
+        :type: ProjectDef
         """
         if project is None:
             raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501

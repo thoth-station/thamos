@@ -29,7 +29,7 @@ class PythonPackageVersionMetadataResponseMetadataImportlibMetadata(object):
     """
     swagger_types = {
         'entry_points': 'list[PythonPackageVersionMetadataResponseMetadataImportlibMetadataEntryPoints]',
-        'files': 'list',
+        'files': 'list[object]',
         'metadata': 'object',
         'requires': 'list[str]',
         'version': 'str'
@@ -87,7 +87,7 @@ class PythonPackageVersionMetadataResponseMetadataImportlibMetadata(object):
         Files shipped with the Python package  # noqa: E501
 
         :return: The files of this PythonPackageVersionMetadataResponseMetadataImportlibMetadata.  # noqa: E501
-        :rtype: list
+        :rtype: list[object]
         """
         return self._files
 
@@ -98,7 +98,7 @@ class PythonPackageVersionMetadataResponseMetadataImportlibMetadata(object):
         Files shipped with the Python package  # noqa: E501
 
         :param files: The files of this PythonPackageVersionMetadataResponseMetadataImportlibMetadata.  # noqa: E501
-        :type: list
+        :type: list[object]
         """
         if files is None:
             raise ValueError("Invalid value for `files`, must not be `None`")  # noqa: E501
