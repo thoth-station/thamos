@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **pipeline** | [**AdviserResultResponseResultReportPipeline**](AdviserResultResponseResultReportPipeline.md) |  | [optional]
 **products** | [**list[AdviserResultResponseResultReportProducts]**](AdviserResultResponseResultReportProducts.md) | Products computed in the deployment, always holds only one item  | [optional]
 **resolver_iterations** | **int** | Number of iterations done by the resolver to compute products  | [optional]
-**stack_info** | [**StackInfo**](StackInfo.md) |  |
+**stack_info** | [**StackInfo**](StackInfo.md) |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
