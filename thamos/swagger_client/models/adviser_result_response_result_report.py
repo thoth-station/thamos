@@ -69,7 +69,8 @@ class AdviserResultResponseResultReport(object):
             self.products = products
         if resolver_iterations is not None:
             self.resolver_iterations = resolver_iterations
-        self.stack_info = stack_info
+        if stack_info is not None:
+            self.stack_info = stack_info
 
     @property
     def error(self):

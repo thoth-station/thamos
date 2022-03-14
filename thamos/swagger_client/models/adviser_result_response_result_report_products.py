@@ -28,7 +28,7 @@ class AdviserResultResponseResultReportProducts(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'advised_manifest_changes': 'list[list]',
+        'advised_manifest_changes': 'list[list[object]]',
         'advised_runtime_environment': 'RuntimeEnvironment',
         'dependency_graph': 'AdviserResultResponseResultReportDependencyGraph',
         'justification': 'Justification',
@@ -68,7 +68,7 @@ class AdviserResultResponseResultReportProducts(object):
         Advised changes to manifest files  # noqa: E501
 
         :return: The advised_manifest_changes of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :rtype: list[list]
+        :rtype: list[list[object]]
         """
         return self._advised_manifest_changes
 
@@ -79,7 +79,7 @@ class AdviserResultResponseResultReportProducts(object):
         Advised changes to manifest files  # noqa: E501
 
         :param advised_manifest_changes: The advised_manifest_changes of this AdviserResultResponseResultReportProducts.  # noqa: E501
-        :type: list[list]
+        :type: list[list[object]]
         """
         if advised_manifest_changes is None:
             raise ValueError("Invalid value for `advised_manifest_changes`, must not be `None`")  # noqa: E501
