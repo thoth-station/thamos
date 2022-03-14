@@ -1,4 +1,10 @@
 
+## Release 1.27.3 (2022-03-14T12:55:59)
+* Regenerate openapi schema to fix serialization issues
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Update client
+
 ## Release 1.27.2 (2022-03-01T16:32:36)
 * Increase thamos timeout to 45 minutes
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
