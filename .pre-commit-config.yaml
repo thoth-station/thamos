@@ -2,12 +2,12 @@
 exclude: "thamos/swagger_client/|docs/|Documentation"
 repos:
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.1.9
+    rev: v1.1.13
     hooks:
       - id: remove-tabs
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.1.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -25,26 +25,19 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/pycqa/pydocstyle.git
-    rev: 5.1.1
+    rev: 6.1.1
     hooks:
       - id: pydocstyle
         exclude: "thamos/swagger_client/|docs/"
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
-    hooks:
-      - id: check-toml
-      - id: check-yaml
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
 
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 22.1.0
     hooks:
       - id: black
 
   - repo: https://gitlab.com/PyCQA/flake8
-    rev: 3.8.4
+    rev: 3.9.2
     hooks:
       - id: flake8
         additional_dependencies: ["pep8-naming"]
@@ -54,6 +47,6 @@ repos:
         exclude: "^(thamos/swagger_client/|examples/|docs/)"
 
   - repo: https://github.com/mgedmin/check-manifest
-    rev: "0.46"
+    rev: "0.48"
     hooks:
       - id: check-manifest
