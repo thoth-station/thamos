@@ -129,6 +129,8 @@ _REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
     "python_version": "Python version",
 }
 
+_THOTH_SEARCH_BASE_URL = "https://thoth-station.ninja/search/"
+
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
@@ -1367,10 +1369,24 @@ def images(
                 key = _REPORT_TRANSLATION_TABLE_IMAGES.get(
                     key, key.replace("_", " ").capitalize()
                 )
+                if key == "Container image analysis":
+                    container_image_search_link = (
+                        f"{_THOTH_SEARCH_BASE_URL}image/{value}"
+                    )
                 key = Text.from_markup(key, style="green bold")
                 # Here, key value are ignored. This is a trick to have "table header" as the first column.
                 table_content.extend([{"key": key, "value": value}])
 
+            table_content.extend(
+                [
+                    {
+                        "key": Text.from_markup(
+                            "See more details in Thoth Search UI:", style="bold cyan"
+                        ),
+                        "value": container_image_search_link,
+                    }
+                ]
+            )
             _print_report(
                 table_content,
                 title=f"Container image {item.get('environment_name', 'UNKNOWN')}",
