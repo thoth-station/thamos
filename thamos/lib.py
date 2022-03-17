@@ -1512,7 +1512,7 @@ def collect_support_information_dict() -> Dict[str, Any]:
         "platform_system": platform.system(),
         "platform_version": platform.version(),
         "python_full_version": platform.python_version(),
-        "python_version": platform.python_version()[:3],
+        "python_version": ".".join(platform.python_version().split(".")[:-1]),
         "sys_platform": sys.platform,
         "pip_freeze": pip_freeze,
         "discovery": discovery,
