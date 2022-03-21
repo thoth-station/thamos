@@ -129,8 +129,6 @@ _REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
     "python_version": "Python version",
 }
 
-THOTH_SEARCH_UI_BASE_URL = configuration.thoth_search_ui_url
-
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
     """Suppress exception in CLI if debug mode was not turned on."""
@@ -1368,7 +1366,7 @@ def images(
             for key, value in item.items():
                 if key == "package_extract_document_id":
                     container_image_search_link = (
-                        f"{THOTH_SEARCH_UI_BASE_URL}image/{value}"
+                        f"{configuration.thoth_search_ui_url}image/{value}"
                     )
                 key = _REPORT_TRANSLATION_TABLE_IMAGES.get(
                     key, key.replace("_", " ").capitalize()
