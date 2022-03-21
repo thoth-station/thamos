@@ -20,7 +20,6 @@
 import json
 import logging
 import os
-import requests
 import shutil
 import subprocess
 import sys
@@ -130,9 +129,7 @@ _REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
     "python_version": "Python version",
 }
 
-THOTH_SEARCH_UI_BASE_URL = requests.get(configuration.api_url).headers[
-    "X-Thoth-Search-Ui-Url"
-]
+THOTH_SEARCH_UI_BASE_URL = configuration.thoth_search_ui_url
 
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
