@@ -20,6 +20,7 @@
 import json
 import logging
 import os
+import requests
 import shutil
 import subprocess
 import sys
@@ -129,9 +130,9 @@ _REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
     "python_version": "Python version",
 }
 
-THOTH_SEARCH_UI_BASE_URL = os.getenv(
-    "THOTH_SEARCH_UI_URL", "https://thoth-station.ninja/search/"
-)
+THOTH_SEARCH_UI_BASE_URL = requests.get(configuration.api_url).headers[
+    "X-Thoth-Search-Ui-Url"
+]
 
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
