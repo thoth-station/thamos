@@ -129,7 +129,9 @@ _REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
     "python_version": "Python version",
 }
 
-_THOTH_SEARCH_BASE_URL = "https://thoth-station.ninja/search/"
+THOTH_SEARCH_UI_BASE_URL = os.getenv(
+    "THOTH_SEARCH_UI_URL", "https://thoth-station.ninja/search/"
+)
 
 
 def handle_cli_exception(func: typing.Callable) -> typing.Callable:
@@ -1366,13 +1368,13 @@ def images(
         for item in result:
             table_content = []
             for key, value in item.items():
+                if key == "package_extract_document_id":
+                    container_image_search_link = (
+                        f"{THOTH_SEARCH_UI_BASE_URL}image/{value}"
+                    )
                 key = _REPORT_TRANSLATION_TABLE_IMAGES.get(
                     key, key.replace("_", " ").capitalize()
                 )
-                if key == "Container image analysis":
-                    container_image_search_link = (
-                        f"{_THOTH_SEARCH_BASE_URL}image/{value}"
-                    )
                 key = Text.from_markup(key, style="green bold")
                 # Here, key value are ignored. This is a trick to have "table header" as the first column.
                 table_content.extend([{"key": key, "value": value}])
