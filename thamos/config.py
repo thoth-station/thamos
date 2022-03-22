@@ -158,6 +158,7 @@ class _Configuration:
         self.explicit_host = None
         self.tls_verify = None
         self._api_url = None
+        self._thoth_search_ui_url = None
 
     @property
     def api_url(self):
