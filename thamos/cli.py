@@ -1363,7 +1363,13 @@ def images(
     elif output_format == "table":
         for item in result:
             table_content = []
+            container_image_search_link = ""
             for key, value in item.items():
+                if configuration.thoth_search_ui_url is not None:
+                    if key == "package_extract_document_id":
+                        container_image_search_link = (
+                            f"{configuration.thoth_search_ui_url}image/{value}"
+                        )
                 key = _REPORT_TRANSLATION_TABLE_IMAGES.get(
                     key, key.replace("_", " ").capitalize()
                 )
@@ -1371,6 +1377,18 @@ def images(
                 # Here, key value are ignored. This is a trick to have "table header" as the first column.
                 table_content.extend([{"key": key, "value": value}])
 
+            if container_image_search_link != "":
+                table_content.extend(
+                    [
+                        {
+                            "key": Text.from_markup(
+                                "See more details in Thoth Search UI:",
+                                style="bold cyan",
+                            ),
+                            "value": container_image_search_link,
+                        }
+                    ]
+                )
             _print_report(
                 table_content,
                 title=f"Container image {item.get('environment_name', 'UNKNOWN')}",

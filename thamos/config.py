@@ -158,6 +158,7 @@ class _Configuration:
         self.explicit_host = None
         self.tls_verify = None
         self._api_url = None
+        self._thoth_search_ui_url = None
 
     @property
     def api_url(self):
@@ -166,6 +167,13 @@ class _Configuration:
             self._api_url = self.api_discovery(self.content["host"])
 
         return self._api_url
+
+    @property
+    def thoth_search_ui_url(self):
+        if not self._thoth_search_ui_url:
+            self.api_discovery(self.content["host"])
+
+        return self._thoth_search_ui_url
 
     @property
     def content(self):
@@ -486,6 +494,8 @@ class _Configuration:
         response = requests.get(
             api_url, verify=self.tls_verify, headers={"Accept": "application/json"}
         )
+
+        self._thoth_search_ui_url = response.headers.get("X-Thoth-Search-Ui-Url")
 
         try:
             response.raise_for_status()
