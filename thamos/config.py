@@ -25,7 +25,6 @@ from typing import Any
 from typing import Dict
 from typing import Optional
 from typing import List
-from typing import Tuple
 from urllib.parse import urljoin
 from jsonschema import validate
 
@@ -164,14 +163,14 @@ class _Configuration:
     def api_url(self):
         """Get URL to Thoth's API."""
         if not self._api_url:
-            self._api_url = self.api_discovery(self.content["host"])[0]
+            self._api_url = self.api_discovery(self.content["host"])
 
         return self._api_url
 
     @property
     def thoth_search_ui_url(self):
         if not self._thoth_search_ui_url:
-            self._thoth_search_ui_url = self.api_discovery(self.content["host"])[1]
+            self.api_discovery(self.content["host"])
 
         return self._thoth_search_ui_url
 
@@ -471,7 +470,7 @@ class _Configuration:
 
         return to_return
 
-    def api_discovery(self, host: str) -> Tuple[str, str]:
+    def api_discovery(self, host: str) -> str:
         """Discover API versions available, return the most recent one supported by client and server."""
         api_url = urljoin("https://" + host, "api/v1")
         self.tls_verify = (
@@ -495,7 +494,7 @@ class _Configuration:
             api_url, verify=self.tls_verify, headers={"Accept": "application/json"}
         )
 
-        thoth_search_ui_url = response.headers["X-Thoth-Search-Ui-Url"]
+        self._thoth_search_ui_url = response.headers["X-Thoth-Search-Ui-Url"]
 
         try:
             response.raise_for_status()
@@ -509,7 +508,7 @@ class _Configuration:
             ) from exc
 
         self._api_url = api_url
-        return self._api_url, thoth_search_ui_url
+        return self._api_url
 
     def check_runtime_environment(
         self, runtime_environment_name: str
