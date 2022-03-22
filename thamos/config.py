@@ -495,7 +495,7 @@ class _Configuration:
             api_url, verify=self.tls_verify, headers={"Accept": "application/json"}
         )
 
-        self._thoth_search_ui_url = response.headers["X-Thoth-Search-Ui-Url"]
+        self._thoth_search_ui_url = response.headers.get("X-Thoth-Search-Ui-Url")
 
         try:
             response.raise_for_status()
