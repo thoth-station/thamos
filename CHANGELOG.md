@@ -1,4 +1,10 @@
 
+## Release 1.27.4 (2022-03-22T08:39:46)
+* Pick only major.minor
+* Fix python version display in support command
+* Update GitHub issue templates
+* Update pre-commit configuration
+
 ## Release 1.27.3 (2022-03-14T12:55:59)
 * Regenerate openapi schema to fix serialization issues
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
