@@ -1601,9 +1601,17 @@ def print_dependency_graph_from_adviser_document(
     pipfile_lock = adviser_document["report"]["products"][0]["project"][
         "requirements_locked"
     ]
-    for direct_dependency in chain(
-        pipfile["packages"].keys(), pipfile["dev-packages"].keys()
-    ):
+
+    direct_dependencies = pipfile["packages"].keys()
+    if adviser_document["parameters"]["dev"]:
+        # Include dev packages in the listing only if dev flag was supplied
+        direct_dependencies = chain(direct_dependencies, pipfile["dev-packages"].keys())
+    else:
+        _LOGGER.warning(
+            "Development dependencies will not be shown as no --dev flag was supplied to the resolution process"
+        )
+
+    for direct_dependency in direct_dependencies:
         direct_dependency_idx = nodes_idx[direct_dependency]
         print(f"→ {_get_package_entry_str(pipfile_lock, direct_dependency)}")
         _traverse_edges(
