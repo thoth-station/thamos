@@ -28,26 +28,51 @@ class ProjectDefConstraints(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'markers': 'str',
         'name': 'str',
-        'version': 'str',
-        'markers': 'str'
+        'version': 'str'
     }
 
     attribute_map = {
+        'markers': 'markers',
         'name': 'name',
-        'version': 'version',
-        'markers': 'markers'
+        'version': 'version'
     }
 
-    def __init__(self, name=None, version=None, markers=None):  # noqa: E501
+    def __init__(self, markers=None, name=None, version=None):  # noqa: E501
         """ProjectDefConstraints - a model defined in Swagger"""  # noqa: E501
+        self._markers = None
         self._name = None
         self._version = None
-        self._markers = None
         self.discriminator = None
+        self.markers = markers
         self.name = name
         self.version = version
-        self.markers = markers
+
+    @property
+    def markers(self):
+        """Gets the markers of this ProjectDefConstraints.  # noqa: E501
+
+        An environment marker used with the version constrain  # noqa: E501
+
+        :return: The markers of this ProjectDefConstraints.  # noqa: E501
+        :rtype: str
+        """
+        return self._markers
+
+    @markers.setter
+    def markers(self, markers):
+        """Sets the markers of this ProjectDefConstraints.
+
+        An environment marker used with the version constrain  # noqa: E501
+
+        :param markers: The markers of this ProjectDefConstraints.  # noqa: E501
+        :type: str
+        """
+        if markers is None:
+            raise ValueError("Invalid value for `markers`, must not be `None`")  # noqa: E501
+
+        self._markers = markers
 
     @property
     def name(self):
@@ -98,31 +123,6 @@ class ProjectDefConstraints(object):
             raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
 
         self._version = version
-
-    @property
-    def markers(self):
-        """Gets the markers of this ProjectDefConstraints.  # noqa: E501
-
-        An environment marker used with the version constrain  # noqa: E501
-
-        :return: The markers of this ProjectDefConstraints.  # noqa: E501
-        :rtype: str
-        """
-        return self._markers
-
-    @markers.setter
-    def markers(self, markers):
-        """Sets the markers of this ProjectDefConstraints.
-
-        An environment marker used with the version constrain  # noqa: E501
-
-        :param markers: The markers of this ProjectDefConstraints.  # noqa: E501
-        :type: str
-        """
-        if markers is None:
-            raise ValueError("Invalid value for `markers`, must not be `None`")  # noqa: E501
-
-        self._markers = markers
 
     def to_dict(self):
         """Returns the model properties as a dict"""

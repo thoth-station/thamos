@@ -32,12 +32,12 @@ class AnalysisResultResponseMetadata(object):
         'analyzer_version': 'str',
         'arguments': 'object',
         '_datetime': 'str',
-        'distribution': 'AnalysisResultResponseMetadataDistribution',
+        'distribution': 'AdviserResultResponseMetadataDistribution',
         'document_id': 'str',
         'duration': 'int',
         'hostname': 'str',
         'os_release': 'object',
-        'python': 'AnalysisResultResponseMetadataPython',
+        'python': 'AdviserResultResponseMetadataPython',
         'thoth_deployment_name': 'str',
         'timestamp': 'int'
     }
@@ -191,7 +191,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :return: The distribution of this AnalysisResultResponseMetadata.  # noqa: E501
-        :rtype: AnalysisResultResponseMetadataDistribution
+        :rtype: AdviserResultResponseMetadataDistribution
         """
         return self._distribution
 
@@ -201,7 +201,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :param distribution: The distribution of this AnalysisResultResponseMetadata.  # noqa: E501
-        :type: AnalysisResultResponseMetadataDistribution
+        :type: AdviserResultResponseMetadataDistribution
         """
         if distribution is None:
             raise ValueError("Invalid value for `distribution`, must not be `None`")  # noqa: E501
@@ -312,7 +312,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :return: The python of this AnalysisResultResponseMetadata.  # noqa: E501
-        :rtype: AnalysisResultResponseMetadataPython
+        :rtype: AdviserResultResponseMetadataPython
         """
         return self._python
 
@@ -322,7 +322,7 @@ class AnalysisResultResponseMetadata(object):
 
 
         :param python: The python of this AnalysisResultResponseMetadata.  # noqa: E501
-        :type: AnalysisResultResponseMetadataPython
+        :type: AdviserResultResponseMetadataPython
         """
         if python is None:
             raise ValueError("Invalid value for `python`, must not be `None`")  # noqa: E501

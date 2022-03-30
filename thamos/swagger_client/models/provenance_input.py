@@ -29,30 +29,30 @@ class ProvenanceInput(object):
     """
     swagger_types = {
         'application_stack': 'PythonStack',
-        'kebechet_metadata': 'KebechetMetadata',
         'justification': 'Justification',
+        'kebechet_metadata': 'KebechetMetadata',
         'stack_info': 'StackInfo'
     }
 
     attribute_map = {
         'application_stack': 'application_stack',
-        'kebechet_metadata': 'kebechet_metadata',
         'justification': 'justification',
+        'kebechet_metadata': 'kebechet_metadata',
         'stack_info': 'stack_info'
     }
 
-    def __init__(self, application_stack=None, kebechet_metadata=None, justification=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, justification=None, kebechet_metadata=None, stack_info=None):  # noqa: E501
         """ProvenanceInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
-        self._kebechet_metadata = None
         self._justification = None
+        self._kebechet_metadata = None
         self._stack_info = None
         self.discriminator = None
         self.application_stack = application_stack
-        if kebechet_metadata is not None:
-            self.kebechet_metadata = kebechet_metadata
         if justification is not None:
             self.justification = justification
+        if kebechet_metadata is not None:
+            self.kebechet_metadata = kebechet_metadata
         if stack_info is not None:
             self.stack_info = stack_info
 
@@ -80,27 +80,6 @@ class ProvenanceInput(object):
         self._application_stack = application_stack
 
     @property
-    def kebechet_metadata(self):
-        """Gets the kebechet_metadata of this ProvenanceInput.  # noqa: E501
-
-
-        :return: The kebechet_metadata of this ProvenanceInput.  # noqa: E501
-        :rtype: KebechetMetadata
-        """
-        return self._kebechet_metadata
-
-    @kebechet_metadata.setter
-    def kebechet_metadata(self, kebechet_metadata):
-        """Sets the kebechet_metadata of this ProvenanceInput.
-
-
-        :param kebechet_metadata: The kebechet_metadata of this ProvenanceInput.  # noqa: E501
-        :type: KebechetMetadata
-        """
-
-        self._kebechet_metadata = kebechet_metadata
-
-    @property
     def justification(self):
         """Gets the justification of this ProvenanceInput.  # noqa: E501
 
@@ -120,6 +99,27 @@ class ProvenanceInput(object):
         """
 
         self._justification = justification
+
+    @property
+    def kebechet_metadata(self):
+        """Gets the kebechet_metadata of this ProvenanceInput.  # noqa: E501
+
+
+        :return: The kebechet_metadata of this ProvenanceInput.  # noqa: E501
+        :rtype: KebechetMetadata
+        """
+        return self._kebechet_metadata
+
+    @kebechet_metadata.setter
+    def kebechet_metadata(self, kebechet_metadata):
+        """Sets the kebechet_metadata of this ProvenanceInput.
+
+
+        :param kebechet_metadata: The kebechet_metadata of this ProvenanceInput.  # noqa: E501
+        :type: KebechetMetadata
+        """
+
+        self._kebechet_metadata = kebechet_metadata
 
     @property
     def stack_info(self):

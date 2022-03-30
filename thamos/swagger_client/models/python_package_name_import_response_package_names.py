@@ -28,80 +28,30 @@ class PythonPackageNameImportResponsePackageNames(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'package_name': 'str',
-        'package_version': 'str',
         'index_url': 'str',
-        'package_import': 'str'
+        'package_import': 'str',
+        'package_name': 'str',
+        'package_version': 'str'
     }
 
     attribute_map = {
-        'package_name': 'package_name',
-        'package_version': 'package_version',
         'index_url': 'index_url',
-        'package_import': 'package_import'
+        'package_import': 'package_import',
+        'package_name': 'package_name',
+        'package_version': 'package_version'
     }
 
-    def __init__(self, package_name=None, package_version=None, index_url=None, package_import=None):  # noqa: E501
+    def __init__(self, index_url=None, package_import=None, package_name=None, package_version=None):  # noqa: E501
         """PythonPackageNameImportResponsePackageNames - a model defined in Swagger"""  # noqa: E501
-        self._package_name = None
-        self._package_version = None
         self._index_url = None
         self._package_import = None
+        self._package_name = None
+        self._package_version = None
         self.discriminator = None
-        self.package_name = package_name
-        self.package_version = package_version
         self.index_url = index_url
         self.package_import = package_import
-
-    @property
-    def package_name(self):
-        """Gets the package_name of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-
-        Name of the package  # noqa: E501
-
-        :return: The package_name of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_name
-
-    @package_name.setter
-    def package_name(self, package_name):
-        """Sets the package_name of this PythonPackageNameImportResponsePackageNames.
-
-        Name of the package  # noqa: E501
-
-        :param package_name: The package_name of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :type: str
-        """
-        if package_name is None:
-            raise ValueError("Invalid value for `package_name`, must not be `None`")  # noqa: E501
-
-        self._package_name = package_name
-
-    @property
-    def package_version(self):
-        """Gets the package_version of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-
-        Version of the package  # noqa: E501
-
-        :return: The package_version of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_version
-
-    @package_version.setter
-    def package_version(self, package_version):
-        """Sets the package_version of this PythonPackageNameImportResponsePackageNames.
-
-        Version of the package  # noqa: E501
-
-        :param package_version: The package_version of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
-        :type: str
-        """
-        if package_version is None:
-            raise ValueError("Invalid value for `package_version`, must not be `None`")  # noqa: E501
-
-        self._package_version = package_version
+        self.package_name = package_name
+        self.package_version = package_version
 
     @property
     def index_url(self):
@@ -152,6 +102,56 @@ class PythonPackageNameImportResponsePackageNames(object):
             raise ValueError("Invalid value for `package_import`, must not be `None`")  # noqa: E501
 
         self._package_import = package_import
+
+    @property
+    def package_name(self):
+        """Gets the package_name of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+
+        Name of the package  # noqa: E501
+
+        :return: The package_name of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_name
+
+    @package_name.setter
+    def package_name(self, package_name):
+        """Sets the package_name of this PythonPackageNameImportResponsePackageNames.
+
+        Name of the package  # noqa: E501
+
+        :param package_name: The package_name of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :type: str
+        """
+        if package_name is None:
+            raise ValueError("Invalid value for `package_name`, must not be `None`")  # noqa: E501
+
+        self._package_name = package_name
+
+    @property
+    def package_version(self):
+        """Gets the package_version of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+
+        Version of the package  # noqa: E501
+
+        :return: The package_version of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_version
+
+    @package_version.setter
+    def package_version(self, package_version):
+        """Sets the package_version of this PythonPackageNameImportResponsePackageNames.
+
+        Version of the package  # noqa: E501
+
+        :param package_version: The package_version of this PythonPackageNameImportResponsePackageNames.  # noqa: E501
+        :type: str
+        """
+        if package_version is None:
+            raise ValueError("Invalid value for `package_version`, must not be `None`")  # noqa: E501
+
+        self._package_version = package_version
 
     def to_dict(self):
         """Returns the model properties as a dict"""

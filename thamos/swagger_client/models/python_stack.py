@@ -29,26 +29,26 @@ class PythonStack(object):
     """
     swagger_types = {
         'requirements': 'RequirementsDef',
-        'requirements_lock': 'RequirementsLockDef',
-        'requirements_format': 'list[str]'
+        'requirements_format': 'list[str]',
+        'requirements_lock': 'RequirementsLockDef'
     }
 
     attribute_map = {
         'requirements': 'requirements',
-        'requirements_lock': 'requirements_lock',
-        'requirements_format': 'requirements_format'
+        'requirements_format': 'requirements_format',
+        'requirements_lock': 'requirements_lock'
     }
 
-    def __init__(self, requirements=None, requirements_lock=None, requirements_format=None):  # noqa: E501
+    def __init__(self, requirements=None, requirements_format=None, requirements_lock=None):  # noqa: E501
         """PythonStack - a model defined in Swagger"""  # noqa: E501
         self._requirements = None
-        self._requirements_lock = None
         self._requirements_format = None
+        self._requirements_lock = None
         self.discriminator = None
         self.requirements = requirements
-        self.requirements_lock = requirements_lock
         if requirements_format is not None:
             self.requirements_format = requirements_format
+        self.requirements_lock = requirements_lock
 
     @property
     def requirements(self):
@@ -74,29 +74,6 @@ class PythonStack(object):
         self._requirements = requirements
 
     @property
-    def requirements_lock(self):
-        """Gets the requirements_lock of this PythonStack.  # noqa: E501
-
-
-        :return: The requirements_lock of this PythonStack.  # noqa: E501
-        :rtype: RequirementsLockDef
-        """
-        return self._requirements_lock
-
-    @requirements_lock.setter
-    def requirements_lock(self, requirements_lock):
-        """Sets the requirements_lock of this PythonStack.
-
-
-        :param requirements_lock: The requirements_lock of this PythonStack.  # noqa: E501
-        :type: RequirementsLockDef
-        """
-        if requirements_lock is None:
-            raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501
-
-        self._requirements_lock = requirements_lock
-
-    @property
     def requirements_format(self):
         """Gets the requirements_format of this PythonStack.  # noqa: E501
 
@@ -118,6 +95,29 @@ class PythonStack(object):
         """
 
         self._requirements_format = requirements_format
+
+    @property
+    def requirements_lock(self):
+        """Gets the requirements_lock of this PythonStack.  # noqa: E501
+
+
+        :return: The requirements_lock of this PythonStack.  # noqa: E501
+        :rtype: RequirementsLockDef
+        """
+        return self._requirements_lock
+
+    @requirements_lock.setter
+    def requirements_lock(self, requirements_lock):
+        """Sets the requirements_lock of this PythonStack.
+
+
+        :param requirements_lock: The requirements_lock of this PythonStack.  # noqa: E501
+        :type: RequirementsLockDef
+        """
+        if requirements_lock is None:
+            raise ValueError("Invalid value for `requirements_lock`, must not be `None`")  # noqa: E501
+
+        self._requirements_lock = requirements_lock
 
     def to_dict(self):
         """Returns the model properties as a dict"""

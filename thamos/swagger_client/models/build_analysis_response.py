@@ -29,33 +29,33 @@ class BuildAnalysisResponse(object):
     """
     swagger_types = {
         'base_image_analysis': 'BuildAnalysisResponseBaseImageAnalysis',
-        'output_image_analysis': 'BuildAnalysisResponseBaseImageAnalysis',
         'buildlog_analysis': 'BuildAnalysisResponseBuildlogAnalysis',
-        'buildlog_document_id': 'str'
+        'buildlog_document_id': 'str',
+        'output_image_analysis': 'BuildAnalysisResponseBaseImageAnalysis'
     }
 
     attribute_map = {
         'base_image_analysis': 'base_image_analysis',
-        'output_image_analysis': 'output_image_analysis',
         'buildlog_analysis': 'buildlog_analysis',
-        'buildlog_document_id': 'buildlog_document_id'
+        'buildlog_document_id': 'buildlog_document_id',
+        'output_image_analysis': 'output_image_analysis'
     }
 
-    def __init__(self, base_image_analysis=None, output_image_analysis=None, buildlog_analysis=None, buildlog_document_id=None):  # noqa: E501
+    def __init__(self, base_image_analysis=None, buildlog_analysis=None, buildlog_document_id=None, output_image_analysis=None):  # noqa: E501
         """BuildAnalysisResponse - a model defined in Swagger"""  # noqa: E501
         self._base_image_analysis = None
-        self._output_image_analysis = None
         self._buildlog_analysis = None
         self._buildlog_document_id = None
+        self._output_image_analysis = None
         self.discriminator = None
         if base_image_analysis is not None:
             self.base_image_analysis = base_image_analysis
-        if output_image_analysis is not None:
-            self.output_image_analysis = output_image_analysis
         if buildlog_analysis is not None:
             self.buildlog_analysis = buildlog_analysis
         if buildlog_document_id is not None:
             self.buildlog_document_id = buildlog_document_id
+        if output_image_analysis is not None:
+            self.output_image_analysis = output_image_analysis
 
     @property
     def base_image_analysis(self):
@@ -77,27 +77,6 @@ class BuildAnalysisResponse(object):
         """
 
         self._base_image_analysis = base_image_analysis
-
-    @property
-    def output_image_analysis(self):
-        """Gets the output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
-
-
-        :return: The output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
-        :rtype: BuildAnalysisResponseBaseImageAnalysis
-        """
-        return self._output_image_analysis
-
-    @output_image_analysis.setter
-    def output_image_analysis(self, output_image_analysis):
-        """Sets the output_image_analysis of this BuildAnalysisResponse.
-
-
-        :param output_image_analysis: The output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
-        :type: BuildAnalysisResponseBaseImageAnalysis
-        """
-
-        self._output_image_analysis = output_image_analysis
 
     @property
     def buildlog_analysis(self):
@@ -142,6 +121,27 @@ class BuildAnalysisResponse(object):
         """
 
         self._buildlog_document_id = buildlog_document_id
+
+    @property
+    def output_image_analysis(self):
+        """Gets the output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
+
+
+        :return: The output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
+        :rtype: BuildAnalysisResponseBaseImageAnalysis
+        """
+        return self._output_image_analysis
+
+    @output_image_analysis.setter
+    def output_image_analysis(self, output_image_analysis):
+        """Sets the output_image_analysis of this BuildAnalysisResponse.
+
+
+        :param output_image_analysis: The output_image_analysis of this BuildAnalysisResponse.  # noqa: E501
+        :type: BuildAnalysisResponseBaseImageAnalysis
+        """
+
+        self._output_image_analysis = output_image_analysis
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -1,10 +1,11 @@
-# BuildAnalysisResponseErrorOutputImageAnalysis
+# PythonEnvironmentsEnvironment
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**error** | **str** | Error information for user | [optional]
-**parameters** | **object** | Parameters echoed back to user for debugging | [optional]
+**os_name** | **str** | Operating system name |
+**os_version** | **str** | Operating system version |
+**python_version** | **str** | Python version |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
