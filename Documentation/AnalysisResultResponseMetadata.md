@@ -7,12 +7,12 @@ Name | Type | Description | Notes
 **analyzer_version** | **str** | Version of analyzer handling the container image analysis  |
 **arguments** | **object** | Arguments passed to the analyzer |
 **_datetime** | **str** | Date and time of analysis end in ISO format |
-**distribution** | [**AnalysisResultResponseMetadataDistribution**](AnalysisResultResponseMetadataDistribution.md) |  |
+**distribution** | [**AdviserResultResponseMetadataDistribution**](AdviserResultResponseMetadataDistribution.md) |  |
 **document_id** | **str** | A unique identifier of the document |
 **duration** | **int** | Number of seconds for which the analyzer was running  |
 **hostname** | **str** | Pod name where the analysis was done |
 **os_release** | **object** |  |
-**python** | [**AnalysisResultResponseMetadataPython**](AnalysisResultResponseMetadataPython.md) |  |
+**python** | [**AdviserResultResponseMetadataPython**](AdviserResultResponseMetadataPython.md) |  |
 **thoth_deployment_name** | **str** | Name of Thoth&#x27;s deployment that computed results |
 **timestamp** | **int** | Timestamp when results were computed |
 

@@ -29,33 +29,33 @@ class KebechetMetadata(object):
     """
     swagger_types = {
         'message_justification': 'int',
+        'package_index': 'str',
         'package_name': 'str',
-        'package_version': 'str',
-        'package_index': 'str'
+        'package_version': 'str'
     }
 
     attribute_map = {
         'message_justification': 'message_justification',
+        'package_index': 'package_index',
         'package_name': 'package_name',
-        'package_version': 'package_version',
-        'package_index': 'package_index'
+        'package_version': 'package_version'
     }
 
-    def __init__(self, message_justification=None, package_name=None, package_version=None, package_index=None):  # noqa: E501
+    def __init__(self, message_justification=None, package_index=None, package_name=None, package_version=None):  # noqa: E501
         """KebechetMetadata - a model defined in Swagger"""  # noqa: E501
         self._message_justification = None
+        self._package_index = None
         self._package_name = None
         self._package_version = None
-        self._package_index = None
         self.discriminator = None
         if message_justification is not None:
             self.message_justification = message_justification
+        if package_index is not None:
+            self.package_index = package_index
         if package_name is not None:
             self.package_name = package_name
         if package_version is not None:
             self.package_version = package_version
-        if package_index is not None:
-            self.package_index = package_index
 
     @property
     def message_justification(self):
@@ -77,6 +77,27 @@ class KebechetMetadata(object):
         """
 
         self._message_justification = message_justification
+
+    @property
+    def package_index(self):
+        """Gets the package_index of this KebechetMetadata.  # noqa: E501
+
+
+        :return: The package_index of this KebechetMetadata.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_index
+
+    @package_index.setter
+    def package_index(self, package_index):
+        """Sets the package_index of this KebechetMetadata.
+
+
+        :param package_index: The package_index of this KebechetMetadata.  # noqa: E501
+        :type: str
+        """
+
+        self._package_index = package_index
 
     @property
     def package_name(self):
@@ -119,27 +140,6 @@ class KebechetMetadata(object):
         """
 
         self._package_version = package_version
-
-    @property
-    def package_index(self):
-        """Gets the package_index of this KebechetMetadata.  # noqa: E501
-
-
-        :return: The package_index of this KebechetMetadata.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_index
-
-    @package_index.setter
-    def package_index(self, package_index):
-        """Sets the package_index of this KebechetMetadata.
-
-
-        :param package_index: The package_index of this KebechetMetadata.  # noqa: E501
-        :type: str
-        """
-
-        self._package_index = package_index
 
     def to_dict(self):
         """Returns the model properties as a dict"""

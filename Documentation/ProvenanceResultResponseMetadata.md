@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **duration** | **int** | Number of seconds for which the provenance-checker was running  |
 **hostname** | **str** | Pod name where the provenance checks were done |
 **os_release** | **object** |  |
-**python** | [**AnalysisResultResponseMetadataPython**](AnalysisResultResponseMetadataPython.md) |  |
+**python** | [**AdviserResultResponseMetadataPython**](AdviserResultResponseMetadataPython.md) |  |
 **thoth_deployment_name** | **str** | Name of Thoth&#x27;s deployment that computed results |
 **timestamp** | **int** | Timestamp when results were computed |
 

@@ -1,11 +1,15 @@
-# PythonPackageVersionEnvironmentsResponseEnvironments
+# AdviserResultResponseMetadataPython
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**os_name** | **str** | Operating system name |
-**os_version** | **str** | Operating system version |
-**python_version** | **str** | Python version |
+**api_version** | **int** |  |
+**implementation_name** | **str** |  |
+**major** | **int** |  |
+**micro** | **int** |  |
+**minor** | **int** |  |
+**releaselevel** | **str** |  |
+**serial** | **int** |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
