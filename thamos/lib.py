@@ -378,8 +378,6 @@ def advise_using_config(
     no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
-    limit: typing.Optional[int] = None,
-    count: int = 1,
     debug: bool = False,
     origin: typing.Optional[str] = None,
     timeout: typing.Optional[int] = None,
@@ -411,8 +409,6 @@ def advise_using_config(
         no_user_stack=no_user_stack,
         nowait=nowait,
         force=force,
-        limit=limit,
-        count=count,
         debug=debug,
         origin=origin,
         timeout=timeout,
@@ -442,8 +438,6 @@ def advise(
     no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
-    limit: typing.Optional[int] = None,
-    count: int = 1,
     debug: bool = False,
     origin: typing.Optional[str] = None,
     timeout: typing.Optional[int] = None,
@@ -548,12 +542,6 @@ def advise(
         "dev": dev,
     }  # type: Dict[str, Any]
 
-    if limit is not None:
-        parameters["limit"] = limit
-
-    if count is not None:
-        parameters["count"] = count
-
     if origin is not None:
         parameters["origin"] = origin
 
@@ -613,8 +601,6 @@ def advise_here(
     no_user_stack: bool = False,
     nowait: bool = False,
     force: bool = False,
-    limit: typing.Optional[int] = None,
-    count: int = 1,
     debug: bool = False,
     timeout: typing.Optional[int] = None,
     origin: typing.Optional[str] = None,
@@ -717,8 +703,6 @@ def advise_here(
             no_user_stack=no_user_stack,
             nowait=nowait,
             force=force,
-            limit=limit,
-            count=count,
             debug=debug,
             origin=origin,
             timeout=timeout,
