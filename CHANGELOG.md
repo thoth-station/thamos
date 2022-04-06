@@ -1,4 +1,21 @@
 
+## Release 1.27.5 (2022-04-06T06:58:20)
+* 4c53db2 Remove limit and count from thamos advise
+* fa6374e :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 302139a Fix click version in pre-commit config
+* 8b8780b Generate OpenAPI schema
+* 3b0bc97 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 78c7aa3 Fix key error for `thamos graph` when no --dev flag was supplied
+* f77282f Verify thoth_search_ui_url is not None
+* 82f9628 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 4ae1445 Initialize _thoth_search_ui_url in constructor
+* 906e875 Assign _thoth_search_ui_url in api_discovery
+* 5003925 Remove variable
+* 909e008 Get Thoth search ui url by modifying api_discovery
+* bee58b9 Get thoth search ui link from api headers
+* 3da18ed Get Thoth Search UI URL from environment and fix link construction
+* 237fd18 Add link to container image analyses from Thoth Search UI in thamos images
+
 ## Release 1.27.4 (2022-03-22T08:39:46)
 * Pick only major.minor
 * Fix python version display in support command
