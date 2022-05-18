@@ -786,23 +786,32 @@ def advise(
         sys.exit(4)
     if not no_write:
         with cwd(configuration.get_overlays_directory(runtime_environment)):
-            if result["report"] and result["report"]["stack_info"]:
+            if json_output:
                 _print_report(
-                    result["report"]["stack_info"],
+                    result["report"],
                     json_output=json_output,
-                    title="Application stack guidance",
                 )
 
-            # Print report of the best one - thus index zero.
-            if result["report"] and result["report"]["products"]:
-                if result["report"]["products"][0]["justification"]:
+            else:
+                if result["report"] and result["report"]["stack_info"]:
                     _print_report(
-                        result["report"]["products"][0]["justification"],
+                        result["report"]["stack_info"],
                         json_output=json_output,
-                        title="Recommended stack report",
+                        title="Application stack guidance",
                     )
-                else:
-                    click.echo("No justification was made for the recommended stack")
+
+                # Print report of the best one - thus index zero.
+                if result["report"] and result["report"]["products"]:
+                    if result["report"]["products"][0]["justification"]:
+                        _print_report(
+                            result["report"]["products"][0]["justification"],
+                            json_output=json_output,
+                            title="Recommended stack report",
+                        )
+                    else:
+                        click.echo(
+                            "No justification was made for the recommended stack"
+                        )
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
