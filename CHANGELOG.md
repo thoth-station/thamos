@@ -1,4 +1,9 @@
 
+## Release 1.27.6 (2022-05-18T11:54:31)
+* 5bda76d Fix JSON output for advise report
+* ea93842 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* ba23c57 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.27.5 (2022-04-06T06:58:20)
 * 4c53db2 Remove limit and count from thamos advise
 * fa6374e :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
