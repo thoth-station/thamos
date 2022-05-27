@@ -392,7 +392,7 @@ be installed through a proxy tunnel:
 Advise report structure
 =======================
 
-The structure of the advise report in JSON format produced with the ``thamos advise`` command is available in the `Thoth API advise endpoint
+The structure of the advise report in JSON format produced with the ``thamos advise --json`` command is available in the `Thoth API advise endpoint
 <https://khemenu.thoth-station.ninja/api/v1/ui/#/Advise/get_advise_python>`_ to retrieve advise results and in the corresponding `schema specification
 <https://github.com/thoth-station/user-api/blob/d81a54236f7dfe55d138ed1fe236eaf097a53d9a/openapi/openapi.yaml#L2741>`_ for this endpoint.
 
