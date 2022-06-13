@@ -214,7 +214,7 @@ def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
         return None
 
     labels: Dict[str, str] = {}
-    parts = label.split(",")
+    parts = label.split(";")
     for part in parts:
         lab = part.split("=")
         if len(lab) != 2:
@@ -684,7 +684,7 @@ def purge(
     "-l",
     envvar="THAMOS_LABELS",
     type=str,
-    metavar="KEY1=VALUE1,KEY2=VALUE2",
+    metavar="KEY1=VALUE1;KEY2=VALUE2,VALUE3",
     default=None,
     show_default=True,
     help="Labels used to label the request.",
@@ -715,7 +715,7 @@ def advise(
     [bold yellow]Examples:[/bold yellow]
     [purple]
 
-      thamos advise --runtime-environment testing --labels 'foo=bar,qux=baz'
+      thamos advise --runtime-environment testing --labels 'foo=bar;qux=baz,bap'
 
       thamos advise --dev
 
