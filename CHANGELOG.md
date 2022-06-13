@@ -1,4 +1,10 @@
 
+## Release 1.27.7 (2022-06-13T12:38:16)
+* 0cf4cad Modify label parsing logic to allow list of values
+* 78bd6d6 Document advise report structure (#1117)
+* 96388eb :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#1119)
+* 3f61e4e :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.27.6 (2022-05-18T11:54:31)
 * 5bda76d Fix JSON output for advise report
 * ea93842 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
