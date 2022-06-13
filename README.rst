@@ -164,7 +164,7 @@ resolver will include pipeline units that match labels with the ones provided
 on the request.
 
 An example can be a CI system that is asking for an advise and labels the
-request with ``requester=ci_foo,team=thoth``. In such a case, the resolution
+request with ``requester=ci_foo;team=thoth``. In such a case, the resolution
 engine includes pipeline units that are specific to the CI system and the team
 specified (besides the ones that are added by default). Labels can be specified
 in the ``.thoth.yaml`` configuration file or using CLI (labels passed via CLI
@@ -172,7 +172,7 @@ take precedence):
 
 .. code-block:: console
 
-  thamos advise --labels requester=ci_foo,team=thoth
+  thamos advise --labels requester=ci_foo;team=thoth
 
 See the following `demo for more information
 <https://www.youtube.com/watch?v=eoJIfQip_6M>`__.
