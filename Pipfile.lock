@@ -203,11 +203,11 @@
         },
         "daiquiri": {
             "hashes": [
-                "sha256:027601aeb0bd37a16db88cb2a1e5cba6373e2eccc2e7e8a1a272ceafc26d79f9",
-                "sha256:9a09ddc00932f06d041bfc3e6a4af962284c72f99283e0f2a64f541d34c8581b"
+                "sha256:5208ba60215087804e522a97758fbb9836ef3d2cfd10d539d8e3d4398df6997f",
+                "sha256:7f572c4edfbac88f5a7a0a5182840e83ff65c3c5ebf4e44903e0bccb846e7f24"
             ],
             "index": "pypi",
-            "version": "==3.1.0"
+            "version": "==3.1.1"
         },
         "delegator.py": {
             "hashes": [
