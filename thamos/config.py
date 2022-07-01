@@ -46,6 +46,10 @@ from .discover import discover_distribution
 from .discover import discover_python_version
 from .discover import discover_platform
 from .discover import discover_base_image
+from .discover import discover_cudnn_version
+from .discover import discover_mkl_version
+from .discover import discover_rpm_package
+from .discover import discover_gpu_model
 from .exceptions import NoApiSupported
 from .exceptions import NoRuntimeEnvironmentError
 from .exceptions import RuntimeEnvironmentExistsError
@@ -319,16 +323,23 @@ class _Configuration:
         _LOGGER.info("Discovering host runtime environment")
 
         cpu_info = discover_cpu()
+        gpu_model = discover_gpu_model()
         cuda_version = discover_cuda_version()
         # Add quotes for textual representation in the config file.
-        cuda_version = f"'{cuda_version}'" if cuda_version is not None else "null"
+        cuda_version = f"'{cuda_version}'" or "null"
         os_name, os_version = discover_distribution()
         os_name = map_os_name(os_name)
         os_version = normalize_os_version(os_name, os_version)
         python_version = discover_python_version()
         platform = discover_platform()
         base_image = discover_base_image()
-        base_image = base_image if base_image is not None else "null"
+        base_image = base_image or "null"
+        cudnn_version = discover_cudnn_version()
+        cudnn_version = cudnn_version or "null"
+        mkl_version = discover_mkl_version()
+        mkl_version = mkl_version or "null"
+        openmpi_version = discover_rpm_package("openmpi")
+        openblas_version = discover_rpm_package("openblas")
 
         runtime_environment_name = re.sub(
             r"[^0-9a-zA-Z-]", "-", f"{os_name}-{os_version}"
@@ -350,15 +361,20 @@ class _Configuration:
         default_config = default_config.format(
             runtime_environment_name=runtime_environment_name,
             cuda_version=cuda_version,
+            cudnn_version=cudnn_version,
             os_name=os_name,
             os_version=os_version,
             python_version=python_version,
             platform=platform,
             requirements_format=requirements_format,
             base_image=base_image,
-            cpu_family=cpu_info["cpu_family"] or "null",
-            cpu_model=cpu_info["cpu_model"] or "null",
-            cpu_model_name=cpu_info["cpu_model_name"] or "CPU detection failed",
+            cpu_family=cpu_info.get("cpu_family", "null"),
+            cpu_model=cpu_info.get("cpu_model", "null"),
+            cpu_model_name=cpu_info.get("cpu_model_name", "CPU detection failed"),
+            gpu_model=gpu_model,
+            mkl_version=mkl_version,
+            openmpi_version=openmpi_version,
+            openblas_version=openblas_version,
             **(dict(os.environ) if expand_env else {}),
         )
 
