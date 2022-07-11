@@ -1143,14 +1143,7 @@ def results(
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         result = print_advise_results(analysis_id)
 
-        if json_output:
-            _print_report(
-                result["report"],
-                json_output=json_output,
-            )
-
-        else:
-            _print_advise_justifications(result, json_output=json_output)
+        _print_advise_justifications(result, json_output=json_output)
 
 
 @cli.command("list")

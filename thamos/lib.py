@@ -1644,7 +1644,7 @@ def print_advise_results(
     adviser_document, error = get_analysis_results(analysis_id)
 
     if error:
-        print("Cannot print dependency graph as advise was not successful")
+        print("Cannot print analysis results as advise was not successful")
 
     if not adviser_document:
         sys.exit(2)
