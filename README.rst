@@ -1,6 +1,23 @@
 Thamos
 ------
 
+.. image:: https://img.shields.io/github/v/tag/thoth-station/thamos?style=plastic
+  :target: https://github.com/thoth-station/thamos/releases
+  :alt: GitHub tag (latest by date)
+
+.. image:: https://img.shields.io/pypi/v/thamos?style=plastic
+  :target: https://pypi.org/project/thamos
+  :alt: PyPI - Module Version
+
+.. image:: https://img.shields.io/pypi/l/thamos?style=plastic
+  :target: https://pypi.org/project/thamos
+  :alt: PyPI - License
+
+.. image:: https://img.shields.io/pypi/dm/thamos?style=plastic
+  :target: https://pypi.org/project/thamos
+  :alt: PyPI - Downloads
+
+
 A CLI tool and library for communicating with Thoth backend.
 
 Using Thamos as a CLI tool
