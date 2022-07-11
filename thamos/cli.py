@@ -209,12 +209,7 @@ def _print_report(
     console.print(table, justify="center")
 
 
-def _print_report_summary(
-    analysis_id: str,
-    report: list,
-    *,
-    json_output: bool = False,
-):
+def _print_report_summary(analysis_id: str, report: list, *, json_output: bool = False):
     """Print reasoning to user."""
     if json_output:
         click.echo(json.dumps(report, sort_keys=True, indent=2))
@@ -222,18 +217,21 @@ def _print_report_summary(
 
     console = Console()
 
-    types = [0, 0, 0]
+    types = {"INFO": 0, "WARNING": 0, "ERROR": 0}
     for item in report:
-        if item["type"] == 'INFO':
-            types[0] += 1
-        elif item["type"] == 'WARNING':
-            types[1] += 1
-        elif item["type"] == 'ERROR':
-            types[2] += 1
+        types[item["type"]] += 1
 
-    console.print(f"Short Summary", justify="center", style="bold")
-    console.print(f"The advise analysis fished with {types[0]} INFO messages, {types[1]} WARNING messages, and {types[2]} ERROR messages.", justify="center")
-    console.print(f"Results can be browsed in Thoth search: [link https://thoth-station.ninja/search/advise/{analysis_id}]https://thoth-station.ninja/search/advise/{analysis_id}", justify="center")
+    console.print("Short Summary", justify="center", style="bold")
+    console.print(
+        f"The advise analysis fished with {types['INFO']} INFO messages, {types['WARNING']} WARNING messages,"
+        + f" and {types['ERROR']} ERROR messages.",
+        justify="center",
+    )
+    console.print(
+        "Results can be browsed in Thoth search: [link https://thoth-station.ninja/search/advise/"
+        + f"{analysis_id}]https://thoth-station.ninja/search/advise/{analysis_id}",
+        justify="center",
+    )
 
 
 def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
@@ -262,7 +260,10 @@ def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
     return labels
 
 
-def _print_advise_justifications(result, json_output: bool = False,):
+def _print_advise_justifications(
+    result,
+    json_output: bool = False,
+):
     if result["report"] and result["report"]["stack_info"]:
         _print_report(
             result["report"]["stack_info"],
@@ -279,9 +280,7 @@ def _print_advise_justifications(result, json_output: bool = False,):
                 title="Recommended stack report",
             )
         else:
-            click.echo(
-                "No justification was made for the recommended stack"
-            )
+            click.echo("No justification was made for the recommended stack")
 
 
 class AliasedGroup(click.RichGroup):
@@ -1120,7 +1119,7 @@ def graph(
     default=None,
     metavar="NAME",
     envvar="THAMOS_RUNTIME_ENVIRONMENT",
-    help="Specify runtime environment to which the given package should be added.",
+    help="Specify runtime environment used to retrieve analysis results.",
 )
 @handle_cli_exception
 def results(
@@ -1143,14 +1142,7 @@ def results(
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         result = print_advise_results(analysis_id)
 
-        if json_output:
-            _print_report(
-                result["report"],
-                json_output=json_output,
-            )
-
-        else:
-            _print_advise_justifications(result, json_output=json_output)
+        _print_advise_justifications(result, json_output=json_output)
 
 
 @cli.command("list")

@@ -33,7 +33,6 @@ from functools import wraps
 import pprint
 import json
 
-import click
 import urllib3
 import requests
 
@@ -1631,9 +1630,7 @@ def print_dependency_graph(
     return print_dependency_graph_from_adviser_document(adviser_document, fold=fold)
 
 
-def print_advise_results(
-    analysis_id: typing.Optional[str] = None
-) -> AnalysisResultResponse.result:
+def print_advise_results(analysis_id: typing.Optional[str] = None):
     """Print dependency graph to stdout produced by the given adviser."""
     analysis_id = analysis_id or get_last_analysis_id()
     if not analysis_id.startswith("adviser-"):
@@ -1644,7 +1641,7 @@ def print_advise_results(
     adviser_document, error = get_analysis_results(analysis_id)
 
     if error:
-        print("Cannot print dependency graph as advise was not successful")
+        print("Cannot print analysis results as advise was not successful")
 
     if not adviser_document:
         sys.exit(2)
