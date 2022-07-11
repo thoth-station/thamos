@@ -2,12 +2,12 @@
 exclude: "thamos/swagger_client/|docs/|Documentation"
 repos:
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.1.13
+    rev: v1.3.0
     hooks:
       - id: remove-tabs
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.3.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -32,7 +32,7 @@ repos:
 
 
   - repo: https://github.com/psf/black
-    rev: 22.1.0
+    rev: 22.6.0
     hooks:
       - id: black
         additional_dependencies: ['click==8.0.4']

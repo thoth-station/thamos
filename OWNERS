@@ -1,15 +1,20 @@
 # See the OWNERS docs at https://go.k8s.io/owners
 
 approvers:
-  - fridex
+  - goern
   - kpostoffice
+  - harshad16
   - mayaCostantini
   - sesheta
 
 reviewers:
-  - pacospace
+  - kpostoffice
   - harshad16
   - mayaCostantini
+
+emeritus_approvers:
+  - pacospace
+  - fridex
 
 labels:
   - sig/user-experience
