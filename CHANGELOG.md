@@ -1,4 +1,15 @@
 
+## Release 1.27.8 (2022-07-11T17:54:45)
+* ca16db8 :medal_sports: Included badge for metrics and tags (#1140)
+* 8b03113 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 1f59023 :recycle: HouseKeeping: Updated OWNERS and pre-commit changes (#1138)
+* 048e95b :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* f80148a :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 2c61052 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 46b9a09 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 01d495a :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 9710bd5 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.27.7 (2022-06-13T12:38:16)
 * 0cf4cad Modify label parsing logic to allow list of values
 * 78bd6d6 Document advise report structure (#1117)
