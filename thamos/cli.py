@@ -62,6 +62,7 @@ from thamos.lib import load_dot_env
 from thamos.lib import load_files
 from thamos.lib import provenance_check as thoth_provenance_check
 from thamos.lib import print_dependency_graph
+from thamos.lib import print_advise_results
 from thamos.lib import get_verified_packages_from_static_analysis
 from thamos.lib import write_configuration
 from thamos.lib import write_files
@@ -208,6 +209,31 @@ def _print_report(
     console.print(table, justify="center")
 
 
+def _print_report_summary(analysis_id: str, report: list, *, json_output: bool = False):
+    """Print reasoning to user."""
+    if json_output:
+        click.echo(json.dumps(report, sort_keys=True, indent=2))
+        return
+
+    console = Console()
+
+    types = {"INFO": 0, "WARNING": 0, "ERROR": 0}
+    for item in report:
+        types[item["type"]] += 1
+
+    console.print("Short Summary", justify="center", style="bold")
+    console.print(
+        f"The advise analysis fished with {types['INFO']} INFO messages, {types['WARNING']} WARNING messages,"
+        + f" and {types['ERROR']} ERROR messages.",
+        justify="center",
+    )
+    console.print(
+        "Results can be browsed in Thoth search: [link https://thoth-station.ninja/search/advise/"
+        + f"{analysis_id}]https://thoth-station.ninja/search/advise/{analysis_id}",
+        justify="center",
+    )
+
+
 def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
     """Parse labels from their string representation."""
     if not label:
@@ -232,6 +258,29 @@ def _parse_labels(label: Optional[str]) -> Optional[Dict[str, str]]:
         labels[lab[0]] = lab[1]
 
     return labels
+
+
+def _print_advise_justifications(
+    result,
+    json_output: bool = False,
+):
+    if result["report"] and result["report"]["stack_info"]:
+        _print_report(
+            result["report"]["stack_info"],
+            json_output=json_output,
+            title="Application stack guidance",
+        )
+
+    # Print report of the best one - thus index zero.
+    if result["report"] and result["report"]["products"]:
+        if result["report"]["products"][0]["justification"]:
+            _print_report(
+                result["report"]["products"][0]["justification"],
+                json_output=json_output,
+                title="Recommended stack report",
+            )
+        else:
+            click.echo("No justification was made for the recommended stack")
 
 
 class AliasedGroup(click.RichGroup):
@@ -639,6 +688,11 @@ def purge(
     "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
 )
 @click.option(
+    "--short",
+    is_flag=True,
+    help="Shorten the analysis output.",
+)
+@click.option(
     "--force",
     is_flag=True,
     envvar="THAMOS_FORCE",
@@ -698,6 +752,7 @@ def advise(
     no_wait: bool = False,
     no_static_analysis: bool = False,
     json_output: bool = False,
+    short: bool = False,
     force: bool = False,
     dev: bool = False,
     no_user_stack: bool = False,
@@ -763,7 +818,7 @@ def advise(
         click.echo(results)
         sys.exit(0)
 
-    result, error = results
+    result, error, metadata = results
     if error:
         if json_output:
             json.dump(result, sys.stdout, indent=2)
@@ -793,25 +848,14 @@ def advise(
                 )
 
             else:
-                if result["report"] and result["report"]["stack_info"]:
-                    _print_report(
+                if short:
+                    _print_report_summary(
+                        metadata.document_id,
                         result["report"]["stack_info"],
                         json_output=json_output,
-                        title="Application stack guidance",
                     )
-
-                # Print report of the best one - thus index zero.
-                if result["report"] and result["report"]["products"]:
-                    if result["report"]["products"][0]["justification"]:
-                        _print_report(
-                            result["report"]["products"][0]["justification"],
-                            json_output=json_output,
-                            title="Recommended stack report",
-                        )
-                    else:
-                        click.echo(
-                            "No justification was made for the recommended stack"
-                        )
+                else:
+                    _print_advise_justifications(result, json_output=json_output)
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
@@ -1061,6 +1105,44 @@ def graph(
         printed = print_dependency_graph(analysis_id, fold=fold)
         if not printed:
             sys.exit(1)
+
+
+@cli.command("results")
+@click.pass_context
+@click.argument("analysis_id", type=str, required=False, metavar="ANALYSIS_ID")
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
+@click.option(
+    "--runtime-environment",
+    "-r",
+    default=None,
+    metavar="NAME",
+    envvar="THAMOS_RUNTIME_ENVIRONMENT",
+    help="Specify runtime environment used to retrieve analysis results.",
+)
+@handle_cli_exception
+def results(
+    analysis_id: typing.Optional[str] = None,
+    runtime_environment: typing.Optional[str] = None,
+    json_output: bool = False,
+) -> None:  # noqa: D412
+    """Show results of finished adviser analysis.
+
+    If ANALYSIS_ID is not provided, the last request is used by default.
+
+    [bold yellow]Examples:[/bold yellow]
+    [purple]
+
+      thamos results
+
+      thamos results adviser-940101080006-110c392feb7cf6da
+    [/purple]
+    """
+    with cwd(configuration.get_overlays_directory(runtime_environment)):
+        result = print_advise_results(analysis_id)
+
+        _print_advise_justifications(result, json_output=json_output)
 
 
 @cli.command("list")
