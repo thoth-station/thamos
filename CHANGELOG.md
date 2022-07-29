@@ -1,4 +1,12 @@
 
+## Release 1.27.9 (2022-07-29T11:50:50)
+* 3b6ca5f :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 025e9c5 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 7d2c21e :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 789f51d fixed errors
+* a3c7584 fixed wording
+* f02bc7a added option to shorten results and reprint advise result table
+
 ## Release 1.27.8 (2022-07-11T17:54:45)
 * ca16db8 :medal_sports: Included badge for metrics and tags (#1140)
 * 8b03113 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
