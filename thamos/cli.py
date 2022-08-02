@@ -295,6 +295,10 @@ class AliasedGroup(click.RichGroup):
             # Address `thamos logs` vs `thamos log` confusion.
             cmd_name = "log"
 
+        if cmd_name == "result":
+            # Address `thamos result` vs `thamos results` confusion.
+            cmd_name = "results"
+
         rv = click.Group.get_command(self, ctx, cmd_name)
         if rv is not None:
             return rv
