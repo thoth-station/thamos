@@ -1466,7 +1466,8 @@ def images(
                 )
                 key = Text.from_markup(key, style="green bold")
                 # Here, key value are ignored. This is a trick to have "table header" as the first column.
-                table_content.extend([{"key": key, "value": value}])
+                if value:
+                    table_content.extend([{"key": key, "value": value}])
 
             if container_image_search_link != "":
                 table_content.extend(
