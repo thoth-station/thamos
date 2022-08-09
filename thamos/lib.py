@@ -319,6 +319,7 @@ def get_static_analysis(
         library_usage = gather_library_usage(
             src_path,
             ignore_errors=True,
+            ignored_subdirs=[".venv"],
             without_standard_imports=without_standard_imports,
             without_builtin_imports=without_builtin_imports,
             without_builtins=without_builtins,
