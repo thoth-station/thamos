@@ -233,11 +233,11 @@
         },
         "filelock": {
             "hashes": [
-                "sha256:37def7b658813cda163b56fc564cdc75e86d338246458c4c28ae84cabefa2404",
-                "sha256:3a0fd85166ad9dbab54c9aec96737b744106dc5f15c0b09a6744a445299fcf04"
+                "sha256:55447caa666f2198c5b6b13a26d2084d26fa5b115c00d065664b2124680c4edc",
+                "sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.7.1"
+            "version": "==3.8.0"
         },
         "frozenlist": {
             "hashes": [
@@ -330,11 +330,11 @@
         },
         "invectio": {
             "hashes": [
-                "sha256:888653e92fb4901bf9825ccc3e76fc0749f05f716e9007f1e6bdda066580b756",
-                "sha256:ea1da827514c3976d9bf85c1365ee96f51623e6407aedc77fa8ceba14335687e"
+                "sha256:cc1a2e69dd95ab98d90bc23fa6ad245d7f1a5f58b40cc9320c4d81786db01bdb",
+                "sha256:f20c8a35f1747eff5cc0a2d5222b0427f75d6096712e67ec2829f491bc5ed82e"
             ],
             "index": "pypi",
-            "version": "==0.2.1"
+            "version": "==0.2.2"
         },
         "jinja2": {
             "hashes": [
@@ -882,10 +882,10 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:011155f11ab828a977fe8a60c5b534c30f49d70c9938362536d206bb230bb519",
-                "sha256:9921e76e29135aa1fa65fe231aaaef47355f85470c5ec59ce32715e22e6340b6"
+                "sha256:75643a8c656ffd61ea0a37bf4b0b9463825d6043d4fbfd7c80872ab66e4fa06e",
+                "sha256:baac8e9426b7927f95792b1f38c83ae743a62471e92b72fa3ec2d5987609abeb"
             ],
-            "version": "==1.9.2"
+            "version": "==1.9.3"
         },
         "six": {
             "hashes": [
@@ -1132,11 +1132,11 @@
         },
         "filelock": {
             "hashes": [
-                "sha256:37def7b658813cda163b56fc564cdc75e86d338246458c4c28ae84cabefa2404",
-                "sha256:3a0fd85166ad9dbab54c9aec96737b744106dc5f15c0b09a6744a445299fcf04"
+                "sha256:55447caa666f2198c5b6b13a26d2084d26fa5b115c00d065664b2124680c4edc",
+                "sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.7.1"
+            "version": "==3.8.0"
         },
         "iniconfig": {
             "hashes": [
