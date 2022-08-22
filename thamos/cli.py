@@ -344,37 +344,22 @@ def _compute_metrics_scorecards(report) -> Optional[OrderedDict]:
 
             # TO DO: Remove when corresponding prescriptions have been updated with tags
             else:
+                replacement_words = {
+                    "Project ": "projects ",
+                    " is ": " are ",
+                    " does ": " do ",
+                    " has ": " have ",
+                    " runs ": " run ",
+                    " requires ": " require ",
+                    " uses ": " use ",
+                    " follows ": " follow ",
+                    " signs ": " sign ",
+                    " NOT ": " not ",
+                }
                 message = justification["message"].strip()
 
-                if "Project " in message:
-                    message = message.replace("Project ", "projects ")
-
-                if " is " in message:
-                    message = message.replace(" is ", " are ")
-
-                if " does " in message:
-                    message = message.replace(" does ", " do ")
-
-                if " has " in message:
-                    message = message.replace(" has ", " have ")
-
-                if " runs " in message:
-                    message = message.replace(" runs ", " run ")
-
-                if " requires " in message:
-                    message = message.replace(" requires ", " require ")
-
-                if " uses " in message:
-                    message = message.replace(" uses ", " use ")
-
-                if " follows " in message:
-                    message = message.replace(" follows ", " follow ")
-
-                if " signs " in message:
-                    message = message.replace(" signs ", " sign ")
-
-            if " NOT " in message:
-                message = message.replace(" NOT ", " not ")
+                for k, v in replacement_words.items():
+                    message = message.replace(k, v)
 
             message = message.split("based")[0]
 
