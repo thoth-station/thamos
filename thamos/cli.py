@@ -24,6 +24,7 @@ import shutil
 import subprocess
 import sys
 import typing
+from collections import OrderedDict
 from functools import wraps
 from typing import Dict
 from typing import Optional
@@ -128,6 +129,49 @@ _REPORT_TRANSLATION_TABLE_ENVIRONMENTS = {
     "os_name": "Operating system name",
     "os_version": "Operating system version",
     "python_version": "Python version",
+}
+
+_REPORT_TRANSLATION_TABLE_SCORECARD_TAGS = {
+    "binary-artifacts": "projects have binary artifacts in the source repository",
+    "no-binary-artifacts": "projects do NOT have binary artifacts in the source repository",
+    "unfixed-vulnerabilities": "projects have open or unfixed vulnerabilities on the OSV service",
+    "no-unfixed-vulnerabilities": "projects do NOT have open or unfixed vulnerabilities on the OSV service",
+    "code-review": "projects require code review before the code is merged",
+    "no-code-review": "projects do NOT require code review before the code is merged",
+    "actively-maintained": "projects are actively maintained",
+    "no-actively-maintained": "projects are NOT actively maintained",
+    "automatic-updates": "projects use use tools for automatic dependency updates",
+    "no-automatic-updates": "projects do NOT use use tools for automatic dependency updates",
+    "branch-protection": "projects have branch protection setup",
+    "no-branch-protection": "projects do NOT have branch protection setup",
+    "least-privileged-workflow": "projects follow the principle of least privileged in GitHub workflows",
+    "no-least-privileged-workflow": "projects do NOT follow the principle of least privileged in GitHub workflows",
+    "security-policy": "projects have a security policy published",
+    "no-security-policy": "projects do NOT have a security policy published",
+    "signed-releases": "projects cryptographically sign released artifacts",
+    "no-signed-releases": "projects do NOT cryptographically sign released artifacts",
+    "fuzzing": "projects use fuzzing",
+    "no-fuzzing": "projects do NOT use fuzzing",
+    "published-package": "projects are published as packages",
+    "no-published-package": "projects are NOT published as packages",
+    "cii": "projects follow best CII practices",
+    "no-cii": "projects do NOT follow best CII practices",
+    "pinned-dependencies": "projects use pinned dependencies",
+    "no-pinned-dependencies": "projects do NOT use pinned dependencies",
+    "multiple-companies-contributors": "projects have a set of contributors from multiple companies",
+    "no-multiple-companies-contributors": "projects do NOT have a set of contributors from multiple companies",
+    "ci-tests": "projects run CI tests before pull requests are merged",
+    "no-ci-tests": "projects do NOT run CI tests before pull requests are merged",
+    "static-analysis": "projects use static source code analysis",
+    "no-static-analysis": "projects do NOT use static source code analysis",
+    "dangerous-patterns": "projects GitHub Action workflows have dangerous code patterns",
+    "no-dangerous-patterns": "projects GitHub Action workflows do NOT have dangerous code patterns",
+    "license": "projects have published a license",
+    "no-license": "projects have NOT published a license",
+    "webhook-token": "projects have a token for webhooks configured in their"
+    " repository to authenticate the origins of requests",
+    "no-webhook-token": "projects do NOT have a token for webhooks configured in their"
+    " repository to authenticate the origins of requests",
 }
 
 
@@ -281,6 +325,64 @@ def _print_advise_justifications(
             )
         else:
             click.echo("No justification was made for the recommended stack")
+
+    return None
+
+
+def _compute_metrics_scorecards(report) -> Optional[OrderedDict]:
+    """Aggregate OSSF Scorecards information from report and compute metrics."""
+    nb_dependencies = 0
+    scorecards_metrics = {}
+
+    if report["products"] and report["products"][0]["dependency_graph"]["nodes"]:
+        nb_dependencies = len(report["products"][0]["dependency_graph"]["nodes"])
+
+    for justification in report["products"][0]["justification"]:
+        if "scorecard" in justification["link"]:
+            if "tag" in justification:
+                message = _REPORT_TRANSLATION_TABLE_SCORECARD_TAGS[justification["tag"]]
+
+            # TO DO: Remove when corresponding prescriptions have been updated with tags
+            else:
+                replacement_words = {
+                    "Project ": "projects ",
+                    " is ": " are ",
+                    " does ": " do ",
+                    " has ": " have ",
+                    " runs ": " run ",
+                    " requires ": " require ",
+                    " uses ": " use ",
+                    " follows ": " follow ",
+                    " signs ": " sign ",
+                    " NOT ": " not ",
+                }
+                message = justification["message"].strip()
+
+                for k, v in replacement_words.items():
+                    message = message.replace(k, v)
+
+            message = message.split("based")[0]
+
+            if message not in scorecards_metrics:
+                scorecards_metrics[message] = 1
+
+            else:
+                scorecards_metrics[message] += 1
+
+    if scorecards_metrics != {}:
+
+        # TO DO: find a better sorting logic based on tags
+        return OrderedDict(
+            sorted(
+                {
+                    k: int(v * nb_dependencies / 100)
+                    for k, v in scorecards_metrics.items()
+                }.items(),
+                key=lambda t: "not" in t[0],
+            )
+        )
+
+    return None
 
 
 class AliasedGroup(click.RichGroup):
@@ -743,6 +845,15 @@ def purge(
     show_default=True,
     help="Labels used to label the request.",
 )
+@click.option(
+    "--scoring",
+    envvar="THAMOS_SHOW_METRICS",
+    type=str,
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Experimental feature: show Thoth package scoring based on OSSF Security Scorecards",
+)
 @handle_cli_exception
 def advise(
     debug: bool = False,
@@ -758,6 +869,7 @@ def advise(
     no_user_stack: bool = False,
     install: bool = False,
     labels: Optional[str] = None,
+    scoring: bool = False,
     write_advised_manifest_changes: Optional[str] = None,
 ) -> None:  # noqa: D412
     """Ask Thoth for recommendations on the application stack.
@@ -856,6 +968,15 @@ def advise(
                     )
                 else:
                     _print_advise_justifications(result, json_output=json_output)
+
+                if scoring:
+                    scorecards_metrics = _compute_metrics_scorecards(result["report"])
+                    if scorecards_metrics:
+                        Console().print(
+                            "Based on OSSF Security Scorecards ( https://github.com/ossf/scorecard ) :\n\n"
+                        )
+                        for message, metric in scorecards_metrics.items():
+                            Console().print(f"- {metric}% of {message}\n")
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
