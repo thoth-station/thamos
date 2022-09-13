@@ -72,9 +72,9 @@ def _split_rpm_filename(filename):
 def discover_cuda_version(interactive: bool = False) -> Optional[str]:
     """Check for CUDA version, if no CUDA is installed, return None."""
     thamos_disable_cuda = os.getenv("THAMOS_DISABLE_CUDA", None)
-    if thamos_disable_cuda == 1:
+    if thamos_disable_cuda == "1":
         _LOGGER.debug(
-            "Disabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to 0",
+            "Disabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to 1",
         )
         return None
 
