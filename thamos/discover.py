@@ -71,16 +71,15 @@ def _split_rpm_filename(filename):
 
 def discover_cuda_version(interactive: bool = False) -> Optional[str]:
     """Check for CUDA version, if no CUDA is installed, return None."""
-    if bool(int(os.getenv("THAMOS_DISABLE_CUDA", 1))):
+    thamos_disable_cuda = os.getenv("THAMOS_DISABLE_CUDA", None)
+    if thamos_disable_cuda == 1:
         _LOGGER.debug(
-            "Disabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to %r",
-            os.environ["THAMOS_DISABLE_CUDA"],
+            "Disabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to 0",
         )
         return None
 
     _LOGGER.debug(
-        "Enabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to %r",
-        os.environ["THAMOS_DISABLE_CUDA"],
+        "Enabling CUDA based on THAMOS_DISABLE_CUDA environment variable that is set to 0",
     )
 
     result = run_command("nvcc --version", raise_on_error=False)
