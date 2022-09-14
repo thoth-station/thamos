@@ -2,6 +2,7 @@ include thamos-cli
 include requirements.txt
 include requirements-test.txt
 include thamos/data/defaultThoth.yaml
+include tests/data/cpu_info_file
 include *.json
 include *.lock
 include *.md
