@@ -1,4 +1,9 @@
 
+## Release 1.27.11 (2022-09-14T15:36:12)
+* 1d9e2d1 Fix environment variable value in string
+* 4ca96f1 Fix THAMOS_DISABLE_CUDA value
+* 57de294 Extend and unit test thamos discover
+
 ## Release 1.27.10 (2022-09-14T08:11:24)
 * 28a8327 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * 6032819 Remove the remaining github issue/pr templates
