@@ -1,4 +1,18 @@
 
+## Release 1.27.10 (2022-09-14T08:11:24)
+* 28a8327 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 6032819 Remove the remaining github issue/pr templates
+* 6217a1c :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* bb9ec77 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#1165)
+* 62ad697 Remove GitHub issue templates so that defaults are used (#1162)
+* 1ba3eca Experimental --scoring flag for scorecards metrics (#1155)
+* 3b48dae Optimize for loop
+* 56b4495 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#1164)
+* 86d1938 Ignore .venv content when getting static analysis of files
+* 96a590b :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* cb3e476 Avoid empty values in thoth images command
+* e9bd06a :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.27.9 (2022-07-29T11:50:50)
 * 3b6ca5f :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * 025e9c5 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
