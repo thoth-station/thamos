@@ -1,4 +1,4 @@
-Thamos
+Thamo
 ------
 
 .. image:: https://img.shields.io/github/v/tag/thoth-station/thamos?style=plastic
