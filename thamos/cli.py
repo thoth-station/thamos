@@ -48,6 +48,7 @@ from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.exceptions import RequirementsFileError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
+from thamos.lib import get_diff
 from thamos.lib import add_requirements_to_project
 from thamos.lib import collect_support_information_dict
 from thamos.lib import check_runtime_environment_run
@@ -83,6 +84,11 @@ _EMOJI = {
     "INFO": Text("\u2714\ufe0f INFO", "green"),
     "LATEST": Text("\U0001f44c LATEST", "cyan"),
     "CVE": Text("\u2620\uFE0F  CVE \u2620\uFE0F", "red"),
+}
+
+_DIFFERENCE = {
+    "REMOVED": Text("REMOVED", style="bold red"),
+    "ADDED": Text("ADDED", "green"),
 }
 
 # Align of columns in table - default is left, values stated here are adjusted otherwise.
@@ -239,6 +245,9 @@ def _print_report(
                 entry, str
             ):
                 entry = _EMOJI.get(entry, entry)
+
+            if isinstance(entry, str) and entry in _DIFFERENCE:
+                entry = _DIFFERENCE.get(entry, entry)
 
             if isinstance(entry, list):
                 entry = ", ".join(entry)
@@ -795,6 +804,11 @@ def purge(
     help="Shorten the analysis output.",
 )
 @click.option(
+    "--diff",
+    is_flag=True,
+    help="Return only the difference between the current analysis output and the last run analysis.",
+)
+@click.option(
     "--force",
     is_flag=True,
     envvar="THAMOS_FORCE",
@@ -864,6 +878,7 @@ def advise(
     no_static_analysis: bool = False,
     json_output: bool = False,
     short: bool = False,
+    diff: bool = False,
     force: bool = False,
     dev: bool = False,
     no_user_stack: bool = False,
@@ -905,6 +920,11 @@ def advise(
             "Development dependencies will not be considered during the resolution process - see %s",
             jl("no_dev"),
         )
+
+    try:
+        last_analysis_id = get_last_analysis_id()
+    except FileNotFoundError:
+        last_analysis_id = None
 
     # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
     results = thoth_advise_here(
@@ -960,12 +980,24 @@ def advise(
                 )
 
             else:
-                if short:
-                    _print_report_summary(
-                        metadata.document_id,
-                        result["report"]["stack_info"],
-                        json_output=json_output,
-                    )
+                if short or diff:
+                    if short:
+                        _print_report_summary(
+                            metadata.document_id,
+                            result["report"]["stack_info"],
+                            json_output=json_output,
+                        )
+                    if diff and last_analysis_id:
+                        try:
+                            print_diff(metadata.document_id, last_analysis_id)
+                        except Exception:
+                            _LOGGER.warning(
+                                "An error occurred during the comparison process, so the advise will not be compared."
+                            )
+                    else:
+                        _LOGGER.warning(
+                            "Could not retrieve last analysis id, so the advise will not be compared."
+                        )
                 else:
                     _print_advise_justifications(result, json_output=json_output)
 
@@ -1095,6 +1127,40 @@ def provenance_check(
 
         if any(item.get("type") == "ERROR" for item in report):
             sys.exit(4)
+
+
+@cli.command("diff")
+@click.pass_context
+@click.argument("new_analysis_id", type=str, required=True)
+@click.argument("old_analysis_id", type=str, required=False)
+@handle_cli_exception
+def print_diff(
+    new_analysis_id: str,
+    old_analysis_id: typing.Optional[str] = None,
+):
+    """Get the difference between two analyses' justification stacks.
+
+    If NEW_ANALYSIS_ID is not provided, the last request is used by default.
+    """
+    click.echo(f"Comparing old: {old_analysis_id} to new: {new_analysis_id}")
+
+    diff_lists = get_diff(new_analysis_id, old_analysis_id)
+
+    _print_report(
+        diff_lists["stack_info"],
+        json_output=False,
+        title="Stack Info Differences",
+    )
+    _print_report(
+        diff_lists["justifications"],
+        json_output=False,
+        title="Justification Differences",
+    )
+
+    if len(diff_lists["stack_info"]) == 0 and len(diff_lists["justifications"]) == 0:
+        click.echo(
+            "No differences found between the justifications and stack info of both documents."
+        )
 
 
 @cli.command("log")
