@@ -264,15 +264,24 @@ def _print_report(
 
 def _print_report_summary(analysis_id: str, report: list, *, json_output: bool = False):
     """Print reasoning to user."""
-    if json_output:
-        click.echo(json.dumps(report, sort_keys=True, indent=2))
-        return
-
-    console = Console()
-
     types = {"INFO": 0, "WARNING": 0, "ERROR": 0}
     for item in report:
         types[item["type"]] += 1
+
+    if json_output:
+        click.echo(
+            json.dumps(
+                {
+                    "count": types,
+                    "thoth_search_url": f"https://thoth-station.ninja/search/advise/{analysis_id}",
+                },
+                sort_keys=True,
+                indent=2,
+            )
+        )
+        return
+
+    console = Console()
 
     console.print("Short Summary", justify="center", style="bold")
     console.print(
@@ -973,42 +982,40 @@ def advise(
         sys.exit(4)
     if not no_write:
         with cwd(configuration.get_overlays_directory(runtime_environment)):
-            if json_output:
+            if short:
+                _print_report_summary(
+                    metadata.document_id,
+                    result["report"]["stack_info"],
+                    json_output=json_output,
+                )
+            elif diff:
+                if last_analysis_id:
+                    try:
+                        print_diff(metadata.document_id, last_analysis_id, json_output)
+                    except Exception:
+                        _LOGGER.warning(
+                            "An error occurred during the comparison process, so the advise will not be compared."
+                        )
+                else:
+                    _LOGGER.warning(
+                        "Could not retrieve last analysis id, so the advise will not be compared."
+                    )
+            elif json_output:
                 _print_report(
                     result["report"],
                     json_output=json_output,
                 )
-
             else:
-                if short or diff:
-                    if short:
-                        _print_report_summary(
-                            metadata.document_id,
-                            result["report"]["stack_info"],
-                            json_output=json_output,
-                        )
-                    if diff and last_analysis_id:
-                        try:
-                            print_diff(metadata.document_id, last_analysis_id)
-                        except Exception:
-                            _LOGGER.warning(
-                                "An error occurred during the comparison process, so the advise will not be compared."
-                            )
-                    else:
-                        _LOGGER.warning(
-                            "Could not retrieve last analysis id, so the advise will not be compared."
-                        )
-                else:
-                    _print_advise_justifications(result, json_output=json_output)
+                _print_advise_justifications(result, json_output=json_output)
 
-                if scoring:
-                    scorecards_metrics = _compute_metrics_scorecards(result["report"])
-                    if scorecards_metrics:
-                        Console().print(
-                            "Based on OSSF Security Scorecards ( https://github.com/ossf/scorecard ) :\n\n"
-                        )
-                        for message, metric in scorecards_metrics.items():
-                            Console().print(f"- {metric}% of {message}\n")
+            if scoring:
+                scorecards_metrics = _compute_metrics_scorecards(result["report"])
+                if scorecards_metrics:
+                    Console().print(
+                        "Based on OSSF Security Scorecards ( https://github.com/ossf/scorecard ) :\n\n"
+                    )
+                    for message, metric in scorecards_metrics.items():
+                        Console().print(f"- {metric}% of {message}\n")
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
@@ -1131,12 +1138,16 @@ def provenance_check(
 
 @cli.command("diff")
 @click.pass_context
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
 @click.argument("new_analysis_id", type=str, required=True)
 @click.argument("old_analysis_id", type=str, required=False)
 @handle_cli_exception
 def print_diff(
     new_analysis_id: str,
     old_analysis_id: typing.Optional[str] = None,
+    json_output: bool = False,
 ):
     """Get the difference between two analyses' justification stacks.
 
@@ -1148,12 +1159,12 @@ def print_diff(
 
     _print_report(
         diff_lists["stack_info"],
-        json_output=False,
+        json_output=json_output,
         title="Stack Info Differences",
     )
     _print_report(
         diff_lists["justifications"],
-        json_output=False,
+        json_output=json_output,
         title="Justification Differences",
     )
 
