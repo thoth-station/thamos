@@ -1,4 +1,10 @@
 
+## Release 1.28.0 (2022-09-29T08:19:32)
+* 3ae58ef added json out
+* 8fc28bd added diff command and flag
+* b1f8e51 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* cd3f37b :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 1.27.11 (2022-09-14T15:36:12)
 * 1d9e2d1 Fix environment variable value in string
 * 4ca96f1 Fix THAMOS_DISABLE_CUDA value
