@@ -49,6 +49,7 @@ def init_rich_click() -> None:
                     "provenance-check",
                     "status",
                     "whatprovides",
+                    "diff",
                 ],
             },
             {

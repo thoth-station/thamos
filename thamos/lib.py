@@ -319,7 +319,6 @@ def get_static_analysis(
         library_usage = gather_library_usage(
             src_path,
             ignore_errors=True,
-            ignored_subdirs=[".venv"],
             without_standard_imports=without_standard_imports,
             without_builtin_imports=without_builtin_imports,
             without_builtins=without_builtins,
@@ -1008,6 +1007,118 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
             continue
 
     return result
+
+
+@with_api_client
+def get_diff(api_client: ApiClient, new_analysis_id: str, old_analysis_id: str = None):
+    """Get the difference of two analyses justification stack - the analysis type must be of type 'adviser-'.
+
+    If old_analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
+    """
+    api_instance = AdviseApi(api_client)
+
+    # get last used analysis ID if old not provided; raise exception if no last id
+    if not old_analysis_id:
+        old_analysis_id = get_last_analysis_id()
+
+    # get old advise document; raise exception if id is invalid
+    if old_analysis_id.startswith("adviser-"):
+        old_result = api_instance.get_advise_python(old_analysis_id)  # type: ignore
+    else:
+        raise UnknownAnalysisType(
+            "Can only compare the differences between 'adviser-' type ids."
+        )
+
+    # validate adviser id and get new document
+    if new_analysis_id:
+        if new_analysis_id.startswith("adviser-"):
+            new_result = api_instance.get_advise_python(new_analysis_id)  # type: ignore
+        else:
+            raise UnknownAnalysisType(
+                "Can only compare the differences between 'adviser-' type ids."
+            )
+    else:
+        raise ValueError("Missing a new analysis ID to compare to.")
+
+    # get stack info and justification from response
+    old_justifications = []
+    new_justifications = []
+    old_stack = []
+    new_stack = []
+
+    try:
+        old_justifications = old_result.result.report.products[0].justification
+    except (TypeError, KeyError):
+        _LOGGER.warning("Could not get justifications from old advise document.")
+
+    try:
+        new_justifications = new_result.result.report.products[0].justification
+    except (TypeError, KeyError):
+        _LOGGER.warning("Could not get justifications from new advise document.")
+
+    try:
+        old_stack = old_result.result.report.stack_info
+    except (TypeError, KeyError):
+        _LOGGER.warning("Could not get stack info from old advise document.")
+
+    try:
+        new_stack = new_result.result.report.stack_info
+    except (TypeError, KeyError):
+        _LOGGER.warning("Could not get stack info from new advise document.")
+
+    # helper function that compares justification types
+    def compare_justification_list(old, new):
+        # helper function that hashes a single justification
+        def _hash_justification(justification):
+            return hash(
+                str(justification.get("link"))
+                + str(justification.get("type"))
+                + str(justification.get("message"))
+                + str(justification.get("package_name"))
+            )
+
+        compare_dict = {}
+        for justification in old:
+            hashed_justification = _hash_justification(justification)
+            compare_dict[hashed_justification] = {
+                "value": justification,
+                "old": True,
+                "new": False,
+            }
+
+        for justification in new:
+            hashed_justification = _hash_justification(justification)
+            if hashed_justification in compare_dict:
+                compare_dict[hashed_justification]["new"] = True
+            else:
+                compare_dict[hashed_justification] = {
+                    "value": justification,
+                    "old": False,
+                    "new": True,
+                }
+
+        # recreated list with difference param and discard equal justifications
+        reconstructed_list = []
+        for key in compare_dict:
+            if compare_dict[key]["new"] and compare_dict[key]["old"]:
+                continue
+            elif compare_dict[key]["new"]:
+                difference = "ADDED"
+            else:
+                difference = "REMOVED"
+
+            reconstructed_list.append(
+                {**compare_dict[key]["value"], "difference": difference}
+            )
+
+        return reconstructed_list
+
+    return {
+        "stack_info": compare_justification_list(old_stack, new_stack),
+        "justifications": compare_justification_list(
+            old_justifications, new_justifications
+        ),
+    }
 
 
 @with_api_client

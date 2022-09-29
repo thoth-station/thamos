@@ -48,6 +48,7 @@ from thamos.exceptions import NoRuntimeEnvironmentError
 from thamos.exceptions import RequirementsFileError
 from thamos.config import config as configuration
 from thamos.lib import advise_here as thoth_advise_here
+from thamos.lib import get_diff
 from thamos.lib import add_requirements_to_project
 from thamos.lib import collect_support_information_dict
 from thamos.lib import check_runtime_environment_run
@@ -83,6 +84,11 @@ _EMOJI = {
     "INFO": Text("\u2714\ufe0f INFO", "green"),
     "LATEST": Text("\U0001f44c LATEST", "cyan"),
     "CVE": Text("\u2620\uFE0F  CVE \u2620\uFE0F", "red"),
+}
+
+_DIFFERENCE = {
+    "REMOVED": Text("REMOVED", style="bold red"),
+    "ADDED": Text("ADDED", "green"),
 }
 
 # Align of columns in table - default is left, values stated here are adjusted otherwise.
@@ -240,6 +246,9 @@ def _print_report(
             ):
                 entry = _EMOJI.get(entry, entry)
 
+            if isinstance(entry, str) and entry in _DIFFERENCE:
+                entry = _DIFFERENCE.get(entry, entry)
+
             if isinstance(entry, list):
                 entry = ", ".join(entry)
 
@@ -255,15 +264,24 @@ def _print_report(
 
 def _print_report_summary(analysis_id: str, report: list, *, json_output: bool = False):
     """Print reasoning to user."""
-    if json_output:
-        click.echo(json.dumps(report, sort_keys=True, indent=2))
-        return
-
-    console = Console()
-
     types = {"INFO": 0, "WARNING": 0, "ERROR": 0}
     for item in report:
         types[item["type"]] += 1
+
+    if json_output:
+        click.echo(
+            json.dumps(
+                {
+                    "count": types,
+                    "thoth_search_url": f"https://thoth-station.ninja/search/advise/{analysis_id}",
+                },
+                sort_keys=True,
+                indent=2,
+            )
+        )
+        return
+
+    console = Console()
 
     console.print("Short Summary", justify="center", style="bold")
     console.print(
@@ -795,6 +813,11 @@ def purge(
     help="Shorten the analysis output.",
 )
 @click.option(
+    "--diff",
+    is_flag=True,
+    help="Return only the difference between the current analysis output and the last run analysis.",
+)
+@click.option(
     "--force",
     is_flag=True,
     envvar="THAMOS_FORCE",
@@ -864,6 +887,7 @@ def advise(
     no_static_analysis: bool = False,
     json_output: bool = False,
     short: bool = False,
+    diff: bool = False,
     force: bool = False,
     dev: bool = False,
     no_user_stack: bool = False,
@@ -905,6 +929,11 @@ def advise(
             "Development dependencies will not be considered during the resolution process - see %s",
             jl("no_dev"),
         )
+
+    try:
+        last_analysis_id = get_last_analysis_id()
+    except FileNotFoundError:
+        last_analysis_id = None
 
     # In CLI we always call to obtain only the best software stack (count is implicitly set to 1).
     results = thoth_advise_here(
@@ -953,30 +982,40 @@ def advise(
         sys.exit(4)
     if not no_write:
         with cwd(configuration.get_overlays_directory(runtime_environment)):
-            if json_output:
+            if short:
+                _print_report_summary(
+                    metadata.document_id,
+                    result["report"]["stack_info"],
+                    json_output=json_output,
+                )
+            elif diff:
+                if last_analysis_id:
+                    try:
+                        print_diff(metadata.document_id, last_analysis_id, json_output)
+                    except Exception:
+                        _LOGGER.warning(
+                            "An error occurred during the comparison process, so the advise will not be compared."
+                        )
+                else:
+                    _LOGGER.warning(
+                        "Could not retrieve last analysis id, so the advise will not be compared."
+                    )
+            elif json_output:
                 _print_report(
                     result["report"],
                     json_output=json_output,
                 )
-
             else:
-                if short:
-                    _print_report_summary(
-                        metadata.document_id,
-                        result["report"]["stack_info"],
-                        json_output=json_output,
-                    )
-                else:
-                    _print_advise_justifications(result, json_output=json_output)
+                _print_advise_justifications(result, json_output=json_output)
 
-                if scoring:
-                    scorecards_metrics = _compute_metrics_scorecards(result["report"])
-                    if scorecards_metrics:
-                        Console().print(
-                            "Based on OSSF Security Scorecards ( https://github.com/ossf/scorecard ) :\n\n"
-                        )
-                        for message, metric in scorecards_metrics.items():
-                            Console().print(f"- {metric}% of {message}\n")
+            if scoring:
+                scorecards_metrics = _compute_metrics_scorecards(result["report"])
+                if scorecards_metrics:
+                    Console().print(
+                        "Based on OSSF Security Scorecards ( https://github.com/ossf/scorecard ) :\n\n"
+                    )
+                    for message, metric in scorecards_metrics.items():
+                        Console().print(f"- {metric}% of {message}\n")
 
             pipfile = result["report"]["products"][0]["project"]["requirements"]
             pipfile_lock = result["report"]["products"][0]["project"][
@@ -1095,6 +1134,44 @@ def provenance_check(
 
         if any(item.get("type") == "ERROR" for item in report):
             sys.exit(4)
+
+
+@cli.command("diff")
+@click.pass_context
+@click.option(
+    "--json", "-j", "json_output", is_flag=True, help="Print output in JSON format."
+)
+@click.argument("new_analysis_id", type=str, required=True)
+@click.argument("old_analysis_id", type=str, required=False)
+@handle_cli_exception
+def print_diff(
+    new_analysis_id: str,
+    old_analysis_id: typing.Optional[str] = None,
+    json_output: bool = False,
+):
+    """Get the difference between two analyses' justification stacks.
+
+    If NEW_ANALYSIS_ID is not provided, the last request is used by default.
+    """
+    click.echo(f"Comparing old: {old_analysis_id} to new: {new_analysis_id}")
+
+    diff_lists = get_diff(new_analysis_id, old_analysis_id)
+
+    _print_report(
+        diff_lists["stack_info"],
+        json_output=json_output,
+        title="Stack Info Differences",
+    )
+    _print_report(
+        diff_lists["justifications"],
+        json_output=json_output,
+        title="Justification Differences",
+    )
+
+    if len(diff_lists["stack_info"]) == 0 and len(diff_lists["justifications"]) == 0:
+        click.echo(
+            "No differences found between the justifications and stack info of both documents."
+        )
 
 
 @cli.command("log")
