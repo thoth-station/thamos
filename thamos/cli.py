@@ -24,6 +24,7 @@ import shutil
 import subprocess
 import sys
 import typing
+import re
 from collections import OrderedDict
 from functools import wraps
 from typing import Dict
@@ -1319,11 +1320,30 @@ def graph(
     envvar="THAMOS_RUNTIME_ENVIRONMENT",
     help="Specify runtime environment used to retrieve analysis results.",
 )
+@click.option(
+    "--filter",
+    "-f",
+    "filter_args",
+    type=str,
+    multiple=True,
+    help="Filter adviser output using the pattern {KEY}={REGEX_PATTERN}.\
+     Accepted keys include type, message, link, package_name or tag",
+)
+@click.option(
+    "--list-categories",
+    "-l",
+    "list_categories",
+    type=str,
+    is_flag=True,
+    help="List the catagories found within the adviser result.",
+)
 @handle_cli_exception
 def results(
     analysis_id: typing.Optional[str] = None,
     runtime_environment: typing.Optional[str] = None,
     json_output: bool = False,
+    filter_args: typing.Optional[str] = None,
+    list_categories: bool = False,
 ) -> None:  # noqa: D412
     """Show results of finished adviser analysis.
 
@@ -1335,10 +1355,81 @@ def results(
       thamos results
 
       thamos results adviser-940101080006-110c392feb7cf6da
+
+      thamos results --filter type=INFO
+
+      thamos results -f type=INFO -f link=.*env
     [/purple]
     """
     with cwd(configuration.get_overlays_directory(runtime_environment)):
         result = print_advise_results(analysis_id)
+
+        stack_info = None
+        justifications = None
+
+        if (
+            result["report"]
+            and result["report"]["products"]
+            and result["report"]["products"][0]["justification"]
+        ):
+            justifications = result["report"]["products"][0]["justification"]
+        if result["report"]:
+            stack_info = result["report"]["stack_info"]
+
+        if list_categories:
+            categories = {}
+            for j in stack_info:
+                if "type" in j:
+                    categories[j["type"]] = categories.get(j["type"], 0) + 1
+
+                # TODO add functionality to support metadata categories
+            for key in categories:
+                click.echo(f"[{categories[key]}]\t{key}")
+
+        if filter_args:
+
+            def filter_helper(key, filter_pattern, obj):
+                r = re.compile(filter_pattern)
+
+                compare_to = None
+                if key in obj:
+                    compare_to = obj[key]
+                elif "metadata" in obj and key in obj["metadata"]:
+                    compare_to = obj["metadata"][key]
+
+                if compare_to:
+                    return r.match(compare_to)
+                else:
+                    return False
+
+            if stack_info or justifications:
+                # parse filter args
+                for arg in filter_args:
+                    split_arg = arg.split("=")
+
+                    if len(split_arg) != 2:
+                        raise Exception(
+                            "Filter argument was not in the format: {KEY}={REGEX_PATTERN}"
+                        )
+
+                    key = split_arg[0].strip()
+                    value = split_arg[1].strip()
+
+                    if stack_info:
+                        stack_info = list(
+                            filter(lambda e: filter_helper(key, value, e), stack_info)
+                        )
+                    if justifications:
+                        justifications = list(
+                            filter(
+                                lambda e: filter_helper(key, value, e), justifications
+                            )
+                        )
+
+            if stack_info is not None:
+                result["report"]["stack_info"] = stack_info
+            if justifications is not None:
+                result["report"]["products"][0]["justification"] = justifications
 
         _print_advise_justifications(result, json_output=json_output)
 
