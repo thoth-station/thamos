@@ -1,4 +1,10 @@
 
+## Release 1.28.1 (2022-10-11T14:40:51)
+* 1b510d6 Regenerate swagger client
+* 20c53ba :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* e72a290 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 1aa79e0 Update defaultThoth.yaml
+
 ## Release 1.28.0 (2022-09-29T08:19:32)
 * 3ae58ef added json out
 * 8fc28bd added diff command and flag
