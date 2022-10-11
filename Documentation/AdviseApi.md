@@ -148,7 +148,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_advise_python**
-> AnalysisWithAuthenticationResponse post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, token=token)
+> AnalysisWithAuthenticationResponse post_advise_python(body, recommendation_type, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, token=token)
 
 Get an advise for a Python application
 
@@ -164,8 +164,6 @@ from pprint import pprint
 api_instance = thamos.swagger_client.AdviseApi()
 body = thamos.swagger_client.AdviseInput() # AdviseInput | Specification of Python application stack with runtime specific information
 recommendation_type = 'latest' # str | Recommendation type (default to latest)
-count = 56 # int | Number of software stacks that should be returned (optional)
-limit = 56 # int | Limit number of software stacks scored (optional)
 origin = 'origin_example' # str | A repository where the application stack is used  (optional)
 source_type = 'source_type_example' # str | A flag marking what Thoth integration is requesting adviser: * cli: Thamos CLI * s2i: OpenShift's S2I (Source-to-Image) build * kebechet: Kebechet Bot * jupyter_notebook: Jupyter Notebook using jupyterlab-requirements  (optional)
 dev = false # bool | Consider or do not consider development dependencies when resolving stacks  (optional) (default to false)
@@ -175,7 +173,7 @@ token = 'token_example' # str | An API token for authenticated requests (optiona
 
 try:
     # Get an advise for a Python application
-    api_response = api_instance.post_advise_python(body, recommendation_type, count=count, limit=limit, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, token=token)
+    api_response = api_instance.post_advise_python(body, recommendation_type, origin=origin, source_type=source_type, dev=dev, debug=debug, force=force, token=token)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AdviseApi->post_advise_python: %s\n" % e)
@@ -187,8 +185,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**AdviseInput**](AdviseInput.md)| Specification of Python application stack with runtime specific information |
  **recommendation_type** | **str**| Recommendation type | [default to latest]
- **count** | **int**| Number of software stacks that should be returned | [optional]
- **limit** | **int**| Limit number of software stacks scored | [optional]
  **origin** | **str**| A repository where the application stack is used  | [optional]
  **source_type** | **str**| A flag marking what Thoth integration is requesting adviser: * cli: Thamos CLI * s2i: OpenShift&#x27;s S2I (Source-to-Image) build * kebechet: Kebechet Bot * jupyter_notebook: Jupyter Notebook using jupyterlab-requirements  | [optional]
  **dev** | **bool**| Consider or do not consider development dependencies when resolving stacks  | [optional] [default to false]

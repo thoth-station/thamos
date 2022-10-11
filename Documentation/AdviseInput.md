@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **application_stack** | [**PythonStack**](PythonStack.md) |  |
+**callback_info** | [**CallbackInfo**](CallbackInfo.md) |  | [optional]
 **constraints** | **str** | Constraints to apply during the resolution | [optional]
 **justification** | [**Justification**](Justification.md) |  | [optional]
 **kebechet_metadata** | [**KebechetMetadata**](KebechetMetadata.md) |  | [optional]

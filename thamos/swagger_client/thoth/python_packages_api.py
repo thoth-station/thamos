@@ -33,7 +33,7 @@ class PythonPackagesApi(object):
         self.api_client = api_client
 
     def get_package_from_imported_packages(self, import_name, **kwargs):  # noqa: E501
-        """List imported packages' (name, version, index)  # noqa: E501
+        """List imported packages (name, version, index)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -54,7 +54,7 @@ class PythonPackagesApi(object):
             return data
 
     def get_package_from_imported_packages_with_http_info(self, import_name, **kwargs):  # noqa: E501
-        """List imported packages' (name, version, index)  # noqa: E501
+        """List imported packages (name, version, index)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -672,8 +672,7 @@ class PythonPackagesApi(object):
 
         :param async_req bool
         :param str name: Name of the Python Package (required)
-        :param int page: Page offset in pagination
-        :param int per_page: Number of items returned per page
+        :param str order_by: Sort the response list
         :param str os_name: Name of the operating system to consider
         :param str os_version: Version of the operating system to consider
         :param str python_version: Version of Python interpreter provided
@@ -698,8 +697,7 @@ class PythonPackagesApi(object):
 
         :param async_req bool
         :param str name: Name of the Python Package (required)
-        :param int page: Page offset in pagination
-        :param int per_page: Number of items returned per page
+        :param str order_by: Sort the response list
         :param str os_name: Name of the operating system to consider
         :param str os_version: Version of the operating system to consider
         :param str python_version: Version of Python interpreter provided
@@ -708,7 +706,7 @@ class PythonPackagesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['name', 'page', 'per_page', 'os_name', 'os_version', 'python_version']  # noqa: E501
+        all_params = ['name', 'order_by', 'os_name', 'os_version', 'python_version']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -733,10 +731,8 @@ class PythonPackagesApi(object):
         path_params = {}
 
         query_params = []
-        if 'page' in params:
-            query_params.append(('page', params['page']))  # noqa: E501
-        if 'per_page' in params:
-            query_params.append(('per_page', params['per_page']))  # noqa: E501
+        if 'order_by' in params:
+            query_params.append(('order_by', params['order_by']))  # noqa: E501
         if 'name' in params:
             query_params.append(('name', params['name']))  # noqa: E501
         if 'os_name' in params:
@@ -789,6 +785,7 @@ class PythonPackagesApi(object):
         :param str os_name: Name of the operating system to consider
         :param str os_version: Version of the operating system to consider
         :param str python_version: Version of Python interpreter provided
+        :param str like: Filter Python package name by string. (wildcard characters \"%\" and \"_\" are supported)
         :return: PythonPackagesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -814,12 +811,13 @@ class PythonPackagesApi(object):
         :param str os_name: Name of the operating system to consider
         :param str os_version: Version of the operating system to consider
         :param str python_version: Version of Python interpreter provided
+        :param str like: Filter Python package name by string. (wildcard characters \"%\" and \"_\" are supported)
         :return: PythonPackagesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['page', 'per_page', 'os_name', 'os_version', 'python_version']  # noqa: E501
+        all_params = ['page', 'per_page', 'os_name', 'os_version', 'python_version', 'like']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -850,6 +848,8 @@ class PythonPackagesApi(object):
             query_params.append(('os_version', params['os_version']))  # noqa: E501
         if 'python_version' in params:
             query_params.append(('python_version', params['python_version']))  # noqa: E501
+        if 'like' in params:
+            query_params.append(('like', params['like']))  # noqa: E501
 
         header_params = {}
 

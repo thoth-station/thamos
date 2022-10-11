@@ -29,6 +29,7 @@ class AdviseInput(object):
     """
     swagger_types = {
         'application_stack': 'PythonStack',
+        'callback_info': 'CallbackInfo',
         'constraints': 'str',
         'justification': 'Justification',
         'kebechet_metadata': 'KebechetMetadata',
@@ -40,6 +41,7 @@ class AdviseInput(object):
 
     attribute_map = {
         'application_stack': 'application_stack',
+        'callback_info': 'callback_info',
         'constraints': 'constraints',
         'justification': 'justification',
         'kebechet_metadata': 'kebechet_metadata',
@@ -49,9 +51,10 @@ class AdviseInput(object):
         'stack_info': 'stack_info'
     }
 
-    def __init__(self, application_stack=None, constraints=None, justification=None, kebechet_metadata=None, labels=None, library_usage=None, runtime_environment=None, stack_info=None):  # noqa: E501
+    def __init__(self, application_stack=None, callback_info=None, constraints=None, justification=None, kebechet_metadata=None, labels=None, library_usage=None, runtime_environment=None, stack_info=None):  # noqa: E501
         """AdviseInput - a model defined in Swagger"""  # noqa: E501
         self._application_stack = None
+        self._callback_info = None
         self._constraints = None
         self._justification = None
         self._kebechet_metadata = None
@@ -61,6 +64,8 @@ class AdviseInput(object):
         self._stack_info = None
         self.discriminator = None
         self.application_stack = application_stack
+        if callback_info is not None:
+            self.callback_info = callback_info
         if constraints is not None:
             self.constraints = constraints
         if justification is not None:
@@ -98,6 +103,27 @@ class AdviseInput(object):
             raise ValueError("Invalid value for `application_stack`, must not be `None`")  # noqa: E501
 
         self._application_stack = application_stack
+
+    @property
+    def callback_info(self):
+        """Gets the callback_info of this AdviseInput.  # noqa: E501
+
+
+        :return: The callback_info of this AdviseInput.  # noqa: E501
+        :rtype: CallbackInfo
+        """
+        return self._callback_info
+
+    @callback_info.setter
+    def callback_info(self, callback_info):
+        """Sets the callback_info of this AdviseInput.
+
+
+        :param callback_info: The callback_info of this AdviseInput.  # noqa: E501
+        :type: CallbackInfo
+        """
+
+        self._callback_info = callback_info
 
     @property
     def constraints(self):
