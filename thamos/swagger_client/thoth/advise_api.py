@@ -322,8 +322,6 @@ class AdviseApi(object):
         :param async_req bool
         :param AdviseInput body: Specification of Python application stack with runtime specific information (required)
         :param str recommendation_type: Recommendation type (required)
-        :param int count: Number of software stacks that should be returned
-        :param int limit: Limit number of software stacks scored
         :param str origin: A repository where the application stack is used
         :param str source_type: A flag marking what Thoth integration is requesting adviser: * cli: Thamos CLI * s2i: OpenShift's S2I (Source-to-Image) build * kebechet: Kebechet Bot * jupyter_notebook: Jupyter Notebook using jupyterlab-requirements
         :param bool dev: Consider or do not consider development dependencies when resolving stacks
@@ -352,8 +350,6 @@ class AdviseApi(object):
         :param async_req bool
         :param AdviseInput body: Specification of Python application stack with runtime specific information (required)
         :param str recommendation_type: Recommendation type (required)
-        :param int count: Number of software stacks that should be returned
-        :param int limit: Limit number of software stacks scored
         :param str origin: A repository where the application stack is used
         :param str source_type: A flag marking what Thoth integration is requesting adviser: * cli: Thamos CLI * s2i: OpenShift's S2I (Source-to-Image) build * kebechet: Kebechet Bot * jupyter_notebook: Jupyter Notebook using jupyterlab-requirements
         :param bool dev: Consider or do not consider development dependencies when resolving stacks
@@ -365,7 +361,7 @@ class AdviseApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'recommendation_type', 'count', 'limit', 'origin', 'source_type', 'dev', 'debug', 'force', 'token']  # noqa: E501
+        all_params = ['body', 'recommendation_type', 'origin', 'source_type', 'dev', 'debug', 'force', 'token']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -396,10 +392,6 @@ class AdviseApi(object):
         query_params = []
         if 'recommendation_type' in params:
             query_params.append(('recommendation_type', params['recommendation_type']))  # noqa: E501
-        if 'count' in params:
-            query_params.append(('count', params['count']))  # noqa: E501
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))  # noqa: E501
         if 'origin' in params:
             query_params.append(('origin', params['origin']))  # noqa: E501
         if 'source_type' in params:

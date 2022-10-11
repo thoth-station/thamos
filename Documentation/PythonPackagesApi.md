@@ -4,7 +4,7 @@ All URIs are relative to https://test.thoth-station.ninja/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_package_from_imported_packages**](PythonPackagesApi.md#get_package_from_imported_packages) | **GET** /python/imports | List imported packages&#x27; (name, version, index)
+[**get_package_from_imported_packages**](PythonPackagesApi.md#get_package_from_imported_packages) | **GET** /python/imports | List imported packages (name, version, index)
 [**get_python_package_dependencies**](PythonPackagesApi.md#get_python_package_dependencies) | **GET** /python/package/dependencies | Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered
 [**get_python_package_version_metadata**](PythonPackagesApi.md#get_python_package_version_metadata) | **GET** /python/package/version/metadata | Get metadata for the given package
 [**get_python_platform**](PythonPackagesApi.md#get_python_platform) | **GET** /python/platform | Get supported platforms for the Python ecosystem
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 # **get_package_from_imported_packages**
 > PythonPackageNameImportResponse get_package_from_imported_packages(import_name)
 
-List imported packages' (name, version, index)
+List imported packages (name, version, index)
 
 ### Example
 ```python
@@ -31,7 +31,7 @@ api_instance = thamos.swagger_client.PythonPackagesApi()
 import_name = 'import_name_example' # str | Names of the Python Packages (name, version, index) for the given import package name
 
 try:
-    # List imported packages' (name, version, index)
+    # List imported packages (name, version, index)
     api_response = api_instance.get_package_from_imported_packages(import_name)
     pprint(api_response)
 except ApiException as e:
@@ -80,7 +80,7 @@ index = 'https://pypi.org/simple' # str | Index url of the Python Package (defau
 os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
 os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
 python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
-marker_evaluation_result = false # bool | Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  (optional) (default to false)
+marker_evaluation_result = true # bool | Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  (optional)
 
 try:
     # Get direct dependencies of Python libraries. If environment is provided, take into account environment markers that are evaluated during dependencies installation. If environment is not provided, any environment is considered
@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
  **os_name** | **str**| Name of the operating system to consider | [optional]
  **os_version** | **str**| Version of the operating system to consider | [optional]
  **python_version** | **str**| Version of Python interpreter provided | [optional]
- **marker_evaluation_result** | **bool**| Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  | [optional] [default to false]
+ **marker_evaluation_result** | **bool**| Consider marker evaluation result for the given environment. If set to None, marker evaluation result is not taken into account  | [optional]
 
 ### Return type
 
@@ -308,7 +308,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_python_package_versions**
-> PythonPackageVersionsResponse list_python_package_versions(name, page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
+> PythonPackageVersionsResponse list_python_package_versions(name, order_by=order_by, os_name=os_name, os_version=os_version, python_version=python_version)
 
 List versions of the given Python package
 
@@ -323,15 +323,14 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = thamos.swagger_client.PythonPackagesApi()
 name = 'name_example' # str | Name of the Python Package
-page = 0 # int | Page offset in pagination (optional) (default to 0)
-per_page = 25 # int | Number of items returned per page (optional) (default to 25)
+order_by = 'order_by_example' # str | Sort the response list (optional)
 os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
 os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
 python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
 
 try:
     # List versions of the given Python package
-    api_response = api_instance.list_python_package_versions(name, page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
+    api_response = api_instance.list_python_package_versions(name, order_by=order_by, os_name=os_name, os_version=os_version, python_version=python_version)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling PythonPackagesApi->list_python_package_versions: %s\n" % e)
@@ -342,8 +341,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **str**| Name of the Python Package |
- **page** | **int**| Page offset in pagination | [optional] [default to 0]
- **per_page** | **int**| Number of items returned per page | [optional] [default to 25]
+ **order_by** | **str**| Sort the response list | [optional]
  **os_name** | **str**| Name of the operating system to consider | [optional]
  **os_version** | **str**| Version of the operating system to consider | [optional]
  **python_version** | **str**| Version of Python interpreter provided | [optional]
@@ -364,7 +362,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_python_packages**
-> PythonPackagesResponse list_python_packages(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
+> PythonPackagesResponse list_python_packages(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version, like=like)
 
 List Python packages
 
@@ -383,10 +381,11 @@ per_page = 25 # int | Number of items returned per page (optional) (default to 2
 os_name = 'os_name_example' # str | Name of the operating system to consider (optional)
 os_version = 'os_version_example' # str | Version of the operating system to consider (optional)
 python_version = 'python_version_example' # str | Version of Python interpreter provided (optional)
+like = 'like_example' # str | Filter Python package name by string. (wildcard characters \"%\" and \"_\" are supported) (optional)
 
 try:
     # List Python packages
-    api_response = api_instance.list_python_packages(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version)
+    api_response = api_instance.list_python_packages(page=page, per_page=per_page, os_name=os_name, os_version=os_version, python_version=python_version, like=like)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling PythonPackagesApi->list_python_packages: %s\n" % e)
@@ -401,6 +400,7 @@ Name | Type | Description  | Notes
  **os_name** | **str**| Name of the operating system to consider | [optional]
  **os_version** | **str**| Version of the operating system to consider | [optional]
  **python_version** | **str**| Version of Python interpreter provided | [optional]
+ **like** | **str**| Filter Python package name by string. (wildcard characters \&quot;%\&quot; and \&quot;_\&quot; are supported) | [optional]
 
 ### Return type
 
