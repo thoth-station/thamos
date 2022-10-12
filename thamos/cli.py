@@ -1377,8 +1377,11 @@ def results(
             stack_info = result["report"]["stack_info"]
 
         if list_categories:
-            categories = {}
-            for j in stack_info:
+            categories: Dict[str, int] = {}
+
+            for j in (stack_info if stack_info is not None else []) + (
+                justifications if justifications is not None else []
+            ):
                 if "type" in j:
                     categories[j["type"]] = categories.get(j["type"], 0) + 1
 
@@ -1386,45 +1389,43 @@ def results(
             for key in categories:
                 click.echo(f"[{categories[key]}]\t{key}")
 
-        if filter_args:
+            return
 
-            def filter_helper(key, filter_pattern, obj):
-                r = re.compile(filter_pattern)
+        def filter_helper(key, filter_pattern, obj):
+            r = re.compile(filter_pattern)
 
-                compare_to = None
-                if key in obj:
-                    compare_to = obj[key]
-                elif "metadata" in obj and key in obj["metadata"]:
-                    compare_to = obj["metadata"][key]
+            compare_to = None
+            if key in obj:
+                compare_to = obj[key]
+            elif "metadata" in obj and key in obj["metadata"]:
+                compare_to = obj["metadata"][key]
 
-                if compare_to:
-                    return r.match(compare_to)
-                else:
-                    return False
+            if compare_to:
+                return r.match(compare_to)
+            else:
+                return False
 
-            if stack_info or justifications:
-                # parse filter args
-                for arg in filter_args:
-                    split_arg = arg.split("=")
+        if filter_args and (stack_info or justifications):
+            # parse filter args
+            for arg in filter_args:
+                split_arg = arg.split("=")
 
-                    if len(split_arg) != 2:
-                        raise Exception(
-                            "Filter argument was not in the format: {KEY}={REGEX_PATTERN}"
-                        )
+                if len(split_arg) != 2:
+                    raise Exception(
+                        "Filter argument was not in the format: {KEY}={REGEX_PATTERN}"
+                    )
 
-                    key = split_arg[0].strip()
-                    value = split_arg[1].strip()
+                key = split_arg[0].strip()
+                value = split_arg[1].strip()
 
-                    if stack_info:
-                        stack_info = list(
-                            filter(lambda e: filter_helper(key, value, e), stack_info)
-                        )
-                    if justifications:
-                        justifications = list(
-                            filter(
-                                lambda e: filter_helper(key, value, e), justifications
-                            )
-                        )
+                if stack_info:
+                    stack_info = list(
+                        filter(lambda e: filter_helper(key, value, e), stack_info)
+                    )
+                if justifications:
+                    justifications = list(
+                        filter(lambda e: filter_helper(key, value, e), justifications)
+                    )
 
             if stack_info is not None:
                 result["report"]["stack_info"] = stack_info
