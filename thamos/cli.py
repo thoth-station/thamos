@@ -1339,6 +1339,7 @@ def graph(
 )
 @handle_cli_exception
 def results(
+    *,
     analysis_id: typing.Optional[str] = None,
     runtime_environment: typing.Optional[str] = None,
     json_output: bool = False,
