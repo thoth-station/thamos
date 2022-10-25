@@ -1,15 +1,17 @@
 # See the OWNERS docs at https://go.k8s.io/owners
 
 approvers:
+  - codificat
   - goern
-  - kpostoffice
   - harshad16
+  - kpostoffice
   - mayaCostantini
   - sesheta
 
 reviewers:
-  - kpostoffice
+  - codificat
   - harshad16
+  - kpostoffice
   - mayaCostantini
 
 emeritus_approvers:
