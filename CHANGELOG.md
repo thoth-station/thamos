@@ -1,4 +1,12 @@
 
+## Release 1.29.0 (2022-10-25T11:16:35)
+* ad39ef3 fix args
+* c69204e fix args
+* 0532b9a fix args
+* 51bcb6f made args key word only
+* 5bd50aa fixed pre-commit issues
+* 36e4a0c filter option to results
+
 ## Release 1.28.1 (2022-10-11T14:40:51)
 * 1b510d6 Regenerate swagger client
 * 20c53ba :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
