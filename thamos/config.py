@@ -326,7 +326,7 @@ class _Configuration:
         gpu_model = discover_gpu_model()
         cuda_version = discover_cuda_version()
         # Add quotes for textual representation in the config file.
-        cuda_version = f"'{cuda_version}'" or "null"
+        cuda_version = f"'{cuda_version}'" if cuda_version else "null"
         os_name, os_version = discover_distribution()
         os_name = map_os_name(os_name)
         os_version = normalize_os_version(os_name, os_version)
