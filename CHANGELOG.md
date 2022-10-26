@@ -1,4 +1,8 @@
 
+## Release 1.29.1 (2022-10-26T13:47:17)
+* a7665dd Check if the cuda_version is none
+* 0908eb0 Add Pep (codificat) as an approver
+
 ## Release 1.29.0 (2022-10-25T11:16:35)
 * ad39ef3 fix args
 * c69204e fix args
