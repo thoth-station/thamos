@@ -309,7 +309,7 @@ class _Configuration:
                 )
 
     def create_default_config(
-        self, template: str = None, nowrite: bool = False
+        self, template: Optional[str] = None, nowrite: bool = False
     ) -> Optional[dict]:
         """Place default configuration into the current directory."""
         if not os.path.isdir(".git"):

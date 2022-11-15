@@ -75,7 +75,7 @@ from .exceptions import PedanticRunVerificationError
 from .exceptions import TimeoutError
 from .exceptions import UnknownAnalysisType
 
-from typing import Callable, Any, Union, Dict
+from typing import Optional, Callable, Any, Union, Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -373,7 +373,7 @@ def advise_using_config(
     runtime_environment_name: typing.Optional[str] = None,
     constraints: typing.Optional[str] = None,
     src_path: str = ".",
-    recommendation_type: str = None,
+    recommendation_type: Optional[str] = None,
     dev: bool = False,
     no_static_analysis: bool = False,
     no_user_stack: bool = False,
@@ -834,8 +834,8 @@ def image_analysis(
     image: str,
     *,
     environment_type: str,
-    registry_user: str = None,
-    registry_password: str = None,
+    registry_user: Optional[str] = None,
+    registry_password: Optional[str] = None,
     verify_tls: bool = True,
     nowait: bool = False,
     force: bool = False,
@@ -945,7 +945,7 @@ def build_analysis(
 
 
 @with_api_client
-def get_log(api_client: ApiClient, analysis_id: str = None):
+def get_log(api_client: ApiClient, analysis_id: Optional[str] = None):
     """Get log of an analysis - the analysis type and endpoint are automatically derived from analysis id.
 
     If analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
@@ -1010,7 +1010,9 @@ def get_log(api_client: ApiClient, analysis_id: str = None):
 
 
 @with_api_client
-def get_diff(api_client: ApiClient, new_analysis_id: str, old_analysis_id: str = None):
+def get_diff(
+    api_client: ApiClient, new_analysis_id: str, old_analysis_id: Optional[str] = None
+):
     """Get the difference of two analyses justification stack - the analysis type must be of type 'adviser-'.
 
     If old_analysis_id is not provided, its get from the last thamos call which stores it in a temporary file.
@@ -1513,7 +1515,7 @@ def load_files(requirements_format: str) -> typing.Tuple[str, typing.Optional[st
 
 def write_configuration(
     advised_configuration: dict,
-    recommendation_type: str = None,
+    recommendation_type: Optional[str] = None,
     dev: bool = False,
 ) -> None:
     """Create thoth configuration file."""

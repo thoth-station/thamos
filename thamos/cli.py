@@ -456,7 +456,7 @@ def cli(
     ctx=None,
     verbose: bool = False,
     workdir: typing.Optional[str] = None,
-    thoth_host: str = None,
+    thoth_host: Optional[str] = None,
 ):
     """CLI tool for interacting with Thoth."""
     if ctx:
@@ -1536,7 +1536,7 @@ def show(
     help="Template which should be used instead of the default one.",
 )
 @handle_cli_exception
-def config(no_interactive: bool = False, template: str = None):
+def config(no_interactive: bool = False, template: Optional[str] = None):
     """Adjust Thamos and Thoth configuration.
 
     Open the .thoth.yaml configuration file. If does not exist yet, perform
