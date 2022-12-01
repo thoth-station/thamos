@@ -412,7 +412,7 @@ class _Configuration:
             raise
 
         try:
-            existing = self.get_runtime_environment(runtime_environment["name"])
+            existing = self.get_runtime_environment()
         except NoRuntimeEnvironmentError:
             self.content.setdefault("runtime_environments", []).append(
                 runtime_environment
